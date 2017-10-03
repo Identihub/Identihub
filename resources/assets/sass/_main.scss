@@ -1,0 +1,67 @@
+body{
+  background-color: $background-color;
+  color: $grey-lighter;
+  font-family: $font-family-sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  user-select: none;
+}
+
+input,
+textarea{
+  font-family: $font-family-sans-serif;
+}
+
+.help-block, .input-error{
+  display: block;
+  color: rgba(243, 52, 52, 0.82);
+
+  strong{
+    margin-top: 10px;
+    display: block;
+  }
+
+}
+
+h1{
+  font-size: 28px;
+}
+
+h2{
+  font-size: 24px;
+}
+
+a {
+  text-decoration: none;
+  color: $grey-main;
+
+  &:focus{
+    outline-width: 1px;
+    outline-style: dashed;
+    outline-offset: 3px;
+    outline-color: $grey-lighter;
+  }
+}
+
+#app{
+  min-height: calc(100vh - 140px);
+  padding-bottom: 70px;//
+}
+
+.clearfix{
+  clear: both;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.installation-checker{
+  li{
+    color: red;
+  }
+  li.active{
+    color: green;
+  }
+}

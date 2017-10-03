@@ -1,0 +1,257 @@
+.bridge-page{
+  width: 90%;
+  max-width: 690px;
+  margin: 0 auto;
+
+  .link{
+    position: relative;
+
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  .clipboard div{
+    position: absolute;
+    top: 0;
+    left: -15px;
+    width: 13px;
+  }
+
+  .clipboard .a{
+    fill: #686961;
+  }
+
+  .breadcrumb{
+    padding-bottom: 40px;
+    a{
+      color: $grey-main;
+      font-weight: bold;
+    }
+  }
+
+  .link{
+    margin-top: 10px;
+  }
+
+  .title-section{
+    input{
+      font-size: 28px;
+      color: $grey-main;
+    }
+
+    img{
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+
+  .fonts-section .bridge-section .empty-state{
+    margin-top: 36px;
+    margin-left: 108px;
+  }
+
+  .bridge-section{
+    margin-top: 65px;
+
+    .content {
+      position: relative;
+      .delete {
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 50px;
+        padding: 3px;
+        border-radius: 999px;
+        transition: 150ms ease-in-out;
+
+        svg {
+          width: 24px;
+          display: block;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: $drop-shadow-color;
+        }
+      }
+
+      &:hover{
+        .delete{
+          display: inline-block;
+        }
+      }
+    }
+
+
+    #icon{
+      display: none;
+    }
+
+    .card{
+      position: relative;
+
+      a{
+        width: 100%;
+        display: inline-block;
+        height: 100%;
+      }
+
+      &.font{
+        width: 100%;
+      }
+
+      .move-handler{
+        display: none;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 22px;
+
+        &:hover{
+          cursor: move;
+        }
+      }
+
+      &:hover{
+        .move-handler{
+          display: block;
+        }
+      }
+
+      img{
+        width: 100%;
+        position: absolute;
+        max-width: 90%;
+        max-height: 90%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .title{
+      display: table;
+      margin: 0 auto;
+      position: relative;
+      padding: 0 170px;
+
+      .tooltip{
+        display: none;
+        left: 235px;
+        top: -17px;
+        padding-left: 60px;
+        position: absolute;
+
+
+        ul{
+          border-radius: 3px;
+          padding: 10px;
+          background-color: white;
+
+          li{
+            cursor: pointer;
+          }
+
+          li:nth-child(2){
+            margin-top: 8px;
+          }
+        }
+
+        &:hover{
+          display: block;
+        }
+      }
+
+      img:hover{
+        cursor: pointer;
+        &~.tooltip{
+          display: block;
+        }
+      }
+
+      h2{
+        font-size: 26px;
+        display: inline-block;
+        float: left;
+        text-transform: capitalize;
+      }
+
+      img{
+        margin-top: 4px;
+        margin-left: 20px;
+        float: left;
+      }
+    }
+
+    .content{
+      margin-top: 20px;
+      clear: both;
+
+      .text{
+        width: 23%;
+        float: left;
+        height: 150px;
+      }
+      input{
+        font-size: 18px;
+        color: $grey-lighter;
+        margin-top: 10px;
+      }
+      textarea{
+        font-size: 10px;
+        resize: none;
+        color: $grey-with-opacity;
+        height: calc(100% - 37px);
+        margin-top: 10px;
+        line-height: 1.35em;
+      }
+
+      input,
+      textarea{
+        float: left;
+        width: 95%;
+      }
+    }
+
+    .flex{
+      width: 77%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: left;
+      float: right;
+      border: 1px solid transparent;
+      box-sizing: border-box;
+      min-height: 172px;
+
+      &.active{
+        background-color: rgba(104, 105, 97, 0.1);
+        border-radius: 3px;
+        border: 1px solid rgba(104, 105, 97, 0.2);
+      }
+
+      .card{
+        transition: .15s ease-in-out;
+        &:hover{
+          cursor: pointer;
+          box-shadow: 0 0 15px rgba(104, 105, 97, 0.1);
+          transform: scale(1.02);
+        }
+      }
+
+      .item{
+        margin: 10px;
+        width: 150px;
+        height: 150px;
+        border-radius: 3px;
+        background-color: $white;
+
+        &.font{
+          width: 100%;
+        }
+      }
+    }
+  }
+}

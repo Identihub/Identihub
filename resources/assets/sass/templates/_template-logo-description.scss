@@ -1,0 +1,30 @@
+.template-logo-description{
+  max-width: 525px;
+
+  p{
+    margin-bottom: 10px;
+    &:last-child{
+      margin-bottom: 60px;
+    }
+  }
+
+  p:nth-child(2){
+    margin-bottom: 60px;
+  }
+
+  .button{
+    margin: 0 auto;
+    display: table;
+  }
+
+  header {
+    margin-bottom: 30px;
+    h2{
+      text-align: center;
+    }
+    img{
+      margin: 0 auto 45px;
+      display: table;
+    }
+  }
+}

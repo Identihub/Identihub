@@ -1,0 +1,25 @@
+a.link{
+  position: relative;
+  color: $grey-with-opacity;
+  transition: $common-transition;
+
+  &:hover{
+    text-decoration: none;
+    color: $grey-main;
+
+    &::after{
+      background-color: $grey-main;
+    }
+  }
+
+  &::after{
+    content: ' ';
+    height: 1px;
+    width: 100%;
+    background-color: $grey-with-opacity;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: $common-transition;
+  }
+}

@@ -1,0 +1,37 @@
+.welcome-page {
+  position: relative;
+  height: 100vh;
+  background-color: $white;
+
+  nav{
+    @media screen and (max-width: $tablet-size) {
+      width: 90%;
+      margin: 0 5%;
+    }
+  }
+
+  .content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 300;
+    width: 100%;
+    text-align: center;
+
+    @media screen and (max-width: $mobile-size) {
+      width: 90%;
+    }
+
+    img{
+      display: block;
+      margin: 20px auto;
+    }
+
+    span{
+      font-weight: 900;
+      font-size: 36px;
+    }
+  }
+
+}

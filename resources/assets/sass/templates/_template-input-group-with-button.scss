@@ -1,0 +1,26 @@
+.template-input-group-with-button{
+  max-width: 250px;
+  .input-wrapper{
+    margin-bottom: 15px;
+  }
+  .button-wrapper{
+    margin: 60px 0 15px;
+
+    .input-wrapper{
+      margin-bottom: 15px;
+    }
+  }
+  .title-wrapper{
+    margin-bottom: 40px;
+    h1, h2, h3, h4, h5, h6{
+      text-align: center;
+    }
+  }
+  .logo-wrapper{
+    margin-bottom: 45px;
+    img{
+      margin: 0 auto;
+      display: table;
+    }
+  }
+}

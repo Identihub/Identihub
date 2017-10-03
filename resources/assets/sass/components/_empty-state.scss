@@ -1,0 +1,15 @@
+.empty-state{
+  width: 70%;
+  margin-top: 10px;
+  img{
+    margin: 0 auto;
+    display: table;
+    opacity: .3;
+  }
+  p{
+    width: 220px;
+    text-align: center;
+    margin: 20px auto 0;
+    color: $grey-with-more-opacity;
+  }
+}

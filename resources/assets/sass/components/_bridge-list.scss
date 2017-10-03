@@ -1,0 +1,15 @@
+.bridge-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+
+  .default-image{
+    width: 50%;
+    opacity: .3;
+  }
+
+  @media (max-width: 1100px) {
+    justify-content: center;
+  }
+}

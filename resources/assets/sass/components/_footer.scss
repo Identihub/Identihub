@@ -1,0 +1,13 @@
+footer{
+  background-color: $white;
+  height: 70px;
+  color: $grey-with-opacity;
+  text-align: center;
+  line-height: 70px;
+
+  span{
+    color: $grey-logo;
+    font-weight: 900;
+  }
+
+}

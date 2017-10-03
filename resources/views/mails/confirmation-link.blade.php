@@ -1,0 +1,1 @@
+<a href="{{ route('activate.check', ['token' => $activationLink->token]) }}">Click here to activate your account</a>

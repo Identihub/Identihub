@@ -1,0 +1,46 @@
+.input{
+  background-color: transparent;
+  border: 1px solid $grey-with-more-opacity;
+  color: $grey-with-opacity;
+  font-size: 14px;
+  line-height: 43px;
+  height: 43px;
+  text-align: center;
+  width: 250px;
+  transition: $common-transition;
+
+  &-ghost{
+    background-color: transparent;
+    border: 0;
+    outline: none;
+  }
+
+  &:focus{
+    border: 1px solid $grey-lighter;
+    color: $grey-main;
+    outline: none;
+  }
+
+  &-white{
+    border: 1px solid $white;
+    color: $white;
+
+    &:focus{
+      border: 1px solid white;
+      color: white;
+      background-color: rgba(255, 255, 255, .2);
+    }
+  }
+
+  &-wrapper{
+
+    .input{
+      display: block;
+      margin: 0 auto;
+    }
+
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+}

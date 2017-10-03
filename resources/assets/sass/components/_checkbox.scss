@@ -1,0 +1,15 @@
+.checkbox{
+  width: 12px;
+  height: 12px;
+  border: 1px solid $grey-with-more-opacity;
+  transition: $common-transition;
+}
+
+input[type="checkbox"]{
+  visibility: hidden;
+}
+
+input[type="checkbox"]:checked ~ .checkbox{
+  background-color: $grey-lighter;
+  border: 1px solid $grey-lighter;
+}

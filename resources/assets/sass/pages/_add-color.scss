@@ -1,0 +1,66 @@
+.add-color{
+  .dialog-box{
+    position: absolute;
+    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $white;
+    padding: 10px;
+
+    font-size: 18px;
+
+    .wrapper{
+      padding: 50px 145px;
+      div{
+        margin-bottom: 20px;
+      }
+    }
+
+    .close-window:hover{
+      cursor: pointer;
+    }
+
+    span{
+      color: $grey-with-opacity;
+    }
+
+    .hex{
+      position: relative;
+      input{
+        width: 80px;
+        text-align: left;
+      }
+      .tooltip{
+        position: absolute;
+        top: 2px;
+        left: -140px;
+        display: none;
+        &.show{
+          display: block;
+        }
+      }
+    }
+
+    input{
+      color: $grey-lighter;
+      font-size: 18px;
+      border: 0;
+      width: 35px;
+      text-align: center;
+
+      &:focus{
+        outline: 0;
+      }
+    }
+
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
+}
