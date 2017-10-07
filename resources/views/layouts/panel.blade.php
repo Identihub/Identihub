@@ -30,7 +30,7 @@
 
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Overpass:400,900" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <script>
         window.Laravel = {!! json_encode([
@@ -58,6 +58,6 @@
 
     <footer>powered by <span>Identihub</span></footer>
 
-    <script src="{{ asset('js/react-panel.js') }}"></script>
+    <script src="{{ mix('js/react-panel.js') }}"></script>
 </body>
 </html>
