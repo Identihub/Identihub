@@ -22,6 +22,7 @@ use App\Section;
 use App\SectionType;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SourceFileController extends Controller
 {
@@ -30,6 +31,12 @@ class SourceFileController extends Controller
     {
 
         try {
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             if ($request->file('icon')->getClientMimeType() !== 'image/svg+xml')
                 throw new IconShouldBeSVG();
 
@@ -90,6 +97,12 @@ class SourceFileController extends Controller
     public function updateIconFile(Request $request, $bridgeId, $iconId)
     {
         try{
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             if ($request->file('icon')->getClientMimeType() !== 'image/svg+xml')
                 throw new IconShouldBeSVG();
 
@@ -151,6 +164,15 @@ class SourceFileController extends Controller
     public function storeImage(Request $request, $bridgeId)
     {
         try{
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
+            $user = Auth::user();
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
 
             $image = $request->file('image');
 
@@ -219,6 +241,11 @@ class SourceFileController extends Controller
     {
         try{
 
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             $icon = Icon::findOrFail($iconId);
 
             $im = new \Imagick();
@@ -259,6 +286,12 @@ class SourceFileController extends Controller
     public function addImageConverted(ConvertedStoreRequest $request, $bridgeId, $imageId)
     {
         try{
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             $format = $request->get('format');
 
             if($format === 'jpg'){
@@ -311,6 +344,12 @@ class SourceFileController extends Controller
     public function deleteIcon(Request $request, $bridgeId, $iconId)
     {
         try{
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             $icon = Icon::findOrFail($iconId);
             $sectionId = $icon->section_id;
             $icon->delete();
@@ -341,6 +380,12 @@ class SourceFileController extends Controller
     public function deleteImage(Request $request, $bridgeId, $imageId)
     {
         try{
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             $image = Image::findOrFail($imageId);
             $sectionId = $image->section_id;
             $image->delete();
@@ -371,6 +416,12 @@ class SourceFileController extends Controller
     public function updateImageFile(Request $request, $bridgeId, $imageId)
     {
         try{
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             $image = $request->file('image');
 
             if (!($image->getClientMimeType() === 'image/jpeg' || $image->getClientMimeType() === 'image/png'))

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 // Import Routes
 import routes from './routes';
 
+
 export default function App(props) {
     return (
         <Provider store={props.store}>

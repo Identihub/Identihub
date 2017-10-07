@@ -51,7 +51,11 @@ class SectionController extends Controller
     {
 
         try{
+            $user = Auth::user();
             $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             (new CreateSection($bridge, SectionType::findOrFail($request->get('section_type'))))->handle();
             event(new BridgeUpdated($bridge));
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
@@ -70,7 +74,15 @@ class SectionController extends Controller
     {
 
         try{
+
             $section = Section::findOrFail($sectionId);
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($section->bridge_id);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
+
             $section->delete();
 
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
@@ -97,6 +109,12 @@ class SectionController extends Controller
     {
         try{
             $section = Section::findOrFail($sectionId);
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($section->bridge_id);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             $section->title = $request->get('title');
             $section->save();
 
@@ -121,6 +139,12 @@ class SectionController extends Controller
     {
         try{
             $section = Section::findOrFail($sectionId);
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($section->bridge_id);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
+
             $section->description = $request->get('description');
             $section->save();
 

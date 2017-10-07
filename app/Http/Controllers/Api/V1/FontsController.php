@@ -16,6 +16,7 @@ use App\Section;
 use App\SectionType;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FontsController extends Controller
 {
@@ -34,7 +35,10 @@ class FontsController extends Controller
 
         try{
 
+            $user = Auth::user();
             $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
 
             if(Font::where('variant_id', $request->get('font_variant_id'))->get()->count())
                 return;
@@ -79,6 +83,11 @@ class FontsController extends Controller
     public function deleteFont($bridgeId, $fontId)
     {
         try{
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($bridgeId);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
 
             $font = Font::findOrFail($fontId);
             $section = Section::findOrFail($font->section_id);

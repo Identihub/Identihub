@@ -60,8 +60,9 @@ export function addBridgeRequest(name) {
     return (dispatch) => {
         return axios.post('/api/v1/bridges', { name: name})
             .then(function (response) {
-              console.log(response.data);
+                console.log(response);
                 dispatch(addBridge(response.data.bridge));
+                dispatch(changeHasBridges(true));
             })
             .catch(function (error) {
                 console.log(error);

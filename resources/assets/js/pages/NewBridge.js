@@ -33,6 +33,9 @@ export class NewBridge extends Component {
     }
 
     render() {
+
+        const goBack = this.goBack;
+
         return (
             <div>
                 <Helmet>
@@ -46,8 +49,8 @@ export class NewBridge extends Component {
                     transitionAppearTimeout={500}
                     transitionEnter={false}
                     transitionLeave={false}>
-                        <img src="/images/tmp/close.svg" className="close" onClick={this.goBack} />
-                        <span onClick={this.goBack} className="overlay"></span>
+                        <img src="/images/tmp/close.svg" className="close" onClick={goBack} />
+                        <span onClick={goBack} className="overlay"></span>
                         <section className="template-center-everything">
                             <div className="input-wrapper">
                                 <input type="text" className="input input-white" placeholder="Bridge Name" value={this.state.bridgeName} onChange={this.handleText} required />

@@ -12,6 +12,7 @@ use App\Jobs\ReorderAfterDelete;
 use App\SectionType;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -36,6 +37,11 @@ class OrderController extends Controller
                 default:
                     throw new \Exception("Not good type");
             }
+
+            $user = Auth::user();
+            $bridge = Bridge::findOrFail($object->bridge_id);
+            if($user->id !== $bridge->user_id)
+                throw new ModelNotFoundException();
 
             $oldOrder = $object->order;
 
@@ -80,10 +86,10 @@ class OrderController extends Controller
     public function changedSection(Request $request, $type, $objectId, $newSection)
     {
         try{
-
             switch ($type) {
                 case 'image':
                     $object = Image::findOrFail($objectId);
+                    $this->checkIfBridgeIsFromTheSameUser($object->bridge_id);
                     $oldSection = $object->section_id;
                     $object->section_id = $newSection;
                     $object->order = Image::where('section_id', $newSection)->get()->count();
@@ -92,6 +98,7 @@ class OrderController extends Controller
                     break;
                 case 'icon':
                     $object = Icon::findOrFail($objectId);
+                    $this->checkIfBridgeIsFromTheSameUser($object->bridge_id);
                     $oldSection = $object->section_id;
                     $object->section_id = $newSection;
                     $object->order = Icon::where('section_id', $newSection)->get()->count();
@@ -100,6 +107,7 @@ class OrderController extends Controller
                     break;
                 case 'color':
                     $object = Color::findOrFail($objectId);
+                    $this->checkIfBridgeIsFromTheSameUser($object->bridge_id);
                     $oldSection = $object->section_id;
                     $object->section_id = $newSection;
                     $object->order = Color::where('section_id', $newSection)->get()->count();
@@ -127,5 +135,13 @@ class OrderController extends Controller
             ]);
         }
     }
+
+    private function checkIfBridgeIsFromTheSameUser($bridgeId){
+        $user = Auth::user();
+        $bridge = Bridge::findOrFail($bridgeId);
+        if($user->id !== $bridge->user_id)
+            throw new ModelNotFoundException();
+    }
+
 
 }
