@@ -11,8 +11,8 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.sass('resources/assets/sass/app.scss', 'public/css');
-mix.react('resources/assets/js/index.js', 'public/js/react-panel.js');
-mix.react('resources/assets/js/public-bridge.js', 'public/js/react-public.js');
+mix.sass('resources/assets/sass/app.scss', 'public/css').version();
+mix.react('resources/assets/js/index.js', 'public/js/react-panel.js').version();
+mix.react('resources/assets/js/public-bridge.js', 'public/js/react-public.js').version();
 
 
