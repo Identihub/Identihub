@@ -1,4 +1,7 @@
 # Identihub
+
+[![AUR](https://img.shields.io/aur/license/yaourt.svg)]()
+
 Identihub is an open-source web platform for brand and assets management. It is being developed by Ura Design, an open-source design agency.
 
 Demo: https://demo.identihub.co/bridge/ura-design
