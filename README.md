@@ -1,6 +1,6 @@
 # Identihub
 
-[![AUR](https://img.shields.io/aur/license/yaourt.svg)]()
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 Identihub is an open-source web platform for brand and assets management. It is being developed by Ura Design, an open-source design agency.
 
