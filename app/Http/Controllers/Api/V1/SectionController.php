@@ -57,12 +57,13 @@ class SectionController extends Controller
                 throw new ModelNotFoundException();
 
             (new CreateSection($bridge, SectionType::findOrFail($request->get('section_type'))))->handle();
-            event(new BridgeUpdated($bridge));
+            // event(new BridgeUpdated($bridge));
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
             return response()->json([
                 'bridge' => $bridge
             ]);
         }catch (\Exception $e){
+            dd($e);
             return response()->json([
                 'error' => 'Server error'
             ]);

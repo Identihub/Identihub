@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+
+export const roundNumber = (number) => {
+    return Math.round(number);
+};
+
 class NewSize extends Component {
 
   constructor(props) {
@@ -69,12 +74,16 @@ class NewSize extends Component {
     const closeComponent = this.closeComponent;
     const openComponent = this.openComponent;
 
+
+
     const { saveElement} = this.props;
     let { width, height, opened} = this.state;
     if( (width === null) && (this.props.defaultWidth)){
       width = this.props.defaultWidth;
       height = width / this.props.ratio
     }
+
+    console.log(roundNumber(height));
 
     if((!saveElement) || (!width))
       return (<div> </div>);
@@ -85,15 +94,15 @@ class NewSize extends Component {
         <div className="text">
           <p>
             <span className="prefix">Width</span>
-            <input type="number" className="primar" value={width}
+            <input type="number" className="primar" value={roundNumber(width)}
                    onChange={(e) => {changeWidth(e.target.value)}} placeholder="Set width"/>
           </p>
           <p>
             <span className="prefix">Height</span>
-            <input className="primar" value={height}
+            <input type="number" className="primar" value={roundNumber(height)}
                    onChange={(e) => {changeHeight(e.target.value)}} placeholder="Set height" />
           </p>
-          <a className="button" onClick={() => { saveElement(width, height); closeComponent()}}>Save</a>
+          <a className="button" onClick={() => { saveElement(roundNumber(width), roundNumber(height)); closeComponent()}}>Save</a>
         </div>
       </section>
     );

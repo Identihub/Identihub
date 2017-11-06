@@ -2,6 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
+const weightToText = (weight) => {
+    if(weight){
+        return weight.replace('100', "Thin ")
+            .replace('200', "Ultra Thin ")
+            .replace('300', "Light ")
+            .replace('400', "Regular ")
+            .replace('500', "Medium ")
+            .replace('600', "Semi Bold ")
+            .replace('700', "Bold ")
+            .replace('800', "Ultra Bold ")
+            .replace('900', "Black ");
+    }
+    return weight;
+};
+
 export const VariantList = (props) => {
     return (
         <CSSTransitionGroup
@@ -19,7 +34,7 @@ export const VariantList = (props) => {
                             onChange={() => {props.toggleVariant(variant)}}/>
                         <label htmlFor={'variant-' + variant.id} className="checkbox"> </label>
                         <label htmlFor={'variant-' + variant.id}>
-                            {variant.variant}
+                            {weightToText(variant.variant)}
                         </label>
 
                     </li>

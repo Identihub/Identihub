@@ -15,18 +15,21 @@ const BridgeCard = (props) => {
   }
 
     return (
-        <div className="bridge">
-          <Link to={'/bridges/' + props.bridge.id + '/delete-confirmation'} className="delete">
-            <ReactSVG
-              path="/images/close.svg"
-            />
-          </Link>
-          <Link to={ '/bridge/' + props.bridge.id }>
-              <img
-                  className={classImage}
-                  src={image}
-                  alt="Bridge Name logo"/>
-          </Link>
+        <div className="bridge-container">
+            <div className="bridge">
+              <Link to={'/bridges/' + props.bridge.id + '/delete-confirmation'} className="delete">
+                <ReactSVG
+                  path="/images/close.svg"
+                />
+              </Link>
+              <Link className="logo-wrapper" to={ '/bridge/' + props.bridge.id }>
+                  <img
+                      className={classImage}
+                      src={image}
+                      alt="Bridge Name logo"/>
+              </Link>
+            </div>
+            <Link className="label" to={ '/bridge/' + props.bridge.id } > {props.bridge.name}</Link>
         </div>
     );
 };
