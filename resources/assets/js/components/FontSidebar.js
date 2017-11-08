@@ -52,7 +52,7 @@ class FontSidebar extends Component {
   deleteFont() {
     const { deleteFont, bridge, font, history } = this.props;
     if(deleteFont){
-      history.replace('/bridge/' + bridge.id);
+      history.replace('/project/' + bridge.id);
       deleteFont(bridge.id, font.id);
     }
   }

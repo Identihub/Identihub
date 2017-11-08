@@ -56,7 +56,7 @@ class ImageSidebar extends Component {
   deleteImage() {
     const { deleteImage, bridge, image, history } = this.props;
     if(deleteImage){
-      history.replace('/bridge/' + bridge.id);
+      history.replace('/project/' + bridge.id);
       deleteImage(bridge.id, image.id);
     }
   }

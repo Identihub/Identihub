@@ -15,7 +15,7 @@ class ColorCard extends Component {
         if(!isPub){
           return connectDragSource(connectDropTarget(
             <div className="item card" style={{backgroundColor: "#" + card.hex, opacity: opacity}}>
-              <Link to={'/bridge/' + bridge.id + '/view/color/element/' + card.id}>
+              <Link to={'/project/' + bridge.id + '/view/color/element/' + card.id}>
                 <img src="/images/move-handler.svg" className="move-handler" width="22"/>
               </Link>
             </div>

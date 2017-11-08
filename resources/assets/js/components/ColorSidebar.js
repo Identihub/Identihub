@@ -51,7 +51,7 @@ class ColorSidebar extends Component {
   deleteColor() {
     const { deleteColor, bridge, color, history } = this.props;
     if(deleteColor()){
-      history.replace('/bridge/' + bridge.id);
+      history.replace('/project/' + bridge.id);
       deleteColor(bridge.id, color.id);
     }
   }

@@ -73,7 +73,7 @@ export class Bridge extends Component {
         if(!isPub){
             breadCrumb = (
                 <div className="breadcrumb">
-                    <Link to="/bridges">Bridges</Link> { '>>' } <span>{ bridge.name }</span>
+                    <Link to="/projects">Projects</Link> { '>>' } <span>{ bridge.name }</span>
                 </div>
             );
         }
