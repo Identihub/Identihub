@@ -98,7 +98,7 @@ class InstallationController extends Controller
     public function finishInstallation(EnvWriter $envWriter)
     {
         $envWriter->writeNewEnvironmentFileWith('IS_INSTALLED', 'true');
-        return $this->redirect->to(route('app') . '#/bridges');
+        return $this->redirect->to(route('app') . '#/projects');
     }
 
 }

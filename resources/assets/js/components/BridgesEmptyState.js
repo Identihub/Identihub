@@ -7,7 +7,7 @@ const BridgesEmptyState = () => {
             <div>
                 <img src="/images/tmp/empty_bridges.svg" width="500" />
             </div>
-            <Link className="button button-blue" to="/bridges/new">Create Bridge</Link>
+            <Link className="button button-blue" to="/projects/new">Create Bridge</Link>
         </div>
     );
 };

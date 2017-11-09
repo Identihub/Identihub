@@ -40,8 +40,8 @@ class FontsController extends Controller
             if($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
-            if(Font::where('variant_id', $request->get('font_variant_id'))->get()->count())
-                return;
+            //if(Font::where('variant_id', $request->get('font_variant_id'))->get()->count())
+                // return;
 
             $section = (new CreateSection($bridge, SectionType::where('name', 'FONTS')->get()->first()))->handle();
 
@@ -61,7 +61,7 @@ class FontsController extends Controller
 
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
             try{
-                event(new BridgeUpdated($bridge));
+                // event(new BridgeUpdated($bridge));
             }catch(\Exception $e){}
             return response()->json([
                 'bridge' => $bridge,

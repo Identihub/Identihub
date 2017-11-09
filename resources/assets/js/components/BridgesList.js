@@ -11,7 +11,7 @@ class BridgesList extends Component{
 
       return (
           <div>
-              <h1>My Bridges</h1>
+              <h1>My Projects</h1>
               <CSSTransitionGroup
                   component="div"
                   className="bridge-list"

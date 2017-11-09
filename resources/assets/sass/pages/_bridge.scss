@@ -121,10 +121,11 @@
       }
 
       img{
-        width: 100%;
+        max-width: 80%;
+        max-height: 80%;
         position: absolute;
-        max-width: 90%;
-        max-height: 90%;
+        // max-width: 90%;
+        // max-height: 90%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -200,7 +201,7 @@
         margin-top: 10px;
       }
       textarea{
-        font-size: 10px;
+        font-size: 12px;
         resize: none;
         color: $grey-with-opacity;
         height: calc(100% - 37px);

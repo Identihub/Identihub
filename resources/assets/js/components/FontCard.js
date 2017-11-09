@@ -10,7 +10,7 @@ class FontCard extends Component {
         if(!isPub){
           return (
               <div className="item font card">
-                  <Link to={'/bridge/' + bridge.id + '/view/font/element/' + card.id}>
+                  <Link to={'/project/' + bridge.id + '/view/font/element/' + card.id}>
                       <img src={'/fonts/' + card.variant.image_link} />
                   </Link>
               </div>

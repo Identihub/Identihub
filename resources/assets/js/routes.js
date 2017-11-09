@@ -19,16 +19,16 @@ export default (
                 </Helmet>
 
                 <Route exact path="/" render={() => (
-                        <Redirect to="/bridges"/>
+                        <Redirect to="/projects"/>
                 )}/>
 
-                <Route path="/bridges" strict={true} component={BridgesList}/>
-                <Route path="/bridges/:id/delete-confirmation" component={DeleteBridge}/>
-                <Route path="/bridges/new" strict={true} component={NewBridge}/>
-                <Route path="/bridge/:id" component={Bridge}/>
-                <Route path="/bridge/:id/add-color" component={AddColor}/>
-                <Route path="/bridge/:id/add-font" component={AddFont}/>
-                <Route path="/bridge/:id/view/:objectType/element/:elementId" component={Viewer}/>
+                <Route path="/projects" strict={true} component={BridgesList}/>
+                <Route path="/projects/:id/delete-confirmation" component={DeleteBridge}/>
+                <Route path="/projects/new" strict={true} component={NewBridge}/>
+                <Route path="/project/:id" component={Bridge}/>
+                <Route path="/project/:id/add-color" component={AddColor}/>
+                <Route path="/project/:id/add-font" component={AddFont}/>
+                <Route path="/project/:id/view/:objectType/element/:elementId" component={Viewer}/>
             </div>
         </HashRouter>
     </div>

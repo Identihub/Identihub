@@ -19,7 +19,7 @@ class AppController extends Controller
     {
         return $this->view->make('app.app', [
             'pusherId' => env('PUSHER_APP_KEY'),
-            'public_bridge_path' => url('/') . "/bridge/",
+            'public_bridge_path' => url('/') . "/project/",
             'is_public' => false,
             'bridge' => null
         ]);

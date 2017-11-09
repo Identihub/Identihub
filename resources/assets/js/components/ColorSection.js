@@ -20,7 +20,7 @@ class ColorSection extends Component {
             bridge,
             history
         } = this.props;
-        history.push('/bridge/' + bridge.id + '/add-color');
+        history.push('/project/' + bridge.id + '/add-color');
     }
 
     render() {

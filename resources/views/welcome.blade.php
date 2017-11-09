@@ -41,7 +41,7 @@
                         <li><a href="{{ route('register') }}">Register</a></li>
                     @else
                         <li class="dropdown">
-                            <a href="/app#/bridges" class="dropdown-toggle">
+                            <a href="/app#/projects" class="dropdown-toggle">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 

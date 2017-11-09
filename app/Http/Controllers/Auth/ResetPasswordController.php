@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/app#/bridges';
+    protected $redirectTo = '/app#/projects';
 
     /**
      * Create a new controller instance.

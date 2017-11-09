@@ -24,7 +24,7 @@ Route::group(['middleware' => 'installationChecker'], function(){
     Route::post('/auth/link', 'Auth\\ActivationLinkController@sendLink')->name('activate.post');
     Route::get('/auth/check/{token}', 'Auth\\ActivationLinkController@activate')->name('activate.check');
 
-    Route::get('/bridge/{slug}', 'App\AppController@publicIdentities')->name('public-identity');
+    Route::get('/project/{slug}', 'App\AppController@publicIdentities')->name('public-identity');
 
     Auth::routes();
 

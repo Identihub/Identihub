@@ -120,6 +120,7 @@ class BridgeController extends Controller
             try{
                 event(new BridgeCreated($bridge));
             }catch(\Exception $e){}
+            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
             return response()->json([
                 'bridge' => $bridge
             ]);
@@ -218,6 +219,7 @@ class BridgeController extends Controller
             try{
                 event(new BridgeCreated($bridge));
             }catch(\Exception $e){}
+            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
             return response()->json([
                 'bridge' => $bridge
             ]);

@@ -128,7 +128,7 @@ class Viewer extends Component {
         let url = null;
 
         if(!isPub){
-          url = '/bridge/' + bridge.id + '/view/' + objectType + '/element/' + element.id;
+          url = '/project/' + bridge.id + '/view/' + objectType + '/element/' + element.id;
         }else{
           url = '/view/' + objectType + '/element/' + element.id;
         }

@@ -56,7 +56,7 @@ class IconSidebar extends Component {
   deleteIcon() {
     const { deleteIcon, bridge, icon, history } = this.props;
     if(deleteIcon){
-      history.replace('/bridge/' + bridge.id);
+      history.replace('/project/' + bridge.id);
       deleteIcon(bridge.id, icon.id);
     }
   }
