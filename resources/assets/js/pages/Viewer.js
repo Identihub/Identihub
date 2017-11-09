@@ -56,6 +56,29 @@ class Viewer extends Component {
         this.goBackward = this.goBackward.bind(this);
         this.goForward = this.goForward.bind(this);
         this.closePage = this.closePage.bind(this);
+        this.keyPress = this.keyPress.bind(this);
+
+    }
+
+    keyPress(event) {
+        const key = event.keyCode;
+
+        switch(key){
+            case 37: {
+                this.goBackward();
+                break;
+            }
+            case 39:{
+                this.goForward();
+                break;
+            }
+            case 27:{
+                //when the esc key is pressed
+                this.closePage();
+                break;
+            }
+            default: break;
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -248,13 +271,13 @@ class Viewer extends Component {
                             className="close"
                         />
                     </div>
-                    <div onClick={goBackward}>
+                    <div onClick={goBackward} tabIndex="-1" ref={input => input && input.focus()} onKeyDown={this.keyPress}>
                         <ReactSVG
                             path="/images/backward.svg"
                             className="backward"
                         />
                     </div>
-                    <div onClick={goForward}>
+                    <div onClick={goForward} tabIndex="-1" ref={input => input && input.focus()} onKeyDown={this.keyPress}>
                         <ReactSVG
                             path="/images/forward.svg"
                             className="forward"

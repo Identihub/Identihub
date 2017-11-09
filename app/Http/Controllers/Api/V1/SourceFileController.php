@@ -46,11 +46,18 @@ class SourceFileController extends Controller {
 			$im->setImageFormat( 'png32' );
 			$im->resizeImage( $im->getImageWidth(), $im->getImageHeight(), \Imagick::FILTER_LANCZOS, 1 );
 
+			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+//		    $filenameIcon = str_random( 40 ) . '.svg';
+			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.svg';
 
-			$filenameIcon = str_random( 40 ) . '.svg';
+
 			$request->file( 'icon' )->storeAs( '', $filenameIcon, 'assets' );
 
-			$filenameConverted = str_random( 40 ) . '.png';
+			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+//		    $filenameConverted = str_random( 40 ) . '.png';
+			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.png';
+
+
 			\Storage::disk( 'assets' )->put( $filenameConverted, $im->getImageBlob() );
 
 			$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
@@ -113,7 +120,10 @@ class SourceFileController extends Controller {
 			$im->readImageBlob( file_get_contents( $request->file( 'icon' )->getRealPath() ) );
 			$im->setImageFormat( 'png32' );
 
-			$filenameIcon = str_random( 40 ) . '.svg';
+			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+//		    $filenameIcon = str_random( 40 ) . '.svg';
+			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.svg';
+
 			$request->file( 'icon' )->storeAs( '', $filenameIcon, 'assets' );
 
 			$icon              = Icon::findOrFail( $iconId );
@@ -202,10 +212,10 @@ class SourceFileController extends Controller {
 			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
 			$section     = Section::where( 'section_type_id', $sectionType->id )->where( 'bridge_id', $bridgeId )->get()->first();
 
-			$filenameImage = $bridge->name . '_' . $sectionType->name . '_' . rand( 1, 9999 ) . '.' . $imageExt;
+			$filenameImage = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.' . $imageExt;
 			$image->storeAs( '', $filenameImage, 'assets' );
 
-			$filenameConverted = str_random( 40 ) . '.' . $imageExt;
+			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.' . $imageExt;
 			\Storage::disk( 'assets' )->put( $filenameConverted, $im->getImageBlob() );
 
 			$image = Image::create( [
@@ -266,7 +276,12 @@ class SourceFileController extends Controller {
 			$im->setImageFormat( 'png32' );
 			$im->resizeImage( $width, $width / $icon->width_ratio, \Imagick::FILTER_LANCZOS, 1 );
 
-			$filenameConverted = str_random( 40 ) . '.png';
+			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+
+
+//			$filenameConverted = str_random( 40 ) . '.png';
+			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.png';
+
 			$iconConverted     = IconConverted::create( [
 				'icon_id'  => $icon->id,
 				'filename' => $filenameConverted,
@@ -323,7 +338,11 @@ class SourceFileController extends Controller {
 			$im->setImageFormat( $imageType );
 			$im->resizeImage( $width, $width / $image->width_ratio, \Imagick::FILTER_LANCZOS, 1 );
 
-			$filenameConverted = str_random( 40 ) . '.' . $imageExt;
+			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+
+//			$filenameConverted = str_random( 40 ) . '.' . $imageExt;
+			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.'.$imageExt;
+
 			$imageConverted    = ImageConverted::create( [
 				'image_id' => $image->id,
 				'filename' => $filenameConverted,
@@ -454,7 +473,10 @@ class SourceFileController extends Controller {
 			$im->readImageBlob( file_get_contents( $request->file( 'image' )->getRealPath() ) );
 			$im->setImageFormat( $imageType );
 
-			$filenameIcon = str_random( 40 ) . '.' . $imageExt;
+			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+//			$filenameIcon = str_random( 40 ) . '.' . $imageExt;
+			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.'.$imageExt;
+
 			$request->file( 'image' )->storeAs( '', $filenameIcon, 'assets' );
 
 			$image              = Image::findOrFail( $imageId );
