@@ -5,6 +5,7 @@ const EmptyCard = () => {
     return (
         <Link to="/bridges/new" className="bridge bridge-empty">
             <img src="/images/add.svg" alt="Add Bridge Icon" />
+            <p className="bridge-name">New Project</p>
         </Link>
     );
 };
