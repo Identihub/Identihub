@@ -58,7 +58,7 @@ class BridgeController extends Controller
         $name = $request->only(['name'])['name'];
         $slug = str_slug($name);
 
-        $bridgesWithThatSlug = Bridge::where('slug', $slug)->get();
+        $bridgesWithThatSlug = Bridge::withTrashed()->where('slug', $slug)->get();
         if($bridgesWithThatSlug->count() !== 0)
             $slug = $slug . '-' . substr(md5(microtime()),rand(0,26),5);
 
