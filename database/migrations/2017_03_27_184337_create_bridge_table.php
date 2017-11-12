@@ -22,7 +22,11 @@ class CreateBridgeTable extends Migration
             $table->integer('images_order')->default(1);
             $table->integer('fonts_order')->default(2);
             $table->integer('colors_order')->default(3);
-            $table->softDeletes();
+            $table->integer('nr_images')->default(0);
+            $table->integer('nr_icons')->default(0);
+            $table->integer('nr_fonts')->default(0);
+            $table->integer('nr_colors')->default(0);
+//            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -16,4 +16,25 @@ class Font extends Model
     {
         return $this->hasOne(FontVariant::class, 'id', 'variant_id');
     }
+
+	public function save(array $options = [])
+	{
+		// before save code
+
+		parent::save();
+		// after save code
+		Bridge::whereId($this->bridge_id)->increment('nr_fonts');
+
+
+	}
+
+	public function update(array $attributes = [], array $options = [])
+	{
+		// before update code
+
+		parent::update();
+		// after update code
+		Bridge::whereId($this->bridge_id)->increment('nr_fonts');
+
+	}
 }

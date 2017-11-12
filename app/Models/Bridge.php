@@ -8,11 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bridge extends Model
 {
-
-    use SoftDeletes;
-
     protected $fillable = [
-        'name', 'user_id', 'slug'
+        'name', 'user_id', 'slug', 'nr_images', 'nr_icons', 'nr_fonts', 'nr_colors'
     ];
 
     public function user()

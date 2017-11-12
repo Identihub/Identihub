@@ -46,22 +46,21 @@ class SourceFileController extends Controller {
 			$im->setImageFormat( 'png32' );
 			$im->resizeImage( $im->getImageWidth(), $im->getImageHeight(), \Imagick::FILTER_LANCZOS, 1 );
 
-			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+			$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
 //		    $filenameIcon = str_random( 40 ) . '.svg';
-			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.svg';
+			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.svg';
 
 
 			$request->file( 'icon' )->storeAs( '', $filenameIcon, 'assets' );
 
-			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+			$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
 //		    $filenameConverted = str_random( 40 ) . '.png';
-			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.png';
+			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.png';
 
 
 			\Storage::disk( 'assets' )->put( $filenameConverted, $im->getImageBlob() );
 
-			$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
-			$section     = Section::where( 'section_type_id', $sectionType->id )->where( 'bridge_id', $bridgeId )->get()->first();
+			$section     = Section::where( 'section_type_id', $sectionType->id )->where( 'bridge_id', $bridgeId )->first();
 
 			$icon = Icon::create( [
 				'bridge_id'   => $bridgeId,
@@ -120,9 +119,9 @@ class SourceFileController extends Controller {
 			$im->readImageBlob( file_get_contents( $request->file( 'icon' )->getRealPath() ) );
 			$im->setImageFormat( 'png32' );
 
-			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+			$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
 //		    $filenameIcon = str_random( 40 ) . '.svg';
-			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.svg';
+			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.svg';
 
 			$request->file( 'icon' )->storeAs( '', $filenameIcon, 'assets' );
 
@@ -212,10 +211,10 @@ class SourceFileController extends Controller {
 			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
 			$section     = Section::where( 'section_type_id', $sectionType->id )->where( 'bridge_id', $bridgeId )->get()->first();
 
-			$filenameImage = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.' . $imageExt;
+			$filenameImage = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_images . '.' . $imageExt;
 			$image->storeAs( '', $filenameImage, 'assets' );
 
-			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.' . $imageExt;
+			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_images . '.' . $imageExt;
 			\Storage::disk( 'assets' )->put( $filenameConverted, $im->getImageBlob() );
 
 			$image = Image::create( [
@@ -276,11 +275,11 @@ class SourceFileController extends Controller {
 			$im->setImageFormat( 'png32' );
 			$im->resizeImage( $width, $width / $icon->width_ratio, \Imagick::FILTER_LANCZOS, 1 );
 
-			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+			$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
 
 
 //			$filenameConverted = str_random( 40 ) . '.png';
-			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.png';
+			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_icons . '.png';
 
 			$iconConverted     = IconConverted::create( [
 				'icon_id'  => $icon->id,
@@ -341,7 +340,7 @@ class SourceFileController extends Controller {
 			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
 
 //			$filenameConverted = str_random( 40 ) . '.' . $imageExt;
-			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.'.$imageExt;
+			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_images . '.'.$imageExt;
 
 			$imageConverted    = ImageConverted::create( [
 				'image_id' => $image->id,
@@ -475,7 +474,7 @@ class SourceFileController extends Controller {
 
 			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
 //			$filenameIcon = str_random( 40 ) . '.' . $imageExt;
-			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . rand( 1, 999 ) . '.'.$imageExt;
+			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_images . '.'.$imageExt;
 
 			$request->file( 'image' )->storeAs( '', $filenameIcon, 'assets' );
 
