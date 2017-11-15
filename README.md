@@ -5,7 +5,10 @@
 
 Identihub is an open-source web platform for brand and assets management. It is being developed by Ura Design, an open-source design agency.
 
-Demo: https://demo.identihub.co/bridge/ura-design
+Demos: 
+https://demo.identihub.co/project/uradesign
+https://demo.identihub.co/project/firefox
+https://demo.identihub.co/project/ooni
 
 ### Deployment
 
