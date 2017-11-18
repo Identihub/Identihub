@@ -20,8 +20,8 @@ Identihub is an open-source web platform for brand and assets management. It is 
 ### Without Homestead (Apache)
 #### Installing the software
 ```bash
-`sudo add-apt-repository ppa:certbot/certbot -y`
-`apt-get update && apt-get upgrade
+sudo add-apt-repository ppa:certbot/certbot -y
+apt-get update && apt-get upgrade
 apt-get install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-dom composer unzip libmagickwand-dev imagemagick php-dev
 ```
 #### Setting up the database
