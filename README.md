@@ -55,12 +55,16 @@ exit
 </VirtualHost>
 ```
 (Assumes you have installed Identihub in /var/www/html)
-`a2enmod rewrite`
-`systemctl restart apache2`
+```bash
+a2enmod rewrite
+systemctl restart apache2
+```
 #### Configure Identihub
-`cp .env.example .env`
-`nano .env`
-Edit DB_DATABASE DB_USERNAME and DB_PASSWORD 
+```bash
+cp .env.example .env
+nano .env
+```
+Edit 'DB_DATABASE' 'DB_USERNAME' and 'DB_PASSWORD' 
 #### Install Identihub
   `composer install`
 #### Generate  AES-128-CB & AES-256-CBC
