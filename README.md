@@ -20,7 +20,6 @@ Identihub is an open-source web platform for brand and assets management. It is 
 ### Without Homestead (Apache)
 #### Installing the software
 ```bash
-sudo add-apt-repository ppa:certbot/certbot -y
 apt-get update && apt-get upgrade
 apt-get install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-dom composer unzip libmagickwand-dev imagemagick php-dev
 ```
@@ -73,6 +72,7 @@ Edit 'DB_DATABASE' 'DB_USERNAME' and 'DB_PASSWORD'
 #### Finishing steps
 Navigate to your server from the web browser
 Click Continue. Enter localhost in 'database host' and your db settings and fill the rest.
+Note: Please use HTTPS. You can get a free SSL certificate using Let's Encrypt. Your users deserve security
 ## Troubleshooting
 
 * *I'm getting an error message upon deployment: "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths."*
