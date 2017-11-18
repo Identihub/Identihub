@@ -19,16 +19,21 @@ Identihub is an open-source web platform for brand and assets management. It is 
 
 ### Without Homestead (Apache)
 #### Installing the software
+```bash
 `sudo add-apt-repository ppa:certbot/certbot -y`
-`apt-get update && apt-get upgrade`
-`apt-get install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-dom composer unzip libmagickwand-dev imagemagick php-dev`
+`apt-get update && apt-get upgrade
+apt-get install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-dom composer unzip libmagickwand-dev imagemagick php-dev
+```
 #### Setting up the database
-`CREATE DATABASE identihub DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;`
-`GRANT ALL ON identihub.* TO 'identihubuser'@'localhost' IDENTIFIED BY 'password';`
-`FLUSH PRIVILEGES;`
-`exit`
+```bash
+CREATE DATABASE identihub DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+GRANT ALL ON identihub.* TO 'identihubuser'@'localhost' IDENTIFIED BY 'password';
+FLUSH PRIVILEGES;
+exit
+```
 #### Configure Apache
 ```bash
+
 
 <VirtualHost *:80>
         ServerAdmin webmaster@localhost
@@ -56,7 +61,7 @@ Identihub is an open-source web platform for brand and assets management. It is 
 `cp .env.example .env`
 `nano .env`
 Edit DB_DATABASE DB_USERNAME and DB_PASSWORD 
-#### Install Identihub'
+#### Install Identihub
   `composer install`
 #### Generate  AES-128-CB & AES-256-CBC
   `php artisan key:generate`
