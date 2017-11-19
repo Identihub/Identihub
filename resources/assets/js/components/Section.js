@@ -94,6 +94,7 @@ class Section extends Component {
         } = this.props;
 
         const isPub = isPublic();
+        console.log('isPub: ', isPub);
 
         let canBeDeleted = (!this.props.children.length) && (section.order != 0);
 
@@ -132,27 +133,35 @@ class Section extends Component {
                              minLength="4"
                              onChange={updateDescription}/>
             );
-        }else{
-          name = (
-            <DebounceInput value={this.state.titleValue}
-                           className="input-ghost"
-                           placeholder="Write a title"
-                           debounceTimeout="3000"
-                           minLength="4"
-                           disabled="true"
-                           onChange={updateTitle}/>
-          );
-          description = (
-            <DebounceInput spellCheck="false"
-                           element="textarea"
-                           className="input-ghost"
-                           value={this.state.descriptionValue}
-                           placeholder="Description"
-                           debounceTimeout="3000"
-                           minLength="4"
-                           disabled="true"
-                           onChange={updateDescription}/>
-          );
+        }
+        else{
+            //show if the string is not empty
+            if(!!this.state.titleValue){
+                name = (
+                    <DebounceInput value={this.state.titleValue}
+                                   className="input-ghost"
+                                   placeholder="Write a title"
+                                   debounceTimeout="3000"
+                                   minLength="4"
+                                   disabled="true"
+                                   onChange={updateTitle}/>
+                );
+            }
+
+            //show if the string is not empty
+            if(!!this.state.descriptionValue){
+                description = (
+                    <DebounceInput spellCheck="false"
+                                   element="textarea"
+                                   className="input-ghost"
+                                   value={this.state.descriptionValue}
+                                   placeholder="Description"
+                                   debounceTimeout="3000"
+                                   minLength="4"
+                                   disabled="true"
+                                   onChange={updateDescription}/>
+                );
+            }
         }
 
         const flexBoxClassName = isActive ? 'flex active' : 'flex';
