@@ -10,8 +10,10 @@ Identihub is an open-source web platform for brand and assets management. It is 
 - https://demo.identihub.co/project/firefox
 - https://demo.identihub.co/project/ooni
 
-## Installing
 
+---
+
+## Installing
 ### Homestead
 1. Map Identihub on `Homestead.yaml`.
 2. Copy the `.env.example` to `.env` and update the latter accordingly.
@@ -73,8 +75,11 @@ Edit 'DB_DATABASE' 'DB_USERNAME' and 'DB_PASSWORD'
 Navigate to your server from the web browser
 Click Continue. Enter localhost in 'database host' and your db settings and fill the rest.
 Note: Please use HTTPS. You can get a free SSL certificate using Let's Encrypt. Your users deserve security
-## Troubleshooting
 
+---
+
+## Troubleshooting
+### Homestead
 * *I'm getting an error message upon deployment: "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths."*
 
   Run the following within your Vagrant box:
@@ -83,6 +88,9 @@ Note: Please use HTTPS. You can get a free SSL certificate using Let's Encrypt. 
 
   `php artisan config:clear`
 
+
+---
+
 ## Bug Reporting
 To help identify and subsequently fix bugs faster, make sure to include some basic information in your report.
 
@@ -90,6 +98,9 @@ To help identify and subsequently fix bugs faster, make sure to include some bas
 2. Actual Results (e.g. User Login Interrupted with Error Message...)
 3. Browser (e.g. Mozilla Firefox) and Screen Resolution (e.g. 1920x1080)
 4. Steps to Reproduce (e.g. Access Main Page, Hit Login, Fill In Login Form, Hit Submit Button)
+
+
+---
 
 ## Sponsored Content
 
