@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Echo from "laravel-echo";
-import App from './App';
+import App from './app';
 import { configureStore } from './store';
 
 import { fetchBridges, fetchBridge } from './reducers/Bridge/BridgeApiCalls';
