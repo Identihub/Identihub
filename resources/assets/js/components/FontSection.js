@@ -40,7 +40,7 @@ class FontSection extends Component {
             emptyStateText
         } = this;
 
-        const emptyState = <EmptySectionState style={{width: "56%", marginLeft: "23%"}} soloElement={true} emptyStateText="No founds found here, start by adding a new font"/>;
+        const emptyState = <EmptySectionState style={{width: "56%", marginLeft: "23%"}} soloElement={true} emptyStateText="No fonts found here, start by adding a new font"/>;
 
         return (
             <div className="fonts-section">

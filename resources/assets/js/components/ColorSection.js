@@ -11,7 +11,7 @@ class ColorSection extends Component {
 
     constructor(params) {
         super(params);
-        this.emptyStateText = "No Colors found here, start by adding a new color.";
+        this.emptyStateText = "No colors found here, start by adding a new color.";
         this.addColor = this.addColor.bind(this);
     }
 
