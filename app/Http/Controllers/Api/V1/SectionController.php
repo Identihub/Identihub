@@ -50,10 +50,10 @@ class SectionController extends Controller
     public function store(CreateSectionRequest $request, $bridgeId)
     {
 
-        try{
+        try {
             $user = Auth::user();
             $bridge = Bridge::findOrFail($bridgeId);
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             (new CreateSection($bridge, SectionType::findOrFail($request->get('section_type'))))->handle();
@@ -62,8 +62,7 @@ class SectionController extends Controller
             return response()->json([
                 'bridge' => $bridge
             ]);
-        }catch (\Exception $e){
-            dd($e);
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server error'
             ]);
@@ -74,31 +73,32 @@ class SectionController extends Controller
     public function destroy($bridgeId, $sectionId)
     {
 
-        try{
+        try {
 
             $section = Section::findOrFail($sectionId);
 
             $user = Auth::user();
             $bridge = Bridge::findOrFail($section->bridge_id);
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
 
             $section->delete();
 
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
-            try{
+            try {
                 event(new BridgeUpdated($bridge));
-            }catch(\Exception $e){}
+            } catch (\Exception $e) {
+            }
             return response()->json([
                 'bridge' => $bridge
             ]);
 
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'Entry not found'
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server error'
             ]);
@@ -108,12 +108,12 @@ class SectionController extends Controller
 
     public function updateTitle(SectionTitleRequest $request, $bridgeId, $sectionId)
     {
-        try{
+        try {
             $section = Section::findOrFail($sectionId);
 
             $user = Auth::user();
             $bridge = Bridge::findOrFail($section->bridge_id);
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             $section->title = $request->get('title');
@@ -121,29 +121,30 @@ class SectionController extends Controller
 
             $bridge = Bridge::with('sections')->findOrFail($bridgeId);
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
-            try{
+            try {
                 event(new BridgeUpdated($bridge));
-            }catch(\Exception $e){}
+            } catch (\Exception $e) {
+            }
             return response()->json([
                 'bridge' => $bridge
             ]);
-        }catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'Entry not found'
             ]);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
 
         }
     }
 
     public function updateDescription(SectionDescriptionRequest $request, $bridgeId, $sectionId)
     {
-        try{
+        try {
             $section = Section::findOrFail($sectionId);
 
             $user = Auth::user();
             $bridge = Bridge::findOrFail($section->bridge_id);
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             $section->description = $request->get('description');
@@ -151,17 +152,18 @@ class SectionController extends Controller
 
             $bridge = Bridge::with('sections')->findOrFail($bridgeId);
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
-            try{
+            try {
                 event(new BridgeUpdated($bridge));
-            }catch(\Exception $e){}
+            } catch (\Exception $e) {
+            }
             return response()->json([
                 'bridge' => $bridge
             ]);
-        }catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'Entry not found'
             ]);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server error'
             ]);
@@ -174,7 +176,8 @@ class SectionController extends Controller
      * @param BridgeUpdateRequest $request
      * @param $id
      */
-    public function updateOrder(BridgeUpdateRequest $request, $id) {
+    public function updateOrder(BridgeUpdateRequest $request, $id)
+    {
 //        try{
 //            $bridge = Bridge::findOrFail($id);
 //            $bridge->name = $request->get('name');

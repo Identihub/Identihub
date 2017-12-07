@@ -26,7 +26,7 @@ const BridgeCard = (props) => {
                   <img
                       className={classImage}
                       src={image}
-                      alt="Bridge Name logo"/>
+                      alt="Project Name logo"/>
               </Link>
             </div>
             <Link className="label" to={ '/project/' + props.bridge.id } > {props.bridge.name}</Link>

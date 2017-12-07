@@ -39,7 +39,7 @@ export class NewBridge extends Component {
         return (
             <div>
                 <Helmet>
-                    <title>Create Bridge</title>
+                    <title>Create Project</title>
                 </Helmet>
                 <CSSTransitionGroup
                     transitionName="example"
@@ -53,12 +53,12 @@ export class NewBridge extends Component {
                         <span onClick={goBack} className="overlay"></span>
                         <section className="template-center-everything">
                             <div className="input-wrapper">
-                                <input type="text" className="input input-white" placeholder="Bridge Name" value={this.state.bridgeName} onChange={this.handleText} required />
+                                <input type="text" className="input input-white" placeholder="Project Name" value={this.state.bridgeName} onChange={this.handleText} required />
                             </div>
                             <div className="button-wrapper">
                                 <div className="input-wrapper">
                                     <button onClick={this.createBridge} type="submit" className="button button-white">
-                                        Create Bridge
+                                        Create Project
                                     </button>
                                 </div>
                             </div>
