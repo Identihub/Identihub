@@ -82,14 +82,14 @@ export class Bridge extends Component {
         if(!isPub){
             bridgeName = ( <div className="title-section">
                 <DebounceInput value={bridge.name || ''} className="input-ghost"
-                               placeholder="Bridge Name" debounceTimeout="500"
+                               placeholder="Project Name" debounceTimeout="500"
                                minLength="4" onChange={this.updateName}
                 />
             </div> );
         }else{
             bridgeName = ( <div className="title-section">
                 <DebounceInput value={bridge.name || ''} className="input-ghost"
-                               placeholder="Bridge Name" debounceTimeout="500"
+                               placeholder="Project Name" debounceTimeout="500"
                                minLength="4" onChange={this.updateName}
                                disabled="true"
                 />
