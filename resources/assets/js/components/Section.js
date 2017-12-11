@@ -145,7 +145,7 @@ class Section extends Component {
                                    debounceTimeout="3000"
                                    minLength="4"
                                    disabled="true"
-                                   />
+                                   onChange={updateTitle}/>
                 );
             }
 
