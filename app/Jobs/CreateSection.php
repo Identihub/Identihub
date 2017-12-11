@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Bridge;
 use App\Section;
+use App\Models\SectionGroup;
 use App\SectionType;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -30,10 +31,11 @@ class CreateSection implements ShouldQueue
      * @param Bridge $bridge
      * @param SectionType $type
      */
-    public function __construct(Bridge $bridge, SectionType $type)
+    public function __construct(Bridge $bridge, SectionType $type, SectionGroup $group)
     {
         $this->bridge = $bridge;
         $this->type = $type;
+        $this->group = $group;
     }
 
     /**
@@ -52,6 +54,7 @@ class CreateSection implements ShouldQueue
         return Section::create([
             'bridge_id' => $this->bridge->id,
             'section_type_id' => $this->type->id,
+            'section_group_id' => $this->group->id,
             'order' => $order,
             'title' => '',
             'description' => ''

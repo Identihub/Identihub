@@ -21,6 +21,8 @@ Route::group(['middleware' => 'auth:api','namespace' => 'Api\V1', 'prefix' => 'v
     Route::resource('bridges.sections', 'SectionController');
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateTitle', 'SectionController@updateTitle');
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateDescription', 'SectionController@updateDescription');
+    Route::patch('bridges/{bridgeId}/sectionGroups/{sectionGroupId}/updateTitle', 'SectionGroupController@updateTitle');
+    Route::patch('bridges/{bridgeId}/sectionGroups/{sectionGroupId}/updateDescription', 'SectionGroupController@updateDescription');
     Route::post('/bridges/{bridgeId}/icons', 'SourceFileController@storeIcon');
     Route::post('/bridges/{bridgeId}/icons/{iconId}/convert', 'SourceFileController@addIconConverted');
     Route::get('/fonts/search/{search}', 'FontsController@search');

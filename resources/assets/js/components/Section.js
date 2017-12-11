@@ -94,7 +94,7 @@ class Section extends Component {
         } = this.props;
 
         const isPub = isPublic();
-        console.log('isPub: ', isPub);
+        //console.log('isPub: ', isPub);
 
         let canBeDeleted = (!this.props.children.length) && (section.order != 0);
 
@@ -131,7 +131,8 @@ class Section extends Component {
                              placeholder="Description"
                              debounceTimeout="3000"
                              minLength="4"
-                             onChange={updateDescription}/>
+                             onChange={updateDescription}
+              />
             );
         }
         else{
@@ -144,7 +145,7 @@ class Section extends Component {
                                    debounceTimeout="3000"
                                    minLength="4"
                                    disabled="true"
-                                   onChange={updateTitle}/>
+                                   />
                 );
             }
 

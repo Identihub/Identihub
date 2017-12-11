@@ -127,6 +127,7 @@ export class Bridge extends Component {
 const mapStateToProps = (state, ownProps) => {
     ownProps = paramsChecker(ownProps);
     const bridgeId = ownProps.match.params.id;
+    //console.log(getSectionTypes(state));
     return {
         bridge: getBridge(state, parseInt(bridgeId)),
         sectionTypes: getSectionTypes(state)

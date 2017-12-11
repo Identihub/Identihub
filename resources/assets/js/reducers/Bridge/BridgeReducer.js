@@ -17,8 +17,8 @@ const initialState = { data: [] };
 const BridgeReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_BRIDGE :
-      console.log(state.data);
-      console.log(state.data.length);
+      //console.log(state.data);
+      //console.log(state.data.length);
       let results = state.data.map((element) => {
         if(element.id === action.bridge.id){
           return action.bridge;
@@ -28,7 +28,7 @@ const BridgeReducer = (state = initialState, action) => {
       if(state.data.length === results.length){
         results = [...results, action.bridge];
       }
-      console.log(results.length);
+      //console.log(results.length);
       return {
         data: results,
       };

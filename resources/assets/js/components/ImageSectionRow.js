@@ -58,7 +58,6 @@ class ImageSectionRow extends Component{
             updateOrderOnImage,
             reorderElement
         } = this.props;
-        console.log(this.props);
         const card = images.find( image => image.order === dragIndex && image.section_id === section.id);
         updateOrderOnImage(bridge.id, card.id, hoverIndex);
         reorderElement('image', card.id, hoverIndex);

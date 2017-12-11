@@ -60,8 +60,7 @@ export function addBridgeRequest(name) {
     return (dispatch) => {
         return axios.post('/api/v1/bridges', { name: name})
             .then(function (response) {
-                console.log(response);
-                dispatch(addBridge(response.data.bridge));
+                 dispatch(addBridge(response.data.bridge));
                 dispatch(changeHasBridges(true));
             })
             .catch(function (error) {
@@ -117,6 +116,37 @@ export function updateSectionDescription(bridgeId, sectionId, text) {
             });
     }
 }
+
+
+export function updateSectionGroupTitle(bridgeId, sectionGroupId, text) {
+    return (dispatch) => {
+        return axios.patch('/api/v1/bridges/' + bridgeId + '/sectionGroups/' +  sectionGroupId + '/updateTitle', {title: text})
+            .then(function(response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+export function updateSectionGroupDescription(bridgeId, sectionGroupId, text) {
+    return (dispatch) => {
+        return axios.patch('/api/v1/bridges/' + bridgeId + '/sectionGroups/' +  sectionGroupId + '/updateDescription', {description: text})
+            .then(function(response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+
+
+
+
+
 
 export function createSection(bridgeid, sectionTypeId) {
     return (dispatch) => {
