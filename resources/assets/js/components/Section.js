@@ -131,8 +131,7 @@ class Section extends Component {
                              placeholder="Description"
                              debounceTimeout="3000"
                              minLength="4"
-                             onChange={updateDescription}
-              />
+                             onChange={updateDescription}/>
             );
         }
         else{
