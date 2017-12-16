@@ -66,15 +66,43 @@ cp .env.example .env
 nano .env
 ```
 Edit 'DB_DATABASE' 'DB_USERNAME' and 'DB_PASSWORD' 
-#### Install Identihub
+#### Install Identihub's dependencies:
   `composer install`
-#### Generate  AES-128-CB & AES-256-CBC
+
+#### Migrate the Indentihub database (this will create the database tables):
+`php artisan migrate`
+
+#### Seed the Indentihub database (this will populate the database with initial values):
+  `php artisan db:seed`
+
+#### Install Laravel Passport. This is related to the API's authentication:
+  `php artisan passport:install`
+  
+#### Generate  AES-128-CB & AES-256-CBC:
   `php artisan key:generate`
 
+#### (Optional) Modify `/etc/hosts` on the host machine to include identihub:
+```
+192.168.10.10   identihub.test
+
+```
+Modify the `Homestead.yaml` (in the Homestead directory) to add an alias `identihub.test` to the project's document root.
+```
+
+.....
+sites:
+    - map: identihub.test
+      to: /home/vagrant/code/identihub/public
+      php: "7.2"
+.....
+```
+
 #### Finishing steps
-Navigate to your server from the web browser
-Click Continue. Enter localhost in 'database host' and your db settings and fill the rest.
-Note: Please use HTTPS. You can get a free SSL certificate using Let's Encrypt. Your users deserve security
+1. Navigate to your server URL from the web browser.
+2. Click Continue.
+3. Enter localhost in 'database host', your database settings, and fill the rest.
+
+Note: Please use HTTPS. You can get a free SSL certificate using Let's Encrypt. Your users deserve security.
 
 ---
 
