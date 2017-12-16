@@ -79,12 +79,12 @@ class BridgeController extends Controller
 
         try {
 
-            $bridge = $db->transaction(function () use ($request, $slug) {
+            $bridge = $db->transaction(function () use ($name, $slug) {
 
                 // Create Bridge
                 $bridge = (new CreateBridge(
                     array_merge(
-                        $request->name,
+                        ['name'=>$name],
                         ['user_id' => Auth::user()->id],
                         ['slug' => $slug]
                     )))->handle();

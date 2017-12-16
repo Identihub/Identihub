@@ -121,8 +121,6 @@ export class Bridge extends Component {
         };
 
         const sectionTypeContent = sectionTypes.map(sectionType => {
-            console.log('Component name:');
-            console.log(sectionType.name);
             const Component = sectionMap[sectionType.name];
             return <Component bridge={bridge} history={this.props.history} />
         });
