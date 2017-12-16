@@ -12,7 +12,8 @@
         "laravel/passport": "^2.0",
         "nesbot/carbon": "^1.22",
         "pusher/pusher-php-server": "^2.6",
-        "orangehill/iseed": "dev-master"
+        "orangehill/iseed": "dev-master",
+        "garygreen/pretty-routes": "^1.0"
     },
     "autoload": {
         "classmap": [

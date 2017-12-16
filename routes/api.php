@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'auth:api','namespace' => 'Api\V1', 'prefix' => 'v1'], function(){
     Route::resource('bridges', 'BridgeController');
     Route::patch('bridges/{id}/name', 'BridgeController@updateName');
-    Route::resource('bridges.sections', 'SectionController');
+    Route::resource('bridges.groups.sections', 'SectionController');
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateTitle', 'SectionController@updateTitle');
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateDescription', 'SectionController@updateDescription');
     Route::patch('bridges/{bridgeId}/sectionGroups/{sectionGroupId}/updateTitle', 'SectionGroupController@updateTitle');

@@ -16,6 +16,7 @@ use App\Jobs\DeleteBridge;
 use App\Jobs\DeleteSection;
 use App\Jobs\UpdateBridgeName;
 use App\Jobs\CreateBridge;
+use App\Models\SectionGroup;
 use App\Section;
 use App\SectionType;
 use Illuminate\Database\Connection;
@@ -47,18 +48,25 @@ class SectionController extends Controller
 //
 //    }
 
-    public function store(CreateSectionRequest $request, $bridgeId)
+    /**
+     * @param CreateSectionRequest $request
+     * @param $bridge
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(CreateSectionRequest $request, Bridge $bridge, SectionGroup $group)
     {
 
         try {
             $user = Auth::user();
-            $bridge = Bridge::findOrFail($bridgeId);
+            $g = $group;
+
+ //           $bridge = Bridge::findOrFail($bridgeId);
             if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
-
-            (new CreateSection($bridge, SectionType::findOrFail($request->get('section_type'))))->handle();
+            //TODO refactor this to use a service
+            (new CreateSection($bridge, SectionType::findOrFail($request->get('section_type')), $group))->handle();
             // event(new BridgeUpdated($bridge));
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge->load('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors');
             return response()->json([
                 'bridge' => $bridge
             ]);

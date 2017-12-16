@@ -31,10 +31,11 @@ class CreateSection implements ShouldQueue
      * @param Bridge $bridge
      * @param SectionType $type
      */
-    public function __construct(Bridge $bridge, SectionType $type)
+    public function __construct(Bridge $bridge, SectionType $type, SectionGroup $group = null)
     {
         $this->bridge = $bridge;
         $this->type = $type;
+        $this->group = $group;
     }
 
     /**
@@ -50,18 +51,10 @@ class CreateSection implements ShouldQueue
         $sectionsWithType = $bridge->getSectionsFromTypeModel($sections, $this->type);
         $order = $sectionsWithType->count();
 
-        $sectionGroup = SectionGroup::create([
-            'bridge_id' => $bridge->id,
-            'section_type_id' => $this->type->id,
-            'name' => $this->type->name,
-            'description' => '',
-            'order' => 1
-        ]);
-
         return Section::create([
             'bridge_id' => $this->bridge->id,
             'section_type_id' => $this->type->id,
-            'section_group_id' => $sectionGroup->id,
+            'section_group_id' => $this->group->id,
             'order' => $order,
             'title' => '',
             'description' => ''
