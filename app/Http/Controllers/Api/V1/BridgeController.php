@@ -98,15 +98,8 @@ class BridgeController extends Controller
                 foreach ($sectionTypes as $sectionType) {
                     //TODO change order
 
-                    $sectionGroup = SectionGroup::create([
-                        'bridge_id' => $bridge->id,
-                        'section_type_id' => $sectionType->id,
-                        'name' => $sectionType->name,
-                        'description' => '',
-                        'order' => 1
-                    ]);
 
-                    (new CreateSection($bridge, $sectionType, $sectionGroup))->handle();
+                    (new CreateSection($bridge, $sectionType))->handle();
 
                 }
 

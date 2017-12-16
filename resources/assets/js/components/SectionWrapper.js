@@ -14,7 +14,6 @@ class SectionWrapper extends Component {
 
     constructor(params) {
         super(params);
-        console.log(this.props);
         this.createSection = this.createSection.bind(this);
         this.updateSectionGroupTitle = this.updateSectionGroupTitle.bind(this);
         this.updateSectionGroupDescription = this.updateSectionGroupDescription.bind(this);
@@ -61,10 +60,6 @@ class SectionWrapper extends Component {
             sectionType
         } = this.props;
 
-
-         console.log("the props...");
-
-         console.log(this.props);
 
         const {createSection} = this;
         const {updateSectionGroupTitle} = this;
