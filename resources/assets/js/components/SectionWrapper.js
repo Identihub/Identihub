@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import DebounceInput from 'react-debounce-input';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {createSection,
-        deleteSection,
-        updateSectionGroupDescription,
-        updateSectionGroupTitle
+import {
+    createSection,
+    deleteSection,
+    updateSectionGroupDescription,
+    updateSectionGroupTitle
 } from '../reducers/Bridge/BridgeApiCalls';
 import {isPublic} from '../helpers';
 
@@ -17,7 +18,7 @@ class SectionWrapper extends Component {
         this.createSection = this.createSection.bind(this);
         this.updateSectionGroupTitle = this.updateSectionGroupTitle.bind(this);
         this.updateSectionGroupDescription = this.updateSectionGroupDescription.bind(this);
-       // this.deleteSection = this.deleteSection.bind(this)
+        // this.deleteSection = this.deleteSection.bind(this)
     }
 
     createSection() {
@@ -26,11 +27,11 @@ class SectionWrapper extends Component {
             sectionType,
             createSection
         } = this.props;
-        createSection(bridge.id, sectionType.id);
+        createSection(bridge.id, sectionType.id, sectionType.group_id);
     }
 
     updateSectionGroupTitle(e) {
-         const {
+        const {
             bridge,
             sectionType,
             updateSectionGroupTitle

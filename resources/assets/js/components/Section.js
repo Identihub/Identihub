@@ -75,8 +75,7 @@ class Section extends Component {
             section,
             deleteSection
         } = this.props;
-        //console.log(bridge);
-        deleteSection(bridge.id, section.id);
+        deleteSection(bridge.id, section.section_group_id, section.id);
     }
 
     render() {

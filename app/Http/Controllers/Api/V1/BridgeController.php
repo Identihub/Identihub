@@ -70,7 +70,7 @@ class BridgeController extends Controller
     {
         $user = Auth::user();
 
-        $name = $request->only(['name'])['name'];
+        $name = $request->name;
         $slug = str_slug($name);
 
         $bridgesWithThatSlug = Bridge::where('slug', $slug)->get();
@@ -84,7 +84,7 @@ class BridgeController extends Controller
                 // Create Bridge
                 $bridge = (new CreateBridge(
                     array_merge(
-                        $request->only(['name']),
+                        $request->name,
                         ['user_id' => Auth::user()->id],
                         ['slug' => $slug]
                     )))->handle();
@@ -93,14 +93,21 @@ class BridgeController extends Controller
                 $sectionTypes = [
                     SectionType::getColorsSectionType(),
                     SectionType::getIconsSectionType(),
+                    SectionType::getFontsSectionType(),
                     SectionType::getImagesSectionType()
                 ];
                 foreach ($sectionTypes as $sectionType) {
                     //TODO change order
 
-
-                    (new CreateSection($bridge, $sectionType))->handle();
-
+                    $sectionGroup = SectionGroup::create([
+                        'bridge_id' => $bridge->id,
+                        'section_type_id' => $sectionType->id,
+                        'name' => $sectionType->name,
+                        'description' => '',
+                        'order' => 1
+                    ]);
+                    //TODO move to service
+                    (new CreateSection($bridge, $sectionType, $sectionGroup))->handle();
                 }
 
                 return $bridge;

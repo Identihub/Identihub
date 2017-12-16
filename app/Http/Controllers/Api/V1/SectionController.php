@@ -48,19 +48,17 @@ class SectionController extends Controller
 //
 //    }
 
+
     /**
      * @param CreateSectionRequest $request
-     * @param $bridge
+     * @param Bridge $bridge
+     * @param SectionGroup $group
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateSectionRequest $request, Bridge $bridge, SectionGroup $group)
     {
-
         try {
             $user = Auth::user();
-            $g = $group;
-
- //           $bridge = Bridge::findOrFail($bridgeId);
             if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
             //TODO refactor this to use a service
@@ -75,25 +73,30 @@ class SectionController extends Controller
                 'error' => 'Server error'
             ]);
         }
-
     }
 
-    public function destroy($bridgeId, $sectionId)
+    /**
+     * @param $bridgeId
+     * @param SectionGroup $group
+     * @param Section $section
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Bridge $bridge, SectionGroup $group, Section $section)
     {
 
         try {
 
-            $section = Section::findOrFail($sectionId);
+//            $section = Section::findOrFail($sectionId);
 
             $user = Auth::user();
-            $bridge = Bridge::findOrFail($section->bridge_id);
+  //          $bridge = Bridge::findOrFail($section->bridge_id);
             if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
 
             $section->delete();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = $bridge->load('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors');
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {

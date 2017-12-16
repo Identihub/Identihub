@@ -3,30 +3,37 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Bridge;
+use App\Events\BridgeUpdated;
 use App\Http\Requests\SectionGroupDescriptionRequest;
 use App\Http\Requests\SectionGroupTitleRequest;
 use App\Models\SectionGroup;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 
 class SectionGroupController extends Controller
 {
 
-    public function updateTitle(SectionGroupTitleRequest $request, $bridgeId, $sectionGroupId)
+    /**
+     * @param SectionGroupTitleRequest $request
+     * @param Bridge $bridgeId
+     * @param SectionGroup $sectionGroup
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateTitle(SectionGroupTitleRequest $request, Bridge $bridge, SectionGroup $sectionGroup)
     {
         try {
-            $sectionGroup = SectionGroup::findOrFail($sectionGroupId);
-
+            // TODO fix this model binding issue:
+            $bridge = Bridge::find($bridge);
+            $sectionGroup = Bridge::find($sectionGroup);
             $user = Auth::user();
-            $bridge = Bridge::findOrFail($sectionGroup->bridge_id);
             if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             $sectionGroup->name = $request->get('title');
             $sectionGroup->save();
 
-            $bridge = Bridge::with('sections')->findOrFail($bridgeId);
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge->load('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors');
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {

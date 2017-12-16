@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth:api','namespace' => 'Api\V1', 'prefix' => 'v
     Route::resource('bridges', 'BridgeController');
     Route::patch('bridges/{id}/name', 'BridgeController@updateName');
     Route::resource('bridges.groups.sections', 'SectionController');
-    Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateTitle', 'SectionController@updateTitle');
+    Route::patch('bridges/{bridge}/sections/{section}/updateTitle', 'SectionController@updateTitle');
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateDescription', 'SectionController@updateDescription');
     Route::patch('bridges/{bridgeId}/sectionGroups/{sectionGroupId}/updateTitle', 'SectionGroupController@updateTitle');
     Route::patch('bridges/{bridgeId}/sectionGroups/{sectionGroupId}/updateDescription', 'SectionGroupController@updateDescription');

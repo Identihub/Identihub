@@ -153,9 +153,9 @@ export function createSection(bridgeid, sectionTypeId, sectionGroupId) {
     }
 }
 
-export function deleteSection(bridgeid, sectionId) {
+export function deleteSection(bridgeid, sectionGroupId, sectionId) {
   return (dispatch) => {
-    return axios.delete('/api/v1/bridges/' + bridgeid + '/sections/' + sectionId)
+    return axios.delete('/api/v1/bridges/' + bridgeid + '/groups/' + sectionGroupId + '/sections/' + sectionId)
       .then(function(response){
         dispatch(addBridge(response.data.bridge));
       })

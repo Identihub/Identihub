@@ -26,7 +26,7 @@ class AbstractSection extends Component {
         const bridge = this.props.bridge;
         const sectionType = this.props.sectionType;
         const createSection = this.props.createSection;
-        createSection(bridge.id, sectionType.id);
+        createSection(bridge.id, sectionType.id, sectionType.group_id);
         // TODO: Create a helper function for this, don't use state
         // this.setState({
         //     sortedSections: this.state.sortedSections.concat({
