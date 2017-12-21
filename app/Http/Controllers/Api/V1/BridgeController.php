@@ -48,13 +48,13 @@ class BridgeController extends Controller
                 })
                     ->get(['section_types.id',
                         'section_groups.name as group_name',
+                        'section_groups.description as group_description',
                         'section_types.name as name',
                         'section_groups.id as group_id']);
 
                 return response()->json([
                     'bridge' => $bridge,
                     'section_types' => $sectionTypes
-
                 ]);
             }
         } catch

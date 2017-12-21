@@ -78,7 +78,6 @@ class SectionController extends Controller
     /**
      * @param $bridgeId
      * @param SectionGroup $group
-     * @param Section $section
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Bridge $bridge, SectionGroup $group, Section $section)

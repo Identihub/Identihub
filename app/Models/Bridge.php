@@ -90,8 +90,8 @@ class Bridge extends Model
         return $this->hasMany(Color::class, 'bridge_id', 'id');
     }
 
-//    public function groups()
-//    {
-//        return $this->hasManyThrough(Section::class, SectionGroup::class, 'bridge_id', 'section_group_id');
-//    }
+    public function groups()
+    {
+        return $this->hasManyThrough(Section::class, SectionGroup::class, 'bridge_id', 'section_group_id');
+    }
 }

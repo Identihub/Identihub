@@ -15,10 +15,44 @@ class SectionWrapper extends Component {
 
     constructor(params) {
         super(params);
+
+        this.state = {
+            group_name: '',
+            group_description: ''
+        };
+
         this.createSection = this.createSection.bind(this);
         this.updateSectionGroupTitle = this.updateSectionGroupTitle.bind(this);
         this.updateSectionGroupDescription = this.updateSectionGroupDescription.bind(this);
         // this.deleteSection = this.deleteSection.bind(this)
+
+    }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     console.log('nextProps inside shouldComponentUpdate');
+    //     console.log(nextProps);
+    //     return true;
+    //     // if (nextProps.sectionType == "undefined") {
+    //     //     return false;
+    //     // }
+    //     // return true;
+    // }
+
+
+    componentWillReceiveProps(nextProps) {
+        console.log('nextProps inside componentWillReceiveProps');
+        console.log(nextProps.sectionType);
+        this.updateLocalState(nextProps);
+    }
+
+    updateLocalState(props) {
+        console.log('updateLocalState sectionType.group_name');
+        console.log(props.sectionType.group_name);
+
+            this.setState({
+            group_name: props.sectionType.group_name,
+            group_description: props.sectionType.group_description
+        });
     }
 
     createSection() {
@@ -52,6 +86,9 @@ class SectionWrapper extends Component {
 
     render() {
 
+        console.log('this.props inside render');
+        console.log(this.props);
+
         const {
             title,
             addResource,
@@ -70,12 +107,15 @@ class SectionWrapper extends Component {
 
         let plusIcon = null;
         let tooltip = null;
+
         let name = null;
         let description = null;
-        let group_name = ' - ';
-        if (sectionType.group_name != "undefined") {
-            group_name = sectionType.group_name;
-        }
+
+        const { group_description, group_name } = this.state
+        // if (sectionType.group_name != "undefined") {
+        //     group_name = sectionType.group_name;
+        //     group_description = sectionType.group_description;
+        // }
 
         if (!isPub) {
             plusIcon = (<img src="/images/plus.svg" width="19" height="19"/>);
@@ -91,20 +131,32 @@ class SectionWrapper extends Component {
             );
 
             name = (
-                <DebounceInput value={group_name}
+                <DebounceInput value={this.state.group_name}
                                className="input-ghost"
                                placeholder="Section Name"
                                debounceTimeout="3000"
                                minLength="4"
                                onChange={updateSectionGroupTitle}/>
             );
+
+            description = (
+                <DebounceInput spellCheck="false"
+                               element="textarea"
+                               className="input-ghost"
+                               value={this.state.group_description}
+                               placeholder="Description"
+                               debounceTimeout="3000"
+                               minLength="4"
+                               onChange={updateSectionGroupDescription}/>
+            );
+
         }
         else {
             //show if the string is not empty
 
             if (!!this.state.titleValue) {
                 name = (
-                    <DebounceInput value={group_name}
+                    <DebounceInput value={this.state.group_name}
                                    className="input-ghost"
                                    placeholder="Section Name"
                                    debounceTimeout="3000"
@@ -112,6 +164,19 @@ class SectionWrapper extends Component {
                                    disabled="true"
                                    onChange={updateSectionGroupTitle}/>
                 );
+
+                description = (
+                    <DebounceInput spellCheck="false"
+                                   element="textarea"
+                                   className="input-ghost"
+                                   value={this.state.group_description}
+                                   placeholder="Description"
+                                   debounceTimeout="3000"
+                                   minLength="4"
+                                   disabled="true"
+                                   onChange={updateSectionGroupDescription}/>
+                );
+
             }
 
 
@@ -122,6 +187,7 @@ class SectionWrapper extends Component {
 
                 <div className="title">
                     <h2>{name}</h2>
+                    {description}
                     {plusIcon}
                     {tooltip}
                 </div>
@@ -141,7 +207,9 @@ SectionWrapper.propTypes = {
     sectionType: PropTypes.shape({
         id: PropTypes.number,
         group_id: PropTypes.number,
-        group_name: PropTypes.string
+        group_name: PropTypes.string,
+        group_description: PropTypes.string
+
     }).isRequired,
     bridge: PropTypes.shape({
         id: PropTypes.number

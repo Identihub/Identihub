@@ -119,7 +119,7 @@ export function updateSectionDescription(bridgeId, sectionId, text) {
 
 export function updateSectionGroupTitle(bridgeId, sectionGroupId, text) {
     return (dispatch) => {
-        return axios.patch('/api/v1/bridges/' + bridgeId + '/sectionGroups/' +  sectionGroupId + '/updateTitle', {title: text})
+        return axios.patch('/api/v1/bridges/' + bridgeId + '/groups/' +  sectionGroupId + '/updateTitle', {title: text})
             .then(function(response) {
                 dispatch(addBridge(response.data.bridge));
             })
@@ -131,8 +131,10 @@ export function updateSectionGroupTitle(bridgeId, sectionGroupId, text) {
 
 export function updateSectionGroupDescription(bridgeId, sectionGroupId, text) {
     return (dispatch) => {
-        return axios.patch('/api/v1/bridges/' + bridgeId + '/sectionGroups/' +  sectionGroupId + '/updateDescription', {description: text})
+        return axios.patch('/api/v1/bridges/' + bridgeId + '/groups/' +  sectionGroupId + '/updateDescription', {description: text})
             .then(function(response) {
+                console.log('the response data');
+                console.log(response.data);
                 dispatch(addBridge(response.data.bridge));
             })
             .catch(function (error) {
@@ -144,6 +146,18 @@ export function updateSectionGroupDescription(bridgeId, sectionGroupId, text) {
 export function createSection(bridgeid, sectionTypeId, sectionGroupId) {
     return (dispatch) => {
         return axios.post('/api/v1/bridges/' + bridgeid + '/groups/' + sectionGroupId + '/sections', {section_type: sectionTypeId})
+            .then(function(response){
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
+}
+
+export function createSectionGroup(bridgeid, sectionTypeId) {
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeid + '/groups', {section_type: sectionTypeId})
             .then(function(response){
                 dispatch(addBridge(response.data.bridge));
             })
