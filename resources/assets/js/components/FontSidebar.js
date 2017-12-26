@@ -86,7 +86,6 @@ class FontSidebar extends Component {
     const marginStyle = "-" + margin + "px";
 
     const { font } = this.props;
-    console.log(font);
     const weight = this.weightToText(font.variant.variant);
 
     let settingsButton = null;

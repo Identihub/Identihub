@@ -10,6 +10,6 @@ class Section extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'order', 'section_type_id', 'bridge_id'
+        'order', 'section_type_id', 'section_group_id', 'bridge_id'
     ];
 }

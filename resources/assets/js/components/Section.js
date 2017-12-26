@@ -75,8 +75,7 @@ class Section extends Component {
             section,
             deleteSection
         } = this.props;
-        //console.log(bridge);
-        deleteSection(bridge.id, section.id);
+        deleteSection(bridge.id, section.section_group_id, section.id);
     }
 
     render() {
@@ -94,7 +93,7 @@ class Section extends Component {
         } = this.props;
 
         const isPub = isPublic();
-        console.log('isPub: ', isPub);
+        //console.log('isPub: ', isPub);
 
         let canBeDeleted = (!this.props.children.length) && (section.order != 0);
 
