@@ -169,6 +169,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Orangehill\Iseed\IseedServiceProvider::class,
+        PrettyRoutes\ServiceProvider::class,
 
         /*
          * Application Service Providers...

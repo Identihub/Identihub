@@ -14,6 +14,7 @@ use App\Jobs\CreateSection;
 use App\Jobs\DeleteBridge;
 use App\Jobs\UpdateBridgeName;
 use App\Jobs\CreateBridge;
+use App\Models\SectionGroup;
 use App\SectionType;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -34,16 +35,30 @@ class BridgeController extends Controller
 
     public function show($id)
     {
-        try{
+        try {
             $user = Auth::user();
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id) {
                 throw new ModelNotFoundException();
-            return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
-            ]);
-        }catch (ModelNotFoundException $e){
+            } else {
+                $sectionTypes = SectionType::leftJoin('section_groups', function ($join) use ($bridge) {
+                    $join->on('section_type_id', '=', 'section_types.id');
+                    $join->where('section_groups.bridge_id', $bridge->id);
+
+                })
+                    ->get(['section_types.id',
+                        'section_groups.name as group_name',
+                        'section_groups.description as group_description',
+                        'section_types.name as name',
+                        'section_groups.id as group_id']);
+
+                return response()->json([
+                    'bridge' => $bridge,
+                    'section_types' => $sectionTypes
+                ]);
+            }
+        } catch
+        (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'Entry not found'
             ]);
@@ -55,33 +70,44 @@ class BridgeController extends Controller
     {
         $user = Auth::user();
 
-        $name = $request->only(['name'])['name'];
+        $name = $request->name;
         $slug = str_slug($name);
 
         $bridgesWithThatSlug = Bridge::where('slug', $slug)->get();
-        if($bridgesWithThatSlug->count() !== 0)
-            $slug = $slug . '-' . substr(md5(microtime()),rand(0,26),5);
+        if ($bridgesWithThatSlug->count() !== 0)
+            $slug = $slug . '-' . substr(md5(microtime()), rand(0, 26), 5);
 
-        try{
+        try {
 
-            $bridge = $db->transaction(function() use ($request, $slug) {
+            $bridge = $db->transaction(function () use ($name, $slug) {
 
                 // Create Bridge
                 $bridge = (new CreateBridge(
                     array_merge(
-                        $request->only(['name']),
+                        ['name'=>$name],
                         ['user_id' => Auth::user()->id],
                         ['slug' => $slug]
                     )))->handle();
 
                 // Create blank sections for every type
-                foreach ([
-                             SectionType::getColorsSectionType(),
-                             SectionType::getIconsSectionType(),
-                             SectionType::getImagesSectionType()
-                         ] as $sectionType)
-                {
-                    (new CreateSection($bridge, $sectionType))->handle();
+                $sectionTypes = [
+                    SectionType::getColorsSectionType(),
+                    SectionType::getIconsSectionType(),
+                    SectionType::getFontsSectionType(),
+                    SectionType::getImagesSectionType()
+                ];
+                foreach ($sectionTypes as $sectionType) {
+                    //TODO change order
+
+                    $sectionGroup = SectionGroup::create([
+                        'bridge_id' => $bridge->id,
+                        'section_type_id' => $sectionType->id,
+                        'name' => $sectionType->name,
+                        'description' => '',
+                        'order' => 1
+                    ]);
+                    //TODO move to service
+                    (new CreateSection($bridge, $sectionType, $sectionGroup))->handle();
                 }
 
                 return $bridge;
@@ -98,7 +124,7 @@ class BridgeController extends Controller
             return response()->json([
                 'bridge' => $bridge
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server error'
             ]);
@@ -108,27 +134,28 @@ class BridgeController extends Controller
 
     public function update(BridgeUpdateRequest $request, $id)
     {
-        try{
+        try {
             $user = Auth::user();
 
             $bridge = Bridge::findOrFail($id);
 
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             $bridge = $this->dispatch(new UpdateBridgeName($bridge, $request->only(['name'])));
-            try{
+            try {
                 event(new BridgeCreated($bridge));
-            }catch(\Exception $e){}
+            } catch (\Exception $e) {
+            }
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
             return response()->json([
                 'bridge' => $bridge
             ]);
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'Entry not found'
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server error'
             ]);
@@ -138,29 +165,30 @@ class BridgeController extends Controller
 
     public function updateSlug(UpdateBridgeSlug $request, $id)
     {
-        try{
+        try {
             $user = Auth::user();
 
             $bridge = Bridge::findOrFail($id);
 
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             $slug = $this->getSlug($request);
             $bridge->slug = $slug;
             $bridge->save();
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
-            try{
+            try {
                 event(new BridgeCreated($bridge));
-            }catch(\Exception $e){}
+            } catch (\Exception $e) {
+            }
             return response()->json([
                 'bridge' => $bridge
             ]);
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'Entry not found'
             ]);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server error'
             ]);
@@ -171,20 +199,20 @@ class BridgeController extends Controller
     {
         $slug = $request->get('slug');
         $slugs = Bridge::where('slug', $slug)->get();
-        if($slugs->count() !== 0)
-            return $slug . '-' . substr(md5(microtime()),rand(0,26),5);
+        if ($slugs->count() !== 0)
+            return $slug . '-' . substr(md5(microtime()), rand(0, 26), 5);
         return $slug;
     }
 
     public function destroy($id)
     {
 
-        try{
+        try {
             $user = Auth::user();
 
             $bridge = Bridge::findOrFail($id);
 
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             $bridge->delete();
@@ -193,11 +221,11 @@ class BridgeController extends Controller
                 'bridges' => $bridges,
                 'section_types' => SectionType::all()
             ]);
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'Entry not found'
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server error'
             ]);
@@ -205,29 +233,31 @@ class BridgeController extends Controller
 
     }
 
-    public function updateName(BridgeUpdateRequest $request, $id) {
-        try{
+    public function updateName(BridgeUpdateRequest $request, $id)
+    {
+        try {
             $user = Auth::user();
 
             $bridge = Bridge::findOrFail($id);
 
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             $bridge->name = $request->get('name');
             $bridge->save();
-            try{
+            try {
                 event(new BridgeCreated($bridge));
-            }catch(\Exception $e){}
+            } catch (\Exception $e) {
+            }
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
             return response()->json([
                 'bridge' => $bridge
             ]);
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'Entry not found'
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server error'
             ]);

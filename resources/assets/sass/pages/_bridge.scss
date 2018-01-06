@@ -140,7 +140,8 @@
 
       .tooltip{
         display: none;
-        left: 235px;
+        /* TODO: figure out the exact position to use */
+        left: 480px;
         top: -17px;
         padding-left: 60px;
         position: absolute;
@@ -172,7 +173,7 @@
         }
       }
 
-      h2{
+      h2, h2 input{
         font-size: 26px;
         display: inline-block;
         float: left;

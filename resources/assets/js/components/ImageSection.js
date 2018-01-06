@@ -62,7 +62,6 @@ class ImageSection extends Component {
                        name="image"/>
                 {
                     sortByOrder(filterSectionsWithSectionType(sections, imagesSection)).map( section => {
-                        console.log(section);
                         return (
                           <ImageSectionRow
                               key={section.id}
