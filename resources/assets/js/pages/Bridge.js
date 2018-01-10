@@ -86,12 +86,14 @@ export class Bridge extends Component {
 
         let breadCrumb = null;
         let plusIcon = null;
+        let forwardIcon = null;
         let tooltip = null;
 
         if (!isPub) {
+            forwardIcon = (<img src="/images/forward.svg" width="10" height="10"/>);
             breadCrumb = (
                 <div className="breadcrumb">
-                    <Link to="/projects">Projects</Link> {'>>'} <span>{bridge.name}</span>
+                    <Link to="/projects">Projects</Link> {forwardIcon} <span>{bridge.name}</span>
                 </div>
             );
         }
