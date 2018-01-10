@@ -3136,13 +3136,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
 var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
 
 var _server = __webpack_require__(488);
 
@@ -3160,8 +3160,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var isBrowser = typeof window !== 'undefined';
 var SVGInjector = isBrowser ? __webpack_require__(544) : undefined;
 
-var ReactSVG = function (_Component) {
-  _inherits(ReactSVG, _Component);
+var ReactSVG = function (_React$Component) {
+  _inherits(ReactSVG, _React$Component);
 
   function ReactSVG() {
     var _ref;
@@ -3213,7 +3213,9 @@ var ReactSVG = function (_Component) {
   }, {
     key: 'removeSVG',
     value: function removeSVG() {
-      this.container.removeChild(this.container.firstChild);
+      if (this.container instanceof Node && this.container.firstChild instanceof Node) {
+        this.container.removeChild(this.container.firstChild);
+      }
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -3229,25 +3231,27 @@ var ReactSVG = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', { ref: this.refCallback });
+      return _react2.default.createElement('div', { ref: this.refCallback, className: this.props.wrapperClassName });
     }
   }]);
 
   return ReactSVG;
-}(_react.Component);
+}(_react2.default.Component);
 
 ReactSVG.defaultProps = {
   callback: function callback() {},
-  className: '',
+  className: null,
   evalScripts: 'once',
-  style: {}
+  style: {},
+  wrapperClassName: null
 };
 ReactSVG.propTypes = {
   callback: _propTypes2.default.func,
   className: _propTypes2.default.string,
   evalScripts: _propTypes2.default.oneOf(['always', 'once', 'never']),
   path: _propTypes2.default.string.isRequired,
-  style: _propTypes2.default.object
+  style: _propTypes2.default.object,
+  wrapperClassName: _propTypes2.default.string
 };
 exports.default = ReactSVG;
 module.exports = exports['default'];
@@ -21190,7 +21194,7 @@ var ColorSection = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (ColorSection.__proto__ || Object.getPrototypeOf(ColorSection)).call(this, params));
 
-        _this.emptyStateText = "No Colors found here, start by adding a new color.";
+        _this.emptyStateText = "No colors found here, start by adding a new color.";
         _this.addColor = _this.addColor.bind(_this);
         return _this;
     }
@@ -21872,7 +21876,7 @@ var FontSection = function (_Component) {
                 emptyStateText = this.emptyStateText;
 
 
-            var emptyState = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__EmptySectionState__["a" /* default */], { style: { width: "56%", marginLeft: "23%" }, soloElement: true, emptyStateText: 'No founds found here, start by adding a new font' });
+            var emptyState = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__EmptySectionState__["a" /* default */], { style: { width: "56%", marginLeft: "23%" }, soloElement: true, emptyStateText: 'No fonts found here, start by adding a new font' });
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -24252,7 +24256,7 @@ var Bridge = function (_Component) {
                     'div',
                     { className: 'title-section' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_react_debounce_input___default.a, { value: bridge.name || '', className: 'input-ghost',
-                        placeholder: 'Bridge Name', debounceTimeout: '500',
+                        placeholder: 'Project Name', debounceTimeout: '500',
                         minLength: '4', onChange: this.updateName
                     })
                 );
@@ -24261,7 +24265,7 @@ var Bridge = function (_Component) {
                     'div',
                     { className: 'title-section' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_react_debounce_input___default.a, { value: bridge.name || '', className: 'input-ghost',
-                        placeholder: 'Bridge Name', debounceTimeout: '500',
+                        placeholder: 'Project Name', debounceTimeout: '500',
                         minLength: '4', onChange: this.updateName,
                         disabled: 'true'
                     })
@@ -25093,15 +25097,15 @@ function shim (obj) {
 "use strict";
 
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
 exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _isDisposable = __webpack_require__(79);
 
-var _isDisposable2 = _interopRequireWildcard(_isDisposable);
+var _isDisposable2 = _interopRequireDefault(_isDisposable);
 
 /**
  * Represents a group of disposable resources that are disposed together.
@@ -25200,11 +25204,12 @@ module.exports = exports['default'];
 "use strict";
 
 
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+exports.__esModule = true;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-exports.__esModule = true;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var noop = function noop() {};
 
 /**
@@ -25212,6 +25217,12 @@ var noop = function noop() {};
  */
 
 var Disposable = (function () {
+  _createClass(Disposable, null, [{
+    key: "empty",
+    value: { dispose: noop },
+    enumerable: true
+  }]);
+
   function Disposable(action) {
     _classCallCheck(this, Disposable);
 
@@ -25226,12 +25237,6 @@ var Disposable = (function () {
     }
   };
 
-  _createClass(Disposable, null, [{
-    key: "empty",
-    enumerable: true,
-    value: { dispose: noop }
-  }]);
-
   return Disposable;
 })();
 
@@ -25245,15 +25250,15 @@ module.exports = exports["default"];
 "use strict";
 
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
 exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _isDisposable = __webpack_require__(79);
 
-var _isDisposable2 = _interopRequireWildcard(_isDisposable);
+var _isDisposable2 = _interopRequireDefault(_isDisposable);
 
 var SerialDisposable = (function () {
   function SerialDisposable() {
@@ -25278,7 +25283,7 @@ var SerialDisposable = (function () {
    */
 
   SerialDisposable.prototype.setDisposable = function setDisposable() {
-    var value = arguments[0] === undefined ? null : arguments[0];
+    var value = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
     if (value != null && !_isDisposable2['default'](value)) {
       throw new Error('Expected either an empty value or a valid disposable');
@@ -25332,31 +25337,31 @@ module.exports = exports['default'];
 "use strict";
 
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
 exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _isDisposable2 = __webpack_require__(79);
 
-var _isDisposable3 = _interopRequireWildcard(_isDisposable2);
+var _isDisposable3 = _interopRequireDefault(_isDisposable2);
 
 exports.isDisposable = _isDisposable3['default'];
 
 var _Disposable2 = __webpack_require__(266);
 
-var _Disposable3 = _interopRequireWildcard(_Disposable2);
+var _Disposable3 = _interopRequireDefault(_Disposable2);
 
 exports.Disposable = _Disposable3['default'];
 
 var _CompositeDisposable2 = __webpack_require__(265);
 
-var _CompositeDisposable3 = _interopRequireWildcard(_CompositeDisposable2);
+var _CompositeDisposable3 = _interopRequireDefault(_CompositeDisposable2);
 
 exports.CompositeDisposable = _CompositeDisposable3['default'];
 
 var _SerialDisposable2 = __webpack_require__(267);
 
-var _SerialDisposable3 = _interopRequireWildcard(_SerialDisposable2);
+var _SerialDisposable3 = _interopRequireDefault(_SerialDisposable2);
 
 exports.SerialDisposable = _SerialDisposable3['default'];
 
@@ -26375,7 +26380,7 @@ var _hasClass2 = _interopRequireDefault(_hasClass);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function addClass(element, className) {
-  if (element.classList) element.classList.add(className);else if (!(0, _hasClass2.default)(element)) element.className = element.className + ' ' + className;
+  if (element.classList) element.classList.add(className);else if (!(0, _hasClass2.default)(element, className)) if (typeof element.className === 'string') element.className = element.className + ' ' + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + ' ' + className);
 }
 module.exports = exports['default'];
 
@@ -26391,7 +26396,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = hasClass;
 function hasClass(element, className) {
-  if (element.classList) return !!className && element.classList.contains(className);else return (" " + element.className + " ").indexOf(" " + className + " ") !== -1;
+  if (element.classList) return !!className && element.classList.contains(className);else return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
 }
 module.exports = exports["default"];
 
@@ -26402,8 +26407,12 @@ module.exports = exports["default"];
 "use strict";
 
 
+function replaceClassName(origClass, classToRemove) {
+  return origClass.replace(new RegExp('(^|\\s)' + classToRemove + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
+}
+
 module.exports = function removeClass(element, className) {
-  if (element.classList) element.classList.remove(className);else element.className = element.className.replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
+  if (element.classList) element.classList.remove(className);else if (typeof element.className === 'string') element.className = replaceClassName(element.className, className);else element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
 };
 
 /***/ }),

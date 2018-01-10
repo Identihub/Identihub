@@ -3136,13 +3136,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
 var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
 
 var _server = __webpack_require__(488);
 
@@ -3160,8 +3160,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var isBrowser = typeof window !== 'undefined';
 var SVGInjector = isBrowser ? __webpack_require__(544) : undefined;
 
-var ReactSVG = function (_Component) {
-  _inherits(ReactSVG, _Component);
+var ReactSVG = function (_React$Component) {
+  _inherits(ReactSVG, _React$Component);
 
   function ReactSVG() {
     var _ref;
@@ -3213,7 +3213,9 @@ var ReactSVG = function (_Component) {
   }, {
     key: 'removeSVG',
     value: function removeSVG() {
-      this.container.removeChild(this.container.firstChild);
+      if (this.container instanceof Node && this.container.firstChild instanceof Node) {
+        this.container.removeChild(this.container.firstChild);
+      }
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -3229,25 +3231,27 @@ var ReactSVG = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', { ref: this.refCallback });
+      return _react2.default.createElement('div', { ref: this.refCallback, className: this.props.wrapperClassName });
     }
   }]);
 
   return ReactSVG;
-}(_react.Component);
+}(_react2.default.Component);
 
 ReactSVG.defaultProps = {
   callback: function callback() {},
-  className: '',
+  className: null,
   evalScripts: 'once',
-  style: {}
+  style: {},
+  wrapperClassName: null
 };
 ReactSVG.propTypes = {
   callback: _propTypes2.default.func,
   className: _propTypes2.default.string,
   evalScripts: _propTypes2.default.oneOf(['always', 'once', 'never']),
   path: _propTypes2.default.string.isRequired,
-  style: _propTypes2.default.object
+  style: _propTypes2.default.object,
+  wrapperClassName: _propTypes2.default.string
 };
 exports.default = ReactSVG;
 module.exports = exports['default'];
@@ -21190,7 +21194,7 @@ var ColorSection = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (ColorSection.__proto__ || Object.getPrototypeOf(ColorSection)).call(this, params));
 
-        _this.emptyStateText = "No Colors found here, start by adding a new color.";
+        _this.emptyStateText = "No colors found here, start by adding a new color.";
         _this.addColor = _this.addColor.bind(_this);
         return _this;
     }
@@ -21872,7 +21876,7 @@ var FontSection = function (_Component) {
                 emptyStateText = this.emptyStateText;
 
 
-            var emptyState = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__EmptySectionState__["a" /* default */], { style: { width: "56%", marginLeft: "23%" }, soloElement: true, emptyStateText: 'No founds found here, start by adding a new font' });
+            var emptyState = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__EmptySectionState__["a" /* default */], { style: { width: "56%", marginLeft: "23%" }, soloElement: true, emptyStateText: 'No fonts found here, start by adding a new font' });
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -24252,7 +24256,7 @@ var Bridge = function (_Component) {
                     'div',
                     { className: 'title-section' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_react_debounce_input___default.a, { value: bridge.name || '', className: 'input-ghost',
-                        placeholder: 'Bridge Name', debounceTimeout: '500',
+                        placeholder: 'Project Name', debounceTimeout: '500',
                         minLength: '4', onChange: this.updateName
                     })
                 );
@@ -24261,7 +24265,7 @@ var Bridge = function (_Component) {
                     'div',
                     { className: 'title-section' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_react_debounce_input___default.a, { value: bridge.name || '', className: 'input-ghost',
-                        placeholder: 'Bridge Name', debounceTimeout: '500',
+                        placeholder: 'Project Name', debounceTimeout: '500',
                         minLength: '4', onChange: this.updateName,
                         disabled: 'true'
                     })
@@ -25093,15 +25097,15 @@ function shim (obj) {
 "use strict";
 
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
 exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _isDisposable = __webpack_require__(79);
 
-var _isDisposable2 = _interopRequireWildcard(_isDisposable);
+var _isDisposable2 = _interopRequireDefault(_isDisposable);
 
 /**
  * Represents a group of disposable resources that are disposed together.
@@ -25200,11 +25204,12 @@ module.exports = exports['default'];
 "use strict";
 
 
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+exports.__esModule = true;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-exports.__esModule = true;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var noop = function noop() {};
 
 /**
@@ -25212,6 +25217,12 @@ var noop = function noop() {};
  */
 
 var Disposable = (function () {
+  _createClass(Disposable, null, [{
+    key: "empty",
+    value: { dispose: noop },
+    enumerable: true
+  }]);
+
   function Disposable(action) {
     _classCallCheck(this, Disposable);
 
@@ -25226,12 +25237,6 @@ var Disposable = (function () {
     }
   };
 
-  _createClass(Disposable, null, [{
-    key: "empty",
-    enumerable: true,
-    value: { dispose: noop }
-  }]);
-
   return Disposable;
 })();
 
@@ -25245,15 +25250,15 @@ module.exports = exports["default"];
 "use strict";
 
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
 exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _isDisposable = __webpack_require__(79);
 
-var _isDisposable2 = _interopRequireWildcard(_isDisposable);
+var _isDisposable2 = _interopRequireDefault(_isDisposable);
 
 var SerialDisposable = (function () {
   function SerialDisposable() {
@@ -25278,7 +25283,7 @@ var SerialDisposable = (function () {
    */
 
   SerialDisposable.prototype.setDisposable = function setDisposable() {
-    var value = arguments[0] === undefined ? null : arguments[0];
+    var value = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
     if (value != null && !_isDisposable2['default'](value)) {
       throw new Error('Expected either an empty value or a valid disposable');
@@ -25332,31 +25337,31 @@ module.exports = exports['default'];
 "use strict";
 
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
 exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _isDisposable2 = __webpack_require__(79);
 
-var _isDisposable3 = _interopRequireWildcard(_isDisposable2);
+var _isDisposable3 = _interopRequireDefault(_isDisposable2);
 
 exports.isDisposable = _isDisposable3['default'];
 
 var _Disposable2 = __webpack_require__(266);
 
-var _Disposable3 = _interopRequireWildcard(_Disposable2);
+var _Disposable3 = _interopRequireDefault(_Disposable2);
 
 exports.Disposable = _Disposable3['default'];
 
 var _CompositeDisposable2 = __webpack_require__(265);
 
-var _CompositeDisposable3 = _interopRequireWildcard(_CompositeDisposable2);
+var _CompositeDisposable3 = _interopRequireDefault(_CompositeDisposable2);
 
 exports.CompositeDisposable = _CompositeDisposable3['default'];
 
 var _SerialDisposable2 = __webpack_require__(267);
 
-var _SerialDisposable3 = _interopRequireWildcard(_SerialDisposable2);
+var _SerialDisposable3 = _interopRequireDefault(_SerialDisposable2);
 
 exports.SerialDisposable = _SerialDisposable3['default'];
 
@@ -26375,7 +26380,7 @@ var _hasClass2 = _interopRequireDefault(_hasClass);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function addClass(element, className) {
-  if (element.classList) element.classList.add(className);else if (!(0, _hasClass2.default)(element)) element.className = element.className + ' ' + className;
+  if (element.classList) element.classList.add(className);else if (!(0, _hasClass2.default)(element, className)) if (typeof element.className === 'string') element.className = element.className + ' ' + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + ' ' + className);
 }
 module.exports = exports['default'];
 
@@ -26391,7 +26396,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = hasClass;
 function hasClass(element, className) {
-  if (element.classList) return !!className && element.classList.contains(className);else return (" " + element.className + " ").indexOf(" " + className + " ") !== -1;
+  if (element.classList) return !!className && element.classList.contains(className);else return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
 }
 module.exports = exports["default"];
 
@@ -26402,8 +26407,12 @@ module.exports = exports["default"];
 "use strict";
 
 
+function replaceClassName(origClass, classToRemove) {
+  return origClass.replace(new RegExp('(^|\\s)' + classToRemove + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
+}
+
 module.exports = function removeClass(element, className) {
-  if (element.classList) element.classList.remove(className);else element.className = element.className.replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
+  if (element.classList) element.classList.remove(className);else if (typeof element.className === 'string') element.className = replaceClassName(element.className, className);else element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
 };
 
 /***/ }),
@@ -50981,7 +50990,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_laravel_echo__ = __webpack_require__(570);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_laravel_echo__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__App__ = __webpack_require__(552);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app__ = __webpack_require__(552);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(259);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__reducers_Bridge_BridgeApiCalls__ = __webpack_require__(13);
 
@@ -51018,7 +51027,7 @@ try {
   console.log("Can't do a real time connection");
 }
 
-__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__App__["a" /* default */], { store: store }), mountApp);
+__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__app__["a" /* default */], { store: store }), mountApp);
 
 /***/ }),
 /* 550 */,
@@ -51111,7 +51120,7 @@ var BridgeCard = function BridgeCard(props) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', {
           className: classImage,
           src: image,
-          alt: 'Bridge Name logo' })
+          alt: 'Project Name logo' })
       )
     ),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -51949,10 +51958,6 @@ var BridgesPage = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-
-            console.log("Props");
-            console.log(this.props);
-
             var block = this.props.hasBridges ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_BridgesList__["a" /* default */], { bridges: this.props.bridges }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_BridgesEmptyState__["a" /* default */], null);
 
             var title = 'List';
@@ -52193,7 +52198,7 @@ var NewBridge = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'title',
                         null,
-                        'Create Bridge'
+                        'Create Project'
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -52214,7 +52219,7 @@ var NewBridge = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'input-wrapper' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', className: 'input input-white', placeholder: 'Bridge Name', value: this.state.bridgeName, onChange: this.handleText, required: true })
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', className: 'input input-white', placeholder: 'Project Name', value: this.state.bridgeName, onChange: this.handleText, required: true })
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
@@ -52225,7 +52230,7 @@ var NewBridge = function (_Component) {
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'button',
                                     { onClick: this.createBridge, type: 'submit', className: 'button button-white' },
-                                    'Create Bridge'
+                                    'Create Project'
                                 )
                             )
                         )
@@ -52404,11 +52409,10 @@ var conversions = __webpack_require__(548);
 	conversions that are not possible simply are not included.
 */
 
-// https://jsperf.com/object-keys-vs-for-in-with-closure/3
-var models = Object.keys(conversions);
-
 function buildGraph() {
 	var graph = {};
+	// https://jsperf.com/object-keys-vs-for-in-with-closure/3
+	var models = Object.keys(conversions);
 
 	for (var len = models.length, i = 0; i < len; i++) {
 		graph[models[i]] = {
@@ -63121,7 +63125,7 @@ var Connector = function () {
         key: 'csrfToken',
         value: function csrfToken() {
             var selector = void 0;
-            if (window && window['Laravel'] && window['Laravel'].csrfToken) {
+            if (typeof window !== 'undefined' && window['Laravel'] && window['Laravel'].csrfToken) {
                 return window['Laravel'].csrfToken;
             } else if (this.options.csrfToken) {
                 return this.options.csrfToken;
@@ -63536,8 +63540,20 @@ var SocketIoConnector = function (_Connector) {
     createClass(SocketIoConnector, [{
         key: 'connect',
         value: function connect() {
+            var io = this.getSocketIO();
             this.socket = io(this.options.host, this.options);
             return this.socket;
+        }
+    }, {
+        key: 'getSocketIO',
+        value: function getSocketIO() {
+            if (typeof io !== 'undefined') {
+                return io;
+            }
+            if (this.options.client !== 'undefined') {
+                return this.options.client;
+            }
+            throw new Error('Socket.io client not found. Should be globally available or passed via options.client');
         }
     }, {
         key: 'listen',
@@ -63702,7 +63718,7 @@ module.exports = Echo;
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
- * Pusher JavaScript Library v4.2.1
+ * Pusher JavaScript Library v4.2.2
  * https://pusher.com/
  *
  * Copyright 2017, Pusher
@@ -63792,7 +63808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _this = this;
 	        checkAppKey(app_key);
 	        options = options || {};
-	        if (!options.cluster) {
+	        if (!options.cluster && !(options.wsHost || options.httpHost)) {
 	            var suffix = url_store_1["default"].buildLogSuffix("javascriptQuickStart");
 	            logger_1["default"].warn("You should always specify a cluster when connecting. " + suffix);
 	        }
@@ -64179,11 +64195,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	var Defaults = {
-	    VERSION: "4.2.1",
+	    VERSION: "4.2.2",
 	    PROTOCOL: 7,
 	    host: 'ws.pusherapp.com',
 	    ws_port: 80,
 	    wss_port: 443,
+	    ws_path: '',
 	    sockjs_host: 'sockjs.pusher.com',
 	    sockjs_http_port: 80,
 	    sockjs_https_port: 443,
@@ -64332,16 +64349,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_i - 0] = arguments[_i];
 	        }
 	        var message = collections_1.stringify.apply(this, arguments);
-	        if ((window).console) {
+	        if (pusher_1["default"].log) {
+	            pusher_1["default"].log(message);
+	        }
+	        else if ((window).console) {
 	            if ((window).console.warn) {
 	                (window).console.warn(message);
 	            }
 	            else if ((window).console.log) {
 	                (window).console.log(message);
 	            }
-	        }
-	        if (pusher_1["default"].log) {
-	            pusher_1["default"].log(message);
 	        }
 	    }
 	};
@@ -65042,7 +65059,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	exports.ws = {
 	    getInitial: function (key, params) {
-	        return getGenericURL("ws", params, getGenericPath(key, "flash=false"));
+	        var path = (params.httpPath || "") + getGenericPath(key, "flash=false");
+	        return getGenericURL("ws", params, path);
 	    }
 	};
 	exports.http = {
@@ -65428,7 +65446,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return [
 	        [":def", "ws_options", {
 	                hostUnencrypted: config.wsHost + ":" + config.wsPort,
-	                hostEncrypted: config.wsHost + ":" + config.wssPort
+	                hostEncrypted: config.wsHost + ":" + config.wssPort,
+	                httpPath: config.wsPath
 	            }],
 	        [":def", "wss_options", [":extend", ":ws_options", {
 	                    encrypted: true
@@ -67856,6 +67875,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        wsHost: defaults_1["default"].host,
 	        wsPort: defaults_1["default"].ws_port,
 	        wssPort: defaults_1["default"].wss_port,
+	        wsPath: defaults_1["default"].ws_path,
 	        httpHost: defaults_1["default"].sockjs_host,
 	        httpPort: defaults_1["default"].sockjs_http_port,
 	        httpsPort: defaults_1["default"].sockjs_https_port,

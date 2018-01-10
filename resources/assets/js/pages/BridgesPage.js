@@ -22,10 +22,6 @@ export class BridgesPage extends Component {
     }
 
     render() {
-
-        console.log("Props");
-        console.log(this.props);
-
         const block = this.props.hasBridges ?
             <BridgesList bridges={this.props.bridges} />
             :

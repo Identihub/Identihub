@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import {HashRouter, Route, Switch, Redirect} from 'react-router-dom';
 import BridgesList from './pages/BridgesPage';
 import NewBridge from './pages/NewBridge';
 import Bridge from './pages/Bridge';
@@ -18,10 +18,7 @@ export default (
                 >
                 </Helmet>
 
-                <Route exact path="/" render={() => (
-                        <Redirect to="/projects"/>
-                )}/>
-
+                <Route exact path="/" render={() => <Redirect to="/projects"/>}/>
                 <Route path="/projects" strict={true} component={BridgesList}/>
                 <Route path="/projects/:id/delete-confirmation" component={DeleteBridge}/>
                 <Route path="/projects/new" strict={true} component={NewBridge}/>
