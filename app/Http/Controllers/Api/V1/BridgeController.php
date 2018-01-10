@@ -98,7 +98,7 @@ class BridgeController extends Controller
             return response()->json([
                 'bridge' => $bridge
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server error'
             ]);

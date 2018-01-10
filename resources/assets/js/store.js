@@ -4,11 +4,19 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import logger from 'redux-logger';
+
 
 export function configureStore(initialState = {}) {
   // Middleware and store enhancers
+    const middlewares = [
+        thunk,
+        logger
+    ];
+
+
   const enhancers = [
-    applyMiddleware(thunk),
+    applyMiddleware(...middlewares),
   ];
 
   //if (process.env.NODE_ENV === 'development') {
