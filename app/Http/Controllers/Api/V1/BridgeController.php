@@ -99,6 +99,7 @@ class BridgeController extends Controller
                 'bridge' => $bridge
             ]);
         } catch (\Exception $e) {
+            return $e->getMessage();
             return response()->json([
                 'error' => 'Server error'
             ]);
