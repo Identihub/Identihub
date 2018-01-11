@@ -4,3 +4,10 @@
   top: 50%;
   left: 50%;
 }
+
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
