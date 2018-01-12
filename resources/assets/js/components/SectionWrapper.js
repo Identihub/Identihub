@@ -44,7 +44,7 @@ class SectionWrapper extends Component {
               <ul>
                 <li onClick={ onResourceClick }>{ addResource }</li>
                 {
-                  canCreateSection ? <li onClick={ createSection }>Add new section</li> : ''
+                  canCreateSection ? <li onClick={ createSection }>Add new section</li> : null
                 }
               </ul>
             </div>

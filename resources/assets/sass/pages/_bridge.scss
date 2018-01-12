@@ -135,15 +135,19 @@
       display: table;
       margin: 0 auto;
       position: relative;
-      //padding: 0 170px;
-      //padding: 0px;
+      // min-width: 85px;
 
+      // padding: 0 170px;
+      //padding: 0px;
       .tooltip {
         display: none;
-        left: 235px;
+        left: 0px;
         top: -17px;
-        padding-left: 60px;
+        min-width: 140px;
+        padding-left: 130px;
+        vertical-align: middle;
         position: absolute;
+        z-index: 1;
 
         ul {
           border-radius: 3px;
