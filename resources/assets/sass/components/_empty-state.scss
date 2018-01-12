@@ -1,6 +1,8 @@
 .empty-state{
   width: 70%;
   margin-top: 10px;
+  overflow-wrap: break-word;
+  text-align: center;
 
   &.solo{
     width: 54%;
@@ -11,8 +13,8 @@
     display: table;
     opacity: .3;
   }
-  p{
-    width: 220px;
+  p {
+    // width: 220px;
     text-align: center;
     margin: 20px auto 0;
     color: $grey-with-more-opacity;

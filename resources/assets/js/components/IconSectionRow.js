@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { DropTarget } from 'react-dnd';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {DropTarget} from 'react-dnd';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import Section from './Section';
 import IconCard from './IconCard';
-import { dropTarget } from '../helpers';
-import { updateOrderOnIcon, updateSectionOnIcon } from '../reducers/Extra/ExtraActions';
-import { reorderElement, changeSection} from '../reducers/Bridge/BridgeApiCalls';
+import {dropTarget} from '../helpers';
+import {updateOrderOnIcon, updateSectionOnIcon} from '../reducers/Extra/ExtraActions';
+import {reorderElement, changeSection} from '../reducers/Bridge/BridgeApiCalls';
 
-class IconSectionRow extends Component{
+class IconSectionRow extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-          icons: []
+            icons: []
         };
 
         this.pushCard = this.pushCard.bind(this);
@@ -24,31 +24,32 @@ class IconSectionRow extends Component{
     }
 
     componentWillReceiveProps(nextProps) {
-      this.updateLocalState(nextProps);
+        this.updateLocalState(nextProps);
     }
 
     componentWillMount() {
-      this.updateLocalState(this.props);
+        this.updateLocalState(this.props);
     }
 
     updateLocalState(props) {
         this.setState({
-          icons: props.icons
+            icons: props.icons
         });
     }
 
     pushCard(card) {
-      const {
-        bridge,
-        section,
-        updateSectionOnIcon,
-        changeSection
-      } = this.props;
-      updateSectionOnIcon(bridge.id, card.id, section.id);
-      changeSection('icon', card.id, section.id);
+        const {
+            bridge,
+            section,
+            updateSectionOnIcon,
+            changeSection
+        } = this.props;
+        updateSectionOnIcon(bridge.id, card.id, section.id);
+        changeSection('icon', card.id, section.id);
     }
 
-    removeCard(index) { }
+    removeCard(index) {
+    }
 
     moveCard(dragIndex, hoverIndex) {
         const {
@@ -58,7 +59,7 @@ class IconSectionRow extends Component{
             updateOrderOnIcon,
             reorderElement
         } = this.props;
-        const card = icons.find( icon => icon.order === dragIndex && icon.section_id === section.id);
+        const card = icons.find(icon => icon.order === dragIndex && icon.section_id === section.id);
         updateOrderOnIcon(bridge.id, card.id, hoverIndex);
         reorderElement('icon', card.id, hoverIndex);
     }
@@ -78,22 +79,22 @@ class IconSectionRow extends Component{
         return connectDropTarget(
             <div>
                 <Section
-                         bridge={bridge}
-                         section={section}
-                         isActive={isActive}
-                         emptyStateText={emptyStateText}>
+                    bridge={bridge}
+                    section={section}
+                    isActive={isActive}
+                    emptyStateText={emptyStateText}>
                     {
-                        icons.filter(icon => ( icon.section_id === section.id)).sort((a, b) => ( a.order - b.order )).map(icon => {
+                        icons.filter(icon => (icon.section_id === section.id)).sort((a, b) => (a.order - b.order)).map(icon => {
                             return (
-                              <IconCard
-                                  key={icon.id}
-                                  index={icon.order}
-                                  listId={icon.section_id}
-                                  card={icon}
-                                  bridge={bridge}
-                                  removeCard={this.removeCard}
-                                  moveCard={this.moveCard}
-                              />
+                                <IconCard
+                                    key={icon.id}
+                                    index={icon.order}
+                                    listId={icon.section_id}
+                                    card={icon}
+                                    bridge={bridge}
+                                    removeCard={this.removeCard}
+                                    moveCard={this.moveCard}
+                                />
                             )
                         })
                     }
@@ -122,12 +123,12 @@ IconSectionRow.propTypes = {
 };
 
 const dispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    updateOrderOnIcon,
-    updateSectionOnIcon,
-    reorderElement,
-    changeSection
-  }, dispatch)
+    return bindActionCreators({
+        updateOrderOnIcon,
+        updateSectionOnIcon,
+        reorderElement,
+        changeSection
+    }, dispatch)
 };
 
 const iconSectionRow = dropTarget("ICON")(IconSectionRow);

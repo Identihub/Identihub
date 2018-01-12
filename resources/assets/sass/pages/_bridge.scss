@@ -1,58 +1,58 @@
-.bridge-page{
+.bridge-page {
   width: 90%;
   max-width: 886px;
   margin: 0 auto;
 
-  .link{
+  .link {
     position: relative;
 
-    &:hover{
+    &:hover {
       cursor: pointer;
     }
   }
 
-  .clipboard div{
+  .clipboard div {
     position: absolute;
     top: 0;
     left: -15px;
     width: 13px;
   }
 
-  .clipboard .a{
+  .clipboard .a {
     fill: #686961;
   }
 
-  .breadcrumb{
+  .breadcrumb {
     padding-bottom: 40px;
-    a{
+    a {
       color: $grey-main;
       font-weight: bold;
     }
   }
 
-  .link{
+  .link {
     margin-top: 10px;
   }
 
-  .title-section{
-    input{
+  .title-section {
+    input {
       font-size: 28px;
       color: $grey-main;
     }
 
-    img{
-      &:hover{
+    img {
+      &:hover {
         cursor: pointer;
       }
     }
   }
 
-  .fonts-section .bridge-section .empty-state{
+  .fonts-section .bridge-section .empty-state {
     margin-top: 36px;
     margin-left: 108px;
   }
 
-  .bridge-section{
+  .bridge-section {
     margin-top: 65px;
 
     .content {
@@ -77,50 +77,49 @@
         }
       }
 
-      &:hover{
-        .delete{
+      &:hover {
+        .delete {
           display: inline-block;
         }
       }
     }
 
-
-    #icon{
+    #icon {
       display: none;
     }
 
-    .card{
+    .card {
       position: relative;
 
-      a{
+      a {
         width: 100%;
         display: inline-block;
         height: 100%;
       }
 
-      &.font{
+      &.font {
         width: 100%;
       }
 
-      .move-handler{
+      .move-handler {
         display: none;
         position: absolute;
         top: 20px;
         left: 20px;
         width: 22px;
 
-        &:hover{
+        &:hover {
           cursor: move;
         }
       }
 
-      &:hover{
-        .move-handler{
+      &:hover {
+        .move-handler {
           display: block;
         }
       }
 
-      img{
+      img {
         max-width: 80%;
         max-height: 80%;
         position: absolute;
@@ -132,75 +131,75 @@
       }
     }
 
-    .title{
+    .title {
       display: table;
       margin: 0 auto;
       position: relative;
-      padding: 0 170px;
+      //padding: 0 170px;
+      //padding: 0px;
 
-      .tooltip{
+      .tooltip {
         display: none;
         left: 235px;
         top: -17px;
         padding-left: 60px;
         position: absolute;
 
-
-        ul{
+        ul {
           border-radius: 3px;
           padding: 10px;
           background-color: white;
 
-          li{
+          li {
             cursor: pointer;
           }
 
-          li:nth-child(2){
+          li:nth-child(2) {
             margin-top: 8px;
           }
         }
 
-        &:hover{
+        &:hover {
           display: block;
         }
       }
 
-      img:hover{
+      img:hover {
         cursor: pointer;
-        &~.tooltip{
+        & ~ .tooltip {
           display: block;
         }
       }
 
-      h2{
+      h2 {
         font-size: 26px;
         display: inline-block;
         float: left;
         text-transform: capitalize;
       }
 
-      img{
+      img {
         margin-top: 4px;
         margin-left: 20px;
         float: left;
       }
     }
 
-    .content{
+    .content {
       margin-top: 20px;
       clear: both;
 
-      .text{
+      .text {
         width: 23%;
         float: left;
         height: 150px;
       }
-      input{
+      input {
         font-size: 18px;
         color: $grey-lighter;
         margin-top: 10px;
       }
-      textarea{
+      textarea {
         font-size: 12px;
         resize: none;
         color: $grey-with-opacity;
@@ -210,13 +209,13 @@
       }
 
       input,
-      textarea{
+      textarea {
         float: left;
         width: 95%;
       }
     }
 
-    .flex{
+    .flex {
       width: 77%;
       display: flex;
       flex-direction: row;
@@ -227,32 +226,45 @@
       box-sizing: border-box;
       min-height: 172px;
 
-      &.active{
+      &.active {
         background-color: rgba(104, 105, 97, 0.1);
         border-radius: 3px;
         border: 1px solid rgba(104, 105, 97, 0.2);
       }
 
-      .card{
+      .card {
         transition: .15s ease-in-out;
-        &:hover{
+        &:hover {
           cursor: pointer;
           box-shadow: 0 0 15px rgba(104, 105, 97, 0.1);
           transform: scale(1.02);
         }
       }
 
-      .item{
+      .item {
         margin: 10px;
         width: 150px;
         height: 150px;
         border-radius: 3px;
         background-color: $white;
 
-        &.font{
+        &.font {
           width: 100%;
         }
       }
     }
+  }
+}
+
+@media (max-width: 767px) {
+  .title {
+    padding: 0;
+  }
+
+  .text {
+    width: 100% !important;
+    float: none !important;
+    height: 100px !important;
+    margin-bottom: 10px;
   }
 }
