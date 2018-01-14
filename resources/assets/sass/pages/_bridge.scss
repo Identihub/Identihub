@@ -32,11 +32,15 @@
 
   .link {
     margin-top: 10px;
+    margin-left: 30px;
   }
 
   .title-section {
     input {
-      font-size: 28px;
+      font-size: 30px;
+      margin-bottom: 50px;
+      // font-style: italic;
+
       color: $grey-main;
     }
 
@@ -135,10 +139,15 @@
       display: table;
       margin: 0 auto;
       position: relative;
-      // min-width: 85px;
+
 
       // padding: 0 170px;
       //padding: 0px;
+      h2 {
+        // width: 85px !important;
+
+      }
+
       .tooltip {
         display: none;
         left: 0px;
@@ -199,7 +208,7 @@
         height: 150px;
       }
       input {
-        font-size: 18px;
+        font-size: 16px;
         color: $grey-lighter;
         margin-top: 10px;
       }
@@ -264,6 +273,7 @@
   .title {
     padding: 0;
   }
+
 
   .text {
     width: 100% !important;

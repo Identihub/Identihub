@@ -63,10 +63,11 @@
 }
 
 .bridge-container{
+  overflow: hidden;
+  max-width: 190px;
   .label{
+    margin-left: 15px;
     text-align: center;
-    // margin-left: 15px;
-    // max-width: 205px;
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -77,4 +78,22 @@
 .bridge-name{
   position: absolute;
   bottom: -30px;
+}
+
+
+
+// TODO: Change later
+
+
+.background-light-gray {
+  background-color: #eee
+}
+
+.background-light-gray-Hovered {
+  width: 100%;
+  &:hover {
+    @include transition(all 0.2s ease-in-out);
+    // TODO: CHANGE later
+    background-color: #eee
+  }
 }

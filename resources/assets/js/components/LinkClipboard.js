@@ -40,9 +40,12 @@ class LinkClipboard extends Component{
                             </span>
         </CopyToClipboard>
         <span>{publicBridgePath}</span>
-        <DebounceInput value={bridge.slug || ''} className="input-ghost" style={{fontSize: '16px', color: '#686961'}}
-                       debounceTimeout="500"
-                       minLength="4" onChange={updateSlug}
+        <DebounceInput
+          value={bridge.slug || ''}
+          className="input-ghost background-light-gray "
+          style={{fontSize: '16px', color: '#686961'}}
+          debounceTimeout="500"
+          minLength="4" onChange={updateSlug}
         />
         <NotificationSystem ref="notificationSystem" />
       </div>
@@ -53,3 +56,5 @@ class LinkClipboard extends Component{
 }
 
 export default LinkClipboard;
+
+// TODO: SHOW background-light-gray only when admin
