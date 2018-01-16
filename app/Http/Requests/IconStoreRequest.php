@@ -24,7 +24,7 @@ class IconStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'icon' => 'required|file'
+            'icons' => 'required|array'
         ];
     }
 }

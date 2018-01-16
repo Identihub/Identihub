@@ -157,9 +157,9 @@ export function createIcon(bridgeId, files, callbackProgress){
     }
 }
 
-export function createImage(bridgeId, file){
+export function createImage(bridgeId, files){
   let data = new FormData();
-  data.append('image', file);
+  _.map(files, (f) => data.append('images[]', f));
 
   return (dispatch) => {
     return axios.post('/api/v1/bridges/' + bridgeId + '/images', data)

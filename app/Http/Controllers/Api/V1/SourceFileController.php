@@ -36,52 +36,59 @@ class SourceFileController extends Controller {
 				throw new ModelNotFoundException();
 			}
 
-			if ( $request->file( 'icon' )->getClientMimeType() !== 'image/svg+xml' ) {
-				throw new IconShouldBeSVG();
+			foreach ($request->icons as $icon) {
+				if ( $icon->getClientMimeType() !== 'image/svg+xml' ) {
+					throw new IconShouldBeSVG();
+				}
+
+				$im = new \Imagick();
+				$im->setBackgroundColor( new \ImagickPixel( 'transparent' ) );
+				$im->readImageBlob( file_get_contents( $icon->getRealPath() ) );
+				$im->setImageFormat( 'png32' );
+				$im->resizeImage( $im->getImageWidth(), $im->getImageHeight(), \Imagick::FILTER_LANCZOS, 1 );
+
+				$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
+
+	//		    $filenameIcon = str_random( 40 ) . '.svg';
+				$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.svg';
+
+
+				$icon->storeAs( '', $filenameIcon, 'assets' );
+
+				$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
+	//		    $filenameConverted = str_random( 40 ) . '.png';
+				$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.png';
+
+
+				\Storage::disk( 'assets' )->put( $filenameConverted, $im->getImageBlob() );
+
+				$section     = Section::where( 'section_type_id', $sectionType->id )->where( 'bridge_id', $bridgeId )->first();
+
+
+							$imageicon = Icon::create( [
+								'bridge_id'   => $bridgeId,
+								'filename'    => $filenameIcon,
+								'width_ratio' => $im->getImageWidth() / $im->getImageHeight(),
+								'section_id'  => $section->id,
+								'order'       => Icon::where( 'section_id', $section->id )->where( 'bridge_id', $bridgeId )->get()->count()
+							] );
+
+							$converted = IconConverted::create( [
+								'icon_id'  => $imageicon->id,
+								'filename' => $filenameConverted,
+								'width'    => $im->getImageWidth(),
+								'height'   => $im->getImageHeight()
+							] );
+
+							$bridge = Bridge::with( 'sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors' )->findOrFail( $bridgeId );
+							try {
+								event( new BridgeUpdated( $bridge ) );
+							} catch ( \Exception $e ) {
+							}
 			}
 
-			$im = new \Imagick();
-			$im->setBackgroundColor( new \ImagickPixel( 'transparent' ) );
-			$im->readImageBlob( file_get_contents( $request->file( 'icon' )->getRealPath() ) );
-			$im->setImageFormat( 'png32' );
-			$im->resizeImage( $im->getImageWidth(), $im->getImageHeight(), \Imagick::FILTER_LANCZOS, 1 );
-
-			$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
-//		    $filenameIcon = str_random( 40 ) . '.svg';
-			$filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.svg';
 
 
-			$request->file( 'icon' )->storeAs( '', $filenameIcon, 'assets' );
-
-			$sectionType = SectionType::where( 'name', SectionType::ICONS )->get()->first();
-//		    $filenameConverted = str_random( 40 ) . '.png';
-			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.png';
-
-
-			\Storage::disk( 'assets' )->put( $filenameConverted, $im->getImageBlob() );
-
-			$section     = Section::where( 'section_type_id', $sectionType->id )->where( 'bridge_id', $bridgeId )->first();
-
-			$icon = Icon::create( [
-				'bridge_id'   => $bridgeId,
-				'filename'    => $filenameIcon,
-				'width_ratio' => $im->getImageWidth() / $im->getImageHeight(),
-				'section_id'  => $section->id,
-				'order'       => Icon::where( 'section_id', $section->id )->where( 'bridge_id', $bridgeId )->get()->count()
-			] );
-
-			$converted = IconConverted::create( [
-				'icon_id'  => $icon->id,
-				'filename' => $filenameConverted,
-				'width'    => $im->getImageWidth(),
-				'height'   => $im->getImageHeight()
-			] );
-
-			$bridge = Bridge::with( 'sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors' )->findOrFail( $bridgeId );
-			try {
-				event( new BridgeUpdated( $bridge ) );
-			} catch ( \Exception $e ) {
-			}
 
 			return response()->json( [
 				'bridge'        => $bridge,
@@ -188,54 +195,54 @@ class SourceFileController extends Controller {
 				throw new ModelNotFoundException();
 			}
 
-			$image = $request->file( 'image' );
+			foreach ($request->images as $image) {
+				if ( ! ( $image->getClientMimeType() === 'image/jpeg' || $image->getClientMimeType() === 'image/png' ) ) {
+					throw new ImageShouldBePNGOrJPG();
+				}
 
-			if ( ! ( $image->getClientMimeType() === 'image/jpeg' || $image->getClientMimeType() === 'image/png' ) ) {
-				throw new ImageShouldBePNGOrJPG();
-			}
+				if ( $image->getClientMimeType() === 'image/jpeg' ) {
+					$imageExt  = 'jpg';
+					$imageType = 'jpeg';
+				} else {
+					$imageExt  = 'png';
+					$imageType = 'png32';
+				}
 
-			if ( $image->getClientMimeType() === 'image/jpeg' ) {
-				$imageExt  = 'jpg';
-				$imageType = 'jpeg';
-			} else {
-				$imageExt  = 'png';
-				$imageType = 'png32';
-			}
+				$im = new \Imagick();
+				$im->setBackgroundColor( new \ImagickPixel( 'transparent' ) );
+				$im->readImageBlob( file_get_contents( $image->getRealPath() ) );
+				$im->setImageFormat( $imageType );
+				$im->resizeImage( $im->getImageWidth(), $im->getImageHeight(), \Imagick::FILTER_LANCZOS, 1 );
 
-			$im = new \Imagick();
-			$im->setBackgroundColor( new \ImagickPixel( 'transparent' ) );
-			$im->readImageBlob( file_get_contents( $image->getRealPath() ) );
-			$im->setImageFormat( $imageType );
-			$im->resizeImage( $im->getImageWidth(), $im->getImageHeight(), \Imagick::FILTER_LANCZOS, 1 );
+				$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
+				$section     = Section::where( 'section_type_id', $sectionType->id )->where( 'bridge_id', $bridgeId )->get()->first();
 
-			$sectionType = SectionType::where( 'name', SectionType::IMAGES )->get()->first();
-			$section     = Section::where( 'section_type_id', $sectionType->id )->where( 'bridge_id', $bridgeId )->get()->first();
+				$filenameImage = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_images . '.' . $imageExt;
+				$image->storeAs( '', $filenameImage, 'assets' );
 
-			$filenameImage = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_images . '.' . $imageExt;
-			$image->storeAs( '', $filenameImage, 'assets' );
+				$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_images . '.' . $imageExt;
+				\Storage::disk( 'assets' )->put( $filenameConverted, $im->getImageBlob() );
 
-			$filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_images . '.' . $imageExt;
-			\Storage::disk( 'assets' )->put( $filenameConverted, $im->getImageBlob() );
+				$image = Image::create( [
+					'bridge_id'   => $bridgeId,
+					'filename'    => $filenameImage,
+					'width_ratio' => $im->getImageWidth() / $im->getImageHeight(),
+					'section_id'  => $section->id,
+					'order'       => Image::where( 'section_id', $section->id )->where( 'bridge_id', $bridgeId )->get()->count()
+				] );
 
-			$image = Image::create( [
-				'bridge_id'   => $bridgeId,
-				'filename'    => $filenameImage,
-				'width_ratio' => $im->getImageWidth() / $im->getImageHeight(),
-				'section_id'  => $section->id,
-				'order'       => Image::where( 'section_id', $section->id )->where( 'bridge_id', $bridgeId )->get()->count()
-			] );
+				$converted = ImageConverted::create( [
+					'image_id' => $image->id,
+					'filename' => $filenameConverted,
+					'width'    => $im->getImageWidth(),
+					'height'   => $im->getImageHeight()
+				] );
 
-			$converted = ImageConverted::create( [
-				'image_id' => $image->id,
-				'filename' => $filenameConverted,
-				'width'    => $im->getImageWidth(),
-				'height'   => $im->getImageHeight()
-			] );
-
-			$bridge = Bridge::with( 'sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors' )->findOrFail( $bridgeId );
-			try {
-				event( new BridgeUpdated( $bridge ) );
-			} catch ( \Exception $e ) {
+				$bridge = Bridge::with( 'sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors' )->findOrFail( $bridgeId );
+				try {
+					event( new BridgeUpdated( $bridge ) );
+				} catch ( \Exception $e ) {
+				}
 			}
 
 			return response()->json( [

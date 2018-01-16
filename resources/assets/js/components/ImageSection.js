@@ -21,7 +21,7 @@ class ImageSection extends Component {
     addImage(event) {
         const bridge = this.props.bridge;
         const createImage = this.props.createImage;
-        const file = event.target.files[0];
+        const file = event.target.files;
         createImage(bridge.id, file)
     }
 
@@ -55,6 +55,7 @@ class ImageSection extends Component {
                 canCreateSection={true}
                 sectionType={imagesSection}>
                 <input id="icon"
+                       multiple
                        ref={input => this.inputElement = input}
                        onChange={this.addImage}
                        type="file"
