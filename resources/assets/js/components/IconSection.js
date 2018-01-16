@@ -19,12 +19,11 @@ class IconSection extends Component {
     }
 
     addIcon(event) {
-
         const bridge = this.props.bridge;
         const createIcon = this.props.createIcon;
-        const file = event.target.files;
+        const files = event.target.files;
 
-        createIcon(bridge.id, file, function (progressEvent) {
+        createIcon(bridge.id, files, function (progressEvent) {
             // console.log(Math.round( (progressEvent.loaded * 100) / progressEvent.total ));
         })
         //this.addIcon(this.props.bridge.id, event.target.files[0]);
