@@ -94,7 +94,6 @@ class Section extends Component {
         } = this.props;
 
         const isPub = isPublic();
-        console.log('isPub: ', isPub);
 
         let canBeDeleted = (!this.props.children.length) && (section.order != 0);
 
@@ -117,7 +116,7 @@ class Section extends Component {
         if(!isPub){
             name = (
               <DebounceInput value={this.state.titleValue}
-                             className="input-ghost"
+                             className="input-ghost background-light-gray-Hovered"
                              placeholder="Write a title"
                              debounceTimeout="3000"
                              minLength="4"
@@ -126,7 +125,7 @@ class Section extends Component {
             description = (
               <DebounceInput spellCheck="false"
                              element="textarea"
-                             className="input-ghost"
+                             className="input-ghost background-light-gray-Hovered"
                              value={this.state.descriptionValue}
                              placeholder="Description"
                              debounceTimeout="3000"

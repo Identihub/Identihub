@@ -63,7 +63,7 @@ class IconSection extends Component {
                        ref={input => this.inputElement = input}
                        onChange={this.addIcon}
                        type="file"
-                       accept="image/*"
+                       accept="image/svg"
                        name="icon"/>
                 {
                     sortByOrder(filterSectionsWithSectionType(sections, iconsSection)).map(section => {
