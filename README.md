@@ -4,7 +4,7 @@
 # Identihub
 
 Identihub is an open-source web platform for brand and assets management. It is being developed by Ura Design, an open-source design agency.
-
+=
 ## Demos: 
 - https://demo.identihub.co/project/uradesign
 - https://demo.identihub.co/project/firefox
@@ -34,25 +34,22 @@ exit
 ```
 #### Configure Apache
 ```bash
-
-
 <VirtualHost *:80>
-        ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/html/public
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/public
 
-        <Directory /var/www/html/>
-            Options Indexes FollowSymLinks
-            AllowOverride All
-            Require all granted
-        </Directory>
+    <Directory /var/www/html/>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
 
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-        <IfModule mod_dir.c>
-            DirectoryIndex index.php index.pl index.cgi index.html index.xhtml $
-        </IfModule>
-
+    <IfModule mod_dir.c>
+        DirectoryIndex index.php index.pl index.cgi index.html index.xhtml $
+    </IfModule>
 </VirtualHost>
 ```
 (Assumes you have installed Identihub in /var/www/html)
@@ -69,10 +66,10 @@ Edit 'DB_DATABASE' 'DB_USERNAME' and 'DB_PASSWORD'
 #### Install Identihub's dependencies:
   `composer install`
 
-#### Migrate the Indentihub database (this will create the database tables):
+#### Migrate the Identihub database (this will create the database tables):
 `php artisan migrate`
 
-#### Seed the Indentihub database (this will populate the database with initial values):
+#### Seed the Identihub database (this will populate the database with initial values):
   `php artisan db:seed`
 
 #### Install Laravel Passport. This is related to the API's authentication:
@@ -80,6 +77,9 @@ Edit 'DB_DATABASE' 'DB_USERNAME' and 'DB_PASSWORD'
   
 #### Generate  AES-128-CB & AES-256-CBC:
   `php artisan key:generate`
+
+#### Set up the Mail server
+Find the `MAIL_*` entries in the `.env` file and update them with your necessary E
 
 #### (Optional) Modify `/etc/hosts` on the host machine to include identihub:
 ```
