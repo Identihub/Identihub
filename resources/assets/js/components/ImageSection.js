@@ -59,7 +59,7 @@ class ImageSection extends Component {
                        ref={input => this.inputElement = input}
                        onChange={this.addImage}
                        type="file"
-                       accept="image/*"
+                       accept="image/png,image/jpg,image/jpeg"
                        name="image"/>
                 {
                     sortByOrder(filterSectionsWithSectionType(sections, imagesSection)).map( section => {

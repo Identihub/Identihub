@@ -19,6 +19,9 @@ class IconSection extends Component {
     }
 
     addIcon(event) {
+        console.log(event);
+        return;
+
         const bridge = this.props.bridge;
         const createIcon = this.props.createIcon;
         const files = event.target.files;
@@ -63,7 +66,6 @@ class IconSection extends Component {
                        ref={input => this.inputElement = input}
                        onChange={this.addIcon}
                        type="file"
-                       accept="image/svg"
                        name="icon"/>
                 {
                     sortByOrder(filterSectionsWithSectionType(sections, iconsSection)).map(section => {
