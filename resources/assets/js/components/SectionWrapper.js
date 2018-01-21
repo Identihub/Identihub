@@ -40,8 +40,7 @@ class SectionWrapper extends Component {
         function isSectionAvailable() {
           for(var key in bridge) {
             if(key == title.toLowerCase()) {
-              return bridge[key].length ? true : false)
-
+              return bridge[key].length ? true : false
             }
           }
         }
