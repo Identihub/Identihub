@@ -1,3 +1,5 @@
+
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -21,17 +23,29 @@ class SectionWrapper extends Component {
       createSection(bridge.id, sectionType.id);
     }
 
-    render() {
 
+
+    render() {
         const {
             title,
             addResource,
             onResourceClick ,
             canCreateSection,
-            children
+            children,
+            bridge,
+            section
         } = this.props;
 
         const { createSection } = this;
+
+        function isSectionAvailable() {
+          for(var key in bridge) {
+            if(key == title.toLowerCase()) {
+              return bridge[key].length ? true : false)
+                
+            }
+          }
+        }
 
         const isPub = isPublic();
 
@@ -51,19 +65,25 @@ class SectionWrapper extends Component {
           );
         }
 
-        return (
-            <div className="bridge-section">
+        if(isPub && !isSectionAvailable()) {
+          return (<div></div>);
+          }else{
+            return (
+                <div className="bridge-section">
 
-                <div className="title">
-                    <h2>{ title }</h2>
-                    { plusIcon }
-                    { tooltip }
+                    <div className="title">
+                        <h2>{ title }</h2>
+                        { plusIcon }
+                        { tooltip }
+                    </div>
+
+                    { children }
+
                 </div>
+              );
+          }
 
-                { children }
 
-            </div>
-        );
     }
 
 }
