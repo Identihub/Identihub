@@ -32,8 +32,7 @@ class SectionWrapper extends Component {
             onResourceClick ,
             canCreateSection,
             children,
-            bridge,
-            section
+            bridge
         } = this.props;
 
         const { createSection } = this;
@@ -42,7 +41,7 @@ class SectionWrapper extends Component {
           for(var key in bridge) {
             if(key == title.toLowerCase()) {
               return bridge[key].length ? true : false)
-                
+
             }
           }
         }
