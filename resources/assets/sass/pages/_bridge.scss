@@ -249,8 +249,8 @@
         transition: .15s ease-in-out;
         &:hover {
           cursor: pointer;
-          box-shadow: 0 0 15px rgba(104, 105, 97, 0.1);
-          transform: scale(1.02);
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+          // transform: scale(1.02);
         }
       }
 
@@ -259,7 +259,7 @@
         width: 150px;
         height: 150px;
         border-radius: 3px;
-        background-color: $white;
+        background-color: $brand-disable-light;
 
         &.font {
           width: 100%;

@@ -13,9 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-
-
-Route::group(['middleware' => 'auth:api','namespace' => 'Api\V1', 'prefix' => 'v1'], function(){
+Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => 'v1'], function () {
+    Route::get('/me', 'UsersController@me');
     Route::resource('bridges', 'BridgeController');
     Route::patch('bridges/{id}/name', 'BridgeController@updateName');
     Route::resource('bridges.sections', 'SectionController');
@@ -41,5 +40,4 @@ Route::group(['middleware' => 'auth:api','namespace' => 'Api\V1', 'prefix' => 'v
 
     Route::post('/order/{type}/{objectId}/{newOrder}', 'OrderController@changedOrderOnSameSection');
     Route::post('/changeSection/{type}/{objectid}/{newSection}', 'OrderController@changedSection');
-
 });

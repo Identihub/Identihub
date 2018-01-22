@@ -1,5 +1,5 @@
 .bridge{
-  background-color: $white;
+  background-color: $brand-disable-light;
   border-radius: 3px;
   width: 190px;
   height: 190px;
@@ -36,8 +36,8 @@
   &:focus{
     outline: none;
     cursor: pointer;
-    transform: translateY(-10px);
-    box-shadow: 0 10px 8px $drop-shadow-color;
+    // transform: translateY(-10px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 
     .delete{
       display: block;
@@ -90,10 +90,9 @@
 }
 
 .background-light-gray-Hovered {
+  @include transition(all 0.2s ease-in-out);
   width: 100%;
   &:hover {
-    @include transition(all 0.2s ease-in-out);
-    // TODO: CHANGE later
-    background-color: #eee;
+    background-color: $brand-disable-light;
   }
 }
