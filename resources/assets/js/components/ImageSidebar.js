@@ -10,7 +10,6 @@ import { deleteImage, addImageConverted, updateImageFile } from '../reducers/Bri
 import { paramsChecker, isPublic } from '../helpers';
 
 class ImageSidebar extends Component {
-
   constructor(props) {
     super(props);
 
@@ -77,7 +76,6 @@ class ImageSidebar extends Component {
   }
 
   render() {
-
     const openSettings = this.openSettings;
     const openPrimary = this.openPrimary;
     const addNotification = this.addNotification;

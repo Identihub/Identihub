@@ -19,8 +19,8 @@ class IconSection extends Component {
     }
 
     addIcon(event) {
-        console.log(event);
-        return;
+        // console.log(event);
+        // return;
 
         const bridge = this.props.bridge;
         const createIcon = this.props.createIcon;

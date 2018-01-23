@@ -48,7 +48,7 @@ class ColorCard extends Component {
                 <span id="card-color-info" style={{color: this.state.infoColor}}>
                     <div className="rgb">
                         {card.rgb.split(" ").map((a, i) => (
-                            <span>
+                            <span key={`color-card${i}`}>
                                 {i === 0
                                     ? <span className="rgb-span">
                                         <span id="rgb-text">R</span>
