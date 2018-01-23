@@ -11,6 +11,7 @@ use App\Http\Requests\ConvertedStoreRequest;
 use App\Http\Requests\CreateConvertedIcon;
 use App\Http\Requests\IconStoreRequest;
 use App\Icon;
+use App\IconConverted;
 use App\Image;
 use App\Jobs\ReorderAfterDelete;
 use App\Section;
@@ -59,12 +60,12 @@ class SourceFileController extends Controller
                     'order' => Icon::where('section_id', $section->id)->where('bridge_id', $bridgeId)->get()->count()
                 ]);
 
-//                $converted = IconConverted::create([
-//                    'icon_id' => $imageicon->id,
-//                    'filename' => $filenameConverted,
-//                    'width' => $im->getImageWidth(),
-//                    'height' => $im->getImageHeight()
-//                ]);
+                IconConverted::create([
+                    'icon_id' => $imageicon->id,
+                    'filename' => $filenameConverted,
+                    'width' => $im->getImageWidth(),
+                    'height' => $im->getImageHeight()
+                ]);
 
                 $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
                 try {
