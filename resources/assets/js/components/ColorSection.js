@@ -5,7 +5,7 @@ import ColorSectionRow from './ColorSectionRow';
 import { getSectionType } from '../reducers/SectionType/SectionTypeReducer';
 import { connect } from 'react-redux';
 import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
-
+import { isPublic } from '../helpers';
 
 class ColorSection extends Component {
 
@@ -21,6 +21,14 @@ class ColorSection extends Component {
             history
         } = this.props;
         history.push('/project/' + bridge.id + '/add-color');
+    }
+
+    isSectionAvailable() {
+      const {
+        colors
+      } = this.props.bridge;
+
+      return colors.length ? true : false;
     }
 
     render() {
@@ -39,7 +47,11 @@ class ColorSection extends Component {
             addColor,
             emptyStateText
         } = this;
+        const isPub = isPublic();
 
+        if(isPub && !this.isSectionAvailable()) {
+          return (<div></div>);
+        }
         return (
             <SectionWrapper
                 title="Colors"
@@ -50,6 +62,7 @@ class ColorSection extends Component {
                 onResourceClick={addColor}>
                 {
                     sortByOrder(filterSectionsWithSectionType(sections, colorsSection)).map(function (section) {
+
                         return (
                             <ColorSectionRow
                                      section={section}

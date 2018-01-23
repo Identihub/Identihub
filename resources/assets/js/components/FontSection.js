@@ -6,6 +6,7 @@ import { getSectionType } from '../reducers/SectionType/SectionTypeReducer';
 import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
 import FontSectionRow from './FontSectionRow';
 import EmptySectionState from './EmptySectionState';
+import { isPublic } from '../helpers';
 
 class FontSection extends Component {
 
@@ -21,6 +22,14 @@ class FontSection extends Component {
             history
         } = this.props;
         history.push('/project/' + bridge.id + "/add-font");
+    }
+
+    isSectionAvailable() {
+      const {
+        fonts
+      } = this.props.bridge;
+
+      return fonts.length ? true : false;
     }
 
     render() {
@@ -41,7 +50,11 @@ class FontSection extends Component {
         } = this;
 
         const emptyState = <EmptySectionState style={{width: "56%", marginLeft: "23%"}} soloElement={true} emptyStateText="No fonts found here, start by adding a new font"/>;
+        const isPub = isPublic();
 
+        if(isPub && !this.isSectionAvailable()) {
+          return (<div></div>);
+        }
         return (
             <div className="fonts-section">
                 <SectionWrapper

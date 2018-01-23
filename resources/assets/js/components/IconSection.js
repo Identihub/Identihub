@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import IconSectionRow from './IconSectionRow';
 import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
 import { createIcon } from '../reducers/Bridge/BridgeApiCalls';
+import { isPublic } from '../helpers';
 
 class IconSection extends Component {
 
@@ -16,6 +17,7 @@ class IconSection extends Component {
         this.inputElement = null;
         this.addIcon = this.addIcon.bind(this);
         this.emulateInputOnChange = this.emulateInputOnChange.bind(this);
+        this.isSectionAvailable = this.isSectionAvailable.bind(this);
     }
 
     addIcon(event) {
@@ -30,6 +32,14 @@ class IconSection extends Component {
 
     emulateInputOnChange(event) {
         this.inputElement.click();
+    }
+
+    isSectionAvailable() {
+      const {
+        icons
+      } = this.props.bridge;
+
+      return icons.length ? true : false;
     }
 
     render() {
@@ -48,7 +58,11 @@ class IconSection extends Component {
             emulateInputOnChange,
             emptyStateText
         } = this;
+        const isPub = isPublic();
 
+        if(isPub && !this.isSectionAvailable()) {
+          return (<div></div>);
+        }
         return (
             <SectionWrapper
                 title="Icons"
