@@ -11,7 +11,7 @@ import IconSidebar from '../components/IconSidebar';
 import ImageSidebar from '../components/ImageSidebar';
 import {paramsChecker, isPublic} from '../helpers';
 import HamburgerMenu from '../components/HamburgerMenu';
-
+import {slide as Menu} from 'react-burger-menu'
 
 class Viewer extends Component {
 
@@ -276,9 +276,6 @@ class Viewer extends Component {
         return (
             <div className="viewer-page">
                 <div className="viewer">
-                    <div className="open-menu">
-                        <HamburgerMenu/>
-                    </div>
                     <div onClick={closePage}>
                         <ReactSVG
                             path="/images/close.svg"
@@ -303,9 +300,17 @@ class Viewer extends Component {
                         {sortedItems}
                         <div className="clearfix"></div>
                     </div>
+
                 </div>
                 {/*<div className="sidebar">*/}
-                {/*{sidebar}*/}
+                <Menu
+                    left
+                    noOverlay
+                    customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
+                    customCrossIcon={ <ReactSVG path="/images/close.svg" className=""/> }
+                >
+                    {sidebar}
+                </Menu>
                 {/*</div>*/}
             </div>
         );

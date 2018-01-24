@@ -113,96 +113,102 @@ class IconSidebar extends Component {
         }
 
         return (
-            <div className="icon-sidebar">
-                <div className="primary-view" style={{marginLeft: marginStyle}}>
-                    <div className="head">
-                        {settingsButton}
-                        <h3>Logos</h3>
-                    </div>
-                    <div className="content">
-                        <section>
-                            <h4>SVG</h4><a className="button" href={window.location.origin + '/assets/' + icon.filename}
-                                           download={icon.filename}>Download</a>
-                            <div className="clipboard_and_text">
-                                <div>
-                                    <CopyToClipboard text={window.location.origin + '/assets/' + icon.filename}
-                                                     className="clipboard" onCopy={() => {
-                                        addNotification()
-                                    }}>
-                    <span><ReactSVG
-                        path="/images/clipboard.svg"
-                    /></span>
-                                    </CopyToClipboard>
-                                </div>
-                                <p>{window.location.origin + '/assets/' + icon.filename}</p>
-                            </div>
-                        </section>
-                        <section>
-                            <h4>PNG</h4>
-                            {
-                                icon.converted.map(function (convertedItem) {
-                                    return (
-                                        <div key={convertedItem.id}>
-                                            <div className="clipboard_and_text">
-                                                <div>
-                                                    <CopyToClipboard
-                                                        text={window.location.origin + '/assets/' + convertedItem.filename}
-                                                        className="clipboard" onCopy={() => {
-                                                        addNotification()
-                                                    }}>
-                            <span>
-                              <ReactSVG
-                                  path="/images/clipboard.svg"
-                              />
-                            </span>
-                                                    </CopyToClipboard>
-                                                </div>
-                                                <p>{window.location.origin + '/assets/' + convertedItem.filename}</p>
-                                            </div>
-                                            <div className="text">
-                                                <p><span className="prefix">Width</span> <span className="primar">{convertedItem.width}</span></p>
-                                                <p><span className="prefix">Height</span> <span className="primar">{convertedItem.height}</span></p>
-                                                <a className="button"
-                                                   href={window.location.origin + '/assets/' + convertedItem.filename}
-                                                   download={convertedItem.filename}>Download</a>
-                                            </div>
-                                        </div>
-                                    );
-                                })
-                            }
-                        </section>
-                        {newSize}
-                    </div>
-                </div>
-                <div className="settings">
-                    <div className="head">
-                        <div onClick={openPrimary}>
-                            <ReactSVG
-                                path="/images/close.svg"
-                            />
-                        </div>
-                        <h3>Logo Settings</h3>
-                    </div>
-                    <div className="content">
-                        <section className="text">
-                            <input id="update-icon"
-                                   ref={input => this.inputElement = input}
-                                   onChange={this.updateIcon}
-                                   type="file"
-                                   accept="image/*"
-                                   name="icon"/>
-                            <a className="button" onClick={emulateInputOnChange}>Update Logo File</a>
-                        </section>
-                        <section>
-                            <div className="text">
-                                <a className="button" onClick={deleteIcon}>Delete</a>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-                <NotificationSystem ref="notificationSystem"/>
-            </div>
+          <div>
+              HELLO WORLD
+          </div>
         );
+
+        // return (
+        //     <div className="icon-sidebar">
+        //         <div className="primary-view" style={{marginLeft: marginStyle}}>
+        //             <div className="head">
+        //                 {settingsButton}
+        //                 <h3>Logos</h3>
+        //             </div>
+        //             <div className="content">
+        //                 <section>
+        //                     <h4>SVG</h4><a className="button" href={window.location.origin + '/assets/' + icon.filename}
+        //                                    download={icon.filename}>Download</a>
+        //                     <div className="clipboard_and_text">
+        //                         <div>
+        //                             <CopyToClipboard text={window.location.origin + '/assets/' + icon.filename}
+        //                                              className="clipboard" onCopy={() => {
+        //                                 addNotification()
+        //                             }}>
+        //             <span><ReactSVG
+        //                 path="/images/clipboard.svg"
+        //             /></span>
+        //                             </CopyToClipboard>
+        //                         </div>
+        //                         <p>{window.location.origin + '/assets/' + icon.filename}</p>
+        //                     </div>
+        //                 </section>
+        //                 <section>
+        //                     <h4>PNG</h4>
+        //                     {
+        //                         icon.converted.map(function (convertedItem) {
+        //                             return (
+        //                                 <div key={convertedItem.id}>
+        //                                     <div className="clipboard_and_text">
+        //                                         <div>
+        //                                             <CopyToClipboard
+        //                                                 text={window.location.origin + '/assets/' + convertedItem.filename}
+        //                                                 className="clipboard" onCopy={() => {
+        //                                                 addNotification()
+        //                                             }}>
+        //                     <span>
+        //                       <ReactSVG
+        //                           path="/images/clipboard.svg"
+        //                       />
+        //                     </span>
+        //                                             </CopyToClipboard>
+        //                                         </div>
+        //                                         <p>{window.location.origin + '/assets/' + convertedItem.filename}</p>
+        //                                     </div>
+        //                                     <div className="text">
+        //                                         <p><span className="prefix">Width</span> <span className="primar">{convertedItem.width}</span></p>
+        //                                         <p><span className="prefix">Height</span> <span className="primar">{convertedItem.height}</span></p>
+        //                                         <a className="button"
+        //                                            href={window.location.origin + '/assets/' + convertedItem.filename}
+        //                                            download={convertedItem.filename}>Download</a>
+        //                                     </div>
+        //                                 </div>
+        //                             );
+        //                         })
+        //                     }
+        //                 </section>
+        //                 {newSize}
+        //             </div>
+        //         </div>
+        //         <div className="settings">
+        //             <div className="head">
+        //                 <div onClick={openPrimary}>
+        //                     <ReactSVG
+        //                         path="/images/close.svg"
+        //                     />
+        //                 </div>
+        //                 <h3>Logo Settings</h3>
+        //             </div>
+        //             <div className="content">
+        //                 <section className="text">
+        //                     <input id="update-icon"
+        //                            ref={input => this.inputElement = input}
+        //                            onChange={this.updateIcon}
+        //                            type="file"
+        //                            accept="image/*"
+        //                            name="icon"/>
+        //                     <a className="button" onClick={emulateInputOnChange}>Update Logo File</a>
+        //                 </section>
+        //                 <section>
+        //                     <div className="text">
+        //                         <a className="button" onClick={deleteIcon}>Delete</a>
+        //                     </div>
+        //                 </section>
+        //             </div>
+        //         </div>
+        //         <NotificationSystem ref="notificationSystem"/>
+        //     </div>
+        // );
 
     }
 
