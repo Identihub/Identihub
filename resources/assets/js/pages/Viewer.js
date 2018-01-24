@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getBridge } from '../reducers/Bridge/BridgeReducer';
-import { getSectionTypes, getSectionType } from '../reducers/SectionType/SectionTypeReducer';
+import {connect} from 'react-redux';
+import {getBridge} from '../reducers/Bridge/BridgeReducer';
+import {getSectionTypes, getSectionType} from '../reducers/SectionType/SectionTypeReducer';
 import ReactSVG from 'react-svg';
-import { sortWithSectionAndOrder } from '../helpers';
+import {sortWithSectionAndOrder} from '../helpers';
 import FontSidebar from '../components/FontSidebar';
 import ColorSidebar from '../components/ColorSidebar';
 import IconSidebar from '../components/IconSidebar';
 import ImageSidebar from '../components/ImageSidebar';
-import { paramsChecker, isPublic } from '../helpers';
+import {paramsChecker, isPublic} from '../helpers';
+import HamburgerMenu from '../components/HamburgerMenu';
+
 
 class Viewer extends Component {
 
@@ -18,39 +20,39 @@ class Viewer extends Component {
 
         props = paramsChecker(props);
 
-        const { bridge, iconsSection, colorsSection, fontsSection, imagesSection } = props;
+        const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = props;
         const objectType = props.match.params.objectType;
 
         let elements = null;
         let elementsSection = null;
 
-        if(bridge){
-            switch (objectType){
-            case "icon":
-                elements = bridge.icons;
-                elementsSection = iconsSection;
-                break;
-            case "image":
-                elements = bridge.images;
-                elementsSection = imagesSection;
-                break;
-            case "color":
-                elements = bridge.colors;
-                elementsSection = colorsSection;
-                break;
-            case "font":
-                elements = bridge.fonts;
-                elementsSection = fontsSection;
-                break;
-            default:
-                return;
+        if (bridge) {
+            switch (objectType) {
+                case "icon":
+                    elements = bridge.icons;
+                    elementsSection = iconsSection;
+                    break;
+                case "image":
+                    elements = bridge.images;
+                    elementsSection = imagesSection;
+                    break;
+                case "color":
+                    elements = bridge.colors;
+                    elementsSection = colorsSection;
+                    break;
+                case "font":
+                    elements = bridge.fonts;
+                    elementsSection = fontsSection;
+                    break;
+                default:
+                    return;
             }
         }
 
         this.state = {
             objectType: objectType,
             elementId: props.match.params.elementId,
-            orderedElements: ( bridge && elementsSection) ? sortWithSectionAndOrder(elements, bridge.sections, elementsSection) : null
+            orderedElements: (bridge && elementsSection) ? sortWithSectionAndOrder(elements, bridge.sections, elementsSection) : null
         };
 
         this.goBackward = this.goBackward.bind(this);
@@ -63,54 +65,55 @@ class Viewer extends Component {
     keyPress(event) {
         const key = event.keyCode;
 
-        switch(key){
+        switch (key) {
             case 37: {
                 this.goBackward();
                 break;
             }
-            case 39:{
+            case 39: {
                 this.goForward();
                 break;
             }
-            case 27:{
+            case 27: {
                 //when the esc key is pressed
                 this.closePage();
                 break;
             }
-            default: break;
+            default:
+                break;
         }
     }
 
     componentWillReceiveProps(nextProps) {
 
-        const { bridge, iconsSection, colorsSection, fontsSection, imagesSection } = nextProps;
-        const { objectType } = this.state;
+        const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = nextProps;
+        const {objectType} = this.state;
 
-        if(!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !objectType)
+        if (!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !objectType)
             return;
 
         let elements = null;
         let elementsSection = null;
 
-        switch (objectType){
-          case "icon":
-              elements = bridge.icons;
-              elementsSection = iconsSection;
-              break;
-          case "color":
-              elements = bridge.colors;
-              elementsSection = colorsSection;
-              break;
-          case "font":
-              elements = bridge.fonts;
-              elementsSection = fontsSection;
-              break;
-          case 'image':
-              elements = bridge.images;
-              elementsSection = imagesSection;
-              break;
-          default:
-              return;
+        switch (objectType) {
+            case "icon":
+                elements = bridge.icons;
+                elementsSection = iconsSection;
+                break;
+            case "color":
+                elements = bridge.colors;
+                elementsSection = colorsSection;
+                break;
+            case "font":
+                elements = bridge.fonts;
+                elementsSection = fontsSection;
+                break;
+            case 'image':
+                elements = bridge.images;
+                elementsSection = imagesSection;
+                break;
+            default:
+                return;
         }
 
         const orderedElements = sortWithSectionAndOrder(elements, bridge.sections, elementsSection);
@@ -123,23 +126,23 @@ class Viewer extends Component {
     goForward() {
         const {elementId, orderedElements} = this.state;
         let hasFoundElement = false;
-        let nextElement = orderedElements.find(function(element) {
-            if(hasFoundElement)
+        let nextElement = orderedElements.find(function (element) {
+            if (hasFoundElement)
                 return true;
-            if(Number(element.id) === Number(elementId))
+            if (Number(element.id) === Number(elementId))
                 hasFoundElement = true;
             return false;
         });
 
-        if(nextElement)
-          this.changeToElement(nextElement);
+        if (nextElement)
+            this.changeToElement(nextElement);
     }
 
-    changeToElement(element){
-        const { objectType } = this.state;
-        const { bridge } = this.props;
+    changeToElement(element) {
+        const {objectType} = this.state;
+        const {bridge} = this.props;
 
-        if(!objectType || !bridge)
+        if (!objectType || !bridge)
             return;
 
         this.setState((prevState, props) => {
@@ -150,10 +153,10 @@ class Viewer extends Component {
 
         let url = null;
 
-        if(!isPub){
-          url = '/project/' + bridge.id + '/view/' + objectType + '/element/' + element.id;
-        }else{
-          url = '/view/' + objectType + '/element/' + element.id;
+        if (!isPub) {
+            url = '/project/' + bridge.id + '/view/' + objectType + '/element/' + element.id;
+        } else {
+            url = '/view/' + objectType + '/element/' + element.id;
         }
 
         this.props.history.replace(url);
@@ -162,24 +165,24 @@ class Viewer extends Component {
     goBackward() {
         const {elementId, orderedElements} = this.state;
         let prevElement = null;
-        orderedElements.find(function(element) {
-            if(Number(element.id) === Number(elementId))
+        orderedElements.find(function (element) {
+            if (Number(element.id) === Number(elementId))
                 return true;
             prevElement = element;
             return false;
         });
 
-        if(prevElement)
+        if (prevElement)
             this.changeToElement(prevElement);
     }
 
     findOrderOfElement(elements, selectedElementId) {
         let order = 0;
-        if(!elements)
+        if (!elements)
             return null;
 
-        elements.find(function(element){
-            if(Number(element.id) === Number(selectedElementId))
+        elements.find(function (element) {
+            if (Number(element.id) === Number(selectedElementId))
                 return true;
             order = order + 1;
             return false;
@@ -193,18 +196,18 @@ class Viewer extends Component {
 
     render() {
 
-        if(this.state === null)
-            return (<div> </div>);
+        if (this.state === null)
+            return (<div></div>);
 
-        const { objectType, orderedElements, elementId } = this.state;
-        const { bridge, iconsSection, colorsSection, fontsSection, imagesSection } = this.props;
+        const {objectType, orderedElements, elementId} = this.state;
+        const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = this.props;
 
         const goForward = this.goForward;
         const goBackward = this.goBackward;
         const closePage = this.closePage;
 
-        if(!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !orderedElements)
-            return (<div> </div>);
+        if (!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !orderedElements)
+            return (<div></div>);
 
         const order = this.findOrderOfElement(orderedElements, elementId);
 
@@ -215,47 +218,55 @@ class Viewer extends Component {
 
         switch (objectType) {
             case 'icon':
-                sortedItems = orderedElements ? orderedElements.map(function(icon){
-                    return( <div key={icon.id} className="item">
+                sortedItems = orderedElements ? orderedElements.map(function (icon) {
+                    return (<div key={icon.id} className="item">
                         <div className="container">
                             <img src={'/assets/' + icon.filename}/>
                         </div>
-                    </div> )
+                    </div>)
                 }) : null;
-                let icon = orderedElements.find(function(item) { return item.id == elementId; });
+                let icon = orderedElements.find(function (item) {
+                    return item.id == elementId;
+                });
                 sidebar = <IconSidebar bridge={bridge} icon={icon} history={this.props.history}/>;
                 break;
             case 'image':
-                sortedItems = orderedElements ? orderedElements.map(function(image){
-                  return( <div key={image.id} className="item">
-                      <div className="container">
-                          <img className="image-viewer" src={'/assets/' + image.filename}/>
-                      </div>
-                  </div> )
+                sortedItems = orderedElements ? orderedElements.map(function (image) {
+                    return (<div key={image.id} className="item">
+                        <div className="container">
+                            <img className="image-viewer" src={'/assets/' + image.filename}/>
+                        </div>
+                    </div>)
                 }) : null;
-                let image = orderedElements.find(function(item) { return item.id == elementId; });
+                let image = orderedElements.find(function (item) {
+                    return item.id == elementId;
+                });
                 sidebar = <ImageSidebar bridge={bridge} image={image} history={this.props.history}/>;
                 break;
             case 'color':
-                sortedItems = orderedElements ? orderedElements.map(function(color){
-                    return( <div key={color.id} className="item">
+                sortedItems = orderedElements ? orderedElements.map(function (color) {
+                    return (<div key={color.id} className="item">
                         <div className="container">
-                            <div className="color" style={{backgroundColor: "#" + color.hex}}> </div>
+                            <div className="color" style={{backgroundColor: "#" + color.hex}}></div>
                         </div>
-                    </div> )
+                    </div>)
                 }) : null;
-                let color = orderedElements.find(function(item) { return item.id == elementId; });
+                let color = orderedElements.find(function (item) {
+                    return item.id == elementId;
+                });
                 sidebar = <ColorSidebar bridge={bridge} color={color} history={this.props.history}/>
                 break;
             case 'font':
-                sortedItems = orderedElements ? orderedElements.map(function(font){
-                    return( <div key={font.id} className="item">
+                sortedItems = orderedElements ? orderedElements.map(function (font) {
+                    return (<div key={font.id} className="item">
                         <div className="container">
                             <img className="" src={'/fonts/' + font.variant.image_link}/>
                         </div>
-                    </div> )
+                    </div>)
                 }) : null;
-                let font = orderedElements.find(function(item) { return item.id == elementId; });
+                let font = orderedElements.find(function (item) {
+                    return item.id == elementId;
+                });
                 sidebar = <FontSidebar bridge={bridge} font={font} history={this.props.history}/>;
                 break;
             default:
@@ -265,32 +276,37 @@ class Viewer extends Component {
         return (
             <div className="viewer-page">
                 <div className="viewer">
+                    <div className="open-menu">
+                        <HamburgerMenu/>
+                    </div>
                     <div onClick={closePage}>
                         <ReactSVG
                             path="/images/close.svg"
                             className="close"
                         />
                     </div>
-                    <div onClick={goBackward} tabIndex="-1" ref={input => input && input.focus()} onKeyDown={this.keyPress}>
+                    <div onClick={goBackward} tabIndex="-1" ref={input => input && input.focus()}
+                         onKeyDown={this.keyPress}>
                         <ReactSVG
                             path="/images/backward.svg"
                             className="backward"
                         />
                     </div>
-                    <div onClick={goForward} tabIndex="-1" ref={input => input && input.focus()} onKeyDown={this.keyPress}>
+                    <div onClick={goForward} tabIndex="-1" ref={input => input && input.focus()}
+                         onKeyDown={this.keyPress}>
                         <ReactSVG
                             path="/images/forward.svg"
                             className="forward"
                         />
                     </div>
                     <div className="items" style={{marginLeft: marginLeft}}>
-                      {sortedItems}
-                      <div className="clearfix"></div>
+                        {sortedItems}
+                        <div className="clearfix"></div>
                     </div>
                 </div>
-                <div className="sidebar">
-                  {sidebar}
-                </div>
+                {/*<div className="sidebar">*/}
+                {/*{sidebar}*/}
+                {/*</div>*/}
             </div>
         );
     }
