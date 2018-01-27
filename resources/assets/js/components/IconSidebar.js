@@ -6,6 +6,8 @@ import ReactSVG from 'react-svg';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import NotificationSystem from 'react-notification-system';
 import NewSize from '../components/NewSize';
+import Spinner from '../components/Spinner';
+
 import {deleteIcon, addIconConverted, updateIconFile} from '../reducers/Bridge/BridgeApiCalls';
 import {paramsChecker, isPublic} from '../helpers';
 
@@ -100,22 +102,60 @@ class IconSidebar extends Component {
         const lastConverted = icon.converted[icon.converted.length - 1];
         console.log(lastConverted);
 
-        let settingsButton = null;
+        let adminOptions = null;
         let newSize = null;
+        // if (!isPub) {
+        //     settingsButton = (
+        //         <div onClick={openSettings}>
+        //             <ReactSVG
+        //                 path="/images/settings.svg"
+        //             />
+        //         </div>);
+        //     // newSize = (
+        //     //     <NewSize defaultWidth={lastConverted.width} ratio={this.props.icon.width_ratio} saveElement={addNewConverted}/>);
+        // }
+
+
         if (!isPub) {
-            settingsButton = (<div onClick={openSettings}>
-                <ReactSVG
-                    path="/images/settings.svg"
-                />
-            </div>);
-            newSize = (
-                <NewSize defaultWidth={lastConverted.width} ratio={this.props.icon.width_ratio} saveElement={addNewConverted}/>);
+            adminOptions = (
+                <div className="settings">
+                    <div className="title">
+                        <span>Admin</span>
+                    </div>
+                    <div className="featured">
+                        <span>Featured Image</span>
+                        {/* THE CHECKBOX FOR SETTING FEATURED */}
+                        <span id="checkbox">
+                            <Spinner
+                                width={14}
+                                height={14}
+                            />
+                        </span>
+                    </div>
+                    <div className="buttons">
+                        {/*<section className="update">*/}
+                            <input id="update-icon"
+                                   ref={input => this.inputElement = input}
+                                   onChange={this.updateIcon}
+                                   type="file"
+                                   accept="image/*"
+                                   name="icon"/>
+                            <a className="button-outline-white settings-button" onClick={emulateInputOnChange}>UPDATE</a>
+                        {/*</section>*/}
+                        <a className="button-outline-delete settings-button button-left" onClick={deleteIcon}>DELETE</a>
+                    </div>
+                </div>
+            );
         }
 
+
         return (
-          <div>
-              HELLO WORLD
-          </div>
+            <div className="bm-item-list sidebar">
+                <div className="header">
+                    <span>User Asset</span>
+                </div>
+                {adminOptions}
+            </div>
         );
 
         // return (

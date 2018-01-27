@@ -10,8 +10,7 @@ import ColorSidebar from '../components/ColorSidebar';
 import IconSidebar from '../components/IconSidebar';
 import ImageSidebar from '../components/ImageSidebar';
 import {paramsChecker, isPublic} from '../helpers';
-import HamburgerMenu from '../components/HamburgerMenu';
-import {slide as Menu} from 'react-burger-menu'
+import {push as Menu} from 'react-burger-menu'
 
 class Viewer extends Component {
 
@@ -211,7 +210,7 @@ class Viewer extends Component {
 
         const order = this.findOrderOfElement(orderedElements, elementId);
 
-        const marginLeft = "calc(" + (-100 * order) + "vw + " + (300 * order) + "px)";
+        const marginLeft = "calc(" + (-100 * order) + "vw + " + 0 + "px)";
 
         let sortedItems = null;
         let sidebar = null;
@@ -274,8 +273,18 @@ class Viewer extends Component {
         }
 
         return (
-            <div className="viewer-page">
-                <div className="viewer">
+            <div className="viewer-page" id="outter-container">
+                <Menu
+                    left
+                    noOverlay
+                    pageWrapId={"page-wrap"}
+                    outerContainerId={"outter-container"}
+                    customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
+                    customCrossIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
+                >
+                    {sidebar}
+                </Menu>
+                <main className="viewer" id="page-wrap">
                     <div onClick={closePage}>
                         <ReactSVG
                             path="/images/close.svg"
@@ -300,18 +309,7 @@ class Viewer extends Component {
                         {sortedItems}
                         <div className="clearfix"></div>
                     </div>
-
-                </div>
-                {/*<div className="sidebar">*/}
-                <Menu
-                    left
-                    noOverlay
-                    customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
-                    customCrossIcon={ <ReactSVG path="/images/close.svg" className=""/> }
-                >
-                    {sidebar}
-                </Menu>
-                {/*</div>*/}
+                </main>
             </div>
         );
     }

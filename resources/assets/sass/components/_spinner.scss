@@ -1,0 +1,202 @@
+// CSS Spinner - Tweak away
+
+// Colours
+$color-1: #636b6f !default;
+$color-2: #f5f8fa !default;
+
+// Timing
+$container-rotate-timing:           1600ms !default;
+$spinner-fill-unfill-rotate-timing: 4800ms !default;
+
+
+$spinner-line-count: 4;
+
+$spinner-left-spin:  $spinner-fill-unfill-rotate-timing / $spinner-line-count; // Changes these values can be interesting
+$spinner-right-spin: $spinner-fill-unfill-rotate-timing / $spinner-line-count; // Changes these values can be interesting
+
+
+.Spinner {
+  //height: 28px;
+  //width: 28px;
+  animation: container-rotate #{$container-rotate-timing} linear infinite;
+}
+
+.Spinner-line {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.Spinner-line--1 {
+  border-color: $color-1;
+  animation: fill-unfill-rotate #{$spinner-fill-unfill-rotate-timing} cubic-bezier(0.4, 0, 0.2, 1) infinite both, line-1-fade-in-out #{$spinner-fill-unfill-rotate-timing} cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+
+}
+
+.Spinner-line--2 {
+  border-color: $color-2;
+  animation: fill-unfill-rotate #{$spinner-fill-unfill-rotate-timing} cubic-bezier(0.4, 0, 0.2, 1) infinite both, line-2-fade-in-out #{$spinner-fill-unfill-rotate-timing} cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+}
+
+.Spinner-line--3 {
+  border-color: $color-1;
+  animation: fill-unfill-rotate #{$spinner-fill-unfill-rotate-timing} cubic-bezier(0.4, 0, 0.2, 1) infinite both, line-3-fade-in-out #{$spinner-fill-unfill-rotate-timing} cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+}
+
+.Spinner-line--4 {
+  border-color: $color-2;
+  animation: fill-unfill-rotate #{$spinner-fill-unfill-rotate-timing} cubic-bezier(0.4, 0, 0.2, 1) infinite both, line-4-fade-in-out #{$spinner-fill-unfill-rotate-timing} cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+
+}
+
+.Spinner-line-cog {
+  display: inline-block;
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+.Spinner-line-cog-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 200%;
+  box-sizing: border-box;
+  height: 100%;
+  border-width: 3px;
+  border-style: solid;
+  border-color: inherit;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: none;
+}
+
+.Spinner-line-cog-inner--left {
+  border-right-color: transparent;
+  transform: rotate(129deg);
+  animation: left-spin #{$spinner-left-spin} cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+}
+
+.Spinner-line-cog-inner--right {
+  left: -100%;
+  border-left-color: transparent;
+  transform: rotate(-129deg);
+  animation: right-spin #{$spinner-right-spin} cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+}
+
+.Spinner-line-cog-inner--center {
+  width: 1000%;
+  left: -450%;
+}
+
+.Spinner-line-ticker {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  left: 45%;
+  width: 10%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+// ===============================
+// Animations
+// ===============================
+
+@keyframes container-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fill-unfill-rotate {
+  12.5% {
+    transform: rotate(135deg);
+  }
+  25% {
+    transform: rotate(270deg);
+  }
+  37.5% {
+    transform: rotate(405deg);
+  }
+  50% {
+    transform: rotate(540deg);
+  }
+  62.5% {
+    transform: rotate(675deg);
+  }
+  75% {
+    transform: rotate(810deg);
+  }
+  87.5% {
+    transform: rotate(945deg);
+  }
+  to {
+    transform: rotate(1080deg);
+  }
+}
+
+@keyframes left-spin {
+  0% {
+    transform: rotate(130deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+  to {
+    transform: rotate(130deg);
+  }
+}
+@keyframes right-spin {
+  0% {
+    transform: rotate(-130deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  to {
+    transform: rotate(-130deg);
+  }
+}
+
+// This could be automated
+
+@keyframes line-1-fade-in-out{
+  0%{opacity:1}
+  25%{opacity:1}
+  26%{opacity:0}
+  89%{opacity:0}
+  90%{opacity:1}
+  to{opacity:1}
+}
+
+
+@keyframes line-2-fade-in-out{
+  0%{opacity:0}
+  15%{opacity:0}
+  25%{opacity:1}
+  50%{opacity:1}
+  51%{opacity:0}
+}
+
+@keyframes line-3-fade-in-out{
+  0%{opacity:0}
+  40%{opacity:0}
+  50%{opacity:1}
+  75%{opacity:1}
+  76%{opacity:0}
+}
+
+@keyframes line-4-fade-in-out{
+  0%{opacity:0}
+  65%{opacity:0}
+  75%{opacity:1}
+  90%{opacity:1}
+  to{opacity:0}
+}

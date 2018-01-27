@@ -51,4 +51,39 @@
     }
   }
 
+  &-outline-delete{
+    border: 1px solid $brand-danger;
+    color: $brand-danger;
+    background-color: transparent;
+    transition: $common-transition;
+
+    &:focus{
+      outline: none;
+    }
+
+    &:hover,
+    &:focus{
+      color: $white;
+      background-color: $brand-danger;
+      cursor: pointer;
+    }
+  }
+
+  &-outline-white{
+    border: 1px solid $white;
+    color: $white;
+    background-color: transparent;
+    transition: $common-transition;
+
+    &:focus{
+      outline: none;
+    }
+
+    &:hover,
+    &:focus{
+      color: $text-color;
+      background-color: $white;
+      cursor: pointer;
+    }
+  }
 }
