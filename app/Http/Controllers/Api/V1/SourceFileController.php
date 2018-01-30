@@ -13,6 +13,7 @@ use App\Http\Requests\IconStoreRequest;
 use App\Icon;
 use App\IconConverted;
 use App\Image;
+use App\ImageConverted;
 use App\Jobs\ReorderAfterDelete;
 use App\Section;
 use App\SectionType;
@@ -197,12 +198,12 @@ class SourceFileController extends Controller
                     'order' => Image::where('section_id', $section->id)->where('bridge_id', $bridgeId)->get()->count()
                 ]);
 
-//                $converted = ImageConverted::create([
-//                    'image_id' => $image->id,
-//                    'filename' => $filenameConverted,
-//                    'width' => $im->getImageWidth(),
-//                    'height' => $im->getImageHeight()
-//                ]);
+                ImageConverted::create([
+                    'image_id' => $image->id,
+                    'filename' => $filenameConverted,
+                    'width' => $im->getImageWidth(),
+                    'height' => $im->getImageHeight()
+                ]);
 
                 $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
                 try {
@@ -241,12 +242,12 @@ class SourceFileController extends Controller
 
             $sectionType = SectionType::where('name', SectionType::ICONS)->get()->first();
             $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_icons . '.png';
-//            $iconConverted = IconConverted::create([
-//                'icon_id' => $icon->id,
-//                'filename' => $filenameConverted,
-//                'width' => $im->getImageWidth(),
-//                'height' => $im->getImageHeight()
-//            ]);
+            IconConverted::create([
+                'icon_id' => $icon->id,
+                'filename' => $filenameConverted,
+                'width' => $im->getImageWidth(),
+                'height' => $im->getImageHeight()
+            ]);
             \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
             return response()->json([
@@ -292,12 +293,12 @@ class SourceFileController extends Controller
             $sectionType = SectionType::where('name', SectionType::IMAGES)->get()->first();
             $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_images . '.' . $imageExt;
 
-//            $imageConverted = ImageConverted::create([
-//                'image_id' => $image->id,
-//                'filename' => $filenameConverted,
-//                'width' => $im->getImageWidth(),
-//                'height' => $im->getImageHeight()
-//            ]);
+            ImageConverted::create([
+                'image_id' => $image->id,
+                'filename' => $filenameConverted,
+                'width' => $im->getImageWidth(),
+                'height' => $im->getImageHeight()
+            ]);
             \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
 
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
