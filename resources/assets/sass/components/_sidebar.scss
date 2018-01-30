@@ -15,6 +15,8 @@
 .bm-cross-button {
   margin-top: 22px;
   margin-right: 10px;
+  color: white;
+  font-size: 25px !important;
 }
 
 .bm-item-list {
@@ -22,7 +24,78 @@
 
   & .sidebar {
     height: 100vh;
-    padding: 30px 10px 30px 30px;
+    padding-top: 30px;
+  }
+
+  & .sidebar-padding {
+    padding-left: 30px;
+    padding-right: 10px;
+  }
+}
+
+
+ #sidebar-hr {
+   margin-top: 30px;
+   padding: 0 20px 0 20px;
+
+   & hr {
+     border: 1px solid #1d2124;
+     //margin: 0;
+   }
+ }
+
+.sidebar-client {
+  padding: 0 30px 0 30px;
+}
+.sidebar-png {
+  margin-top: 30px;
+}
+
+.sidebar-section {
+  & .title {
+    span {
+      color: $white;
+    }
+    & #title-icon {
+      margin-left: 10px;
+      color: $white;
+    }
+  }
+}
+
+.sidebar-svg-url {
+  margin-top: 10px;
+  & #title {
+    font-size: 10px;
+    color: $text-gray-dark;
+    font-weight: bold;
+  }
+
+  & .url {
+    display: flex;
+    align-items: center;
+
+    & #copy-to-clip {
+      //margin-right: 10px;
+    }
+
+    #icon {
+      color: $text-gray-light;
+      font-size: 20px;
+      margin-left: 10px;
+    }
+
+    & p {
+      margin-top: 5px;
+      padding: 7px;
+      font-size: 14px;
+      background-color: $text-gray-dark;
+      color: $text-gray-light;
+
+      width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
@@ -36,6 +109,10 @@
     //text-align: center;
     font-weight: 500;
   }
+}
+
+.admin-option {
+  margin-bottom: 30px;
 }
 
 .settings {

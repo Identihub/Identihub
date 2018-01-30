@@ -280,7 +280,7 @@ class Viewer extends Component {
                     pageWrapId={"page-wrap"}
                     outerContainerId={"outter-container"}
                     customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
-                    customCrossIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
+                    customCrossIcon={ <span className="close-menu"><i className="fas fa-bars"/></span> }
                 >
                     {sidebar}
                 </Menu>

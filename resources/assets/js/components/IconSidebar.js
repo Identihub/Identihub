@@ -37,6 +37,8 @@ class IconSidebar extends Component {
     }
 
     addNotification() {
+        console.log("Here");
+
         this.notificationSystem.addNotification({
             message: 'Link copied to clipboard ',
             level: 'success'
@@ -118,31 +120,43 @@ class IconSidebar extends Component {
 
         if (!isPub) {
             adminOptions = (
-                <div className="settings">
-                    <div className="title">
-                        <span>Admin</span>
-                    </div>
-                    <div className="featured">
-                        <span>Featured Image</span>
-                        {/* THE CHECKBOX FOR SETTING FEATURED */}
-                        <span id="checkbox">
+                <div className="admin-option">
+                    <div className="sidebar-padding">
+                        <div className="header">
+                            <span>User Asset</span>
+                        </div>
+                        <div className="settings">
+                            <div className="title">
+                                <span>Admin</span>
+                            </div>
+                            <div className="featured">
+                                <span>Featured Image</span>
+                                {/* THE CHECKBOX FOR SETTING FEATURED */}
+                                <span id="checkbox">
                             <Spinner
                                 width={14}
                                 height={14}
                             />
                         </span>
+                            </div>
+                            <div className="buttons">
+                                {/*<section className="update">*/}
+                                <input id="update-icon"
+                                       ref={input => this.inputElement = input}
+                                       onChange={this.updateIcon}
+                                       type="file"
+                                       accept="image/*"
+                                       name="icon"/>
+                                <a className="button-outline-white settings-button"
+                                   onClick={emulateInputOnChange}>UPDATE</a>
+                                {/*</section>*/}
+                                <a className="button-outline-delete settings-button button-left"
+                                   onClick={deleteIcon}>DELETE</a>
+                            </div>
+                        </div>
                     </div>
-                    <div className="buttons">
-                        {/*<section className="update">*/}
-                            <input id="update-icon"
-                                   ref={input => this.inputElement = input}
-                                   onChange={this.updateIcon}
-                                   type="file"
-                                   accept="image/*"
-                                   name="icon"/>
-                            <a className="button-outline-white settings-button" onClick={emulateInputOnChange}>UPDATE</a>
-                        {/*</section>*/}
-                        <a className="button-outline-delete settings-button button-left" onClick={deleteIcon}>DELETE</a>
+                    <div id="sidebar-hr">
+                        <hr/>
                     </div>
                 </div>
             );
@@ -151,10 +165,49 @@ class IconSidebar extends Component {
 
         return (
             <div className="bm-item-list sidebar">
-                <div className="header">
-                    <span>User Asset</span>
-                </div>
                 {adminOptions}
+                <div className="sidebar-client">
+                    <div className="sidebar-section">
+                        <div className="title">
+                            <span>
+                                SVG
+                            </span>
+                            <a id="title-icon" href={window.location.origin + '/assets/' + icon.filename}
+                               download={icon.filename}>
+                                <i className="fas fa-download"/>
+                            </a>
+                        </div>
+                        <div className="sidebar-svg-url">
+                            <div id="title">EMBED</div>
+                            <div className="url">
+                                <p>{window.location.origin + '/assets/' + icon.filename}</p>
+                                <span id="copy-to-clip">
+                                    <CopyToClipboard
+                                        text={window.location.origin + '/assets/' + icon.filename}
+                                        className="clipboard" onCopy={() => {
+                                        addNotification()
+                                    }}>
+                                            <span id="icon">
+                                                <i className="far fa-copy"/>
+                                            </span>
+                                    </CopyToClipboard>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="sidebar-png sidebar-section">
+                        <div className="title">
+                            <span>
+                                PNG
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+
+                </div>
+                <NotificationSystem ref="notificationSystem"/>
             </div>
         );
 
@@ -171,10 +224,10 @@ class IconSidebar extends Component {
         //                                    download={icon.filename}>Download</a>
         //                     <div className="clipboard_and_text">
         //                         <div>
-        //                             <CopyToClipboard text={window.location.origin + '/assets/' + icon.filename}
-        //                                              className="clipboard" onCopy={() => {
-        //                                 addNotification()
-        //                             }}>
+        //                            <CopyToClipboard text={window.location.origin + '/assets/' + icon.filename}
+        //                                             className="clipboard" onCopy={() => {
+        //                               addNotification()
+        //                            }}>
         //             <span><ReactSVG
         //                 path="/images/clipboard.svg"
         //             /></span>

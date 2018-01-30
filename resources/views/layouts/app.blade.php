@@ -29,8 +29,12 @@
     <title>{{ config('app.name', 'Identihub') }}</title>
 
     <!-- Styles -->
-    <link href="https://fonts.googleapis.com/css?family=Overpass:400,900" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <script type="text/javascript">
+
+    </script>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">

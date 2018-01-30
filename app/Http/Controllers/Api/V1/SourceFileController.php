@@ -13,6 +13,7 @@ use App\Http\Requests\IconStoreRequest;
 use App\Icon;
 use App\IconConverted;
 use App\Image;
+use App\ImageConverted;
 use App\Jobs\ReorderAfterDelete;
 use App\Section;
 use App\SectionType;

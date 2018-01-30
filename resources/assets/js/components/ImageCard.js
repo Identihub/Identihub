@@ -14,7 +14,7 @@ class ImageCard extends Component {
         if(!isPub){
           return connectDragSource(connectDropTarget(
             <div className="item card" style={{opacity: opacity}}>
-                <Link to={'/project/' + bridge.id + '/view/image/element/' + card.id} style={{backgroundImage: "url(" + '/assets/' + card.filename + ")", backgroundSize: 'cover'}}>
+                <Link to={'/project/' + bridge.id + '/view/image/element/' + card.id} style={{backgroundImage: "url(" + '/assets/' + card.filename + ")", backgroundPosition: 'center', backgroundSize: 'cover'}}>
                     <img src="/images/move-handler.svg" className="move-handler" width="22"/>
                 </Link>
             </div>
@@ -22,7 +22,7 @@ class ImageCard extends Component {
         }else{
           return (
             <div className="item card" style={{opacity: opacity}}>
-                <Link to={'/view/image/element/' + card.id} style={{backgroundImage: "url(" + '/assets/' + card.filename + ")", backgroundSize: 'cover'}}>
+                <Link to={'/view/image/element/' + card.id} style={{backgroundImage: "url(" + '/assets/' + card.filename + ")", backgroundPosition: 'center', backgroundSize: 'cover'}}>
                 </Link>
             </div>
           );

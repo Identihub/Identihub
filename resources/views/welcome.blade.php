@@ -27,11 +27,13 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Overpass:400,900" rel="stylesheet">
+        <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
+         <!--  Font Awesome -->
+         <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     </head>
     <body class="welcome-page">
-
         <nav>
             <div class="container">
                 <ul>
