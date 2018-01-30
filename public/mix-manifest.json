@@ -1,5 +1,11 @@
 {
+<<<<<<< HEAD
   "/js/react-panel.js": "/js/react-panel.059709a8f6b47a122f6b.js",
   "/css/app.css": "/css/app.0896447dd43a667f45bd.css",
   "/js/react-public.js": "/js/react-public.770db6269b835ec30e7c.js"
+=======
+  "/js/react-panel.js": "/js/react-panel.76d27f503fee43376b99.js",
+  "/css/app.css": "/css/app.2a54ca58f963c7232a70.css",
+  "/js/react-public.js": "/js/react-public.8f94317d996d4928c7b4.js"
+>>>>>>> dev
 }

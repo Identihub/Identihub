@@ -19,21 +19,14 @@ class DatabaseSeeder extends Seeder
 
     private function seedSectionTypes()
     {
-
-        foreach ([
-                     SectionType::COLORS,
-                     SectionType::FONTS,
-                     SectionType::ICONS,
-                     SectionType::IMAGES
-                 ] as $type) {
-            if(SectionType::where('name', $type)->get()->count() === 0)
-                SectionType::create([
-                    'name' => $type
-                ]);
+        $sectionTypes = [SectionType::COLORS, SectionType::FONTS, SectionType::ICONS, SectionType::IMAGES];
+        foreach ($sectionTypes as $type) {
+            if(SectionType::where('name', $type)->get()->count() === 0) {
+                SectionType::create(['name' => $type]);
+            }
         }
 
         $this->call(FontsListTableSeeder::class);
         $this->call(FontVariantsTableSeeder::class);
-
     }
 }
