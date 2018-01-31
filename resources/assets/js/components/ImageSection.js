@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import ImageSectionRow from './ImageSectionRow';
 import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
 import { createImage } from '../reducers/Bridge/BridgeApiCalls';
+import { isPublic } from '../helpers';
 
 class ImageSection extends Component {
 
@@ -29,6 +30,14 @@ class ImageSection extends Component {
         this.inputElement.click();
     }
 
+    isSectionAvailable() {
+      const {
+        images
+      } = this.props.bridge;
+
+      return images.length ? true : false;
+    }
+
     render() {
 
         const {
@@ -45,7 +54,11 @@ class ImageSection extends Component {
             emulateInputOnChange,
             emptyStateText
         } = this;
+        const isPub = isPublic();
 
+        if(isPub && !this.isSectionAvailable()) {
+          return (<div></div>);
+        }
         return (
             <SectionWrapper
                 title="Images"
@@ -62,7 +75,7 @@ class ImageSection extends Component {
                        name="image"/>
                 {
                     sortByOrder(filterSectionsWithSectionType(sections, imagesSection)).map( section => {
-                        console.log(section);
+
                         return (
                           <ImageSectionRow
                               key={section.id}
