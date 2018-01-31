@@ -23,7 +23,6 @@
   background-color: #212429;
 
   & .sidebar {
-    height: 100vh;
     padding-top: 30px;
   }
 
@@ -47,7 +46,7 @@
 .sidebar-client {
   padding: 0 30px 0 30px;
 }
-.sidebar-png {
+.sidebar-margin-top {
   margin-top: 30px;
 }
 
@@ -56,20 +55,80 @@
     span {
       color: $white;
     }
-    & #title-icon {
-      margin-left: 10px;
-      color: $white;
-    }
   }
 }
 
-.sidebar-svg-url {
-  margin-top: 10px;
-  & #title {
-    font-size: 10px;
-    color: $text-gray-dark;
-    font-weight: bold;
+.new-size {
+  margin-top: 30px;
+  padding-bottom: 30px;
+}
+
+.add-size {
+  background-color: $white;
+  transition: 300ms ease-in-out;
+  font-size: 11px;
+  padding: 12px;
+  font-weight: bold;
+  margin-top: 15px;
+  &:hover {
+    border: 1px solid $white;
+    background-color: transparent;
+    color: $white;
   }
+}
+
+.download-icon {
+  margin-left: 10px;
+  color: $white;
+}
+
+.sidebar-section-img-info {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+
+  #download-icon {
+    margin-top: 14px
+  }
+
+  & .sidebar-image-info {
+    margin-right: 10px;
+  }
+
+  & .lock {
+    margin-top: 10px;
+    margin-right: 10px;
+    color: $text-gray-dark
+  }
+}
+
+.sidebar-image-info {
+  & .info {
+    margin-top: 5px;
+    padding: 7px;
+    font-size: 14px;
+  }
+
+  & .info-darker {
+    background-color: $text-gray-8;
+    color: $text-gray-darker;
+  }
+
+  & .info-lighter {
+    background-color: $text-gray-8;
+    color: $text-gray-light;
+  }
+}
+
+.sidebar-little-title {
+  font-size: 10px;
+  color: $text-gray-dark;
+  font-weight: bold;
+
+}
+
+.sidebar-section-url {
+  margin-top: 10px;
 
   & .url {
     display: flex;
@@ -80,7 +139,6 @@
     }
 
     #icon {
-      color: $text-gray-light;
       font-size: 20px;
       margin-left: 10px;
     }
@@ -89,12 +147,31 @@
       margin-top: 5px;
       padding: 7px;
       font-size: 14px;
-      background-color: $text-gray-dark;
-      color: $text-gray-light;
 
       width: 90%;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+  }
+  .url-lighter {
+    #icon {
+      color: $text-gray-light;
+    }
+
+    & p {
+      background-color: $text-gray-dark;
+      color: $text-gray-light;
+    }
+  }
+
+  .url-darker {
+    #icon {
+      color: $text-gray-darker;
+    }
+
+    & p {
+      background-color: $text-gray-8;
+      color: $text-gray-darker;
     }
   }
 }

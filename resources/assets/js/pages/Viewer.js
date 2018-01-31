@@ -10,7 +10,7 @@ import ColorSidebar from '../components/ColorSidebar';
 import IconSidebar from '../components/IconSidebar';
 import ImageSidebar from '../components/ImageSidebar';
 import {paramsChecker, isPublic} from '../helpers';
-import {push as Menu} from 'react-burger-menu'
+import {slide as Menu} from 'react-burger-menu'
 
 class Viewer extends Component {
 
@@ -277,6 +277,8 @@ class Viewer extends Component {
                 <Menu
                     left
                     noOverlay
+                    width={ 320 }
+                    className={ "viewer-sidebar" }
                     pageWrapId={"page-wrap"}
                     outerContainerId={"outter-container"}
                     customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }

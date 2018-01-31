@@ -48,6 +48,10 @@
     }
   }
 
+  .viewer-sidebar {
+    overflow: scroll;
+  }
+
   .content{
     a.button{
       margin-left: 10px;
@@ -158,11 +162,6 @@
 
   .backward{
     left: 45px;
-  }
-
-  .sidebar{
-    height: 100vh;
-    z-index: 9999;
   }
 
   .clipboard_and_text{

@@ -69,84 +69,138 @@ class ColorSidebar extends Component {
 
     const { color } = this.props;
 
-    let settingsButton = null;
+    let settings = null;
     if(!isPub){
-      settingsButton = (<div onClick={openSettings}>
-        <ReactSVG
-          path="/images/settings.svg"
-        />
-      </div>);
+      settings = (
+          <div className="settings">
+              <div className="buttons">
+                  <a className="button-outline-delete settings-button"
+                     onClick={deleteColor}>DELETE</a>
+              </div>
+          </div>
+      );
     }
 
     if(!color)
       return <div> </div>;
 
     return (
-      <div className="font-sidebar">
-        <div className="primary-view" style={{marginLeft: marginStyle}}>
-          <div className="head">
-            { settingsButton }
-            <h3>Color</h3>
-          </div>
-          <div className="content">
-            <section>
-              <div className="clipboard_and_text">
-                <div>
-                  <CopyToClipboard text={"#" + color.hex} className="clipboard" onCopy={() => {addNotification()}}>
-                    <span><ReactSVG
-                      path="/images/clipboard.svg"
-                    /></span>
-                  </CopyToClipboard>
+        <div className="bm-item-list sidebar">
+            <div className="sidebar-padding">
+                <div className="header">
+                    <span>Use Color</span>
                 </div>
-                <p>{"#" + color.hex}</p>
-              </div>
-              <div className="clipboard_and_text">
-                <div>
-                  <CopyToClipboard text={"rgb(" + color.rgb.replace(" ", ", ") + ")"} className="clipboard" onCopy={() => {addNotification()}}>
-                    <span><ReactSVG
-                      path="/images/clipboard.svg"
-                    /></span>
-                  </CopyToClipboard>
-                </div>
-                <p>{"rgb(" + color.rgb.replace(" ", ", ") + ")"}</p>
-              </div>
-              <div className="clipboard_and_text">
-                <div>
-                  <CopyToClipboard text={"#" + color.hex} className="clipboard" onCopy={() => {addNotification()}}>
-                    <span><ReactSVG
-                      path="/images/clipboard.svg"
-                    /></span>
-                  </CopyToClipboard>
-                </div>
-                <p>{"#" + color.hex}</p>
-              </div>
-            </section>
-          </div>
-        </div>
-        <div className="settings">
-          <div className="head">
-            <div onClick={openPrimary}>
-              <ReactSVG
-                path="/images/close.svg"
-              />
+                {settings}
             </div>
-            <h3>Color Settings</h3>
-          </div>
-          <div className="content">
-            <section>
-              <div className="text">
-                <a className="button" onClick={deleteColor}>Delete</a>
-              </div>
-            </section>
-          </div>
+            <div id="sidebar-hr">
+                <hr/>
+            </div>
+            <div className="sidebar-client sidebar-margin-top">
+                <div className="sidebar-section-url">
+                    <div className="sidebar-little-title">HEX</div>
+                    <div className="url url-lighter">
+                        <p>{"#" + color.hex}</p>
+                        <span id="copy-to-clip">
+                                        <CopyToClipboard
+                                            text={"#" + color.hex}
+                                            className="clipboard" onCopy={() => {
+                                            addNotification()
+                                        }}>
+                                                <span id="icon">
+                                                    <i className="far fa-copy"/>
+                                                </span>
+                                        </CopyToClipboard>
+                                    </span>
+                    </div>
+                </div>
+            </div>
+            <div className="sidebar-client sidebar-margin-top">
+                <div className="sidebar-section-url">
+                    <div className="sidebar-little-title">RGB</div>
+                    <div className="url url-darker">
+                        <p>{"rgb(" + color.rgb.replace(" ", ", ") + ")"}</p>
+                        <span id="copy-to-clip">
+                                        <CopyToClipboard
+                                            text={"#" + color.hex}
+                                            className="clipboard" onCopy={() => {
+                                            addNotification()
+                                        }}>
+                                                <span id="icon">
+                                                    <i className="far fa-copy"/>
+                                                </span>
+                                        </CopyToClipboard>
+                                    </span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <NotificationSystem ref="notificationSystem" />
-      </div>
     );
 
   }
 
 }
+
+
+{/*<div className="font-sidebar">*/}
+    {/*<div className="primary-view" style={{marginLeft: marginStyle}}>*/}
+        {/*<div className="head">*/}
+            {/*{ settingsButton }*/}
+            {/*<h3>Color</h3>*/}
+        {/*</div>*/}
+        {/*<div className="content">*/}
+            {/*<section>*/}
+                {/*<div className="clipboard_and_text">*/}
+                    {/*<div>*/}
+                        {/*<CopyToClipboard text={"#" + color.hex} className="clipboard" onCopy={() => {addNotification()}}>*/}
+                    {/*<span><ReactSVG*/}
+                        {/*path="/images/clipboard.svg"*/}
+                    {/*/></span>*/}
+                        {/*</CopyToClipboard>*/}
+                    {/*</div>*/}
+                    {/*<p>{"#" + color.hex}</p>*/}
+                {/*</div>*/}
+                {/*<div className="clipboard_and_text">*/}
+                    {/*<div>*/}
+                        {/*<CopyToClipboard text={"rgb(" + color.rgb.replace(" ", ", ") + ")"} className="clipboard" onCopy={() => {addNotification()}}>*/}
+                    {/*<span><ReactSVG*/}
+                        {/*path="/images/clipboard.svg"*/}
+                    {/*/></span>*/}
+                        {/*</CopyToClipboard>*/}
+                    {/*</div>*/}
+                    {/*<p>{"rgb(" + color.rgb.replace(" ", ", ") + ")"}</p>*/}
+                {/*</div>*/}
+                {/*<div className="clipboard_and_text">*/}
+                    {/*<div>*/}
+                        {/*<CopyToClipboard text={"#" + color.hex} className="clipboard" onCopy={() => {addNotification()}}>*/}
+                    {/*<span><ReactSVG*/}
+                        {/*path="/images/clipboard.svg"*/}
+                    {/*/></span>*/}
+                        {/*</CopyToClipboard>*/}
+                    {/*</div>*/}
+                    {/*<p>{"#" + color.hex}</p>*/}
+                {/*</div>*/}
+            {/*</section>*/}
+        {/*</div>*/}
+    {/*</div>*/}
+    {/*<div className="settings">*/}
+        {/*<div className="head">*/}
+            {/*<div onClick={openPrimary}>*/}
+                {/*<ReactSVG*/}
+                    {/*path="/images/close.svg"*/}
+                {/*/>*/}
+            {/*</div>*/}
+            {/*<h3>Color Settings</h3>*/}
+        {/*</div>*/}
+        {/*<div className="content">*/}
+            {/*<section>*/}
+                {/*<div className="text">*/}
+                    {/*<a className="button" onClick={deleteColor}>Delete</a>*/}
+                {/*</div>*/}
+            {/*</section>*/}
+        {/*</div>*/}
+    {/*</div>*/}
+    {/*<NotificationSystem ref="notificationSystem" />*/}
+{/*</div>*/}
 
 ColorSidebar.propTypes = {
   color: PropTypes.shape({

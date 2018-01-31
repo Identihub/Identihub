@@ -99,23 +99,13 @@ class IconSidebar extends Component {
         const {icon} = this.props;
 
         if (!icon)
-            return <div></div>;
+            return <div/>;
 
         const lastConverted = icon.converted[icon.converted.length - 1];
         console.log(lastConverted);
 
         let adminOptions = null;
         let newSize = null;
-        // if (!isPub) {
-        //     settingsButton = (
-        //         <div onClick={openSettings}>
-        //             <ReactSVG
-        //                 path="/images/settings.svg"
-        //             />
-        //         </div>);
-        //     // newSize = (
-        //     //     <NewSize defaultWidth={lastConverted.width} ratio={this.props.icon.width_ratio} saveElement={addNewConverted}/>);
-        // }
 
 
         if (!isPub) {
@@ -123,7 +113,7 @@ class IconSidebar extends Component {
                 <div className="admin-option">
                     <div className="sidebar-padding">
                         <div className="header">
-                            <span>User Asset</span>
+                            <span>Use Asset</span>
                         </div>
                         <div className="settings">
                             <div className="title">
@@ -133,11 +123,11 @@ class IconSidebar extends Component {
                                 <span>Featured Image</span>
                                 {/* THE CHECKBOX FOR SETTING FEATURED */}
                                 <span id="checkbox">
-                            <Spinner
-                                width={14}
-                                height={14}
-                            />
-                        </span>
+                                    <Spinner
+                                         width={14}
+                                         height={14}
+                                    />
+                                </span>
                             </div>
                             <div className="buttons">
                                 {/*<section className="update">*/}
@@ -158,7 +148,15 @@ class IconSidebar extends Component {
                     <div id="sidebar-hr">
                         <hr/>
                     </div>
+
                 </div>
+            );
+
+            newSize = (
+                <NewSize
+                    defaultWidth={lastConverted.width}
+                    ratio={this.props.icon.width_ratio}
+                    saveElement={addNewConverted}/>
             );
         }
 
@@ -172,14 +170,14 @@ class IconSidebar extends Component {
                             <span>
                                 SVG
                             </span>
-                            <a id="title-icon" href={window.location.origin + '/assets/' + icon.filename}
+                            <a className="download-icon" href={window.location.origin + '/assets/' + icon.filename}
                                download={icon.filename}>
                                 <i className="fas fa-download"/>
                             </a>
                         </div>
-                        <div className="sidebar-svg-url">
-                            <div id="title">EMBED</div>
-                            <div className="url">
+                        <div className="sidebar-section-url">
+                            <div className="sidebar-little-title">EMBED</div>
+                            <div className="url url-lighter">
                                 <p>{window.location.origin + '/assets/' + icon.filename}</p>
                                 <span id="copy-to-clip">
                                     <CopyToClipboard
@@ -195,17 +193,67 @@ class IconSidebar extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="sidebar-png sidebar-section">
+                </div>
+                <div className="sidebar-margin-top sidebar-section">
+                    <div className="sidebar-client">
                         <div className="title">
-                            <span>
-                                PNG
-                            </span>
+                                <span>
+                                    PNG
+                                </span>
                         </div>
                     </div>
+                    {
+                        icon.converted.map((convertedItem, index)  => {
+                            return (
+                                <div key={`icon-sidebar-item-${index}`}>
+                                    <div className="sidebar-client">
+                                        <div>
+                                            <div className="sidebar-section-img-info">
+                                                <div className="sidebar-image-info">
+                                                    <div className="sidebar-little-title">WIDTH(px)</div>
+                                                    <div className="info info-darker">{convertedItem.width}</div>
+                                                </div>
+                                                <i className="fas fa-lock lock"/>
+                                                <div className="sidebar-image-info">
+                                                    <div className="sidebar-little-title">HEIGHT</div>
+                                                    <div className="info info-darker">{convertedItem.height}</div>
+                                                </div>
+                                                <a className="download-icon"
+                                                   href={window.location.origin + '/assets/' + convertedItem.filename}
+                                                   download={convertedItem.filename}>
+                                                    <i className="fas fa-download" id="download-icon"/>
+                                                </a>
+                                            </div>
+                                            <div className="sidebar-section-url">
+                                                <div className="sidebar-little-title">EMBED</div>
+                                                <div className="url url-darker">
+                                                    <p>{window.location.origin + '/assets/' + convertedItem.filename}</p>
+                                                    <span id="copy-to-clip">
+                                                    <CopyToClipboard
+                                                        text={window.location.origin + '/assets/' + convertedItem.filename}
+                                                        className="clipboard" onCopy={() => {
+                                                        addNotification()
+                                                    }}>
+                                                        <span id="icon">
+                                                            <i className="far fa-copy"/>
+                                                        </span>
+                                                    </CopyToClipboard>
+                                                </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="sidebar-hr">
+                                        <hr/>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    }
                 </div>
 
-                <div>
-
+                <div className="sidebar-client new-size">
+                    {newSize}
                 </div>
                 <NotificationSystem ref="notificationSystem"/>
             </div>

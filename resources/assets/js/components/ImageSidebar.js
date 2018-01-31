@@ -8,6 +8,8 @@ import NotificationSystem from 'react-notification-system';
 import NewSize from '../components/NewSize';
 import { deleteImage, addImageConverted, updateImageFile } from '../reducers/Bridge/BridgeApiCalls';
 import { paramsChecker, isPublic } from '../helpers';
+import Spinner from '../components/Spinner';
+
 
 class ImageSidebar extends Component {
   constructor(props) {
@@ -95,99 +97,157 @@ class ImageSidebar extends Component {
     if(!image)
       return <div> </div>;
 
-    let settingsButton = null;
+    let adminOptions = null;
     let newSize = null;
+
     if(!isPub){
-      settingsButton = (<div onClick={openSettings}>
-        <ReactSVG
-          path="/images/settings.svg"
-        />
-      </div>);
-      newSize = (<NewSize defaultWidth={lastConverted.width} ratio={image.width_ratio} saveElement={addNewConverted}/>);
+      adminOptions = (
+          <div className="admin-option">
+              <div className="sidebar-padding">
+                  <div className="header">
+                      <span>Use Image</span>
+                  </div>
+                  <div className="settings">
+                      <div className="title">
+                          <span>Admin</span>
+                      </div>
+                      <div className="featured">
+                          <span>Featured Image</span>
+                          {/* THE CHECKBOX FOR SETTING FEATURED */}
+                          <span id="checkbox">
+                                    <Spinner
+                                        width={14}
+                                        height={14}
+                                    />
+                                </span>
+                      </div>
+                      <div className="buttons">
+                          {/*<section className="update">*/}
+                          <input id="update-icon"
+                                 ref={input => this.inputElement = input}
+                                 onChange={this.updateIcon}
+                                 type="file"
+                                 accept="image/*"
+                                 name="icon"/>
+                          <a className="button-outline-white settings-button"
+                             onClick={emulateInputOnChange}>UPDATE</a>
+                          {/*</section>*/}
+                          <a className="button-outline-delete settings-button button-left"
+                             onClick={deleteImage}>DELETE</a>
+                      </div>
+                  </div>
+              </div>
+              <div id="sidebar-hr">
+                  <hr/>
+              </div>
+
+          </div>
+      );
+      newSize = (
+          <NewSize
+              defaultWidth={lastConverted.width}
+              ratio={this.props.image.width_ratio}
+              saveElement={addNewConverted}/>
+      );
     }
 
     return (
-      <div className="image-sidebar">
-        <div className="primary-view" style={{marginLeft: marginStyle}}>
-          <div className="head">
-            {settingsButton}
-            <h3>Images</h3>
-          </div>
-          <div className="content">
-            <section>
-              <h4>Source File</h4><a className="button" href={window.location.origin + '/assets/' + image.filename} download={image.filename}>Download</a>
-              <div className="clipboard_and_text">
-                <div>
-                  <CopyToClipboard text={window.location.origin + '/assets/' + image.filename} className="clipboard" onCopy={() => {addNotification()}}>
-                    <span><ReactSVG
-                      path="/images/clipboard.svg"
-                    /></span>
-                  </CopyToClipboard>
-                </div>
-                <p>{window.location.origin + '/assets/' + image.filename}</p>
-              </div>
-            </section>
-            <section>
-              <h4>Converted Files</h4>
-              {
-                image.converted.map(function(convertedItem) {
-                  return (
-                    <div key={convertedItem.id}>
-                      <div className="clipboard_and_text">
-                        <div>
-                          <CopyToClipboard text={window.location.origin + '/assets/' + convertedItem.filename} className="clipboard" onCopy={() => {addNotification()}}>
+        <div className="bm-item-list sidebar">
+            {adminOptions}
+            <div className="sidebar-client">
+                <div className="sidebar-section">
+                    <div className="title">
                             <span>
-                              <ReactSVG
-                                path="/images/clipboard.svg"
-                              />
+                                SOURCE FILE
                             </span>
-                          </CopyToClipboard>
-                        </div>
-                        <p>{window.location.origin + '/assets/' + convertedItem.filename}</p>
-                      </div>
-                      <div className="text">
-                        <p><span className="prefix">Width</span> <span className="primar">{convertedItem.width}</span></p>
-                        <p><span className="prefix">Height</span> <span className="primar">{convertedItem.height}</span></p>
-                        <a className="button" href={window.location.origin + '/assets/' + convertedItem.filename} download={convertedItem.filename}>Download</a>
-                      </div>
+                        <a className="download-icon"
+                           href={window.location.origin + '/assets/' + image.filename}
+                           download={image.filename}>
+                            <i className="fas fa-download"/>
+                        </a>
                     </div>
-                  );
-                })
-              }
-            </section>
-            {newSize}
-          </div>
-        </div>
-        <div className="settings">
-          <div className="head">
-            <div onClick={openPrimary}>
-              <ReactSVG
-                path="/images/close.svg"
-              />
+                    <div className="sidebar-section-url">
+                        <div className="sidebar-little-title">EMBED</div>
+                        <div className="url url-lighter">
+                            <p>{window.location.origin + '/assets/' + image.filename}</p>
+                            <span id="copy-to-clip">
+                                    <CopyToClipboard
+                                        text={window.location.origin + '/assets/' + image.filename}
+                                        className="clipboard" onCopy={() => {
+                                        addNotification()
+                                    }}>
+                                            <span id="icon">
+                                                <i className="far fa-copy"/>
+                                            </span>
+                                    </CopyToClipboard>
+                                </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h3>Logo Settings</h3>
-          </div>
-          <div className="content">
-            <section>
-              <input id="update-icon"
-                     ref={input => this.inputElement = input}
-                     onChange={this.updateImage}
-                     type="file"
-                     accept="image/*"
-                     name="image"/>
-              <div className="text">
-                <a className="button" onClick={emulateInputOnChange}>Update Logo File</a>
-              </div>
-            </section>
-            <section>
-              <div className="text">
-                <a className="button" onClick={deleteImage}>Delete</a>
-              </div>
-            </section>
-          </div>
+            <div className="sidebar-margin-top sidebar-section">
+                <div className="sidebar-client">
+                    <div className="title">
+                                <span>
+                                    CONVERTED FILES
+                                </span>
+                    </div>
+                </div>
+                {
+                    image.converted.map((convertedItem, index)  => {
+                        return (
+                            <div key={`icon-sidebar-item-${index}`}>
+                                <div className="sidebar-client">
+                                    <div>
+                                        <div className="sidebar-section-img-info">
+                                            <div className="sidebar-image-info">
+                                                <div className="sidebar-little-title">WIDTH(px)</div>
+                                                <div className="info info-darker">{convertedItem.width}</div>
+                                            </div>
+                                            <i className="fas fa-lock lock"/>
+                                            <div className="sidebar-image-info">
+                                                <div className="sidebar-little-title">HEIGHT</div>
+                                                <div className="info info-darker">{convertedItem.height}</div>
+                                            </div>
+                                            <a className="download-icon"
+                                               href={window.location.origin + '/assets/' + convertedItem.filename}
+                                               download={convertedItem.filename}>
+                                                <i className="fas fa-download" id="download-icon"/>
+                                            </a>
+                                        </div>
+                                        <div className="sidebar-section-url">
+                                            <div className="sidebar-little-title">EMBED</div>
+                                            <div className="url url-darker">
+                                                <p>{window.location.origin + '/assets/' + convertedItem.filename}</p>
+                                                <span id="copy-to-clip">
+                                                    <CopyToClipboard
+                                                        text={window.location.origin + '/assets/' + convertedItem.filename}
+                                                        className="clipboard" onCopy={() => {
+                                                        addNotification()
+                                                    }}>
+                                                        <span id="icon">
+                                                            <i className="far fa-copy"/>
+                                                        </span>
+                                                    </CopyToClipboard>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="sidebar-hr">
+                                    <hr/>
+                                </div>
+                            </div>
+                        );
+                    })
+                }
+            </div>
+
+            <div className="sidebar-client new-size">
+                {newSize}
+            </div>
+            <NotificationSystem ref="notificationSystem"/>
         </div>
-        <NotificationSystem ref="notificationSystem" />
-      </div>
     );
 
   }
@@ -209,3 +269,85 @@ const dispatchToProps = (dispatch) => {
 };
 
 export default connect(state => state, dispatchToProps)(ImageSidebar);
+
+{/*<div className="image-sidebar">*/}
+    {/*<div className="primary-view" style={{marginLeft: marginStyle}}>*/}
+        {/*<div className="head">*/}
+            {/*{settingsButton}*/}
+            {/*<h3>Images</h3>*/}
+        {/*</div>*/}
+        {/*<div className="content">*/}
+            {/*<section>*/}
+                {/*<h4>Source File</h4><a className="button" href={window.location.origin + '/assets/' + image.filename} download={image.filename}>Download</a>*/}
+                {/*<div className="clipboard_and_text">*/}
+                    {/*<div>*/}
+                        {/*<CopyToClipboard text={window.location.origin + '/assets/' + image.filename} className="clipboard" onCopy={() => {addNotification()}}>*/}
+                    {/*<span><ReactSVG*/}
+                        {/*path="/images/clipboard.svg"*/}
+                    {/*/></span>*/}
+                        {/*</CopyToClipboard>*/}
+                    {/*</div>*/}
+                    {/*<p>{window.location.origin + '/assets/' + image.filename}</p>*/}
+                {/*</div>*/}
+            {/*</section>*/}
+            {/*<section>*/}
+                {/*<h4>Converted Files</h4>*/}
+                {/*{*/}
+                    {/*image.converted.map(function(convertedItem) {*/}
+                        {/*return (*/}
+                            {/*<div key={convertedItem.id}>*/}
+                                {/*<div className="clipboard_and_text">*/}
+                                    {/*<div>*/}
+                                        {/*<CopyToClipboard text={window.location.origin + '/assets/' + convertedItem.filename} className="clipboard" onCopy={() => {addNotification()}}>*/}
+                            {/*<span>*/}
+                              {/*<ReactSVG*/}
+                                  {/*path="/images/clipboard.svg"*/}
+                              {/*/>*/}
+                            {/*</span>*/}
+                                        {/*</CopyToClipboard>*/}
+                                    {/*</div>*/}
+                                    {/*<p>{window.location.origin + '/assets/' + convertedItem.filename}</p>*/}
+                                {/*</div>*/}
+                                {/*<div className="text">*/}
+                                    {/*<p><span className="prefix">Width</span> <span className="primar">{convertedItem.width}</span></p>*/}
+                                    {/*<p><span className="prefix">Height</span> <span className="primar">{convertedItem.height}</span></p>*/}
+                                    {/*<a className="button" href={window.location.origin + '/assets/' + convertedItem.filename} download={convertedItem.filename}>Download</a>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                        {/*);*/}
+                    {/*})*/}
+                {/*}*/}
+            {/*</section>*/}
+            {/*{newSize}*/}
+        {/*</div>*/}
+    {/*</div>*/}
+    {/*<div className="settings">*/}
+        {/*<div className="head">*/}
+            {/*<div onClick={openPrimary}>*/}
+                {/*<ReactSVG*/}
+                    {/*path="/images/close.svg"*/}
+                {/*/>*/}
+            {/*</div>*/}
+            {/*<h3>Logo Settings</h3>*/}
+        {/*</div>*/}
+        {/*<div className="content">*/}
+            {/*<section>*/}
+                {/*<input id="update-icon"*/}
+                       {/*ref={input => this.inputElement = input}*/}
+                       {/*onChange={this.updateImage}*/}
+                       {/*type="file"*/}
+                       {/*accept="image/*"*/}
+                       {/*name="image"/>*/}
+                {/*<div className="text">*/}
+                    {/*<a className="button" onClick={emulateInputOnChange}>Update Logo File</a>*/}
+                {/*</div>*/}
+            {/*</section>*/}
+            {/*<section>*/}
+                {/*<div className="text">*/}
+                    {/*<a className="button" onClick={deleteImage}>Delete</a>*/}
+                {/*</div>*/}
+            {/*</section>*/}
+        {/*</div>*/}
+    {/*</div>*/}
+    {/*<NotificationSystem ref="notificationSystem" />*/}
+{/*</div>*/}
