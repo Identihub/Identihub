@@ -178,7 +178,7 @@ class IconSidebar extends Component {
                         <div className="sidebar-section-url">
                             <div className="sidebar-little-title">EMBED</div>
                             <div className="url url-lighter">
-                                <p>{window.location.origin + '/assets/' + icon.filename}</p>
+                                <p>{`${window.location.origin + '/assets/' + icon.filename}`.substring(0,35)}</p>
                                 <span id="copy-to-clip">
                                     <CopyToClipboard
                                         text={window.location.origin + '/assets/' + icon.filename}
