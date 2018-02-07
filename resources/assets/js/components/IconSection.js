@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import IconSectionRow from './IconSectionRow';
 import {filterSectionsWithSectionType, sortByOrder} from '../helpers';
 import {createIcon} from '../reducers/Bridge/BridgeApiCalls';
+import NotificationSystem from 'react-notification-system';
+import _ from 'lodash';
 
 class IconSection extends Component {
 
@@ -19,9 +21,22 @@ class IconSection extends Component {
     }
 
     addIcon(event) {
+        console.log(event);
+        let files = [];
+        Object.entries(event.target.files).map(
+            ([key, value]) => (
+                value.type === 'image/svg+xml'
+                    ? files = [...files, value]
+                    : this.iconNotification.addNotification({
+                        message: `File ${_.truncate(value.name, 10)} was not accepted`,
+                        level: 'error'
+                    })
+            )
+        );
+
         const bridge = this.props.bridge;
         const createIcon = this.props.createIcon;
-        const files = event.target.files;
+        // const files = event.target.files;
 
         createIcon(bridge.id, files, function (progressEvent) {
             // console.log(Math.round( (progressEvent.loaded * 100) / progressEvent.total ));
@@ -29,7 +44,7 @@ class IconSection extends Component {
         //this.addIcon(this.props.bridge.id, event.target.files[0]);
     }
 
-    emulateInputOnChange(event) {
+    emulateInputOnChange() {
         this.inputElement.click();
     }
 
@@ -76,13 +91,14 @@ class IconSection extends Component {
                         )
                     })
                 }
+                <NotificationSystem ref={(div) => this.iconNotification = div}/>
             </SectionWrapper>
         );
     }
 
 }
 
-const mapStateToProps = (state, _) => {
+const mapStateToProps = (state) => {
     return {
         iconsSection: getSectionType(state, "ICONS")
     }
