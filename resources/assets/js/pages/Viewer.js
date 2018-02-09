@@ -51,14 +51,15 @@ class Viewer extends Component {
         this.state = {
             objectType: objectType,
             elementId: props.match.params.elementId,
-            orderedElements: (bridge && elementsSection) ? sortWithSectionAndOrder(elements, bridge.sections, elementsSection) : null
+            orderedElements: (bridge && elementsSection) ? sortWithSectionAndOrder(elements, bridge.sections, elementsSection) : null,
+            screenWidth: undefined,
         };
 
         this.goBackward = this.goBackward.bind(this);
         this.goForward = this.goForward.bind(this);
         this.closePage = this.closePage.bind(this);
         this.keyPress = this.keyPress.bind(this);
-
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
     keyPress(event) {
@@ -82,6 +83,22 @@ class Viewer extends Component {
                 break;
         }
     }
+
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+
+    updateWindowDimensions() {
+        this.setState({ screenWidth: window.innerWidth });
+    }
+
 
     componentWillReceiveProps(nextProps) {
 
@@ -194,11 +211,10 @@ class Viewer extends Component {
     }
 
     render() {
-
         if (this.state === null)
             return (<div></div>);
 
-        const {objectType, orderedElements, elementId} = this.state;
+        const {objectType, orderedElements, elementId, screenWidth} = this.state;
         const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = this.props;
 
         const goForward = this.goForward;
@@ -274,19 +290,24 @@ class Viewer extends Component {
 
         return (
             <div className="viewer-page" id="outter-container">
-                <Menu
-                    left
-                    noOverlay
-                    width={ 320 }
-                    className={ "viewer-sidebar" }
-                    pageWrapId={"page-wrap"}
-                    outerContainerId={"outter-container"}
-                    customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
-                    customCrossIcon={ <span className="close-menu"><i className="fas fa-bars"/></span> }
-                >
-                    {sidebar}
-                </Menu>
-                <main className="viewer" id="page-wrap">
+                {screenWidth > 768
+                    ?  <div className="viewer-sidebar__desktop">{sidebar}</div>
+
+                    :   <Menu
+                        left
+                        noOverlay
+                        width={ 320 }
+                        className={ "viewer-sidebar" }
+                        pageWrapId={"page-wrap"}
+                        outerContainerId={"outter-container"}
+                        customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
+                        customCrossIcon={ <span className="close-menu"><i className="fas fa-bars"/></span> }
+                    >
+                        {sidebar}
+                    </Menu>
+
+                }
+                <main className={screenWidth > 768 ? 'viewer__desktop' : "viewer"} id="page-wrap">
                     <div onClick={closePage}>
                         <ReactSVG
                             path="/images/close.svg"
@@ -309,7 +330,7 @@ class Viewer extends Component {
                     </div>
                     <div className="items" style={{marginLeft: marginLeft}}>
                         {sortedItems}
-                        <div className="clearfix"></div>
+                        <div className="clearfix"/>
                     </div>
                 </main>
             </div>
