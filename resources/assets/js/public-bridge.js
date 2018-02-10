@@ -26,8 +26,5 @@ App.propTypes = {
 
 fillStore(store);
 
-ReactDOM.render(
-  <App store={store}/>,
-  mountApp
-);
+ReactDOM.render(<App store={store}/>, mountApp);
 
