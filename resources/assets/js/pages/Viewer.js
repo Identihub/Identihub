@@ -225,20 +225,19 @@ class Viewer extends Component {
             return (<div></div>);
 
         const order = this.findOrderOfElement(orderedElements, elementId);
+        const marginLeft = "calc(" + (-100 * order) + "vw + " + 0 + "px)";
 
-        const marginLeft = () => {
-            if(this.state.screenWidth <= 760) return "calc(" + (-100 * order) + "vw + " + 0 + "px)";
-            else return "calc(" + (-100 * order) + "vw + " + (300 * order) + "px)";
-        };
+        console.log("aa", marginLeft);
 
         let sortedItems = null;
         let sidebar = null;
+        const container = screenWidth > 900 ? "container__desktop" : "container";
 
         switch (objectType) {
             case 'icon':
                 sortedItems = orderedElements ? orderedElements.map(function (icon) {
                     return (<div key={icon.id} className="item">
-                        <div className="container">
+                        <div className={container}>
                             <img src={'/assets/' + icon.filename}/>
                         </div>
                     </div>)
@@ -251,7 +250,7 @@ class Viewer extends Component {
             case 'image':
                 sortedItems = orderedElements ? orderedElements.map(function (image) {
                     return (<div key={image.id} className="item">
-                        <div className="container">
+                        <div className={container}>
                             <img className="image-viewer" src={'/assets/' + image.filename}/>
                         </div>
                     </div>)
@@ -264,7 +263,7 @@ class Viewer extends Component {
             case 'color':
                 sortedItems = orderedElements ? orderedElements.map(function (color) {
                     return (<div key={color.id} className="item">
-                        <div className="container">
+                        <div className={container}>
                             <div className="color" style={{backgroundColor: "#" + color.hex}}></div>
                         </div>
                     </div>)
@@ -277,7 +276,7 @@ class Viewer extends Component {
             case 'font':
                 sortedItems = orderedElements ? orderedElements.map(function (font) {
                     return (<div key={font.id} className="item">
-                        <div className="container">
+                        <div className={container}>
                             <img className="" src={'/fonts/' + font.variant.image_link}/>
                         </div>
                     </div>)
@@ -293,7 +292,7 @@ class Viewer extends Component {
 
         return (
             <div className="viewer-page" id="outter-container">
-                <main className={screenWidth > 768 ? 'viewer__desktop' : "viewer"} id="page-wrap">
+                <main className={screenWidth > 900 ? 'viewer__desktop' : "viewer"} id="page-wrap">
                     <div onClick={closePage}>
                         <ReactSVG
                             path="/images/close.svg"
@@ -314,14 +313,13 @@ class Viewer extends Component {
                             className="forward"
                         />
                     </div>
-                    <div className="items" style={{marginLeft: marginLeft}}>
+                    <div className="items" style={{ marginLeft: marginLeft}}>
                         {sortedItems}
                         <div className="clearfix"/>
                     </div>
                 </main>
-                {screenWidth > 768
+                {screenWidth > 900
                     ?  <div className="viewer-sidebar__desktop">{sidebar}</div>
-
                     :   <Menu
                         left
                         noOverlay

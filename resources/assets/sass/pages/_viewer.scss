@@ -26,10 +26,14 @@
   }
 
   .viewer-sidebar__desktop {
-    max-width: 300px;
+    max-width: 320px;
     height: 100vh;
     background-color: #494949;
     z-index: 9999;
+    & .sidebar {
+      padding-top: 30px;
+      height: 100% !important;
+    }
   }
 
 
@@ -105,22 +109,32 @@
       //width: calc(100vw - 300px);
       width: 100vw;
       position: relative;
-      .container{
+
+      .container {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+      }
 
+      .container__desktop {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-100%, -50%);
+      }
+
+      .container, .container__desktop {
         img{
-          max-width: 500px;
-          max-height: 30vh;
-          min-width: 200px;
+          width: 22vw;
+          max-height: 100vw;
+          object-fit: contain;
         }
 
         .image-viewer{
-          // width: 100vw;
-          max-width: calc(100vw - 550px);
-          max-height: 80vh;
+          width: 22vw;
+          max-height: 100vw;
+          object-fit: contain;
         }
       }
     }
