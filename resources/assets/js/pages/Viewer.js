@@ -226,7 +226,10 @@ class Viewer extends Component {
 
         const order = this.findOrderOfElement(orderedElements, elementId);
 
-        const marginLeft = "calc(" + (-100 * order) + "vw + " + 0 + "px)";
+        const marginLeft = () => {
+            if(this.state.screenWidth <= 760) return "calc(" + (-100 * order) + "vw + " + 0 + "px)";
+            else return "calc(" + (-100 * order) + "vw + " + (300 * order) + "px)";
+        };
 
         let sortedItems = null;
         let sidebar = null;
@@ -290,23 +293,6 @@ class Viewer extends Component {
 
         return (
             <div className="viewer-page" id="outter-container">
-                {screenWidth > 768
-                    ?  <div className="viewer-sidebar__desktop">{sidebar}</div>
-
-                    :   <Menu
-                        left
-                        noOverlay
-                        width={ 320 }
-                        className={ "viewer-sidebar" }
-                        pageWrapId={"page-wrap"}
-                        outerContainerId={"outter-container"}
-                        customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
-                        customCrossIcon={ <span className="close-menu"><i className="fas fa-bars"/></span> }
-                    >
-                        {sidebar}
-                    </Menu>
-
-                }
                 <main className={screenWidth > 768 ? 'viewer__desktop' : "viewer"} id="page-wrap">
                     <div onClick={closePage}>
                         <ReactSVG
@@ -333,6 +319,23 @@ class Viewer extends Component {
                         <div className="clearfix"/>
                     </div>
                 </main>
+                {screenWidth > 768
+                    ?  <div className="viewer-sidebar__desktop">{sidebar}</div>
+
+                    :   <Menu
+                        left
+                        noOverlay
+                        width={ 320 }
+                        className={ "viewer-sidebar" }
+                        pageWrapId={"page-wrap"}
+                        outerContainerId={"outter-container"}
+                        customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
+                        customCrossIcon={ <span className="close-menu"><i className="fas fa-bars"/></span> }
+                    >
+                        {sidebar}
+                    </Menu>
+
+                }
             </div>
         );
     }

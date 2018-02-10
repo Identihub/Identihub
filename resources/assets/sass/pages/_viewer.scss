@@ -23,10 +23,22 @@
     position: relative;
     max-height: 100vh;
     z-index: -1;
+  }
 
-    .a {
-      fill: #494949;
-    }
+  .viewer-sidebar__desktop {
+    max-width: 300px;
+    height: 100vh;
+    background-color: #494949;
+    z-index: 9999;
+  }
+
+
+  .viewer__desktop {
+    max-width: calc(100vw - 300px);
+    float: right;
+    position: relative;
+    max-height: 100vh;
+    z-index: -1;
   }
 
   h4{
