@@ -120,7 +120,7 @@ export class Bridge extends Component {
         }
 
         let colorSection = null;
-        if(isPub && !this.isSectionAvailable(bridge.icons)) {
+        if(isPub && !this.isSectionAvailable(bridge.colors)) {
             colorSection = (
               <div></div>
             );
@@ -131,7 +131,7 @@ export class Bridge extends Component {
         }
 
         let fontSection = null;
-        if(isPub && !this.isSectionAvailable(bridge.icons)) {
+        if(isPub && !this.isSectionAvailable(bridge.fonts)) {
             fontSection = (
               <div></div>
             );
@@ -142,7 +142,7 @@ export class Bridge extends Component {
         }
 
         let imageSection = null;
-        if(isPub && !this.isSectionAvailable(bridge.icons)) {
+        if(isPub && !this.isSectionAvailable(bridge.images)) {
             imageSection = (
               <div></div>
             );
