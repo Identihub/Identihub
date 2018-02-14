@@ -4,6 +4,7 @@ php:
   - 7.2
 
 before_script:
+  - npm install
   - npm install react-burger-menu
   - cp .env.travis .env
   - rm phpunit.xml
@@ -15,6 +16,7 @@ before_script:
   - php artisan db:seed
   - php artisan passport:install  
   - php artisan key:generate
+  - npm run production
 
 script:
 - vendor/bin/phpunit
