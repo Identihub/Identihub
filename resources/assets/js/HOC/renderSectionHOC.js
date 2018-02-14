@@ -6,12 +6,11 @@ import {fetchBridge} from "../reducers/Bridge/BridgeApiCalls";
 const renderSection = (data) => (WrappedComponent) => {
 
     return class renderSection extends Component {
-        componentDidMount() {
-            console.log(this.state, data);
-            if(!isPublic()){
-                // this.props.dispatch(fetchBridge(this.state.id));
-            }
-        }
+        // componentDidMount() {
+        //     if(!isPublic()){
+        //         // this.props.dispatch(fetchBridge(this.state.id));
+        //     }
+        // }
 
         render() {
             const isPub = isPublic();
