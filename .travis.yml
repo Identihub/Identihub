@@ -9,6 +9,7 @@ before_script:
   - cp .phpunit.xml.travis phpunit.xml
   - mysql -e 'create database homestead_test;'
   - composer self-update
+  - composer require lavary/laravel-menu
   - composer install --no-interaction
   - php artisan migrate
   - php artisan db:seed
