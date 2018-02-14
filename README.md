@@ -23,7 +23,7 @@ Identihub is an open-source web platform for brand and assets management. It is 
 #### Installing the software
 ```bash
 apt-get update && apt-get upgrade
-apt-get install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-dom composer unzip libmagickwand-dev imagemagick php-dev
+apt-get install  apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-xml composer unzip libmagickwand-dev imagemagick php-dev librsvg2-bin php-imagick
 ```
 #### Setting up the database
 ```bash
