@@ -5,6 +5,7 @@ php:
 
 before_script:
   - npm install react-burger-menu
+  - npm install --save redux-logger
   - cp .env.travis .env
   - rm phpunit.xml
   - cp .phpunit.xml.travis phpunit.xml
