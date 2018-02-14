@@ -4,7 +4,6 @@ php:
   - 7.2
 
 before_script:
-  - npm install
   - npm install react-burger-menu
   - cp .env.travis .env
   - rm phpunit.xml
