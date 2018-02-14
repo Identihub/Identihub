@@ -1,0 +1,30 @@
+language: php
+
+php:
+  - 7.2
+before_install:
+- apt-get update && apt-get install  apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-xml composer unzip libmagickwand-dev imagemagick php-dev librsvg2-bin php-imagick
+- a2enmod rewrite 
+- echo "export PATH=/home/vagrant/.phpenv/bin:$PATH" | sudo tee -a /etc/apache2/envvars > /dev/null
+- echo "$(curl -fsSL https://gist.github.com/roderik/16d751c979fdeb5a14e3/raw/gistfile1.txt)" | sudo tee /etc/apache2/conf.d/phpconfig > /dev/null
+- echo "$(curl -fsSL https://gist.github.com/roderik/2eb301570ed4a1f4c33d/raw/gistfile1.txt)" | sed -e "s,PATH,`pwd`/web,g" | sudo tee /etc/apache2/sites-available/default > /dev/null
+- systemctl restart apache2
+before_script:
+  - rm /etc/apache2/sites-enabled/000-default.conf
+  - mv .apacheblock /etc/apache2/sites-enabled/000-default.conf
+  - npm install react-burger-menu
+  - npm install --save redux-logger
+  - cp .env.travis .env
+  #- rm phpunit.xml
+  #- cp .phpunit.xml.travis phpunit.xml
+  - mysql -e 'create database homestead_test;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan migrate
+  - php artisan db:seed
+  - php artisan passport:install  
+  - php artisan key:generate
+
+script:
+- npm run production
+- vendor/bin/phpunit
