@@ -7,8 +7,8 @@ before_script:
   - npm install react-burger-menu
   - npm install --save redux-logger
   - cp .env.travis .env
-  - rm phpunit.xml
-  - cp .phpunit.xml.travis phpunit.xml
+  #- rm phpunit.xml
+  #- cp .phpunit.xml.travis phpunit.xml
   - mysql -e 'create database homestead_test;'
   - composer self-update
   - composer install --no-interaction
