@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import ImageSectionRow from './ImageSectionRow';
 import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
 import { createImage } from '../reducers/Bridge/BridgeApiCalls';
+import renderSection from '../HOC/renderSectionHOC'
 
 class ImageSection extends Component {
 
@@ -101,4 +102,4 @@ const dispatchToProps = (dispatch) => {
   }, dispatch)
 };
 
-export default connect(mapStateToProps, dispatchToProps)(ImageSection);
+export default renderSection('images')(connect(mapStateToProps, dispatchToProps)(ImageSection));

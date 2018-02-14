@@ -9,6 +9,8 @@ import {filterSectionsWithSectionType, sortByOrder} from '../helpers';
 import {createIcon} from '../reducers/Bridge/BridgeApiCalls';
 import NotificationSystem from 'react-notification-system';
 import _ from 'lodash';
+import renderSection from '../HOC/renderSectionHOC'
+
 
 class IconSection extends Component {
 
@@ -119,4 +121,4 @@ const dispatchToProps = (dispatch) => {
     }, dispatch)
 };
 
-export default connect(mapStateToProps, dispatchToProps)(IconSection);
+export default renderSection('icons')(connect(mapStateToProps, dispatchToProps)(IconSection));

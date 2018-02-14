@@ -5,6 +5,7 @@ import ColorSectionRow from './ColorSectionRow';
 import { getSectionType } from '../reducers/SectionType/SectionTypeReducer';
 import { connect } from 'react-redux';
 import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
+import renderSection from '../HOC/renderSectionHOC'
 
 
 class ColorSection extends Component {
@@ -81,4 +82,4 @@ ColorSection.propTypes = {
     }).isRequired
 };
 
-export default connect(mapStateToProps)(ColorSection);
+export default renderSection('colors')(connect(mapStateToProps)(ColorSection));

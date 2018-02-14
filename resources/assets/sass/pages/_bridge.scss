@@ -5,7 +5,7 @@
 
   .link {
     position: relative;
-
+    margin-bottom: 65px;
     &:hover {
       cursor: pointer;
     }
@@ -57,7 +57,7 @@
   }
 
   .bridge-section {
-    margin-top: 65px;
+    margin-bottom: 65px;
 
     .content {
       position: relative;
