@@ -16,7 +16,7 @@ before_script:
   - php artisan db:seed
   - php artisan passport:install  
   - php artisan key:generate
-  - npm run production
 
 script:
+- npm run production
 - vendor/bin/phpunit
