@@ -18,4 +18,5 @@ before_script:
   - php artisan key:generate
 
 script:
+  - npm install
   - npm run production
