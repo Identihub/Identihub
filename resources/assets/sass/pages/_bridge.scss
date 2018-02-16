@@ -106,10 +106,12 @@
       }
 
       .move-handler {
-        display: none;
+        //display: none;
+        @include transition(opacity 0.2s ease-in-out);
         position: absolute;
-        top: 20px;
-        left: 20px;
+        opacity: 0;
+        top: 10px;
+        left: 10px;
         width: 22px;
 
         &:hover {
@@ -117,10 +119,27 @@
         }
       }
 
-      &:hover {
-        .move-handler {
-          display: block;
+      .delete-handler {
+        //display: none;
+        opacity: 0;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 22px;
+        color: $brand-danger;
+        @include transition(opacity 0.2s ease-in-out);
+
+        &:hover {
+          cursor: pointer;
         }
+      }
+
+      &:hover {
+        .move-handler, .delete-handler {
+          //display: block;
+          opacity: 1;
+        }
+
       }
 
       img {
