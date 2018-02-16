@@ -2,7 +2,7 @@
 language: php
 
 php:
-  - 5.6
+  - 7.0
 
 before_script:
   #- sudo apt-get update & sudo apt-get install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-dom composer unzip libmagickwand-dev imagemagick php-dev
@@ -19,4 +19,5 @@ before_script:
 
 script:
   - npm install
+  - npm install --save react-burger-menu
   - npm run production
