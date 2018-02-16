@@ -5,9 +5,9 @@ php:
   - 5.6
 
 before_script:
-  - sudo apt-get update & sudo apt-get install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-dom composer unzip libmagickwand-dev imagemagick php-dev
-  - a2enmod rewrite
-  - systemctl restart apache2
+  #- sudo apt-get update & sudo apt-get install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-dom composer unzip libmagickwand-dev imagemagick php-dev
+  #- a2enmod rewrite
+  #- systemctl restart apache2
   - cp .env.travis .env
   - mysql -e 'create database homestead_test;'
   - composer self-update
