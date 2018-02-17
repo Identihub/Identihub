@@ -60,13 +60,13 @@ class ColorCard extends Component {
                     onClick={deleteColor}
                 >
                     <i
-                        className="fas fa-trash-alt fa-2x delete-handler"
+                        className="fas fa-trash-alt delete-handler"
                         style={{color: this.state.infoColor}}
                     />
                 </span>
                 <Link to={'/project/' + bridge.id + '/view/color/element/' + card.id}>
                     {/*<img src="/images/move-handler.svg" className="" width="22" />*/}
-                    <i className="fas fa-expand-arrows-alt move-handler fa-2x" style={{color: this.state.infoColor}}/>
+                    <i className="fas fa-expand-arrows-alt move-handler" style={{color: this.state.infoColor}}/>
                 </Link>
                 <span id="card-color-info" style={{color: this.state.infoColor}}>
                     <div className="rgb">

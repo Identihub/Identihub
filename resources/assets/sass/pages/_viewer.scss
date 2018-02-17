@@ -121,12 +121,12 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-100%, -50%);
+        transform: translate(-80%, -50%);
       }
 
       .container, .container__desktop {
         img{
-          width: 22vw;
+          width: 40vw;
           max-height: 100vw;
           object-fit: contain;
         }

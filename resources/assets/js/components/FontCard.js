@@ -33,7 +33,7 @@ class FontCard extends Component {
                       <img src={'/fonts/' + card.variant.image_link} />
                   </Link>
                   <span onClick={deleteFont}>
-                        <i className="fas fa-trash-alt fa-2x delete-handler"/>
+                        <i className="fas fa-trash-alt delete-handler"/>
                   </span>
               </div>
           );

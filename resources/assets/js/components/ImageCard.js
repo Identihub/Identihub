@@ -40,10 +40,10 @@ class ImageCard extends Component {
                             backgroundPosition: 'center',
                             backgroundSize: 'cover'
                         }}>
-                        <i className="fas fa-expand-arrows-alt move-handler fa-2x"/>
+                        <i className="fas fa-expand-arrows-alt move-handler"/>
                     </Link>
                     <span onClick={deleteImage}>
-                        <i className="fas fa-trash-alt fa-2x delete-handler has-background-white-circle"/>
+                        <i className="fas fa-trash-alt delete-handler"/>
                   </span>
                 </div>
             ));
