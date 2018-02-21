@@ -172,7 +172,7 @@ class ImageSidebar extends Component {
                             <div className="sidebar-little-title">EMBED</div>
                             <div className="url url-lighter">
                                 <input type="text"
-                                       value={window.location.origin + '/assets/' + image.filename}/>
+                                       defaultValue={window.location.origin + '/assets/' + image.filename}/>
                                 <span id="copy-to-clip">
                                     <CopyToClipboard
                                         text={window.location.origin + '/assets/' + image.filename}
@@ -222,7 +222,7 @@ class ImageSidebar extends Component {
                                                 <div className="sidebar-little-title">EMBED</div>
                                                 <div className="url url-darker">
                                                     <input type="text"
-                                                           value={window.location.origin + '/assets/' + convertedItem.filename}/>
+                                                           defaultValue={window.location.origin + '/assets/' + convertedItem.filename}/>
                                                     <span id="copy-to-clip">
                                                     <CopyToClipboard
                                                         text={window.location.origin + '/assets/' + convertedItem.filename}

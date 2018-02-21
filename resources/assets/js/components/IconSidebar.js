@@ -182,7 +182,7 @@ class IconSidebar extends Component {
                                 <div className="sidebar-little-title">EMBED</div>
                                 <div className="url url-lighter">
                                     <input type="text"
-                                           value={`${window.location.origin + '/assets/' + icon.filename}`}/>
+                                           defaultValue={`${window.location.origin + '/assets/' + icon.filename}`}/>
                                     {/*<p>{`${window.location.origin + '/assets/' + icon.filename}`.substring(0, 35)}</p>*/}
                                     <span id="copy-to-clip">
                                     <CopyToClipboard
@@ -233,7 +233,7 @@ class IconSidebar extends Component {
                                                     <div className="sidebar-little-title">EMBED</div>
                                                     <div className="url url-darker">
                                                         <input type="text"
-                                                               value={window.location.origin + '/assets/' + convertedItem.filename}/>
+                                                               defaultValue={window.location.origin + '/assets/' + convertedItem.filename}/>
                                                         <span id="copy-to-clip">
                                                     <CopyToClipboard
                                                         text={window.location.origin + '/assets/' + convertedItem.filename}

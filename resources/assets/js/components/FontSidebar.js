@@ -133,7 +133,7 @@ class FontSidebar extends Component {
                     <div className="sidebar-little-title">FONT URL</div>
                     <div className="url url-darker">
                         <input type="text"
-                        value={`${font.variant.link}`.substring(0,59)}/>
+                        defaultValue={`${font.variant.link}`.substring(0,59)}/>
                         <span id="copy-to-clip">
                                         <CopyToClipboard
                                             text={font.variant.link}
