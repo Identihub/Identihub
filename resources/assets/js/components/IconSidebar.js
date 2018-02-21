@@ -112,9 +112,6 @@ class IconSidebar extends Component {
             adminOptions = (
                 <div className="admin-option">
                     <div className="sidebar-padding">
-                        <div className="header">
-                            <span>Use Asset</span>
-                        </div>
                         <div className="settings">
                             <div className="title">
                                 <span>Admin</span>
@@ -124,8 +121,8 @@ class IconSidebar extends Component {
                                 {/* THE CHECKBOX FOR SETTING FEATURED */}
                                 <span id="checkbox">
                                     <Spinner
-                                         width={14}
-                                         height={14}
+                                        width={14}
+                                        height={14}
                                     />
                                 </span>
                             </div>
@@ -162,24 +159,32 @@ class IconSidebar extends Component {
 
 
         return (
-            <div className="bm-item-list sidebar">
-                {adminOptions}
-                <div className="sidebar-client">
-                    <div className="sidebar-section">
-                        <div className="title">
+            <div className="sidebar">
+                <div className="bm-item-list">
+                    <div className="admin-option sidebar-padding">
+                        <div className="header">
+                            <span>Use Asset</span>
+                        </div>
+                    </div>
+                    {adminOptions}
+                    <div className="sidebar-client">
+                        <div className="sidebar-section">
+                            <div className="title">
                             <span>
                                 SVG
                             </span>
-                            <a className="download-icon" href={window.location.origin + '/assets/' + icon.filename}
-                               download={icon.filename}>
-                                <i className="fas fa-download"/>
-                            </a>
-                        </div>
-                        <div className="sidebar-section-url">
-                            <div className="sidebar-little-title">EMBED</div>
-                            <div className="url url-lighter">
-                                <p>{`${window.location.origin + '/assets/' + icon.filename}`.substring(0,35)}</p>
-                                <span id="copy-to-clip">
+                                <a className="download-icon" href={window.location.origin + '/assets/' + icon.filename}
+                                   download={icon.filename}>
+                                    <i className="fas fa-download"/>
+                                </a>
+                            </div>
+                            <div className="sidebar-section-url">
+                                <div className="sidebar-little-title">EMBED</div>
+                                <div className="url url-lighter">
+                                    <input type="text"
+                                           value={`${window.location.origin + '/assets/' + icon.filename}`}/>
+                                    {/*<p>{`${window.location.origin + '/assets/' + icon.filename}`.substring(0, 35)}</p>*/}
+                                    <span id="copy-to-clip">
                                     <CopyToClipboard
                                         text={window.location.origin + '/assets/' + icon.filename}
                                         className="clipboard" onCopy={() => {
@@ -190,45 +195,46 @@ class IconSidebar extends Component {
                                             </span>
                                     </CopyToClipboard>
                                 </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="sidebar-margin-top sidebar-section">
-                    <div className="sidebar-client">
-                        <div className="title">
+                    <div className="sidebar-margin-top sidebar-section">
+                        <div className="sidebar-client">
+                            <div className="title">
                                 <span>
                                     PNG
                                 </span>
+                            </div>
                         </div>
-                    </div>
-                    {
-                        icon.converted.map((convertedItem, index)  => {
-                            return (
-                                <div key={`icon-sidebar-item-${index}`}>
-                                    <div className="sidebar-client">
-                                        <div>
-                                            <div className="sidebar-section-img-info">
-                                                <div className="sidebar-image-info">
-                                                    <div className="sidebar-little-title">WIDTH(px)</div>
-                                                    <div className="info info-darker">{convertedItem.width}</div>
+                        {
+                            icon.converted.map((convertedItem, index) => {
+                                return (
+                                    <div key={`icon-sidebar-item-${index}`}>
+                                        <div className="sidebar-client">
+                                            <div>
+                                                <div className="sidebar-section-img-info">
+                                                    <div className="sidebar-image-info">
+                                                        <div className="sidebar-little-title">WIDTH(px)</div>
+                                                        <div className="info info-darker">{convertedItem.width}</div>
+                                                    </div>
+                                                    <i className="fas fa-lock lock"/>
+                                                    <div className="sidebar-image-info">
+                                                        <div className="sidebar-little-title">HEIGHT</div>
+                                                        <div className="info info-darker">{convertedItem.height}</div>
+                                                    </div>
+                                                    <a className="download-icon"
+                                                       href={window.location.origin + '/assets/' + convertedItem.filename}
+                                                       download={convertedItem.filename}>
+                                                        <i className="fas fa-download" id="download-icon"/>
+                                                    </a>
                                                 </div>
-                                                <i className="fas fa-lock lock"/>
-                                                <div className="sidebar-image-info">
-                                                    <div className="sidebar-little-title">HEIGHT</div>
-                                                    <div className="info info-darker">{convertedItem.height}</div>
-                                                </div>
-                                                <a className="download-icon"
-                                                   href={window.location.origin + '/assets/' + convertedItem.filename}
-                                                   download={convertedItem.filename}>
-                                                    <i className="fas fa-download" id="download-icon"/>
-                                                </a>
-                                            </div>
-                                            <div className="sidebar-section-url">
-                                                <div className="sidebar-little-title">EMBED</div>
-                                                <div className="url url-darker">
-                                                    <p>{window.location.origin + '/assets/' + convertedItem.filename}</p>
-                                                    <span id="copy-to-clip">
+                                                <div className="sidebar-section-url">
+                                                    <div className="sidebar-little-title">EMBED</div>
+                                                    <div className="url url-darker">
+                                                        <input type="text"
+                                                               value={window.location.origin + '/assets/' + convertedItem.filename}/>
+                                                        <span id="copy-to-clip">
                                                     <CopyToClipboard
                                                         text={window.location.origin + '/assets/' + convertedItem.filename}
                                                         className="clipboard" onCopy={() => {
@@ -239,23 +245,24 @@ class IconSidebar extends Component {
                                                         </span>
                                                     </CopyToClipboard>
                                                 </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div id="sidebar-hr">
+                                            <hr/>
+                                        </div>
                                     </div>
-                                    <div id="sidebar-hr">
-                                        <hr/>
-                                    </div>
-                                </div>
-                            );
-                        })
-                    }
-                </div>
+                                );
+                            })
+                        }
+                    </div>
 
-                <div className="sidebar-client new-size">
-                    {newSize}
+                    <div className="sidebar-client new-size">
+                        {newSize}
+                    </div>
+                    <NotificationSystem ref="notificationSystem"/>
                 </div>
-                <NotificationSystem ref="notificationSystem"/>
             </div>
         );
 

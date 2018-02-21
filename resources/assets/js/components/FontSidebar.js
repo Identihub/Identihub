@@ -132,7 +132,8 @@ class FontSidebar extends Component {
                 <div className="sidebar-section-url">
                     <div className="sidebar-little-title">FONT URL</div>
                     <div className="url url-darker">
-                        <p>{`${font.variant.link}`.substring(0,59)}</p>
+                        <input type="text"
+                        value={`${font.variant.link}`.substring(0,59)}/>
                         <span id="copy-to-clip">
                                         <CopyToClipboard
                                             text={font.variant.link}
@@ -152,11 +153,11 @@ class FontSidebar extends Component {
                     <div className="sidebar-section-img-info">
                         <div className="sidebar-image-info">
                             <div className="sidebar-little-title">FONT FAMILY</div>
-                            <div className="info">{font.variant.font_family.family}</div>
+                            <div className="info info-darker">{font.variant.font_family.family}</div>
                         </div>
                         <div className="sidebar-image-info">
                             <div className="sidebar-little-title">WEIGHT</div>
-                            <div className="info">{weight}</div>
+                            <div className="info info-darker">{weight}</div>
                         </div>
                     </div>
                 </div>

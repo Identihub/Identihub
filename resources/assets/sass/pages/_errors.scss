@@ -1,0 +1,49 @@
+.forOfor {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & .body {
+    & img {
+      width: 30vw;
+      height: 30vh;
+    }
+    & h1, p {
+      margin-top: 30px;
+      text-align: center;
+    }
+    & span {
+      color: $oc-gray-8;
+      font-weight: bold;
+    }
+
+    & p {
+      font-size: 18px;
+    }
+  }
+}
+
+#goBack {
+  margin-top: 30px;
+  text-align: center;
+
+  & a {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    
+    display: inline-block;
+    padding: 10px 20px 10px 20px;
+    border: 2px solid $oc-gray-7;
+    font-weight:500;
+
+    &:hover {
+      background-color: $oc-gray-7;
+      color: white;
+    }
+  }
+}

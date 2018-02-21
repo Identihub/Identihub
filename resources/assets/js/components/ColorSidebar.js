@@ -99,7 +99,8 @@ class ColorSidebar extends Component {
                 <div className="sidebar-section-url">
                     <div className="sidebar-little-title">HEX</div>
                     <div className="url url-lighter">
-                        <p>{"#" + color.hex}</p>
+                        <input type="text"
+                               value={"#" + color.hex}/>
                         <span id="copy-to-clip">
                                         <CopyToClipboard
                                             text={"#" + color.hex}
@@ -118,7 +119,8 @@ class ColorSidebar extends Component {
                 <div className="sidebar-section-url">
                     <div className="sidebar-little-title">RGB</div>
                     <div className="url url-darker">
-                        <p>{"rgb(" + color.rgb.replace(" ", ", ") + ")"}</p>
+                        <input type="text"
+                               value={"rgb(" + color.rgb.replace(" ", ", ") + ")"}/>
                         <span id="copy-to-clip">
                                         <CopyToClipboard
                                             text={"#" + color.hex}

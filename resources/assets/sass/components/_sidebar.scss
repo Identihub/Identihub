@@ -80,6 +80,10 @@
 .download-icon {
   margin-left: 10px;
   color: $white;
+
+  &:active {
+    opacity: 0.75;
+  }
 }
 
 .sidebar-section-img-info {
@@ -111,7 +115,7 @@
 
   & .info-darker {
     background-color: $text-gray-8;
-    color: $text-gray-darker;
+    color: $text-gray-light;
   }
 
   & .info-lighter {
@@ -143,9 +147,9 @@
       margin-left: 10px;
     }
 
-    & p {
+    & input {
       margin-top: 5px;
-      padding: 7px;
+      padding: 3px;
       font-size: 14px;
 
       width: 90%;
@@ -156,10 +160,17 @@
   }
   .url-lighter {
     #icon {
+      //@include transition(color 1 ease-in-out);
       color: $text-gray-light;
+      opacity: 1;
+      cursor: pointer;
+      &:active {
+        opacity: 0.75;
+      }
+
     }
 
-    & p {
+    & input {
       background-color: $text-gray-dark;
       color: $text-gray-light;
     }
@@ -167,12 +178,13 @@
 
   .url-darker {
     #icon {
-      color: $text-gray-darker;
+      color: $text-gray-light;
+      cursor: pointer;
     }
 
-    & p {
+    & input {
       background-color: $text-gray-8;
-      color: $text-gray-darker;
+      color: $text-gray-light;
     }
   }
 }

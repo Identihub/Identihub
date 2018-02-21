@@ -69,8 +69,8 @@ class IconSection extends Component {
 
         return (
             <SectionWrapper
-                title="Icons"
-                addResource="Add Icon"
+                title="Logos"
+                addResource="Upload SVG"
                 onResourceClick={emulateInputOnChange}
                 bridge={bridge}
                 canCreateSection={true}

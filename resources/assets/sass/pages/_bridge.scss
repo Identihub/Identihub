@@ -6,6 +6,18 @@
   .link {
     position: relative;
     margin-bottom: 65px;
+    & span {
+      & .fa-copy {
+        font-size: 20px;
+        margin-right: 13px;
+        @include  transition(color 0.2s easer-in-out);
+
+        &:active {
+            color: $oc-gray-6;
+        }
+      }
+    }
+
     &:hover {
       cursor: pointer;
     }
@@ -32,7 +44,7 @@
 
   .link {
     margin-top: 10px;
-    margin-left: 30px;
+    //margin-left: 30px;
   }
 
   .title-section {

@@ -10,7 +10,7 @@ import ColorSidebar from '../components/ColorSidebar';
 import IconSidebar from '../components/IconSidebar';
 import ImageSidebar from '../components/ImageSidebar';
 import {paramsChecker, isPublic} from '../helpers';
-import {slide as Menu} from 'react-burger-menu'
+import { slide as Menu } from 'react-burger-menu'
 
 class Viewer extends Component {
 
