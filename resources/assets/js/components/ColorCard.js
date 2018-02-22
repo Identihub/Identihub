@@ -33,9 +33,9 @@ class ColorCard extends Component {
     }
 
     deleteColor() {
-        const { deleteColor, bridge, card } = this.props;
+        const {deleteColor, bridge, card} = this.props;
 
-        if(deleteColor()){
+        if (deleteColor()) {
             deleteColor(bridge.id, card.id);
         }
     }
@@ -48,14 +48,15 @@ class ColorCard extends Component {
         const deleteColor = this.deleteColor;
         // console.log(card);
 
-        return connectDragSource(connectDropTarget(
-            <div
-                className="item card color-card"
-                ref={(div) => {
-                    this.card = div;
-                }}
-                style={{backgroundColor: "#" + card.hex, opacity: opacity}}
-            >
+        if (!isPub) {
+            return connectDragSource(connectDropTarget(
+                <div
+                    className="item card color-card"
+                    ref={(div) => {
+                        this.card = div;
+                    }}
+                    style={{backgroundColor: "#" + card.hex, opacity: opacity}}
+                >
                 <span
                     onClick={deleteColor}
                 >
@@ -64,11 +65,11 @@ class ColorCard extends Component {
                         style={{color: this.state.infoColor}}
                     />
                 </span>
-                <Link to={'/project/' + bridge.id + '/view/color/element/' + card.id}>
-                    {/*<img src="/images/move-handler.svg" className="" width="22" />*/}
-                    <i className="fas fa-expand-arrows-alt move-handler" style={{color: this.state.infoColor}}/>
-                </Link>
-                <span id="card-color-info" style={{color: this.state.infoColor}}>
+                    <Link to={'/project/' + bridge.id + '/view/color/element/' + card.id}>
+                        {/*<img src="/images/move-handler.svg" className="" width="22" />*/}
+                        <i className="fas fa-expand-arrows-alt move-handler" style={{color: this.state.infoColor}}/>
+                    </Link>
+                    <span id="card-color-info" style={{color: this.state.infoColor}}>
                     <div className="rgb">
                         {card.rgb.split(" ").map((a, i) => (
                             <span key={`color-card${i}`}>
@@ -97,14 +98,41 @@ class ColorCard extends Component {
                         #{card.hex}
                     </div>
               </span>
-            </div>
-        ));
-        if (!isPub) {
+                </div>
+            ));
         } else {
             return (
-                <div className="item card" style={{backgroundColor: "#" + card.hex, opacity: opacity}}>
-                    <Link to={'/view/color/element/' + card.id}>
-                    </Link>
+                <div className="item card color-card" style={{backgroundColor: "#" + card.hex, opacity: opacity}}>
+                    <Link to={'/view/color/element/' + card.id}/>
+                    <span id="card-color-info" style={{color: this.state.infoColor}}>
+                    <div className="rgb">
+                        {card.rgb.split(" ").map((a, i) => (
+                            <span key={`color-card${i}`}>
+                                {i === 0
+                                    ? <span className="rgb-span">
+                                        <span id="rgb-text">R</span>
+                                        <span id="rgb-number">{a}</span>
+                                      </span>
+                                    : null}
+                                {i === 1
+                                    ? <span className="rgb-span">
+                                        <span id="rgb-text">R</span>
+                                        <span id="rgb-number">{a}</span>
+                                    </span>
+                                    : null}
+                                {i === 2
+                                    ? <span className="rgb-span">
+                                        <span id="rgb-text">R</span>
+                                        <span id="rgb-number">{a}</span>
+                                      </span>
+                                    : null}
+                            </span>
+                        ))}
+                     </div>
+                    <div className="hex">
+                        #{card.hex}
+                    </div>
+              </span>
                 </div>
             );
         }
@@ -118,4 +146,4 @@ const dispatchToProps = (dispatch) => {
     }, dispatch)
 };
 
-export default dropTargetFlow("COLOR")(connect(state=>state, dispatchToProps)(ColorCard));
+export default dropTargetFlow("COLOR")(connect(state => state, dispatchToProps)(ColorCard));
