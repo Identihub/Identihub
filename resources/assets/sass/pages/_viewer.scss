@@ -129,7 +129,7 @@
       .container, .container__desktop {
         img {
           width: 40vw;
-          max-height: 100vw;
+          max-height: 90vh;
           object-fit: contain;
         }
 
@@ -179,8 +179,8 @@
   }
 
   .color {
-    width: 20vw;
-    height: 20vw;
+    width: 40vw;
+    height: 40vw;
   }
 
   .forward {
