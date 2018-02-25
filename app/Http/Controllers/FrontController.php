@@ -8,7 +8,12 @@ class FrontController
 
     public function welcome()
     {
-        return view('welcome');
+        if(Auth::guest()){
+            return view('auth/login');
+        }
+        else {
+            header("Location: /app#/projects");
+        }
     }
 
 }
