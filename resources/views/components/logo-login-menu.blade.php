@@ -1,6 +1,6 @@
 <div class="navigation">
-    <a class="center-both-axes" href="/">
-        <img src="/images/logo.svg" width="48" height="48">
+    <a class="keep-on-left" style="" href="/">
+        <img src="/images/header-logo.svg">
     </a>
 
     <label class="menu" for="menu"><img src="/images/menu.svg"/></label>
@@ -19,7 +19,7 @@
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu navbar-ul" role="menu">
                         <li>
                             <a href="{{ route('logout') }}"
                                onclick="event.preventDefault();

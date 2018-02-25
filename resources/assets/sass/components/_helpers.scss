@@ -5,6 +5,19 @@
   left: 50%;
 }
 
+.keep-on-left{
+  float: left;
+  margin-top: 20px;
+  //transform: translateY(-27%);
+}
+
+
+@media (max-width: 1097px) {
+  .keep-on-left {
+    margin-left: 30px;
+  }
+}
+
 @mixin transition($transition...) {
   -webkit-transition: $transition;
   -moz-transition: $transition;

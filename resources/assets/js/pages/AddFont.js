@@ -144,7 +144,7 @@ class AddFont extends Component {
                                            placeholder="Font Family"
                                            onChange={searchFontFamilyFunction}/>
                         </div>
-                        <div>
+                        <div className={"fontList"}>
                             {
                                 selectedFontFamily ?
                                         <div>
