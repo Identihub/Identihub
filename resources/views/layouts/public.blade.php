@@ -31,6 +31,8 @@
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Overpass:400,900" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <!--  Font Awesome -->
+    <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
     <script>
         window.Laravel = {!! json_encode([

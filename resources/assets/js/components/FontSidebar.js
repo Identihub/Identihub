@@ -89,67 +89,80 @@ class FontSidebar extends Component {
     console.log(font);
     const weight = this.weightToText(font.variant.variant);
 
-    let settingsButton = null;
+    let settings = null;
     if(!isPub){
-      settingsButton = (<div onClick={openSettings}>
-        <ReactSVG
-          path="/images/settings.svg"
-        />
-      </div>);
+      settings = (
+          <div className="settings">
+              <div className="buttons">
+                  <a className="button-outline-delete settings-button"
+                     onClick={deleteFont}>DELETE</a>
+              </div>
+          </div>
+      );
     }
 
     if(!font)
       return <div> </div>;
 
     return (
-      <div className="font-sidebar">
-        <div className="primary-view" style={{marginLeft: marginStyle}}>
-          <div className="head">
-            { settingsButton }
-            <h3>Fonts</h3>
-          </div>
-          <div className="content">
-            <section>
-              <h4>Source File</h4><a className="button" href={font.variant.link} download={font.variant.font_family.family + " " + font.variant.variant}>Download</a>
-              <div className="clipboard_and_text">
-                <div>
-                  <CopyToClipboard text={font.variant.link} className="clipboard" onCopy={() => {addNotification()}}>
-                    <span><ReactSVG
-                      path="/images/clipboard.svg"
-                    /></span>
-                  </CopyToClipboard>
+        <div className="bm-item-list sidebar">
+            <div className="sidebar-padding">
+                <div className="header">
+                    <span>Use Font</span>
                 </div>
-                <p>{font.variant.link}</p>
-              </div>
-            </section>
-            <section>
-              <h4>Info</h4>
-              <div className="text">
-                <p><span className="prefix">Font Family</span> <span className="primar">{font.variant.font_family.family}</span></p>
-                <p><span className="prefix">Weight</span> <span className="primar">{weight}</span></p>
-              </div>
-            </section>
-          </div>
-        </div>
-        <div className="settings">
-          <div className="head">
-            <div onClick={openPrimary}>
-              <ReactSVG
-                path="/images/close.svg"
-              />
+                {settings}
             </div>
-            <h3>Font Settings</h3>
-          </div>
-          <div className="content">
-            <section>
-              <div className="text">
-                <a className="button" onClick={deleteFont}>Delete</a>
-              </div>
-            </section>
-          </div>
+            <div id="sidebar-hr">
+                <hr/>
+            </div>
+            <div className="sidebar-client sidebar-margin-top">
+                <div className="sidebar-section">
+                    <div className="title">
+                                <span>
+                                    SOURCE FILE
+                                </span>
+                        <a className="download-icon" href={font.variant.link}
+                           download={font.variant.font_family.family + " " + font.variant.variant}>
+                            <i className="fas fa-download"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div className="sidebar-client sidebar-margin-top">
+                <div className="sidebar-section-url">
+                    <div className="sidebar-little-title">FONT URL</div>
+                    <div className="url url-darker">
+                        <input type="text"
+                        defaultValue={`${font.variant.link}`.substring(0,59)}/>
+                        <span id="copy-to-clip">
+                                        <CopyToClipboard
+                                            text={font.variant.link}
+                                            className="clipboard" onCopy={() => {
+                                            addNotification()
+                                        }}>
+                                                <span id="icon">
+                                                    <i className="far fa-copy"/>
+                                                </span>
+                                        </CopyToClipboard>
+                                    </span>
+                    </div>
+                </div>
+            </div>
+            <div className="sidebar-client sidebar-margin-top">
+                <div>
+                    <div className="sidebar-section-img-info">
+                        <div className="sidebar-image-info">
+                            <div className="sidebar-little-title">FONT FAMILY</div>
+                            <div className="info info-darker">{font.variant.font_family.family}</div>
+                        </div>
+                        <div className="sidebar-image-info">
+                            <div className="sidebar-little-title">WEIGHT</div>
+                            <div className="info info-darker">{weight}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <NotificationSystem ref="notificationSystem" />
-      </div>
     );
 
   }
@@ -169,3 +182,53 @@ const dispatchToProps = (dispatch) => {
 };
 
 export default connect(state => state, dispatchToProps)(FontSidebar);
+
+
+{/*<div className="font-sidebar">*/}
+    {/*<div className="primary-view" style={{marginLeft: marginStyle}}>*/}
+        {/*<div className="head">*/}
+            {/*{ settingsButton }*/}
+            {/*<h3>Fonts</h3>*/}
+        {/*</div>*/}
+        {/*<div className="content">*/}
+            {/*<section>*/}
+                {/*<h4>Source File</h4><a className="button" href={font.variant.link} download={font.variant.font_family.family + " " + font.variant.variant}>Download</a>*/}
+                {/*<div className="clipboard_and_text">*/}
+                    {/*<div>*/}
+                        {/*<CopyToClipboard text={font.variant.link} className="clipboard" onCopy={() => {addNotification()}}>*/}
+                    {/*<span><ReactSVG*/}
+                        {/*path="/images/clipboard.svg"*/}
+                    {/*/></span>*/}
+                        {/*</CopyToClipboard>*/}
+                    {/*</div>*/}
+                    {/*<p>{font.variant.link}</p>*/}
+                {/*</div>*/}
+            {/*</section>*/}
+            {/*<section>*/}
+                {/*<h4>Info</h4>*/}
+                {/*<div className="text">*/}
+                    {/*<p><span className="prefix">Font Family</span> <span className="primar">{font.variant.font_family.family}</span></p>*/}
+                    {/*<p><span className="prefix">Weight</span> <span className="primar">{weight}</span></p>*/}
+                {/*</div>*/}
+            {/*</section>*/}
+        {/*</div>*/}
+    {/*</div>*/}
+    {/*<div className="settings">*/}
+        {/*<div className="head">*/}
+            {/*<div onClick={openPrimary}>*/}
+                {/*<ReactSVG*/}
+                    {/*path="/images/close.svg"*/}
+                {/*/>*/}
+            {/*</div>*/}
+            {/*<h3>Font Settings</h3>*/}
+        {/*</div>*/}
+        {/*<div className="content">*/}
+            {/*<section>*/}
+                {/*<div className="text">*/}
+                    {/*<a className="button" onClick={deleteFont}>Delete</a>*/}
+                {/*</div>*/}
+            {/*</section>*/}
+        {/*</div>*/}
+    {/*</div>*/}
+    {/*<NotificationSystem ref="notificationSystem" />*/}
+{/*</div>*/}

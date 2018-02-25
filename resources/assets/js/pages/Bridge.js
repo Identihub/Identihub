@@ -81,7 +81,7 @@ export class Bridge extends Component {
         let bridgeName = null;
         if(!isPub){
             bridgeName = ( <div className="title-section">
-                <DebounceInput value={bridge.name || ''} className="input-ghost"
+                <DebounceInput value={bridge.name || ''} className="input-ghost background-light-gray-Hovered"
                                placeholder="Project Name" debounceTimeout="500"
                                minLength="4" onChange={this.updateName}
                 />
@@ -110,7 +110,7 @@ export class Bridge extends Component {
                 </Helmet>
                 <div>
 
-                    { breadCrumb }
+                    {/*{ breadCrumb }*/}
                     { bridgeName }
                     { link }
 

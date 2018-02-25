@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import _ from 'lodash';
 import { addBridges, addBridge } from './BridgeActions';
 import { changeHasBridges } from '../Extra/ExtraActions';
 import { addSectionTypes } from '../SectionType/SectionTypeActions';
@@ -142,9 +142,9 @@ export function deleteSection(bridgeid, sectionId) {
   }
 }
 
-export function createIcon(bridgeId, file, callbackProgress){
+export function createIcon(bridgeId, files, callbackProgress){
     let data = new FormData();
-    data.append('icon', file);
+    _.map(files, (f) => data.append('icons[]', f));
 
     return (dispatch) => {
         return axios.post('/api/v1/bridges/' + bridgeId + '/icons', data, {onUploadProgress: callbackProgress})
@@ -157,9 +157,9 @@ export function createIcon(bridgeId, file, callbackProgress){
     }
 }
 
-export function createImage(bridgeId, file){
+export function createImage(bridgeId, files){
   let data = new FormData();
-  data.append('image', file);
+  _.map(files, (f) => data.append('images[]', f));
 
   return (dispatch) => {
     return axios.post('/api/v1/bridges/' + bridgeId + '/images', data)

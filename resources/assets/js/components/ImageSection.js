@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import ImageSectionRow from './ImageSectionRow';
 import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
 import { createImage } from '../reducers/Bridge/BridgeApiCalls';
+import renderSection from '../HOC/renderSectionHOC'
 
 class ImageSection extends Component {
 
@@ -21,7 +22,7 @@ class ImageSection extends Component {
     addImage(event) {
         const bridge = this.props.bridge;
         const createImage = this.props.createImage;
-        const file = event.target.files[0];
+        const file = event.target.files;
         createImage(bridge.id, file)
     }
 
@@ -55,10 +56,11 @@ class ImageSection extends Component {
                 canCreateSection={true}
                 sectionType={imagesSection}>
                 <input id="icon"
+                       multiple
                        ref={input => this.inputElement = input}
                        onChange={this.addImage}
                        type="file"
-                       accept="image/*"
+                       accept="image/png,image/jpg,image/jpeg"
                        name="image"/>
                 {
                     sortByOrder(filterSectionsWithSectionType(sections, imagesSection)).map( section => {
@@ -100,4 +102,4 @@ const dispatchToProps = (dispatch) => {
   }, dispatch)
 };
 
-export default connect(mapStateToProps, dispatchToProps)(ImageSection);
+export default renderSection('images')(connect(mapStateToProps, dispatchToProps)(ImageSection));

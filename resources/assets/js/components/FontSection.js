@@ -6,6 +6,8 @@ import { getSectionType } from '../reducers/SectionType/SectionTypeReducer';
 import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
 import FontSectionRow from './FontSectionRow';
 import EmptySectionState from './EmptySectionState';
+import renderSection from '../HOC/renderSectionHOC'
+
 
 class FontSection extends Component {
 
@@ -84,4 +86,4 @@ FontSection.propTypes = {
     }).isRequired
 };
 
-export default connect(mapStateToProps)(FontSection);
+export default renderSection('fonts')(connect(mapStateToProps)(FontSection));
