@@ -23,7 +23,7 @@ Identihub is an open-source web platform for brand and assets management. It is 
 #### Installing the software
 ```bash
 apt-get update && apt-get upgrade
-apt-get install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-dom composer unzip libmagickwand-dev imagemagick php-dev
+apt-get install  apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-xml composer unzip libmagickwand-dev imagemagick php-dev librsvg2-bin php-imagick
 ```
 #### Setting up the database
 ```bash
@@ -127,3 +127,8 @@ To help identify and subsequently fix bugs faster, make sure to include some bas
 3. Browser (e.g. Mozilla Firefox) and Screen Resolution (e.g. 1920x1080)
 4. Steps to Reproduce (e.g. Access Main Page, Hit Login, Fill In Login Form, Hit Submit Button)
 
+---
+
+## Contributing Code
+
+Simply create a branch based on the `dev` branch, do your changes, and open it as a pull request. Ideally write tests for the feature or bugfix you propose.
