@@ -15,7 +15,7 @@
                 </ul>
                 <br />
                 <section>
-                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                    <p>Make sure you install Imagick AND php-imagick.</p>
                     <a class="button" href="{{ route('introduction.finish') }}">Continue</a>
                 </section>
             </div>
