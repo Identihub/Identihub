@@ -15,7 +15,7 @@
                 </ul>
                 <br />
                 <section>
-                    <p>Make sure you install Imagick AND php-imagick.</p>
+                    <p>Make sure you install the program(s) marked in red.</p>
                     <a class="button" href="{{ route('introduction.finish') }}">Continue</a>
                 </section>
             </div>
