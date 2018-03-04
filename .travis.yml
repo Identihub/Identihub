@@ -16,5 +16,4 @@ before_script:
 
 script:
   - npm install
-  - npm install --save react-burger-menu
   - npm run production
