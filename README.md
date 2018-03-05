@@ -18,69 +18,6 @@ Identihub is an open-source web platform for brand and assets management. It is 
 1. Map Identihub on `Homestead.yaml`.
 2. Copy the `.env.example` to `.env` and update the latter accordingly.
 3. Run Vagrant.
-
-### Without Homestead (Apache)
-#### Installing the software
-```bash
-apt-get update && apt-get upgrade
-apt-get install  apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql php-curl php-json php-mbstring php-xml composer unzip libmagickwand-dev imagemagick php-dev librsvg2-bin php-imagick
-```
-#### Setting up the database
-```bash
-CREATE DATABASE identihub DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-GRANT ALL ON identihub.* TO 'identihubuser'@'localhost' IDENTIFIED BY 'password';
-FLUSH PRIVILEGES;
-exit
-```
-#### Configure Apache
-```bash
-<VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/html/public
-
-    <Directory /var/www/html/>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
-    </Directory>
-
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-    <IfModule mod_dir.c>
-        DirectoryIndex index.php index.pl index.cgi index.html index.xhtml $
-    </IfModule>
-</VirtualHost>
-```
-(Assumes you have installed Identihub in /var/www/html)
-```bash
-a2enmod rewrite
-systemctl restart apache2
-```
-#### Configure Identihub
-```bash
-cp .env.example .env
-nano .env
-```
-Edit 'DB_DATABASE' 'DB_USERNAME' and 'DB_PASSWORD' 
-#### Install Identihub's dependencies:
-  `composer install`
-
-#### Migrate the Identihub database (this will create the database tables):
-`php artisan migrate`
-
-#### Seed the Identihub database (this will populate the database with initial values):
-  `php artisan db:seed`
-
-#### Install Laravel Passport. This is related to the API's authentication:
-  `php artisan passport:install`
-  
-#### Generate  AES-128-CB & AES-256-CBC:
-  `php artisan key:generate`
-
-#### Set up the Mail server
-Find the `MAIL_*` entries in the `.env` file and update them with your necessary E
-
 #### (Optional) Modify `/etc/hosts` on the host machine to include identihub:
 ```
 192.168.10.10   identihub.test
@@ -96,13 +33,7 @@ sites:
       php: "7.2"
 .....
 ```
-
-#### Finishing steps
-1. Navigate to your server URL from the web browser.
-2. Click Continue.
-3. Enter localhost in 'database host', your database settings, and fill the rest.
-
-Note: Please use HTTPS. You can get a free SSL certificate using Let's Encrypt. Your users deserve security.
+[Installation guides are located at our wiki](https://github.com/uracreative/identihub/wiki/Installation-Guide-(from-souce))
 
 ---
 
