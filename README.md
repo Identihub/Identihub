@@ -14,26 +14,7 @@ Identihub is an open-source web platform for brand and assets management. It is 
 ---
 
 ## Installing
-### Homestead
-1. Map Identihub on `Homestead.yaml`.
-2. Copy the `.env.example` to `.env` and update the latter accordingly.
-3. Run Vagrant.
-#### (Optional) Modify `/etc/hosts` on the host machine to include identihub:
-```
-192.168.10.10   identihub.test
-
-```
-Modify the `Homestead.yaml` (in the Homestead directory) to add an alias `identihub.test` to the project's document root.
-```
-
-.....
-sites:
-    - map: identihub.test
-      to: /home/vagrant/code/identihub/public
-      php: "7.2"
-.....
-```
-[Installation guides are located at our wiki](https://github.com/uracreative/identihub/wiki/Installation-Guide-(from-souce))
+[Installation guides are located at our wiki]https://github.com/uracreative/identihub/wiki/Installation-Guide)
 
 ---
 
