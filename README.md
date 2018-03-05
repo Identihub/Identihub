@@ -14,7 +14,7 @@ Identihub is an open-source web platform for brand and assets management. It is 
 ---
 
 ## Installing
-[Installation guides are located at our wiki]https://github.com/uracreative/identihub/wiki/Installation-Guide)
+[Installation guides are located at our wiki](https://github.com/uracreative/identihub/wiki/Installation-Guide)
 
 ---
 
