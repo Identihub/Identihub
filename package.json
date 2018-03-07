@@ -36,6 +36,7 @@
     "react-dnd": "^2.4.0",
     "react-dnd-html5-backend": "^2.4.1",
     "react-notification-system": "0.2.x",
-    "react-svg": "^2.1.21"
+    "react-svg": "^2.1.21",
+    "snapsvg-cjs": "0.0.6"
   }
 }
