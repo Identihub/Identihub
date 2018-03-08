@@ -12,7 +12,7 @@ class FrontController
             return view('auth/login');
         }
         else {
-            header("Location: /app#/projects");
+            return redirect('/app#/projects');
         }
     }
 
