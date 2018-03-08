@@ -26,15 +26,17 @@ class ColorSidebar extends Component {
   }
 
   componentDidMount() {
-    this.notificationSystem = this.refs.notificationSystem;
+      this.notificationSystem = this.refs.notificationSystem;
   }
 
-  addNotification(){
-    this.notificationSystem.addNotification({
-      message: 'Color copied ',
-      level: 'success'
-    });
+  addNotification() {
+      debugger;
+        this.notificationSystem.addNotification({
+            message: 'Color copied to clipboard',
+            level: 'success'
+        });
   }
+
 
   openSettings() {
     this.setState((prevState, _) => {
@@ -57,7 +59,6 @@ class ColorSidebar extends Component {
   }
 
   render() {
-
     const openSettings = this.openSettings;
     const openPrimary = this.openPrimary;
     const addNotification = this.addNotification;
@@ -100,7 +101,8 @@ class ColorSidebar extends Component {
                     <div className="sidebar-little-title">HEX</div>
                     <div className="url url-lighter">
                         <input type="text"
-                               defaultValue={"#" + color.hex}/>
+                               readOnly
+                               value={"#" + color.hex}/>
                         <span id="copy-to-clip">
                                         <CopyToClipboard
                                             text={"#" + color.hex}
@@ -120,7 +122,8 @@ class ColorSidebar extends Component {
                     <div className="sidebar-little-title">RGB</div>
                     <div className="url url-darker">
                         <input type="text"
-                               defaultValue={"rgb(" + color.rgb.replace(" ", ", ") + ")"}/>
+                               readOnly
+                               value={"rgb(" + color.rgb.replace(" ", ", ") + ")"}/>
                         <span id="copy-to-clip">
                                         <CopyToClipboard
                                             text={"#" + color.hex}
@@ -135,13 +138,25 @@ class ColorSidebar extends Component {
                     </div>
                 </div>
             </div>
+            <NotificationSystem ref="notificationSystem"/>
         </div>
     );
-
   }
-
 }
 
+ColorSidebar.propTypes = {
+  color: PropTypes.shape({
+    id: PropTypes.number
+  })
+};
+
+const dispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    deleteColor
+  }, dispatch)
+};
+
+export default connect(null, dispatchToProps)(ColorSidebar);
 
 {/*<div className="font-sidebar">*/}
     {/*<div className="primary-view" style={{marginLeft: marginStyle}}>*/}
@@ -204,16 +219,3 @@ class ColorSidebar extends Component {
     {/*<NotificationSystem ref="notificationSystem" />*/}
 {/*</div>*/}
 
-ColorSidebar.propTypes = {
-  color: PropTypes.shape({
-    id: PropTypes.number
-  })
-};
-
-const dispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    deleteColor
-  }, dispatch)
-};
-
-export default connect(state => state, dispatchToProps)(ColorSidebar);

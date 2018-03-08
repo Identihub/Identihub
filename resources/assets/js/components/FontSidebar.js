@@ -162,6 +162,7 @@ class FontSidebar extends Component {
                     </div>
                 </div>
             </div>
+            <NotificationSystem ref="notificationSystem"/>
         </div>
     );
 
