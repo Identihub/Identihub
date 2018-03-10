@@ -12,7 +12,7 @@ before_script:
   - php artisan migrate
   - php artisan db:seed
   - php artisan passport:install
-  - php artisan key:generate
+  - 
 
 script:
   - npm install

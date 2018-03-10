@@ -44,3 +44,18 @@ To help identify and subsequently fix bugs faster, make sure to include some bas
 ## Contributing Code
 
 Simply create a branch based on the `dev` branch, do your changes, and open it as a pull request. Ideally write tests for the feature or bugfix you propose.
+
+
+## Installing on ubuntu 17 and running tests
+
+```bash
+
+apt-get update
+apt install aptitude unzip
+apt-get install php-imagick composer php-curl php-mbstring php-dom  imagemagick-6.q16
+cp .env.travis .env
+composer install --no-interaction
+php artisan key:generate
+./vendor/bin/phpunit
+
+```
