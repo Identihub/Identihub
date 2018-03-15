@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/uracreative/identihub.svg?branch=dev)](https://travis-ci.org/uracreative/identihub)
 # Identihub
 
-Identihub is an open-source web platform for brand and assets management. It is being developed by the folks at Ura Design.
+Identihub is an open-source web platform for brand and assets management. It is being developed by the folks at Ura Design and contributors around the world.
 
 ## Demos: 
 - https://demo.identihub.co/project/uradesign
