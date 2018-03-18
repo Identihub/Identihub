@@ -179,6 +179,8 @@ export function addIconConverted(bridgeId, iconId, width, height){
         dispatch(addBridge(response.data.bridge));
       })
       .catch(function(error) {
+        console.log('Something went wrong');
+        console.log(error.response.data);
         console.log(error);
       });
   }
@@ -191,6 +193,8 @@ export function addImageConverted(bridgeId, imageId, width, height){
         dispatch(addBridge(response.data.bridge));
       })
       .catch(function(error) {
+        console.log('Something went wrong');
+        console.log(error.response.data);
         console.log(error);
       });
   }
