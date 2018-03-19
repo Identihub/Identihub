@@ -24,8 +24,8 @@ class CreateConvertedIcon extends FormRequest
     public function rules()
     {
         return [
-            'width' => 'required|integer',
-            'height' => 'required|integer'
+            'width' => 'required|integer|max:20000',
+            'height' => 'required|integer|max:20000'
         ];
     }
 }
