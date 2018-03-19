@@ -16,7 +16,6 @@ use Illuminate\Contracts\Console\Kernel;
 
 class InstallationController extends Controller
 {
-
     public function introduction()
     {
         return $this->view->make('installation.introduction', ['menu' => false]);
@@ -29,7 +28,6 @@ class InstallationController extends Controller
 
     public function saveDatabaseInformation(InstallationDatabaseStore $request, EnvWriter $envWriter, Kernel $console)
     {
-
         $defaultDatabaseType = 'mysql';
         $rootConfigAccess = 'database.connections.' . $defaultDatabaseType;
         \Config::set($rootConfigAccess . '.host', $request->request->get('host'));
@@ -37,9 +35,10 @@ class InstallationController extends Controller
         \Config::set($rootConfigAccess . '.username', $request->request->get('username'));
         \Config::set($rootConfigAccess . '.password', $request->request->get('password'));
 
-        try{
-            if(!DatabaseChecker::checkIfConnectionWorks())
+        try {
+            if (!DatabaseChecker::checkIfConnectionWorks()) {
                 throw new DBConnectionError();
+            }
 
             $envWriter->writeNewEnvironmentFileWith('DB_HOST', $request->request->get('host'));
             $envWriter->writeNewEnvironmentFileWith('DB_DATABASE', $request->request->get('name'));
@@ -55,10 +54,9 @@ class InstallationController extends Controller
             }
 
             return $this->redirect->to(route('introduction.user'));
-        }catch (DBConnectionError $e){
+        } catch (DBConnectionError $e) {
             return back()->withErrors($e)->withInput($request->request->all());
         }
-
     }
 
     public function userInformation()
@@ -79,7 +77,7 @@ class InstallationController extends Controller
 
     public function saveOrganizationInformation(StoreOrganization $request, EnvWriter $envWriter)
     {
-        $envWriter->writeNewEnvironmentFileWith('ORGANIZATION_NAME', $request->request->get('name'));
+        $envWriter->writeNewEnvironmentFileWith('ORGANIZATION_NAME', '"' . $request->request->get('name') . '"');
         return $this->redirect->to(route('introduction.third-party'));
     }
 
@@ -100,5 +98,4 @@ class InstallationController extends Controller
         $envWriter->writeNewEnvironmentFileWith('IS_INSTALLED', 'true');
         return $this->redirect->to(route('app') . '#/projects');
     }
-
 }
