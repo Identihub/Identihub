@@ -24,7 +24,8 @@ class ConvertedStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'width' => 'required|integer|max:20000',
+            'height' => 'required|integer|max:20000'
         ];
     }
 }
