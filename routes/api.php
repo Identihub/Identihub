@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::delete('/bridges/{bridgeId}/fonts/{fontId}', 'FontsController@deleteFont');
 
     Route::post('/bridges/{bridgeId}/colors', 'ColorsController@createColor');
-    Route::post('/bridges/{bridge}/bulk-colors', 'ColorsController@createBulkColors')->name('colors.createBulk');
+    Route::post('/bridges/{bridgeId}/bulk-colors', 'ColorsController@createBulkColors')->name('colors.createBulk');
 
     Route::patch('/bridges/{bridgeId}/colors/{colorId}', 'ColorsController@updateColor');
     Route::delete('/bridges/{bridgeId}/colors/{colorId}', 'ColorsController@deleteColor');
