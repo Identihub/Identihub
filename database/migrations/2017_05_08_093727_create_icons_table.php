@@ -16,6 +16,7 @@ class CreateIconsTable extends Migration
         Schema::create('icons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('filename');
+            $table->string('filename_png');
             $table->integer('bridge_id');
             $table->double('width_ratio');
             $table->integer('section_id');
