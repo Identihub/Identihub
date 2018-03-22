@@ -22,3 +22,30 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Bridge::class, function (Faker\Generator $faker) {
+    $name = $faker->word;
+
+    return [
+        'name' => $name,
+        'slug' => str_slug($name),
+        'user_id' => function () {
+            return factory(\App\User::class)->create()->id;
+        }
+    ];
+});
+
+$factory->define(App\SectionType::class, function (Faker\Generator $faker) {
+    return [
+        'name' => 'COLORS'
+    ];
+});
+
+$factory->define(App\Section::class, function (Faker\Generator $faker) {
+    return [
+        'section_type_id' => 1,
+        'order' => 0,
+        'bridge_id' => factory(\App\Bridge::class)->create()->id
+    ];
+});
