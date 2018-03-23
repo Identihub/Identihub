@@ -36,7 +36,7 @@ class IconCard extends Component {
             return connectDragSource(connectDropTarget(
                 <div className="item card" style={{opacity: opacity}}>
                     <Link to={'/project/' + bridge.id + '/view/icon/element/' + card.id}>
-                        <img src={'/assets/' + card.filename}/>
+                        <img src={'/assets/' + card.filename_png}/>
                         <i className="fas fa-expand-arrows-alt move-handler"/>
                     </Link>
                     <span onClick={deleteIcon}>
@@ -48,7 +48,7 @@ class IconCard extends Component {
             return (
                 <div className="item card" style={{opacity: opacity}}>
                     <Link to={'/view/icon/element/' + card.id}>
-                        <img src={'/assets/' + card.filename}/>
+                        <img src={'/assets/' + card.filename_png}/>
                     </Link>
                 </div>
             );

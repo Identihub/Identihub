@@ -51,11 +51,15 @@ class SourceFileController extends Controller
                 $sectionType = SectionType::where('name', SectionType::ICONS)->get()->first();
                 $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.png';
 
+                $iconAsPng = $filenameIcon . '.png';
+
                 \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
+                \Storage::disk('assets')->put($iconAsPng, $im->getImageBlob());
                 $section = Section::where('section_type_id', $sectionType->id)->where('bridge_id', $bridgeId)->first();
                 $imageicon = Icon::create([
                     'bridge_id' => $bridgeId,
                     'filename' => $filenameIcon,
+                    'filename_png' => $iconAsPng,
                     'width_ratio' => $im->getImageWidth() / $im->getImageHeight(),
                     'section_id' => $section->id,
                     'order' => Icon::where('section_id', $section->id)->where('bridge_id', $bridgeId)->get()->count()
@@ -108,10 +112,16 @@ class SourceFileController extends Controller
             $sectionType = SectionType::where('name', SectionType::ICONS)->get()->first();
             $filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.svg';
             $request->file('icon')->storeAs('', $filenameIcon, 'assets');
+
+            $iconAsPng = $filenameIcon . '.png';
+            \Storage::disk('assets')->put($iconAsPng, $im->getImageBlob());
+
             $icon = Icon::findOrFail($iconId);
             $icon->filename = $filenameIcon;
+            $icon->filename_png = $iconAsPng;
             $icon->width_ratio = $im->getImageWidth() / $im->getImageHeight();
             $icon->save();
+
 
             $this->updateConvertedIcons($icon);
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
