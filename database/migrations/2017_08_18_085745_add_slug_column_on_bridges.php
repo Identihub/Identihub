@@ -13,8 +13,8 @@ class AddSlugColumnOnBridges extends Migration
      */
     public function up()
     {
-        Schema::table('bridges', function(Blueprint $table) {
-            $table->string('slug')->unique();
+        Schema::table('bridges', function (Blueprint $table) {
+            $table->string('slug')->unique()->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddSlugColumnOnBridges extends Migration
      */
     public function down()
     {
-        Schema::table('bridges', function(Blueprint $table) {
-           $table->dropColumn('slug');
+        Schema::table('bridges', function (Blueprint $table) {
+            $table->dropColumn('slug');
         });
     }
 }
