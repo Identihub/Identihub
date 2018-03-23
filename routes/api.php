@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +24,10 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::get('/fonts/search/{search}', 'FontsController@search');
     Route::post('/bridges/{bridgeId}/fonts', 'FontsController@createFont');
     Route::delete('/bridges/{bridgeId}/fonts/{fontId}', 'FontsController@deleteFont');
+
     Route::post('/bridges/{bridgeId}/colors', 'ColorsController@createColor');
+    Route::post('/bridges/{bridgeId}/bulk-colors', 'ColorsController@createBulkColors')->name('colors.createBulk');
+
     Route::patch('/bridges/{bridgeId}/colors/{colorId}', 'ColorsController@updateColor');
     Route::delete('/bridges/{bridgeId}/colors/{colorId}', 'ColorsController@deleteColor');
     Route::delete('/bridges/{bridgeId}/icons/{iconId}', 'SourceFileController@deleteIcon');
