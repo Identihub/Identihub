@@ -47,7 +47,7 @@ class LoginController extends Controller
         $this->validateLogin($request);
 
         $email = $request->get('email');
-        $user = User::where('email', $email)->get()->first();
+        $user = User::where('email', $email)->whereActive(1)->get()->first();
 
         if (!$user) {
             return redirect()->back()->withInput()->withErrors((new UserDoesntExist()));
