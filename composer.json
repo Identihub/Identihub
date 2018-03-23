@@ -15,9 +15,7 @@
         "nesbot/carbon": "^1.22",
         "orangehill/iseed": "dev-master",
         "phpunit/phpunit": "^5.7",
-        "pusher/pusher-php-server": "^2.6"
-    },
-    "require-dev": {
+        "pusher/pusher-php-server": "^2.6",
         "mockery/mockery": "dev-master@dev"
     },
     "autoload": {

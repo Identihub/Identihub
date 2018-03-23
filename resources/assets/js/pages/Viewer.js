@@ -238,7 +238,7 @@ class Viewer extends Component {
                 sortedItems = orderedElements ? orderedElements.map(function (icon) {
                     return (<div key={icon.id} className="item">
                         <div className={container}>
-                            <img src={'/assets/' + icon.filename}/>
+                            <img src={'/assets/' + icon.filename_png}/>
                         </div>
                     </div>)
                 }) : null;
