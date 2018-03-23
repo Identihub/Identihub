@@ -12,33 +12,36 @@ class Icon extends Model
     protected $table = 'icons';
 
     protected $fillable = [
-        'filename', 'bridge_id', 'width_ratio', 'section_id', 'order'
+        'filename', 'filename_png', 'bridge_id', 'width_ratio', 'section_id', 'order'
     ];
+
+    public function getFilenamePngAttribute($value)
+    {
+        if ($value == null) {
+            return $this->filename;
+        }
+    }
 
     public function converted()
     {
         return $this->hasMany(IconConverted::class, 'icon_id', 'id');
     }
 
-	public function save(array $options = [])
-	{
-		// before save code
+    public function save(array $options = [])
+    {
+        // before save code
 
-		parent::save();
-		// after save code
-		Bridge::whereId($this->bridge_id)->increment('nr_icons');
+        parent::save();
+        // after save code
+        Bridge::whereId($this->bridge_id)->increment('nr_icons');
+    }
 
+    public function update(array $attributes = [], array $options = [])
+    {
+        // before update code
 
-	}
-
-	public function update(array $attributes = [], array $options = [])
-	{
-		// before update code
-
-		parent::update();
-		// after update code
-		Bridge::whereId($this->bridge_id)->increment('nr_icons');
-
-	}
-
+        parent::update();
+        // after update code
+        Bridge::whereId($this->bridge_id)->increment('nr_icons');
+    }
 }
