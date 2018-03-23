@@ -15,6 +15,13 @@ class Icon extends Model
         'filename', 'filename_png', 'bridge_id', 'width_ratio', 'section_id', 'order'
     ];
 
+    public function getFilenamePngAttribute($value)
+    {
+        if ($value == null) {
+            return $this->filename;
+        }
+    }
+
     public function converted()
     {
         return $this->hasMany(IconConverted::class, 'icon_id', 'id');

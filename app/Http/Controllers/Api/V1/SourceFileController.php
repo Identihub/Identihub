@@ -112,10 +112,16 @@ class SourceFileController extends Controller
             $sectionType = SectionType::where('name', SectionType::ICONS)->get()->first();
             $filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.svg';
             $request->file('icon')->storeAs('', $filenameIcon, 'assets');
+
+            $iconAsPng = $filenameIcon . '.png';
+            \Storage::disk('assets')->put($iconAsPng, $im->getImageBlob());
+
             $icon = Icon::findOrFail($iconId);
             $icon->filename = $filenameIcon;
+            $icon->filename_png = $iconAsPng;
             $icon->width_ratio = $im->getImageWidth() / $im->getImageHeight();
             $icon->save();
+
 
             $this->updateConvertedIcons($icon);
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
