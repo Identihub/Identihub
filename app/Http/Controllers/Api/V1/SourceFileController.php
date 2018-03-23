@@ -84,7 +84,7 @@ class SourceFileController extends Controller
         } catch (IconShouldBeSVG $e) {
             return response()->json(['error' => $e->getMessage()]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error']);
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
         }
     }
 
@@ -127,7 +127,7 @@ class SourceFileController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error']);
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
         }
     }
 
@@ -219,8 +219,23 @@ class SourceFileController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error']);
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
         }
+    }
+
+    private function addViewBoxAndScaleSvg($svgdata, $width, $height)
+    {
+        $xml = simplexml_load_string($svgdata);
+        $attr = $xml->attributes();
+
+        if (strpos($svgdata, "viewBox") == false) {
+            $xml->addAttribute('viewBox', "0 0 ". $attr->width . " " . $attr->height);
+        }
+
+        $xml->attributes()->width =  $width;
+        $xml->attributes()->height =  $height;
+
+        return $xml->asXML();
     }
 
     public function addIconConverted(CreateConvertedIcon $request, $bridgeId, $iconId)
@@ -233,15 +248,21 @@ class SourceFileController extends Controller
             }
 
             $icon = Icon::findOrFail($iconId);
-            $im = new \Imagick();
             $width = (int)$request->get('width');
+            $height = (int)($width / $icon->width_ratio);
+
+            $im = new \Imagick();
+            $svgdata = \Storage::disk('assets')->get($icon->filename);
+            $svgdata = $this->addViewBoxAndScaleSvg($svgdata, $width, $height);
+
             $im->setBackgroundColor(new \ImagickPixel('transparent'));
-            $im->readImageBlob(\Storage::disk('assets')->get($icon->filename));
+            $im->readImageBlob($svgdata);
+            $im->setImageResolution(1536, 1536);
             $im->setImageFormat('png32');
-            $im->resizeImage($width, $width / $icon->width_ratio, \Imagick::FILTER_LANCZOS, 1);
 
             $sectionType = SectionType::where('name', SectionType::ICONS)->get()->first();
-            $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_icons . '.png';
+            $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_icons
+            . '-' . $width .'x' . $height . '.png';
             IconConverted::create([
                 'icon_id' => $icon->id,
                 'filename' => $filenameConverted,
@@ -250,15 +271,18 @@ class SourceFileController extends Controller
             ]);
             \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+
+            $im->clear();
+            $im->destroy();
+
             return response()->json([
                 'bridge' => $bridge,
                 'section_types' => SectionType::all()
             ]);
-
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error']);
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
         }
     }
 
@@ -306,11 +330,10 @@ class SourceFileController extends Controller
                 'bridge' => $bridge,
                 'section_types' => SectionType::all()
             ]);
-
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error']);
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
         }
     }
 
@@ -345,7 +368,7 @@ class SourceFileController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error']);
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
         }
     }
 
@@ -379,7 +402,7 @@ class SourceFileController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error']);
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
         }
     }
 
@@ -431,11 +454,10 @@ class SourceFileController extends Controller
                 'bridge' => $bridge,
                 'section_types' => SectionType::all()
             ]);
-
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error']);
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
         }
     }
 
