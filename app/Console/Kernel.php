@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('fonts:update')->monthly();
+        $schedule->command('fonts:update')
+            ->weekly()->sundays()->at('03:00');
     }
 
     /**

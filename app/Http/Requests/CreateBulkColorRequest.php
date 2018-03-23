@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateConvertedIcon extends FormRequest
+class CreateBulkColorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class CreateConvertedIcon extends FormRequest
     public function rules()
     {
         return [
-            'width' => 'required|integer|max:20000',
-            'height' => 'required|integer|max:20000'
+            'swatch' => 'required|mimetypes:text/plain'
         ];
     }
 }
