@@ -9,7 +9,7 @@ const BridgeCard = (props) => {
 
   let image = "/images/logo.svg";
   if(props.bridge.icons.length !== 0){
-    image = '/assets/' + props.bridge.icons[0].filename_png;
+    image = '/assets/' + props.bridge.icons[0].filename;
   }else{
     classImage += 'default-image';
   }
