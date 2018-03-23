@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-
 use App\ActivationLink;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ActivateLinkRequest;
@@ -14,7 +13,6 @@ use Illuminate\Http\Request;
 
 class ActivationLinkController extends Controller
 {
-
     public function activateLinkPage()
     {
         return $this->view->make('auth.resend-activation-link', [
@@ -38,18 +36,20 @@ class ActivationLinkController extends Controller
     public function activate(Request $request, $token)
     {
         $activationLink = ActivationLink::where('token', $token)->get()->first();
-        if (!$activationLink)
+        if (!$activationLink) {
             throw new ModelNotFoundException();
+        }
         $isActive = ActivationLink::isActiveLink($activationLink);
         if ($isActive) {
             $user = $activationLink->user;
             $user->active = true;
             $user->save();
             $activationLink->delete();
-            return redirect()->route('login')->with('message', 'Account is activated');
+            \Auth::login($user);
+            return redirect()->route('home');
+            // return redirect()->route('login')->with('message', 'Account is activated');
         } else {
             return redirect()->route('activate.page')->with('message', 'Link is not active, generate a new one');
         }
     }
-
 }
