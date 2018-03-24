@@ -14,7 +14,7 @@ class AddFilenamePngColumnOnIcons extends Migration
     public function up()
     {
         Schema::table('icons', function (Blueprint $table) {
-            $table->string('filename_png')->nullable();
+            $table->string('filename_png');
         });
     }
 
