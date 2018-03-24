@@ -6,7 +6,6 @@ use App\ActivationLink;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ActivationLinkMail extends Mailable
 {
@@ -14,7 +13,7 @@ class ActivationLinkMail extends Mailable
     /**
      * @var ActivationLink
      */
-    private $activationLink;
+    public $activationLink;
 
     /**
      * Create a new message instance.
