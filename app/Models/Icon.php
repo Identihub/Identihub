@@ -18,6 +18,7 @@ class Icon extends Model
     public function getFilenamePngAttribute($value)
     {
         return (strlen($value) > 1) ? $value :  $this->filename;
+
     }
 
     public function converted()
