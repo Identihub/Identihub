@@ -1,0 +1,17 @@
+version: '3'
+services:
+    web:
+        hostname: web
+        build: .
+        ports:
+            - 8080:80
+        volumes:
+            #- ./storage/web:/var/www/html
+            - ./entrypoint.sh:/entrypoint.sh
+        depends_on:
+            - db
+    db:
+        hostname: db
+        image: mariadb
+        volumes:
+            - ./storage/db:/var/lib/mysql
