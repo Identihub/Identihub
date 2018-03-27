@@ -1,45 +1,15 @@
-FROM php:7.1-fpm
+FROM debian:unstable
+
+# disable interactive functions
+ENV DEBIAN_FRONTEND noninteractive
 
 MAINTAINER Albatroz Jeremias <ajeremias@coletivos.org>
 
-#####
-# SYSTEM REQUIREMENT
-#####
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        libmcrypt-dev zlib1g-dev git libgmp-dev \
-        libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
-        build-essential chrpath libssl-dev libxft-dev \
-        libfreetype6 libfontconfig1 libfontconfig1-dev
-    # && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
-# RUN apt-get update && apt-get install -y --no-install-recommends 
-# RUN apt-get install libfreetype6-dev libjpeg62-turbo-dev libpng12-dev libmcrypt-dev zlib1g-dev git libgmp-dev
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ 
-RUN docker-php-ext-configure gmp 
-RUN docker-php-ext-install iconv mcrypt mbstring pdo pdo_mysql zip gd gmp opcache 
-    
-#
-# sRUN     
-    # apt-get install  apache2 mysql-server php libapache2-mod-php php-mcrypt 
-    # php-mysql php-curl php-json php-mbstring php-xml composer unzip libmagickwand-dev imagemagick 
-    # php-dev librsvg2-bin php-imagick
-    
-# set recommended PHP.ini settings
-# see https://secure.php.net/manual/en/opcache.installation.php
-RUN { \
-		echo 'opcache.memory_consumption=128'; \
-		echo 'opcache.interned_strings_buffer=8'; \
-		echo 'opcache.max_accelerated_files=4000'; \
-		echo 'opcache.revalidate_freq=60'; \
-		echo 'opcache.fast_shutdown=1'; \
-		echo 'opcache.enable_cli=1'; \
-} > /usr/local/etc/php/conf.d/opcache-recommended.ini
+#add-apt-repository ppa:ondrej/php
+RUN apt -y update && apt -y upgrade
+RUN apt -y install apache2 mysql-server php7.1 libapache2-mod-php7.1 php7.1-mcrypt php7.1-mysql php7.1-curl php7.1-json php7.1-mbstring php7.1-xml composer unzip libmagickwand-dev imagemagick php7.1-dev librsvg2-bin php7.1-imagick 
 
-#####
-# INSTALL COMPOSER
-#####
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
+RUN apt -y remove php7.2-* php7.0-*
 
 COPY ./ /var/www/html
 
@@ -53,4 +23,3 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["php-fpm"]

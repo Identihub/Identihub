@@ -3,15 +3,27 @@ services:
     web:
         hostname: web
         build: .
+        image: libreramboxdeploy/identihub
         ports:
             - 8080:80
-        volumes:
-            #- ./storage/web:/var/www/html
-            - ./entrypoint.sh:/entrypoint.sh
         depends_on:
             - db
+        networks:
+            - external_network
+            - internal_network
     db:
         hostname: db
-        image: mariadb
+        image: mysql
+        networks:
+            - internal_network   
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
         volumes:
-            - ./storage/db:/var/lib/mysql
+           - ./storage/db:/var/lib/mysql
+networks:
+    external_network:
+    internal_network:
+        internal: true

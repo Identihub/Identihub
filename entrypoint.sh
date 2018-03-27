@@ -1,14 +1,14 @@
 #!/bin/bash
 
-if [ ! -f "/var/www/html/installed" ]; then
-    touch /var/www/html/installed
-    cd /var/www/html/
+## change this to wait for database
+sleep 40;
+
+if [ -f /installed ]; then
     php artisan migrate
     php artisan db:seed
     php artisan passport:install
     php artisan key:generate
+    touch /installed
 fi
 
-cd /var/www/html
-ls
-sleep 100000;
+tail -f /var/log/apache2/*
