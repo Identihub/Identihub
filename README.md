@@ -19,8 +19,6 @@
 
 ![SVG Assets](https://user-images.githubusercontent.com/5436686/38042573-079e8e54-32b5-11e8-9f7f-a899460684dd.png)
 
-![Colors](https://user-images.githubusercontent.com/5436686/38042582-0c010aee-32b5-11e8-9ef1-6715ee9a6d94.png)
-
 ---
 
 ## Demos: 
