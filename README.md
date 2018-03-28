@@ -32,7 +32,7 @@
 ---
 
 ## Installing
-[Installation guides are located in our wiki](https://github.com/uracreative/identihub/wiki/Installation-Guide) 
+[(Installation guides are located in our wiki)](https://github.com/uracreative/identihub/wiki/Installation-Guide) 
 
 There are are several ways to install Identihub in various configurations
 * [From source](https://github.com/uracreative/identihub/wiki/Installation-Guide-%28from-souce%29)
