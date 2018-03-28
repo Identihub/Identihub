@@ -6,13 +6,14 @@ services:
         image: libreramboxdeploy/identihub
         ports:
             - 8080:80
-        depends_on:
-            - db
+        links:
+            - superdb
         networks:
             - external_network
             - internal_network
-    db:
-        hostname: db
+        # volumes:
+    superdb:
+        hostname: superdb
         image: mysql
         networks:
             - internal_network   
