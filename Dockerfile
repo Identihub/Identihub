@@ -13,6 +13,10 @@ RUN apt -y remove php7.2-* php7.0-*
 
 COPY ./ /var/www/html
 
+RUN mkdir -p /var/www/html/storage/framework/sessions/
+RUN mkdir -p /var/www/html/storage/framework/cache/
+RUN mkdir -p /var/www/html/storage/framework/views/
+
 RUN chown -R www-data:www-data /var/www/html
 
 WORKDIR /var/www/html
@@ -22,4 +26,11 @@ RUN composer install
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+ADD ./000-default.conf /etc/apache2/sites-available/
+
+RUN a2enmod rewrite
+
+ENV LOG errorlog
+
 ENTRYPOINT ["/entrypoint.sh"]
+CMD ["apache2ctl", "-D", "FOREGROUND"]

@@ -1,14 +1,7 @@
 #!/bin/bash
 
-## change this to wait for database
-sleep 40;
+## bug from identihub
+cd /var/www/html/ && php artisan key:generate
 
-if [ -f /installed ]; then
-    php artisan migrate
-    php artisan db:seed
-    php artisan passport:install
-    php artisan key:generate
-    touch /installed
-fi
-
-tail -f /var/log/apache2/*
+echo 'start'
+exec "$@"

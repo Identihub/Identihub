@@ -16,6 +16,14 @@ Identihub is an open-source web platform for brand and assets management. It is 
 ## Installing
 [Installation guides are located at our wiki](https://github.com/uracreative/identihub/wiki/Installation-Guide)
 
+### Using docker 
+copy the .env.docker to .env (edit the file according to your own needs)
+
+`$ docker-compose run web php artisan migrate`
+`$ docker-compose run web php artisan db:seed`
+`$ docker-compose run web php artisan key:generate`
+`$ docker-compose up`
+
 ---
 
 ## Troubleshooting
