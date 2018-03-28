@@ -33,6 +33,7 @@ export class Bridge extends Component {
 
         this.updateName = this.updateName.bind(this);
         this.updateSlug = this.updateSlug.bind(this);
+        this.isSectionAvailable = this.isSectionAvailable.bind(this);
     }
 
     componentDidMount() {
@@ -49,6 +50,10 @@ export class Bridge extends Component {
     updateSlug(event) {
         const name = event.target.value;
         this.props.dispatch(updateBridgeSlugRequest(this.props.bridge.id, name));
+    }
+
+    isSectionAvailable(section) {
+      return section.length ? true : false;
     }
 
     render() {
@@ -103,6 +108,50 @@ export class Bridge extends Component {
             );
         }
 
+        let iconSection = null;
+        if(isPub && !this.isSectionAvailable(bridge.icons)) {
+            iconSection = (
+              <div></div>
+            );
+        } else {
+            iconSection = (
+              <IconSection  bridge={bridge}/>
+            );
+        }
+
+        let colorSection = null;
+        if(isPub && !this.isSectionAvailable(bridge.icons)) {
+            colorSection = (
+              <div></div>
+            );
+        } else {
+            colorSection = (
+              <ColorSection bridge={bridge} history={this.props.history}/>
+            );
+        }
+
+        let fontSection = null;
+        if(isPub && !this.isSectionAvailable(bridge.icons)) {
+            fontSection = (
+              <div></div>
+            );
+        } else {
+            fontSection = (
+              <FontSection bridge={bridge} history={this.props.history}/>
+            );
+        }
+
+        let imageSection = null;
+        if(isPub && !this.isSectionAvailable(bridge.icons)) {
+            imageSection = (
+              <div></div>
+            );
+        } else {
+            imageSection = (
+              <ImageSection bridge={bridge} history={this.props.history}/>
+            );
+        }
+
         return (
             <div className="bridge-page">
                 <Helmet>
@@ -114,10 +163,10 @@ export class Bridge extends Component {
                     { bridgeName }
                     { link }
 
-                    <IconSection  bridge={bridge}/>
-                    <ColorSection bridge={bridge} history={this.props.history}/>
-                    <FontSection bridge={bridge} history={this.props.history}/>
-                    <ImageSection bridge={bridge} history={this.props.history}/>
+                    { iconSection }
+                    { colorSection }
+                    { fontSection }
+                    { imageSection }
                 </div>
             </div>
         );
