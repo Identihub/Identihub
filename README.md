@@ -15,6 +15,13 @@
 
 <h5 align="center"><a href="https://www.patreon.com/ura" target="_blank"><img src="https://user-images.githubusercontent.com/5436686/38039744-2ddd1e66-32ae-11e8-8cf6-7c16390c2e05.png" width="150" alt="Support on Patreon"></a></h5>
 
+## Screenshots:
+
+![SVG Assets](https://user-images.githubusercontent.com/5436686/38042573-079e8e54-32b5-11e8-9f7f-a899460684dd.png)
+
+![Colors](https://user-images.githubusercontent.com/5436686/38042582-0c010aee-32b5-11e8-9ef1-6715ee9a6d94.png)
+
+---
 
 ## Demos: 
 
@@ -23,14 +30,6 @@
 * [Firefox](https://demo.identihub.co/project/firefox)
 * [The Tor Project](https://demo.identihub.co/project/tor-project)
 
-
----
-
-## Screenshots:
-
-![SVG Assets](https://user-images.githubusercontent.com/5436686/38042573-079e8e54-32b5-11e8-9f7f-a899460684dd.png)
-
-![Colors](https://user-images.githubusercontent.com/5436686/38042582-0c010aee-32b5-11e8-9ef1-6715ee9a6d94.png)
 
 ---
 
