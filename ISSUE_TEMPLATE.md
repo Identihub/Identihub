@@ -15,4 +15,5 @@
 * Version used:
 * Environment name and version (e.g. Chrome 39, node.js 5.4):
 * Operating System and version (desktop or mobile):
+* Architechture used: 
 * Link to your project:
