@@ -1,20 +1,46 @@
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/uracreative/identihub.png?columns=all)](https://waffle.io/uracreative/identihub?utm_source=badge)
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Build Status](https://travis-ci.org/uracreative/identihub.svg?branch=dev)](https://travis-ci.org/uracreative/identihub)
-# Identihub
+<h1 align="center">
+  <br>
+  <a href="http://rambox.pro"><img src="https://user-images.githubusercontent.com/5436686/38038733-efdd9d22-32ab-11e8-837e-2ed218ed937d.png" width="350px" alt="Identihub"></a>
+  <br>
 
-Identihub is an open-source web platform for brand and assets management. It is being developed by the folks at Ura Design and contributors around the world.
+<p align="center">
+  <a href="https://waffle.io/uracreative/identihub?utm_source=badge" target="_blank"><img src="https://badge.waffle.io/uracreative/identihub.png?columns=all" alt="Waffle.io Columns and Card count"></a>
+  <br>
+  <a href="https://www.gnu.org/licenses/agpl-3.0" target="_blank"><img src="https://img.shields.io/badge/License-AGPL%20v3-blue.svg" alt="GNU AGPL v3"></a>
+  <a href="https://travis-ci.org/uracreative/identihub" target="_blank"><img src="https://travis-ci.org/uracreative/identihub.svg?branch=dev" alt="Build Status"></a>
+</p>
+
+<h4 align="center">Identihub is open Source brand and visual assets hosting software which can be self-hosted as well.</h4>
+
+
+<h5 align="center"><a href="https://www.patreon.com/ura" target="_blank"><img src="https://user-images.githubusercontent.com/5436686/38039744-2ddd1e66-32ae-11e8-8cf6-7c16390c2e05.png" width="150" alt="Support on Patreon"></a></h5>
+
 
 ## Demos: 
-- https://demo.identihub.co/project/uradesign
-- https://demo.identihub.co/project/firefox
-- https://demo.identihub.co/project/ooni
+
+* [Identihub](https://demo.identihub.co/project/identihub)
+* [Ura Design](https://demo.identihub.co/project/uradesign)
+* [Firefox](https://demo.identihub.co/project/firefox)
+* [The Tor Project](https://demo.identihub.co/project/tor-project)
 
 
 ---
 
+## Screenshots:
+
+![SVG Assets](https://user-images.githubusercontent.com/5436686/38042573-079e8e54-32b5-11e8-9f7f-a899460684dd.png)
+
+![Colors](https://user-images.githubusercontent.com/5436686/38042582-0c010aee-32b5-11e8-9ef1-6715ee9a6d94.png)
+
+---
+
 ## Installing
-[Installation guides are located at our wiki](https://github.com/uracreative/identihub/wiki/Installation-Guide)
+[Installation guides are located in our wiki](https://github.com/uracreative/identihub/wiki/Installation-Guide) 
+
+There are are several ways to install Identihub in various configurations
+* [From source](https://github.com/uracreative/identihub/wiki/Installation-Guide-%28from-souce%29)
+* [Homestead](https://github.com/uracreative/identihub/wiki/Installation-guide-(homestead))
+
 
 ---
 
