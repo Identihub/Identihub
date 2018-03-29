@@ -37,6 +37,27 @@ class RegistrationAndAuthenticationFlowTest extends TestCase
         });
     }
 
+
+    /** @test */
+    public function theTheConfirmationEmailIsPlain()
+    {
+        Mail::fake();
+
+        $data = [
+            'name' => 'Sidrit',
+            'email' => 'foo@bar.com',
+            'password' => 'supersuper',
+            'password_confirmation' => 'supersuper'
+        ];
+
+        $response = $this->post('register', $data);
+
+        Mail::assertSent(ActivationLinkMail::class, function ($mail) {
+            $mail->build();
+            return ($mail->textView == 'mails.confirmation-link-plain');
+        });
+    }
+
     /** @test */
     public function theInactiveUserCannotLogIn()
     {

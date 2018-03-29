@@ -34,6 +34,7 @@ class ActivationLinkMail extends Mailable
     public function build()
     {
         return $this->subject('Confirm your Identihub email')
-            ->view('mails.confirmation-link', ['activationLink' => $this->activationLink]);
+            // ->view('mails.confirmation-link', ['activationLink' => $this->activationLink])
+            ->text('mails.confirmation-link-plain', ['activationLink' => $this->activationLink]);
     }
 }
