@@ -1,36 +1,62 @@
-FROM debian:unstable
-
-# disable interactive functions
-ENV DEBIAN_FRONTEND noninteractive
+FROM php:7.2-fpm
 
 MAINTAINER Albatroz Jeremias <ajeremias@coletivos.org>
 
-#add-apt-repository ppa:ondrej/php
-RUN apt -y update && apt -y upgrade
-RUN apt -y install apache2 mysql-server php7.1 libapache2-mod-php7.1 php7.1-mcrypt php7.1-mysql php7.1-curl php7.1-json php7.1-mbstring php7.1-xml composer unzip libmagickwand-dev imagemagick php7.1-dev librsvg2-bin php7.1-imagick 
+#####
+# SYSTEM REQUIREMENT
+#####
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        zlib1g-dev git libgmp-dev \
+        libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+        build-essential chrpath libssl-dev libxft-dev \
+        libfreetype6 libfontconfig1 libfontconfig1-dev \
+    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/ \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure gmp \
+    && docker-php-ext-install iconv mbstring pdo pdo_mysql zip gd gmp opcache \
+    && rm -rf /var/lib/apt/lists/*
+    
+# set recommended PHP.ini settings
+# see https://secure.php.net/manual/en/opcache.installation.php
+RUN { \
+		echo 'opcache.memory_consumption=128'; \
+		echo 'opcache.interned_strings_buffer=8'; \
+		echo 'opcache.max_accelerated_files=4000'; \
+		echo 'opcache.revalidate_freq=60'; \
+		echo 'opcache.fast_shutdown=1'; \
+		echo 'opcache.enable_cli=1'; \
+} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-RUN apt -y remove php7.2-* php7.0-*
+#####
+# INSTALL COMPOSER
+#####
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY ./ /var/www/html
 
-RUN mkdir -p /var/www/html/storage/framework/sessions/
-RUN mkdir -p /var/www/html/storage/framework/cache/
-RUN mkdir -p /var/www/html/storage/framework/views/
+#####
+# COPY APP
+#####
+COPY . /var/www/app
 
-RUN chown -R www-data:www-data /var/www/html
+RUN composer install --working-dir /var/www/app -o --no-dev --no-interaction --no-progress
+RUN chown -R www-data:www-data /var/www/app
+RUN mv /var/www/app/storage /var/www/docker-backup-storage
 
-WORKDIR /var/www/html
 
-RUN composer install
+######
+# DEFAULT ENV
+######
+ENV LOG errorlog
+ENV IS_INSTALLED true
+
+#use to be mounted into nginx for exemple
+VOLUME /var/www/app/public
+
+WORKDIR /var/www/app
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-ADD ./000-default.conf /etc/apache2/sites-available/
-
-RUN a2enmod rewrite
-
-ENV LOG errorlog
-
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["php-fpm"]
