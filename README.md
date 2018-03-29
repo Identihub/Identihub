@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="http://rambox.pro"><img src="https://user-images.githubusercontent.com/5436686/38038733-efdd9d22-32ab-11e8-837e-2ed218ed937d.png" width="350px" alt="Identihub"></a>
+  <a href="https://identihub.co"><img src="https://user-images.githubusercontent.com/5436686/38038733-efdd9d22-32ab-11e8-837e-2ed218ed937d.png" width="350px" alt="Identihub"></a>
   <br>
 
 <p align="center">
