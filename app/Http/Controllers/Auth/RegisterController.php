@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Http\Request;
+use App\Mail\ActivationLinkMail;
+use App\Jobs\CreateActivationLink;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -68,6 +70,15 @@ class RegisterController extends Controller
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
     }
+
+    protected function registered(Request $request, $user)
+    {
+        $activationLink = (new CreateActivationLink($user->id))->handle();
+        \Mail::to($user)->send(new ActivationLinkMail($activationLink));
+        return redirect()->route('activate.page')->with('message', 'An activation link was send to your email');
+    }
+
+
 
     /**
      * Create a new user instance after a valid registration.

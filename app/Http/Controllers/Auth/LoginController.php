@@ -9,7 +9,6 @@ use App\Mail\ActivationLinkMail;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LoginController extends Controller
 {
@@ -48,18 +47,19 @@ class LoginController extends Controller
         $this->validateLogin($request);
 
         $email = $request->get('email');
-        $user = User::where('email', $email)->get()->first();
+        $user = User::where('email', $email)->whereActive(1)->get()->first();
 
-        if(!$user)
+        if (!$user) {
             return redirect()->back()->withInput()->withErrors((new UserDoesntExist()));
-
-        $isActive = (boolean) $user->active;
-        if($isActive === false){
-            $activationLink = (new CreateActivationLink($user->id))->handle();
-            \Mail::to($user)
-                ->send(new ActivationLinkMail($activationLink));
-            return redirect()->route('activate.page')->with('message', 'An activation link was send to your email');
         }
+
+        // $isActive = (boolean) $user->active;
+        // if($isActive === false){
+        //     $activationLink = (new CreateActivationLink($user->id))->handle();
+        //     \Mail::to($user)
+        //         ->send(new ActivationLinkMail($activationLink));
+        //     return redirect()->route('activate.page')->with('message', 'An activation link was send to your email');
+        // }
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
