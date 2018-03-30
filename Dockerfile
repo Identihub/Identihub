@@ -1,3 +1,15 @@
+
+#####
+# BUILD ASSETS
+#####
+FROM node:9 AS assets
+COPY . .
+RUN npm install && npm run production
+
+
+#####
+# Indentihub image
+#####
 FROM php:7.2-fpm
 
 MAINTAINER Albatroz Jeremias <ajeremias@coletivos.org>
@@ -42,7 +54,12 @@ COPY . /var/www/app
 RUN composer install --working-dir /var/www/app -o --no-dev --no-interaction --no-progress
 RUN chown -R www-data:www-data /var/www/app
 RUN mv /var/www/app/storage /var/www/docker-backup-storage
+RUN rm -rf /var/www/app/tests
+RUN rm -rf /var/www/app/resources/assets
 
+COPY --from=assets public/css /var/www/app/public/css
+COPY --from=assets public/js /var/www/app/public/js
+COPY --from=assets public/mix-manifest.json /var/www/app/public/mix-manifest.json
 
 ######
 # DEFAULT ENV
