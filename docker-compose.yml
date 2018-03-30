@@ -1,30 +1,38 @@
-version: '3'
+version: '2'
+
 services:
-    web:
-        hostname: web
-        build: .
-        image: libreramboxdeploy/identihub
-        ports:
-            - 8080:80
-        links:
-            - superdb
-        networks:
-            - external_network
-            - internal_network
-        # volumes:
-    superdb:
-        hostname: superdb
-        image: mysql
-        networks:
-            - internal_network   
-        environment:
-            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_USER: ${DB_USERNAME}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-        volumes:
-           - ./storage/db:/var/lib/mysql
-networks:
-    external_network:
-    internal_network:
-        internal: true
+  web:
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    links:
+      - app
+    volumes_from:
+      - app
+    ports:
+      - 8080:80
+    
+  app:
+    image: uracreative/identihub
+    links:
+      - db:mysql
+    env_file: .env.docker
+    volumes:
+      - .:/var/www/app
+      - /var/www/app/vendor
+      #   - ./srv/invoiceninja/storage:/var/www/app/storage:rw
+      #   - ./srv/invoiceninja/logo:/var/www/app/public/logo:rw
+    restart: always
+    
+  db:
+    image: mysql
+    env_file: .env.docker
+    restart: always
+    volumes:
+      - data-volume:/var/lib/mysql
+
+
+
+volumes:
+  data-volume:
+      
