@@ -39,6 +39,14 @@ There are are several ways to install Identihub in various configurations
 * [Homestead](https://github.com/uracreative/identihub/wiki/Installation-guide-(homestead))
 
 
+### Using docker 
+copy the .env.docker to .env (edit the file according to your own needs)
+
+`$ docker-compose run web php artisan migrate`
+`$ docker-compose run web php artisan db:seed`
+`$ docker-compose run web php artisan key:generate`
+`$ docker-compose up`
+
 ---
 
 ## Troubleshooting
