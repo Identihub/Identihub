@@ -4,7 +4,14 @@
 #####
 FROM node:9 AS assets
 COPY . .
-RUN npm install && npm run production
+RUN yarn install && yarn run production
+
+#####
+# INSTALL VENDORS
+#####
+FROM composer as vendors
+COPY . .
+RUN composer install -o --no-dev --no-interaction --no-progress
 
 
 #####
@@ -19,7 +26,7 @@ MAINTAINER Albatroz Jeremias <ajeremias@coletivos.org>
 #####
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        zlib1g-dev git libgmp-dev \
+        zlib1g-dev libgmp-dev \
         libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
         build-essential chrpath libssl-dev libxft-dev \
         libfreetype6 libfontconfig1 libfontconfig1-dev \
@@ -40,22 +47,16 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 } > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-#####
-# INSTALL COMPOSER
-#####
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 
 #####
 # COPY APP
 #####
-COPY . /var/www/app
+COPY --from=vendors . /var/www
 
-RUN composer install --working-dir /var/www/app -o --no-dev --no-interaction --no-progress
-RUN chown -R www-data:www-data /var/www/app
-RUN mv /var/www/app/storage /var/www/docker-backup-storage
-RUN rm -rf /var/www/app/tests
-RUN rm -rf /var/www/app/resources/assets
+RUN chown -R www-data:www-data /var/www/app \
+    && mv /var/www/app/storage /var/www/docker-backup-storage \
+    && rm -rf /var/www/app/tests \
+    && rm -rf /var/www/app/resources/assets
 
 COPY --from=assets public/css /var/www/app/public/css
 COPY --from=assets public/js /var/www/app/public/js
