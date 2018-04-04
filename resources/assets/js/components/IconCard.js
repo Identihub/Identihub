@@ -37,7 +37,7 @@ class IconCard extends Component {
                 <div className="item card" style={{opacity: opacity}}>
                     <Link to={'/project/' + bridge.id + '/view/icon/element/' + card.id}>
                         <img src={'/assets/' + card.filename_png}/>
-                        <i className="fas fa-expand-arrows-alt move-handler"/>
+                        {/*<i className="fas fa-expand-arrows-alt move-handler"/>*/}
                     </Link>
                     <span onClick={deleteIcon}>
                         <i className="fas fa-trash-alt delete-handler"/>
