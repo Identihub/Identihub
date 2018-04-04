@@ -146,8 +146,9 @@
         }
 
         .image-viewer {
-          width: 22vw;
-          max-height: 100vw;
+          max-width: 40vw;
+          max-height: 88vw;
+
           object-fit: contain;
         }
       }
