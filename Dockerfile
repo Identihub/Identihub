@@ -53,6 +53,8 @@ RUN { \
 #####
 COPY --from=vendors . /var/www
 
+RUN mkdir -p /var/www/app/storage
+
 RUN chown -R www-data:www-data /var/www/app \
     && mv /var/www/app/storage /var/www/docker-backup-storage \
     && rm -rf /var/www/app/tests \
