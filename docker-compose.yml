@@ -11,7 +11,9 @@ services:
       - app
     ports:
       - 8080:80
-    
+    networks:
+        - external_network
+
   app:
     image: uracreative/identihub
     links:
@@ -20,18 +22,26 @@ services:
     volumes:
       - .:/var/www/app
       - /var/www/app/vendor
-      #   - ./srv/invoiceninja/storage:/var/www/app/storage:rw
-      #   - ./srv/invoiceninja/logo:/var/www/app/public/logo:rw
+#      - ./../storage/app:/var/www/app/storage:rw
+#      - ./../storage/logo:/var/www/app/public/logo:rw
     restart: always
-    
+    networks:
+        - external_network
+        - internal_network
+        
   db:
     image: mysql
     env_file: .env.docker
     restart: always
     volumes:
       - data-volume:/var/lib/mysql
+    networks:
+        - internal_network
 
-
+networks:
+    external_network:
+    internal_network:
+        internal: true
 
 volumes:
   data-volume:
