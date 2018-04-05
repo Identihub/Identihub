@@ -55,6 +55,11 @@ COPY --from=vendors . /var/www
 
 RUN mkdir -p /var/www/app/storage
 
+RUN mkdir -p /var/www/app/storage/framework/sessions/ \
+    && mkdir -p /var/www/app/storage/framework/cache/ \
+    && mkdir -p /var/www/app/storage/framework/views/ \
+    && mkdir -p /var/www/app/bootstrap/cache/
+ 
 RUN chown -R www-data:www-data /var/www/app \
     && mv /var/www/app/storage /var/www/docker-backup-storage \
     && rm -rf /var/www/app/tests \

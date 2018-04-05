@@ -19,11 +19,12 @@ services:
     links:
       - db:mysql
     env_file: .env.docker
-    volumes:
-      - .:/var/www/app
-      - /var/www/app/vendor
+#    volumes:
 #      - ./../storage/app:/var/www/app/storage:rw
 #      - ./../storage/logo:/var/www/app/public/logo:rw
+## only active for developing..
+#      - .:/var/www/app:ro
+#      - /var/www/app/vendor:rw
     restart: always
     networks:
         - external_network
