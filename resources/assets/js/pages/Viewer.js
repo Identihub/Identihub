@@ -10,7 +10,7 @@ import ColorSidebar from '../components/ColorSidebar';
 import IconSidebar from '../components/IconSidebar';
 import ImageSidebar from '../components/ImageSidebar';
 import {paramsChecker, isPublic} from '../helpers';
-import { slide as Menu } from 'react-burger-menu'
+import {slide as Menu} from 'react-burger-menu'
 
 class Viewer extends Component {
 
@@ -96,7 +96,7 @@ class Viewer extends Component {
 
 
     updateWindowDimensions() {
-        this.setState({ screenWidth: window.innerWidth });
+        this.setState({screenWidth: window.innerWidth});
     }
 
 
@@ -207,7 +207,7 @@ class Viewer extends Component {
     }
 
     closePage() {
-        this.props.history.goBack();
+        this.props.history.push('/#/')
     }
 
     render() {
@@ -313,22 +313,22 @@ class Viewer extends Component {
                             className="forward"
                         />
                     </div>
-                    <div className="items" style={{ marginLeft: marginLeft}}>
+                    <div className="items" style={{marginLeft: marginLeft}}>
                         {sortedItems}
                         <div className="clearfix"/>
                     </div>
                 </main>
                 {screenWidth > 900
-                    ?  <div className="viewer-sidebar__desktop">{sidebar}</div>
-                    :   <Menu
+                    ? <div className="viewer-sidebar__desktop">{sidebar}</div>
+                    : <Menu
                         left
                         noOverlay
-                        width={ 320 }
-                        className={ "viewer-sidebar" }
+                        width={320}
+                        className={"viewer-sidebar"}
                         pageWrapId={"page-wrap"}
                         outerContainerId={"outter-container"}
-                        customBurgerIcon={ <ReactSVG path="/images/hamburger.svg" className="open-menu"/> }
-                        customCrossIcon={ <span className="close-menu"><i className="fas fa-bars"/></span> }
+                        customBurgerIcon={<ReactSVG path="/images/hamburger.svg" className="open-menu"/>}
+                        customCrossIcon={<span className="close-menu"><i className="fas fa-bars"/></span>}
                     >
                         {sidebar}
                     </Menu>
