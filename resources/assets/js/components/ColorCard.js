@@ -60,41 +60,41 @@ class ColorCard extends Component {
                 <span
                     onClick={deleteColor}
                 >
-                    <i className="fas fa-trash-alt delete-handler" />
+                    <i className="fas fa-trash-alt delete-handler"/>
                 </span>
                     <Link to={'/project/' + bridge.id + '/view/color/element/' + card.id}>
                         {/*<img src="/images/move-handler.svg" className="" width="22" />*/}
                         {/*<i className="fas fa-expand-arrows-alt move-handler" style={{color: this.state.infoColor}}/>*/}
                     </Link>
                     <span id="card-color-info" style={{color: this.state.infoColor}}>
-                    <div className="rgb">
-                        {card.rgb.split(" ").map((a, i) => (
-                            <span key={`color-card${i}`}>
-                                {i === 0
-                                    ? <span className="rgb-span">
-                                        <span id="rgb-text">R</span>
-                                        <span id="rgb-number">{a}</span>
-                                      </span>
-                                    : null}
-                                {i === 1
-                                    ? <span className="rgb-span">
-                                        <span id="rgb-text">R</span>
-                                        <span id="rgb-number">{a}</span>
-                                    </span>
-                                    : null}
-                                {i === 2
-                                    ? <span className="rgb-span">
-                                        <span id="rgb-text">R</span>
-                                        <span id="rgb-number">{a}</span>
-                                      </span>
-                                    : null}
-                            </span>
-                        ))}
-                     </div>
-                    <div className="hex">
-                        #{card.hex}
-                    </div>
-              </span>
+                        <div className="rgb">
+                            {card.rgb.split(" ").map((a, i) => (
+                                <span key={`color-card${i}`}>
+                                    {i === 0
+                                        ? <span className="rgb-span">
+                                            <span id="rgb-text">R</span>
+                                            <span id="rgb-number">{a}</span>
+                                          </span>
+                                        : null}
+                                    {i === 1
+                                        ? <span className="rgb-span">
+                                            <span id="rgb-text">R</span>
+                                            <span id="rgb-number">{a}</span>
+                                        </span>
+                                        : null}
+                                    {i === 2
+                                        ? <span className="rgb-span">
+                                            <span id="rgb-text">R</span>
+                                            <span id="rgb-number">{a}</span>
+                                          </span>
+                                        : null}
+                                </span>
+                            ))}
+                         </div>
+                        <div className="hex">
+                            #{card.hex}
+                        </div>
+                    </span>
                 </div>
             ));
         } else {
