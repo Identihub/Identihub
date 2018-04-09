@@ -107,6 +107,7 @@
     .card {
       position: relative;
 
+
       a {
         width: 100%;
         display: inline-block;
@@ -150,8 +151,12 @@
         color: black;
         padding: 5px 2px 5px 2px;
 
+        @include transition(all 0.2s ease-in);
+
         &:hover {
           cursor: pointer;
+          color: $brand-danger;
+          //border: 1px solid $brand-danger;
         }
       }
 
@@ -286,8 +291,8 @@
 
       .card {
         transition: .15s ease-in-out;
+
         &:hover {
-          cursor: pointer;
           box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
           transform: scale(1.02);
         }
