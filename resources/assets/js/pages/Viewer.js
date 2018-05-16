@@ -207,7 +207,13 @@ class Viewer extends Component {
     }
 
     closePage() {
-        this.props.history.push('/#/')
+        console.log("this.props", this.props);
+
+        if(isPublic()) {
+            this.props.history.push('/')
+        } else {
+            this.props.history.push(`/project/${this.props.bridge.id}`)
+        }
     }
 
     render() {
@@ -227,7 +233,6 @@ class Viewer extends Component {
         const order = this.findOrderOfElement(orderedElements, elementId);
         const marginLeft = "calc(" + (-100 * order) + "vw + " + 0 + "px)";
 
-        console.log("aa", marginLeft);
 
         let sortedItems = null;
         let sidebar = null;
