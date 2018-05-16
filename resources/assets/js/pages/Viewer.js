@@ -212,7 +212,7 @@ class Viewer extends Component {
 
     render() {
         if (this.state === null)
-            return (<div></div>);
+            return (<div/>);
 
         const {objectType, orderedElements, elementId, screenWidth} = this.state;
         const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = this.props;
@@ -222,7 +222,7 @@ class Viewer extends Component {
         const closePage = this.closePage;
 
         if (!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !orderedElements)
-            return (<div></div>);
+            return (<div/>);
 
         const order = this.findOrderOfElement(orderedElements, elementId);
         const marginLeft = "calc(" + (-100 * order) + "vw + " + 0 + "px)";
@@ -242,8 +242,10 @@ class Viewer extends Component {
                         </div>
                     </div>)
                 }) : null;
+
                 let icon = orderedElements.find(function (item) {
-                    return item.id == elementId;
+                    console.log("item.id === elementId", item.id, parseInt(elementId), item.id === elementId);
+                    return item.id === parseInt(elementId);
                 });
                 sidebar = <IconSidebar bridge={bridge} icon={icon} history={this.props.history}/>;
                 break;
@@ -256,7 +258,7 @@ class Viewer extends Component {
                     </div>)
                 }) : null;
                 let image = orderedElements.find(function (item) {
-                    return item.id == elementId;
+                    return item.id === parseInt(elementId);
                 });
                 sidebar = <ImageSidebar bridge={bridge} image={image} history={this.props.history}/>;
                 break;
@@ -264,14 +266,14 @@ class Viewer extends Component {
                 sortedItems = orderedElements ? orderedElements.map(function (color) {
                     return (<div key={color.id} className="item">
                         <div className={container}>
-                            <div className="color" style={{backgroundColor: "#" + color.hex}}></div>
+                            <div className="color" style={{backgroundColor: "#" + color.hex}}/>
                         </div>
                     </div>)
                 }) : null;
                 let color = orderedElements.find(function (item) {
-                    return item.id == elementId;
+                    return item.id === parseInt(elementId);
                 });
-                sidebar = <ColorSidebar bridge={bridge} color={color} history={this.props.history}/>
+                sidebar = <ColorSidebar bridge={bridge} color={color} history={this.props.history}/>;
                 break;
             case 'font':
                 sortedItems = orderedElements ? orderedElements.map(function (font) {
@@ -282,7 +284,7 @@ class Viewer extends Component {
                     </div>)
                 }) : null;
                 let font = orderedElements.find(function (item) {
-                    return item.id == elementId;
+                    return item.id === parseInt(elementId);
                 });
                 sidebar = <FontSidebar bridge={bridge} font={font} history={this.props.history}/>;
                 break;

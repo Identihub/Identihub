@@ -84,12 +84,11 @@ class NewSize extends Component {
 
         console.log(roundNumber(height));
 
-        if ((!saveElement) || (!width))
-            return (<div></div>);
+        // if ((!saveElement) || (!width))
+        //     return (<div />);
 
         return (
             <section className="new-size">
-                {/*<h4 onClick={openComponent}>Add new size</h4>*/}
                 <div className="sidebar-section-img-info">
                     <div className="sidebar-image-info">
                         <div className="sidebar-little-title">WIDTH(px)</div>
