@@ -23,7 +23,6 @@ class IconSection extends Component {
     }
 
     addIcon(event) {
-        console.log(event);
         let files = [];
         Object.entries(event.target.files).map(
             ([key, value]) => (
@@ -70,8 +69,12 @@ class IconSection extends Component {
         return (
             <SectionWrapper
                 title="Logos"
-                addResource="Upload SVG"
-                onResourceClick={emulateInputOnChange}
+                componentResources={[
+                    {
+                        title: "Upload SVG",
+                        onClick: emulateInputOnChange
+                    },
+                ]}
                 bridge={bridge}
                 canCreateSection={true}
                 sectionType={iconsSection}>

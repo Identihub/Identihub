@@ -157,7 +157,7 @@ class IconSidebar extends Component {
             );
         }
 
-
+        console.log("newSize", newSize);
         return (
             <div className="sidebar">
                 <div className="bm-item-list">

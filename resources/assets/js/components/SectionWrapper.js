@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createSection, deleteSection } from '../reducers/Bridge/BridgeApiCalls';
+import { createSection } from '../reducers/Bridge/BridgeApiCalls';
 import { isPublic } from '../helpers';
 
 class SectionWrapper extends Component {
@@ -16,7 +16,7 @@ class SectionWrapper extends Component {
       const {
         bridge,
         sectionType,
-        createSection
+        createSection,
       } = this.props;
       createSection(bridge.id, sectionType.id);
     }
@@ -25,9 +25,8 @@ class SectionWrapper extends Component {
 
         const {
             title,
-            addResource,
-            onResourceClick ,
             canCreateSection,
+            componentResources,
             children
         } = this.props;
 
@@ -42,7 +41,9 @@ class SectionWrapper extends Component {
           tooltip = (
             <div className="tooltip">
               <ul>
-                <li onClick={ onResourceClick }>{ addResource }</li>
+                  {componentResources && componentResources.map((cR, i) => (
+                    <li key={`cr${cR.title}-${i}`} onClick={ cR.onClick }>{ cR.title }</li>
+                  ))}
                 {
                   canCreateSection ? <li onClick={ createSection }>Add new section</li> : null
                 }
@@ -70,8 +71,8 @@ class SectionWrapper extends Component {
 
 SectionWrapper.propTypes = {
     title: PropTypes.string.isRequired,
-    addResource: PropTypes.string.isRequired,
-    onResourceClick: PropTypes.func.isRequired,
+    // addResource: PropTypes.string.isRequired,
+    // onResourceClick: PropTypes.func.isRequired,
     sectionType: PropTypes.shape({
         id: PropTypes.number
     }).isRequired,
