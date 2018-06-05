@@ -32,6 +32,7 @@ class IconRepository extends Repository
         $im->setBackgroundColor(new ImagickPixel('transparent'));
         $im->readImageBlob($svgData);
         $im->setImageResolution(1536, 1536);
+        $im->resizeImage($width, $width / $icon->width_ratio, \Imagick::FILTER_LANCZOS, 1);
         $im->setImageFormat('png32');
 
         $sectionType = SectionType::where('name', SectionType::ICONS)->first();
