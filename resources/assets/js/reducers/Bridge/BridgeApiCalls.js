@@ -229,6 +229,29 @@ export function addImageConverted(bridgeId, imageId, width, height) {
     }
 }
 
+export function downloadImageConverted(bridgeId, imageId, width, height) {
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/images/' + imageId + '/converted/custom', {
+            width: width,
+            height: height
+        }).then(function (response) {
+console.log(response.data);
+            if (response.data.download_url) {
+                const link = document.createElement('a');
+                link.href = response.data.download_url;
+                link.setAttribute('download', response.data.filename);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            }
+
+        }).catch(function (error) {
+            console.log('Something went wrong');
+            console.log(error);
+        });
+    }
+}
+
 export function updateIconFile(bridgeId, iconId, file) {
     let data = new FormData();
     data.append('icon', file);

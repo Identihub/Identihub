@@ -16,6 +16,7 @@ use App\Image;
 use App\ImageConverted;
 use App\Jobs\ReorderAfterDelete;
 use App\Repositories\IconRepository;
+use App\Repositories\ImageRepository;
 use App\Section;
 use App\SectionType;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -25,10 +26,12 @@ use Illuminate\Support\Facades\Auth;
 class SourceFileController extends Controller
 {
     private $iconRepo;
+    private $imageRepo;
 
-    public function __construct(IconRepository $iconRepo)
+    public function __construct(IconRepository $iconRepo, ImageRepository $imageRepo)
     {
         $this->iconRepo = $iconRepo;
+        $this->imageRepo = $imageRepo;
     }
 
     public function storeIcon(IconStoreRequest $request, $bridgeId)
@@ -376,6 +379,34 @@ class SourceFileController extends Controller
                 'bridge'        => $bridge,
                 'section_types' => SectionType::all(),
             ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Entry not found']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
+        }
+    }
+
+    /**
+     * Serve the generated image publicly.
+     *
+     * @param ConvertedStoreRequest $request
+     * @param Bridge                $bridge
+     * @param Image                 $image
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function customSizeImageConverted(ConvertedStoreRequest $request, Bridge $bridge, Image $image)
+    {
+        try {
+            $width = (int) $request->get('width');
+            $height = (int) ($width / $image->width_ratio);
+
+            $path = $this->imageRepo->generateImageConverted($bridge, $image, $width, $height, $request->get('format'));
+
+            return response()->json([
+                'download_url' => url($path),
+                'filename'     => basename($path),
+            ]);
+
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {

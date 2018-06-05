@@ -63,10 +63,9 @@ class CustomSizeDownload extends Component {
             height = width / this.props.ratio
         }
 
-        /*
-         if ((!downloadCustomSize) || (!width))
-             return (<div></div>);
-        * */
+        if ((!downloadCustomSize) || (!width))
+            return (<div></div>);
+
 
         return (
             <section className="new-size">

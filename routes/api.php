@@ -46,5 +46,6 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
 
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1'], function () {
     Route::post('/bridges/{bridge}/icons/{icon}/converted/custom', 'SourceFileController@customSizeIconConverted');
+    Route::post('/bridges/{bridge}/images/{image}/converted/custom', 'SourceFileController@customSizeImageConverted');
 });
 

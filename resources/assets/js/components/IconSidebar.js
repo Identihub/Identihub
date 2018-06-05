@@ -166,7 +166,7 @@ class IconSidebar extends Component {
             );
         } else {
             customSizeDownload = (<CustomSizeDownload
-                defaultWidth={500}
+                defaultWidth={lastConverted.width}
                 ratio={this.props.icon.width_ratio}
                 downloadCustomSize={downloadCustomSize}/>);
         }

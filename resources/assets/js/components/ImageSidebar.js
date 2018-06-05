@@ -6,9 +6,15 @@ import ReactSVG from 'react-svg';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import NotificationSystem from 'react-notification-system';
 import NewSize from '../components/NewSize';
-import {deleteImage, addImageConverted, updateImageFile} from '../reducers/Bridge/BridgeApiCalls';
+import {
+    deleteImage,
+    addImageConverted,
+    updateImageFile,
+    downloadImageConverted
+} from '../reducers/Bridge/BridgeApiCalls';
 import {paramsChecker, isPublic} from '../helpers';
 import Spinner from '../components/Spinner';
+import CustomSizeDownload from "./CustomSizeDownload";
 
 
 class ImageSidebar extends Component {
@@ -29,6 +35,7 @@ class ImageSidebar extends Component {
         this.addNewConverted = this.addNewConverted.bind(this);
         this.emulateInputOnChange = this.emulateInputOnChange.bind(this);
         this.updateImage = this.updateImage.bind(this);
+        this.downloadCustomSize = this.downloadCustomSize.bind(this);
     }
 
     componentDidMount() {
@@ -77,6 +84,11 @@ class ImageSidebar extends Component {
         addImageConverted(bridge.id, image.id, parseInt(width), parseInt(height));
     }
 
+    downloadCustomSize(width, height) {
+        const {downloadImageConverted, bridge, image} = this.props;
+        downloadImageConverted(bridge.id, image.id, parseInt(width), parseInt(height));
+    }
+
     render() {
         const openSettings = this.openSettings;
         const openPrimary = this.openPrimary;
@@ -84,6 +96,7 @@ class ImageSidebar extends Component {
         const deleteImage = this.deleteImage;
         const addNewConverted = this.addNewConverted;
         const emulateInputOnChange = this.emulateInputOnChange;
+        const downloadCustomSize = this.downloadCustomSize;
 
         const isPub = isPublic();
 
@@ -99,6 +112,7 @@ class ImageSidebar extends Component {
 
         let adminOptions = null;
         let newSize = null;
+        let customSizeDownload = null;
 
         if (!isPub) {
             adminOptions = (
@@ -146,7 +160,13 @@ class ImageSidebar extends Component {
                     ratio={this.props.image.width_ratio}
                     saveElement={addNewConverted}/>
             );
+        } else {
+            customSizeDownload = (<CustomSizeDownload
+                defaultWidth={lastConverted.width}
+                ratio={this.props.image.width_ratio}
+                downloadCustomSize={downloadCustomSize}/>);
         }
+
 
         return (
             <div className="bm-item-list sidebar">
@@ -249,13 +269,13 @@ class ImageSidebar extends Component {
 
                 <div className="sidebar-client new-size">
                     {newSize}
+                    {customSizeDownload}
                 </div>
                 <NotificationSystem ref="notificationSystem"/>
             </div>
         );
 
     }
-
 }
 
 ImageSidebar.propTypes = {
@@ -268,7 +288,8 @@ const dispatchToProps = (dispatch) => {
     return bindActionCreators({
         deleteImage,
         addImageConverted,
-        updateImageFile
+        updateImageFile,
+        downloadImageConverted
     }, dispatch)
 };
 
