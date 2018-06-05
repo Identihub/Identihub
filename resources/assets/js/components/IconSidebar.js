@@ -8,8 +8,9 @@ import NotificationSystem from 'react-notification-system';
 import NewSize from '../components/NewSize';
 import Spinner from '../components/Spinner';
 
-import {deleteIcon, addIconConverted, updateIconFile} from '../reducers/Bridge/BridgeApiCalls';
+import {deleteIcon, addIconConverted, updateIconFile, downloadIconConverted} from '../reducers/Bridge/BridgeApiCalls';
 import {paramsChecker, isPublic} from '../helpers';
+import CustomSizeDownload from "./CustomSizeDownload";
 
 class IconSidebar extends Component {
 
@@ -30,6 +31,7 @@ class IconSidebar extends Component {
         this.addNewConverted = this.addNewConverted.bind(this);
         this.emulateInputOnChange = this.emulateInputOnChange.bind(this);
         this.updateIcon = this.updateIcon.bind(this);
+        this.downloadCustomSize = this.downloadCustomSize.bind(this);
     }
 
     componentDidMount() {
@@ -81,6 +83,11 @@ class IconSidebar extends Component {
         addIconConverted(bridge.id, icon.id, parseInt(width), parseInt(height));
     }
 
+    downloadCustomSize(width, height) {
+        const {downloadIconConverted, bridge, icon} = this.props;
+        downloadIconConverted(bridge.id, icon.id, parseInt(width), parseInt(height));
+    }
+
     render() {
         console.log(this.props);
 
@@ -90,6 +97,7 @@ class IconSidebar extends Component {
         const deleteIcon = this.deleteIcon;
         const addNewConverted = this.addNewConverted;
         const emulateInputOnChange = this.emulateInputOnChange;
+        const downloadCustomSize = this.downloadCustomSize;
 
         const isPub = isPublic();
 
@@ -106,6 +114,7 @@ class IconSidebar extends Component {
 
         let adminOptions = null;
         let newSize = null;
+        let customSizeDownload = null;
 
 
         if (!isPub) {
@@ -155,6 +164,11 @@ class IconSidebar extends Component {
                     ratio={this.props.icon.width_ratio}
                     saveElement={addNewConverted}/>
             );
+        } else {
+            customSizeDownload = (<CustomSizeDownload
+                defaultWidth={500}
+                ratio={this.props.icon.width_ratio}
+                downloadCustomSize={downloadCustomSize}/>);
         }
 
 
@@ -260,6 +274,7 @@ class IconSidebar extends Component {
 
                     <div className="sidebar-client new-size">
                         {newSize}
+                        {customSizeDownload}
                     </div>
                     <NotificationSystem ref="notificationSystem"/>
                 </div>
@@ -372,7 +387,8 @@ const dispatchToProps = (dispatch) => {
     return bindActionCreators({
         deleteIcon,
         addIconConverted,
-        updateIconFile
+        updateIconFile,
+        downloadIconConverted
     }, dispatch)
 };
 

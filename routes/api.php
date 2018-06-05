@@ -43,3 +43,8 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::post('/order/{type}/{objectId}/{newOrder}', 'OrderController@changedOrderOnSameSection');
     Route::post('/changeSection/{type}/{objectid}/{newSection}', 'OrderController@changedSection');
 });
+
+Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1'], function () {
+    Route::post('/bridges/{bridge}/icons/{icon}/converted/custom', 'SourceFileController@customSizeIconConverted');
+});
+
