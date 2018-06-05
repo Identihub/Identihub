@@ -43,13 +43,14 @@ class ImageRepository extends Repository
 
         $sectionType = SectionType::where('name', SectionType::IMAGES)->get()->first();
 
-        $filenameConverted = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_converted_'.++$bridge->nr_images.'.'.$imageExt;
+        $filenameConverted = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_converted_'.$image->id.'-'.$width.'x'.$height.'.'.$imageExt;
 
         ImageConverted::create([
-            'image_id' => $image->id,
-            'filename' => $filenameConverted,
-            'width'    => $im->getImageWidth(),
-            'height'   => $im->getImageHeight(),
+            'image_id'          => $image->id,
+            'filename'          => $filenameConverted,
+            'width'             => $im->getImageWidth(),
+            'height'            => $im->getImageHeight(),
+            'is_visitor_custom' => 1,
         ]);
 
         Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());

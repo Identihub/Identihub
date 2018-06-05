@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CleanCustomConvertedItems;
 use App\Console\Commands\CreateImagesFromFontVariants;
 use App\Console\Commands\UpdateFonts;
 use Illuminate\Console\Scheduling\Schedule;
@@ -17,18 +18,21 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         UpdateFonts::class,
         CreateImagesFromFontVariants::class,
+        CleanCustomConvertedItems::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('fonts:update')
             ->weekly()->sundays()->at('03:00');
+
+        $schedule->command('clean:custom-converted-items')->daily();
     }
 
     /**

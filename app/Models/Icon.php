@@ -23,7 +23,7 @@ class Icon extends Model
 
     public function converted()
     {
-        return $this->hasMany(IconConverted::class, 'icon_id', 'id');
+        return $this->hasMany(IconConverted::class, 'icon_id', 'id')->where('is_visitor_custom', 0);
     }
 
     public function save(array $options = [])

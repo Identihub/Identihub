@@ -12,7 +12,7 @@ class IconConverted extends Model
     protected $table = 'icons_converted';
 
     protected $fillable = [
-        'filename', 'icon_id', 'width', 'height'
+        'filename', 'icon_id', 'width', 'height', 'is_visitor_custom'
     ];
 
     public function icon()

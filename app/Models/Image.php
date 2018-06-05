@@ -17,7 +17,7 @@ class Image extends Model
 
     public function converted()
     {
-        return $this->hasMany(ImageConverted::class, 'image_id', 'id');
+        return $this->hasMany(ImageConverted::class, 'image_id', 'id')->where('is_visitor_custom', 0);
     }
 
 	public function save(array $options = [])

@@ -12,7 +12,7 @@ class ImageConverted extends Model
     protected $table = 'images_converted';
 
     protected $fillable = [
-        'filename', 'image_id', 'width', 'height'
+        'filename', 'image_id', 'width', 'height', 'is_visitor_custom'
     ];
 
     protected function image()

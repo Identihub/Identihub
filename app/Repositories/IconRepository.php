@@ -37,14 +37,14 @@ class IconRepository extends Repository
 
         $sectionType = SectionType::where('name', SectionType::ICONS)->first();
 
-        $filenameConverted = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_converted_'.++$bridge->nr_icons
-            .'-'.$width.'x'.$height.'.png';
+        $filenameConverted = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_converted_'.$icon->id.'-'.$width.'x'.$height.'.png';
 
         IconConverted::create([
-            'icon_id'  => $icon->id,
-            'filename' => $filenameConverted,
-            'width'    => $im->getImageWidth(),
-            'height'   => $im->getImageHeight(),
+            'icon_id'           => $icon->id,
+            'filename'          => $filenameConverted,
+            'width'             => $im->getImageWidth(),
+            'height'            => $im->getImageHeight(),
+            'is_visitor_custom' => 1,
         ]);
 
         Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());

@@ -235,7 +235,7 @@ export function downloadImageConverted(bridgeId, imageId, width, height) {
             width: width,
             height: height
         }).then(function (response) {
-console.log(response.data);
+
             if (response.data.download_url) {
                 const link = document.createElement('a');
                 link.href = response.data.download_url;
