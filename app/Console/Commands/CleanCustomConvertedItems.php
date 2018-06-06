@@ -42,7 +42,7 @@ class CleanCustomConvertedItems extends Command
     public function handle()
     {
         $convertedImages = ImageConverted::where('is_visitor_custom', 1)
-            ->where('created_at', '<', Carbon::now()->subMinute())->get();
+            ->where('created_at', '<', Carbon::now()->subHours(12))->get();
 
         foreach ($convertedImages as $image) {
             $done = Storage::disk('assets')->delete($image->filename);
@@ -52,7 +52,7 @@ class CleanCustomConvertedItems extends Command
         }
 
         $convertedIcons = IconConverted::where('is_visitor_custom', 1)
-            ->where('created_at', '<', Carbon::now()->subMinute())->get();
+            ->where('created_at', '<', Carbon::now()->subHours(12))->get();
 
         foreach ($convertedIcons as $icon) {
             $done = Storage::disk('assets')->delete($icon->filename);
