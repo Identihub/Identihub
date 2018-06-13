@@ -9,10 +9,10 @@ import {
     addImageConverted,
     updateImageFile,
     downloadImageConverted
-} from '../reducers/Bridge/BridgeApiCalls';
-import {paramsChecker, isPublic} from '../helpers';
-import Spinner from '../components/Spinner';
-import CustomSizeDownload from "./CustomSizeDownload";
+} from '../../reducers/Bridge/BridgeApiCalls';
+import {paramsChecker, isPublic} from '../../helpers';
+import Spinner from '../../components/Spinner';
+import CustomSizeDownload from "../CustomSizeDownload";
 
 
 class ImageSidebar extends Component {

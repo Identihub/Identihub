@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SectionWrapper from './SectionWrapper';
+import SectionWrapper from '../SectionWrapper';
 import { bindActionCreators } from 'redux';
-import { getSectionType } from '../reducers/SectionType/SectionTypeReducer';
+import { getSectionType } from '../../reducers/SectionType/SectionTypeReducer';
 import { connect } from 'react-redux';
 import ImageSectionRow from './ImageSectionRow';
-import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
-import { createImage } from '../reducers/Bridge/BridgeApiCalls';
-import renderSection from '../HOC/renderSectionHOC'
+import { filterSectionsWithSectionType, sortByOrder } from '../../helpers';
+import { createImage } from '../../reducers/Bridge/BridgeApiCalls';
+import renderSection from '../../HOC/renderSectionHOC'
 
 class ImageSection extends Component {
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getSectionType } from '../reducers/SectionType/SectionTypeReducer';
-import { sortWithSectionAndOrder } from '../helpers';
+import { getSectionType } from '../../reducers/SectionType/SectionTypeReducer';
+import { sortWithSectionAndOrder } from '../../helpers';
 
 class IconViewerSection extends Component{
 

@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Section from './Section';
-import ColorCard from './ColorCard';
-import { dropTarget } from '../helpers';
-import { updateSectionOnColor, updateOrderOnColor } from '../reducers/Extra/ExtraActions';
-import { reorderElement, changeSection} from '../reducers/Bridge/BridgeApiCalls';
+import Section from '../Section';
+import ImageCard from './ImageCard';
+import { dropTarget } from '../../helpers';
+import { updateSectionOnImage, updateOrderOnImage } from '../../reducers/Extra/ExtraActions';
+import { reorderElement, changeSection} from '../../reducers/Bridge/BridgeApiCalls';
 
-class ColorSectionRow extends Component{
+class ImageSectionRow extends Component{
 
     constructor(props) {
         super(props);
 
         this.state = {
-          colors: []
+          images: []
         };
 
         this.pushCard = this.pushCard.bind(this);
@@ -33,34 +33,35 @@ class ColorSectionRow extends Component{
 
     updateLocalState(props) {
         this.setState({
-          colors: props.colors
+          images: props.images
         });
     }
 
     pushCard(card) {
-        const {
-            bridge,
-            section,
-            updateSectionOnColor,
-            changeSection
-        } = this.props;
-        updateSectionOnColor(bridge.id, card.id, section.id);
-        changeSection('color', card.id, section.id);
+      const {
+        bridge,
+        section,
+        updateSectionOnImage,
+        changeSection
+      } = this.props;
+      updateSectionOnImage(bridge.id, card.id, section.id);
+      changeSection('image', card.id, section.id);
     }
 
     removeCard(index) { }
 
     moveCard(dragIndex, hoverIndex) {
         const {
-            colors,
+            images,
             bridge,
             section,
-            updateOrderOnColor,
+            updateOrderOnImage,
             reorderElement
         } = this.props;
-        const card = colors.find( color => color.order === dragIndex && color.section_id === section.id);
-        updateOrderOnColor(bridge.id, card.id, hoverIndex);
-        reorderElement('color', card.id, hoverIndex);
+        console.log(this.props);
+        const card = images.find( image => image.order === dragIndex && image.section_id === section.id);
+        updateOrderOnImage(bridge.id, card.id, hoverIndex);
+        reorderElement('image', card.id, hoverIndex);
     }
 
     render() {
@@ -68,12 +69,15 @@ class ColorSectionRow extends Component{
             bridge,
             section,
             emptyStateText,
-            colors,
+            images,
             canDrop,
             isOver,
             connectDropTarget
         } = this.props;
         const isActive = canDrop && isOver;
+
+        if(images === undefined)
+            return (<div> </div>);
 
         return connectDropTarget(
             <div>
@@ -83,16 +87,16 @@ class ColorSectionRow extends Component{
                          isActive={isActive}
                          emptyStateText={emptyStateText}>
                     {
-                        colors.filter(color => ( color.section_id === section.id)).sort((a, b) => ( a.order - b.order )).map(color => {
+                        images.filter(image => ( image.section_id === section.id)).sort((a, b) => ( a.order - b.order )).map(image => {
                             return (
-                              <ColorCard
-                                  key={color.id}
-                                  index={color.order}
-                                  listId={color.section_id}
-                                  card={color}
+                              <ImageCard
+                                  key={image.id}
+                                  index={image.order}
+                                  listId={image.section_id}
+                                  card={image}
+                                  bridge={bridge}
                                   removeCard={this.removeCard}
                                   moveCard={this.moveCard}
-                                  bridge={bridge}
                               />
                             )
                         })
@@ -103,7 +107,7 @@ class ColorSectionRow extends Component{
     }
 }
 
-ColorSectionRow.propTypes = {
+ImageSectionRow.propTypes = {
     bridge: PropTypes.shape({
         id: PropTypes.integer
     }).isRequired,
@@ -113,7 +117,7 @@ ColorSectionRow.propTypes = {
         title: PropTypes.string,
         description: PropTypes.string
     }).isRequired,
-    colors: PropTypes.arrayOf(PropTypes.shape({
+    images: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         section_id: PropTypes.number,
         order: PropTypes.number
@@ -123,13 +127,13 @@ ColorSectionRow.propTypes = {
 
 const dispatchToProps = (dispatch) => {
   return bindActionCreators({
-    updateOrderOnColor,
-    updateSectionOnColor,
+    updateOrderOnImage,
+    updateSectionOnImage,
     reorderElement,
     changeSection
   }, dispatch)
 };
 
-const colorSectionRow = dropTarget("COLOR")(ColorSectionRow);
+const imageSectionRow = dropTarget("IMAGE")(ImageSectionRow);
 
-export default connect(state => state, dispatchToProps)(colorSectionRow);
+export default connect(state => state, dispatchToProps)(imageSectionRow);

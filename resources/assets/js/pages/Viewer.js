@@ -5,10 +5,10 @@ import {getBridge} from '../reducers/Bridge/BridgeReducer';
 import {getSectionTypes, getSectionType} from '../reducers/SectionType/SectionTypeReducer';
 import ReactSVG from 'react-svg';
 import {sortWithSectionAndOrder} from '../helpers';
-import FontSidebar from '../components/FontSidebar';
-import ColorSidebar from '../components/ColorSidebar';
-import IconSidebar from '../components/IconSidebar';
-import ImageSidebar from '../components/ImageSidebar';
+import FontSidebar from '../components/font/FontSidebar';
+import ColorSidebar from '../components/color/ColorSidebar';
+import IconSidebar from '../components/icon/IconSidebar';
+import ImageSidebar from '../components/image/ImageSidebar';
 import {paramsChecker, isPublic} from '../helpers';
 import {slide as Menu} from 'react-burger-menu'
 

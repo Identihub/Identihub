@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { isPublic } from '../helpers';
+import { isPublic } from '../../helpers';
 import {bindActionCreators} from "redux";
-import {deleteFont} from "../reducers/Bridge/BridgeApiCalls";
+import {deleteFont} from "../../reducers/Bridge/BridgeApiCalls";
 
 import {connect} from 'react-redux';
 

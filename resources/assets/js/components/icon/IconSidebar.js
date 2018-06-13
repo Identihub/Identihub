@@ -4,11 +4,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import NotificationSystem from 'react-notification-system';
-import Spinner from '../components/Spinner';
+import Spinner from '../../components/Spinner';
 
-import {deleteIcon, addIconConverted, updateIconFile, downloadIconConverted} from '../reducers/Bridge/BridgeApiCalls';
-import {paramsChecker, isPublic} from '../helpers';
-import CustomSizeDownload from "./CustomSizeDownload";
+import {deleteIcon, addIconConverted, updateIconFile, downloadIconConverted} from '../../reducers/Bridge/BridgeApiCalls';
+import {paramsChecker, isPublic} from '../../helpers';
+import CustomSizeDownload from "../CustomSizeDownload";
 
 class IconSidebar extends Component {
 

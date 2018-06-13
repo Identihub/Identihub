@@ -5,7 +5,7 @@ import { getFonts } from '../reducers/Extra/ExtraReducer';
 import { searchFont } from '../reducers/Bridge/BridgeApiCalls';
 import DebounceInput from 'react-debounce-input';
 import { addFonts } from '../reducers/Extra/ExtraActions';
-import FontList from '../components/FontList';
+import FontList from '../components/font/FontList';
 import VariantList from '../components/VariantList';
 import { createFont } from '../reducers/Bridge/BridgeApiCalls';
 

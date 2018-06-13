@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import {DropTarget} from 'react-dnd';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Section from './Section';
+import Section from '../Section';
 import IconCard from './IconCard';
-import {dropTarget} from '../helpers';
-import {updateOrderOnIcon, updateSectionOnIcon} from '../reducers/Extra/ExtraActions';
-import {reorderElement, changeSection} from '../reducers/Bridge/BridgeApiCalls';
+import {dropTarget} from '../../helpers';
+import {updateOrderOnIcon, updateSectionOnIcon} from '../../reducers/Extra/ExtraActions';
+import {reorderElement, changeSection} from '../../reducers/Bridge/BridgeApiCalls';
 
 class IconSectionRow extends Component {
 
