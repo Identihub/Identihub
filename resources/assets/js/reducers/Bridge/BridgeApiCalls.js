@@ -1,9 +1,9 @@
 import axios from 'axios';
 import _ from 'lodash';
-import { addBridges, addBridge } from './BridgeActions';
-import { changeHasBridges } from '../Extra/ExtraActions';
-import { addSectionTypes } from '../SectionType/SectionTypeActions';
-import { addFonts } from '../Extra/ExtraActions';
+import {addBridges, addBridge} from './BridgeActions';
+import {changeHasBridges} from '../Extra/ExtraActions';
+import {addSectionTypes} from '../SectionType/SectionTypeActions';
+import {addFonts} from '../Extra/ExtraActions';
 
 export function fetchBridges() {
     return (dispatch) => {
@@ -11,9 +11,9 @@ export function fetchBridges() {
             .then(function (response) {
                 dispatch(addBridges(response.data.bridges));
                 dispatch(addSectionTypes(response.data.section_types));
-                if(response.data.bridges.length === 0){
+                if (response.data.bridges.length === 0) {
                     dispatch(changeHasBridges(false));
-                }else{
+                } else {
                     dispatch(changeHasBridges(true));
                 }
 
@@ -39,26 +39,26 @@ export function fetchBridge(id) {
 }
 
 export function deleteBridge(id) {
-  return (dispatch) => {
-    return axios.delete('/api/v1/bridges/' + id)
-      .then(function (response) {
-        dispatch(addBridges(response.data.bridges));
-        dispatch(addSectionTypes(response.data.section_types));
-        if(response.data.bridges.length === 0){
-          dispatch(changeHasBridges(false));
-        }else{
-          dispatch(changeHasBridges(true));
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+    return (dispatch) => {
+        return axios.delete('/api/v1/bridges/' + id)
+            .then(function (response) {
+                dispatch(addBridges(response.data.bridges));
+                dispatch(addSectionTypes(response.data.section_types));
+                if (response.data.bridges.length === 0) {
+                    dispatch(changeHasBridges(false));
+                } else {
+                    dispatch(changeHasBridges(true));
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 }
 
 export function addBridgeRequest(name) {
     return (dispatch) => {
-        return axios.post('/api/v1/bridges', { name: name})
+        return axios.post('/api/v1/bridges', {name: name})
             .then(function (response) {
                 console.log(response);
                 dispatch(addBridge(response.data.bridge));
@@ -72,8 +72,8 @@ export function addBridgeRequest(name) {
 
 export function updateBridgeNameRequest(id, name) {
     return (dispatch) => {
-        return axios.patch('/api/v1/bridges/' + id + '/name', { name: name})
-            .then(function(response) {
+        return axios.patch('/api/v1/bridges/' + id + '/name', {name: name})
+            .then(function (response) {
                 dispatch(addBridge(response.data.bridge));
             })
             .catch(function (error) {
@@ -83,21 +83,21 @@ export function updateBridgeNameRequest(id, name) {
 }
 
 export function updateBridgeSlugRequest(id, name) {
-  return (dispatch) => {
-    return axios.patch('/api/v1/bridges/' + id + '/slug', { slug: name})
-      .then(function(response) {
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+    return (dispatch) => {
+        return axios.patch('/api/v1/bridges/' + id + '/slug', {slug: name})
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 export function updateSectionTitle(bridgeId, sectionId, text) {
     return (dispatch) => {
-        return axios.patch('/api/v1/bridges/' + bridgeId + '/sections/' +  sectionId + '/updateTitle', {title: text})
-            .then(function(response) {
+        return axios.patch('/api/v1/bridges/' + bridgeId + '/sections/' + sectionId + '/updateTitle', {title: text})
+            .then(function (response) {
                 dispatch(addBridge(response.data.bridge));
             })
             .catch(function (error) {
@@ -108,8 +108,8 @@ export function updateSectionTitle(bridgeId, sectionId, text) {
 
 export function updateSectionDescription(bridgeId, sectionId, text) {
     return (dispatch) => {
-        return axios.patch('/api/v1/bridges/' + bridgeId + '/sections/' +  sectionId + '/updateDescription', {description: text})
-            .then(function(response) {
+        return axios.patch('/api/v1/bridges/' + bridgeId + '/sections/' + sectionId + '/updateDescription', {description: text})
+            .then(function (response) {
                 dispatch(addBridge(response.data.bridge));
             })
             .catch(function (error) {
@@ -121,170 +121,220 @@ export function updateSectionDescription(bridgeId, sectionId, text) {
 export function createSection(bridgeid, sectionTypeId) {
     return (dispatch) => {
         return axios.post('/api/v1/bridges/' + bridgeid + '/sections', {section_type: sectionTypeId})
-            .then(function(response){
+            .then(function (response) {
                 dispatch(addBridge(response.data.bridge));
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             });
     }
 }
 
 export function deleteSection(bridgeid, sectionId) {
-  return (dispatch) => {
-    return axios.delete('/api/v1/bridges/' + bridgeid + '/sections/' + sectionId)
-      .then(function(response){
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
-}
-
-export function createIcon(bridgeId, files, callbackProgress){
-    let data = new FormData();
-    _.map(files, (f) => data.append('icons[]', f));
-
     return (dispatch) => {
-        return axios.post('/api/v1/bridges/' + bridgeId + '/icons', data, {onUploadProgress: callbackProgress})
-            .then(function(response){
+        return axios.delete('/api/v1/bridges/' + bridgeid + '/sections/' + sectionId)
+            .then(function (response) {
                 dispatch(addBridge(response.data.bridge));
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             });
     }
 }
 
-export function createImage(bridgeId, files){
-  let data = new FormData();
-  _.map(files, (f) => data.append('images[]', f));
+export function createIcon(bridgeId, files, callbackProgress) {
+    let data = new FormData();
+    _.map(files, (f) => data.append('icons[]', f));
 
-  return (dispatch) => {
-    return axios.post('/api/v1/bridges/' + bridgeId + '/images', data)
-      .then(function(response){
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/icons', data, {onUploadProgress: callbackProgress})
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
-export function addIconConverted(bridgeId, iconId, width, height){
-  return (dispatch) => {
-    return axios.post('/api/v1/bridges/' + bridgeId + '/icons/' + iconId + '/converted', {width: width, height: height})
-      .then(function(response){
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function(error) {
-        console.log('Something went wrong');
-        console.log(error.response.data);
-        console.log(error);
-      });
-  }
+export function createImage(bridgeId, files) {
+    let data = new FormData();
+    _.map(files, (f) => data.append('images[]', f));
+
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/images', data)
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
-export function addImageConverted(bridgeId, imageId, width, height){
-  return (dispatch) => {
-    return axios.post('/api/v1/bridges/' + bridgeId + '/images/' + imageId + '/converted', {width: width, height: height})
-      .then(function(response){
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function(error) {
-        console.log('Something went wrong');
-        console.log(error.response.data);
-        console.log(error);
-      });
-  }
+export function addIconConverted(bridgeId, iconId, width, height) {
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/icons/' + iconId + '/converted', {
+            width: width,
+            height: height
+        })
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log('Something went wrong');
+                console.log(error.response.data);
+                console.log(error);
+            });
+    }
 }
 
-export function updateIconFile(bridgeId, iconId, file){
-  let data = new FormData();
-  data.append('icon', file);
+export function downloadIconConverted(bridgeId, iconId, width, height) {
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/icons/' + iconId + '/converted/custom', {
+            width: width,
+            height: height
+        }).then(function (response) {
 
-  return (dispatch) => {
-    return axios.post('/api/v1/bridges/' + bridgeId + '/icons/' + iconId + '/filename', data)
-      .then(function(response){
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+            if (response.data.download_url) {
+                const link = document.createElement('a');
+                link.href = response.data.download_url;
+                link.setAttribute('download', response.data.filename);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            }
+
+        }).catch(function (error) {
+            console.log('Something went wrong', error);
+        });
+    }
 }
 
-export function updateImageFile(bridgeId, imageId, file){
-  let data = new FormData();
-  data.append('image', file);
-
-  return (dispatch) => {
-    return axios.post('/api/v1/bridges/' + bridgeId + '/images/' + imageId + '/filename', data)
-      .then(function(response){
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+export function addImageConverted(bridgeId, imageId, width, height) {
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/images/' + imageId + '/converted', {
+            width: width,
+            height: height
+        })
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log('Something went wrong');
+                console.log(error.response.data);
+                console.log(error);
+            });
+    }
 }
 
-export function deleteIcon(bridgeId, id){
-  return (dispatch) => {
-    return axios.delete('/api/v1/bridges/' + bridgeId + '/icons/' + id)
-      .then(function(response){
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+export function downloadImageConverted(bridgeId, imageId, width, height) {
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/images/' + imageId + '/converted/custom', {
+            width: width,
+            height: height
+        }).then(function (response) {
+
+            if (response.data.download_url) {
+                const link = document.createElement('a');
+                link.href = response.data.download_url;
+                link.setAttribute('download', response.data.filename);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            }
+
+        }).catch(function (error) {
+            console.log('Something went wrong', error);
+        });
+    }
 }
 
-export function deleteImage(bridgeId, id){
-  return (dispatch) => {
-    return axios.delete('/api/v1/bridges/' + bridgeId + '/images/' + id)
-      .then(function(response){
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+export function updateIconFile(bridgeId, iconId, file) {
+    let data = new FormData();
+    data.append('icon', file);
+
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/icons/' + iconId + '/filename', data)
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+export function updateImageFile(bridgeId, imageId, file) {
+    let data = new FormData();
+    data.append('image', file);
+
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/images/' + imageId + '/filename', data)
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+export function deleteIcon(bridgeId, id) {
+    return (dispatch) => {
+        return axios.delete('/api/v1/bridges/' + bridgeId + '/icons/' + id)
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+export function deleteImage(bridgeId, id) {
+    return (dispatch) => {
+        return axios.delete('/api/v1/bridges/' + bridgeId + '/images/' + id)
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 export function createColor(bridgeId, hex, rgb, cmyk) {
     return (dispatch) => {
         return axios.post('/api/v1/bridges/' + bridgeId + '/colors', {hex: hex, rgb: rgb, cmyk: cmyk})
-            .then(function(response){
+            .then(function (response) {
                 dispatch(addBridge(response.data.bridge));
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             });
     }
 }
 
 export function deleteColor(bridgeId, id) {
-  return (dispatch) => {
-    return axios.delete('/api/v1/bridges/' + bridgeId + '/colors/' + id)
-      .then(function(response){
-        dispatch(addBridge(response.data.bridge));
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+    return (dispatch) => {
+        return axios.delete('/api/v1/bridges/' + bridgeId + '/colors/' + id)
+            .then(function (response) {
+                dispatch(addBridge(response.data.bridge));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 export function searchFont(font) {
     return (dispatch) => {
         return axios.get('/api/v1/fonts/search/' + font)
-            .then(function(response){
+            .then(function (response) {
                 dispatch(addFonts(response.data.fonts));
             })
-            .catch(function(error){
+            .catch(function (error) {
                 dispatch(addFonts([]));
                 console.log(error);
             });
@@ -310,43 +360,43 @@ export function createFont(bridgeId, fontFamilyId, variantId) {
 }
 
 export function deleteFont(bridgeId, fontId) {
-  return (dispatch) => {
-    return axios.delete(
-      '/api/v1/bridges/' + bridgeId + '/fonts/' + fontId
-    )
-      .then((response) => {
-        dispatch(addBridge(response.data.bridge))
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
+    return (dispatch) => {
+        return axios.delete(
+            '/api/v1/bridges/' + bridgeId + '/fonts/' + fontId
+        )
+            .then((response) => {
+                dispatch(addBridge(response.data.bridge))
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 }
 
 export function reorderElement(type, elementId, newOrder) {
-  return (dispatch) => {
-    return axios.post(
-      '/api/v1/order/' + type + '/' + elementId + '/' + newOrder
-    )
-      .then((response) => {
-        dispatch(addBridge(response.data.bridge))
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
+    return (dispatch) => {
+        return axios.post(
+            '/api/v1/order/' + type + '/' + elementId + '/' + newOrder
+        )
+            .then((response) => {
+                dispatch(addBridge(response.data.bridge))
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 }
 
 export function changeSection(type, elementId, newSection) {
-  return (dispatch) => {
-    return axios.post(
-      '/api/v1/changeSection/' + type + '/' + elementId + '/' + newSection
-    )
-      .then((response) => {
-        dispatch(addBridge(response.data.bridge))
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
+    return (dispatch) => {
+        return axios.post(
+            '/api/v1/changeSection/' + type + '/' + elementId + '/' + newSection
+        )
+            .then((response) => {
+                dispatch(addBridge(response.data.bridge))
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 }

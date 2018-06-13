@@ -2,13 +2,17 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ReactSVG from 'react-svg';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import NotificationSystem from 'react-notification-system';
-import NewSize from '../components/NewSize';
-import {deleteImage, addImageConverted, updateImageFile} from '../reducers/Bridge/BridgeApiCalls';
-import {paramsChecker, isPublic} from '../helpers';
-import Spinner from '../components/Spinner';
+import {
+    deleteImage,
+    addImageConverted,
+    updateImageFile,
+    downloadImageConverted
+} from '../../reducers/Bridge/BridgeApiCalls';
+import {paramsChecker, isPublic} from '../../helpers';
+import Spinner from '../../components/Spinner';
+import CustomSizeDownload from "../CustomSizeDownload";
 
 
 class ImageSidebar extends Component {
@@ -29,6 +33,7 @@ class ImageSidebar extends Component {
         this.addNewConverted = this.addNewConverted.bind(this);
         this.emulateInputOnChange = this.emulateInputOnChange.bind(this);
         this.updateImage = this.updateImage.bind(this);
+        this.downloadCustomSize = this.downloadCustomSize.bind(this);
     }
 
     componentDidMount() {
@@ -77,6 +82,11 @@ class ImageSidebar extends Component {
         addImageConverted(bridge.id, image.id, parseInt(width), parseInt(height));
     }
 
+    downloadCustomSize(width, height) {
+        const {downloadImageConverted, bridge, image} = this.props;
+        downloadImageConverted(bridge.id, image.id, parseInt(width), parseInt(height));
+    }
+
     render() {
         const openSettings = this.openSettings;
         const openPrimary = this.openPrimary;
@@ -84,6 +94,7 @@ class ImageSidebar extends Component {
         const deleteImage = this.deleteImage;
         const addNewConverted = this.addNewConverted;
         const emulateInputOnChange = this.emulateInputOnChange;
+        const downloadCustomSize = this.downloadCustomSize;
 
         const isPub = isPublic();
 
@@ -98,7 +109,7 @@ class ImageSidebar extends Component {
             return <div></div>;
 
         let adminOptions = null;
-        let newSize = null;
+        let customSizeDownload = null;
 
         if (!isPub) {
             adminOptions = (
@@ -119,7 +130,7 @@ class ImageSidebar extends Component {
                                 </span>
                             </div>
                             <div className="buttons">
-                                {/*<section className="update">*/}
+
                                 <input id="update-icon"
                                        ref={input => this.inputElement = input}
                                        onChange={this.updateIcon}
@@ -128,7 +139,7 @@ class ImageSidebar extends Component {
                                        name="icon"/>
                                 <a className="button-outline-white settings-button"
                                    onClick={emulateInputOnChange}>UPDATE</a>
-                                {/*</section>*/}
+
                                 <a className="button-outline-delete settings-button button-left"
                                    onClick={deleteImage}>DELETE</a>
                             </div>
@@ -140,13 +151,13 @@ class ImageSidebar extends Component {
 
                 </div>
             );
-            newSize = (
-                <NewSize
-                    defaultWidth={lastConverted.width}
-                    ratio={this.props.image.width_ratio}
-                    saveElement={addNewConverted}/>
-            );
+
         }
+
+        customSizeDownload = (<CustomSizeDownload
+            defaultWidth={lastConverted.width}
+            ratio={this.props.image.width_ratio}
+            downloadCustomSize={downloadCustomSize}/>);
 
         return (
             <div className="bm-item-list sidebar">
@@ -202,6 +213,7 @@ class ImageSidebar extends Component {
                                 <div key={`icon-sidebar-item-${index}`}>
                                     <div className="sidebar-client">
                                         <div>
+
                                             <div className="sidebar-section-img-info">
                                                 <div className="sidebar-image-info">
                                                     <div className="sidebar-little-title">WIDTH(px)</div>
@@ -218,22 +230,25 @@ class ImageSidebar extends Component {
                                                     <i className="fas fa-download" id="download-icon"/>
                                                 </a>
                                             </div>
+
                                             <div className="sidebar-section-url">
                                                 <div className="sidebar-little-title">EMBED</div>
                                                 <div className="url url-darker">
+
                                                     <input type="text"
                                                            defaultValue={window.location.origin + '/assets/' + convertedItem.filename}/>
+
                                                     <span id="copy-to-clip">
-                                                    <CopyToClipboard
-                                                        text={window.location.origin + '/assets/' + convertedItem.filename}
-                                                        className="clipboard" onCopy={() => {
-                                                        addNotification()
-                                                    }}>
-                                                        <span id="icon">
-                                                            <i className="far fa-copy"/>
-                                                        </span>
-                                                    </CopyToClipboard>
-                                                </span>
+
+                                                        <CopyToClipboard
+                                                            text={window.location.origin + '/assets/' + convertedItem.filename}
+                                                            className="clipboard" onCopy={() => {
+                                                            addNotification()
+                                                        }}>
+
+                                                        <span id="icon"><i className="far fa-copy"/></span>
+                                                        </CopyToClipboard>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -248,14 +263,13 @@ class ImageSidebar extends Component {
                 </div>
 
                 <div className="sidebar-client new-size">
-                    {newSize}
+                    {customSizeDownload}
                 </div>
                 <NotificationSystem ref="notificationSystem"/>
             </div>
         );
 
     }
-
 }
 
 ImageSidebar.propTypes = {
@@ -268,171 +282,9 @@ const dispatchToProps = (dispatch) => {
     return bindActionCreators({
         deleteImage,
         addImageConverted,
-        updateImageFile
+        updateImageFile,
+        downloadImageConverted
     }, dispatch)
 };
 
 export default connect(state => state, dispatchToProps)(ImageSidebar);
-
-{/*<div className="image-sidebar">*/
-}
-{/*<div className="primary-view" style={{marginLeft: marginStyle}}>*/
-}
-{/*<div className="head">*/
-}
-{/*{settingsButton}*/
-}
-{/*<h3>Images</h3>*/
-}
-{/*</div>*/
-}
-{/*<div className="content">*/
-}
-{/*<section>*/
-}
-{/*<h4>Source File</h4><a className="button" href={window.location.origin + '/assets/' + image.filename} download={image.filename}>Download</a>*/
-}
-{/*<div className="clipboard_and_text">*/
-}
-{/*<div>*/
-}
-{/*<CopyToClipboard text={window.location.origin + '/assets/' + image.filename} className="clipboard" onCopy={() => {addNotification()}}>*/
-}
-{/*<span><ReactSVG*/
-}
-{/*path="/images/clipboard.svg"*/
-}
-{/*/></span>*/
-}
-{/*</CopyToClipboard>*/
-}
-{/*</div>*/
-}
-{/*<p>{window.location.origin + '/assets/' + image.filename}</p>*/
-}
-{/*</div>*/
-}
-{/*</section>*/
-}
-{/*<section>*/
-}
-{/*<h4>Converted Files</h4>*/
-}
-{/*{*/
-}
-{/*image.converted.map(function(convertedItem) {*/
-}
-{/*return (*/
-}
-{/*<div key={convertedItem.id}>*/
-}
-{/*<div className="clipboard_and_text">*/
-}
-{/*<div>*/
-}
-{/*<CopyToClipboard text={window.location.origin + '/assets/' + convertedItem.filename} className="clipboard" onCopy={() => {addNotification()}}>*/
-}
-{/*<span>*/
-}
-{/*<ReactSVG*/
-}
-{/*path="/images/clipboard.svg"*/
-}
-{/*/>*/
-}
-{/*</span>*/
-}
-{/*</CopyToClipboard>*/
-}
-{/*</div>*/
-}
-{/*<p>{window.location.origin + '/assets/' + convertedItem.filename}</p>*/
-}
-{/*</div>*/
-}
-{/*<div className="text">*/
-}
-{/*<p><span className="prefix">Width</span> <span className="primar">{convertedItem.width}</span></p>*/
-}
-{/*<p><span className="prefix">Height</span> <span className="primar">{convertedItem.height}</span></p>*/
-}
-{/*<a className="button" href={window.location.origin + '/assets/' + convertedItem.filename} download={convertedItem.filename}>Download</a>*/
-}
-{/*</div>*/
-}
-{/*</div>*/
-}
-{/*);*/
-}
-{/*})*/
-}
-{/*}*/
-}
-{/*</section>*/
-}
-{/*{newSize}*/
-}
-{/*</div>*/
-}
-{/*</div>*/
-}
-{/*<div className="settings">*/
-}
-{/*<div className="head">*/
-}
-{/*<div onClick={openPrimary}>*/
-}
-{/*<ReactSVG*/
-}
-{/*path="/images/close.svg"*/
-}
-{/*/>*/
-}
-{/*</div>*/
-}
-{/*<h3>Logo Settings</h3>*/
-}
-{/*</div>*/
-}
-{/*<div className="content">*/
-}
-{/*<section>*/
-}
-{/*<input id="update-icon"*/
-}
-{/*ref={input => this.inputElement = input}*/
-}
-{/*onChange={this.updateImage}*/
-}
-{/*type="file"*/
-}
-{/*accept="image/*"*/
-}
-{/*name="image"/>*/
-}
-{/*<div className="text">*/
-}
-{/*<a className="button" onClick={emulateInputOnChange}>Update Logo File</a>*/
-}
-{/*</div>*/
-}
-{/*</section>*/
-}
-{/*<section>*/
-}
-{/*<div className="text">*/
-}
-{/*<a className="button" onClick={deleteImage}>Delete</a>*/
-}
-{/*</div>*/
-}
-{/*</section>*/
-}
-{/*</div>*/
-}
-{/*</div>*/
-}
-{/*<NotificationSystem ref="notificationSystem" />*/
-}
-{/*</div>*/
-}

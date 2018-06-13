@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SectionWrapper from './SectionWrapper';
+import SectionWrapper from '../SectionWrapper';
 import { connect } from 'react-redux';
-import { getSectionType } from '../reducers/SectionType/SectionTypeReducer';
-import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
+import { getSectionType } from '../../reducers/SectionType/SectionTypeReducer';
+import { filterSectionsWithSectionType, sortByOrder } from '../../helpers';
 import FontSectionRow from './FontSectionRow';
-import EmptySectionState from './EmptySectionState';
-import renderSection from '../HOC/renderSectionHOC'
+import EmptySectionState from '../EmptySectionState';
+import renderSection from '../../HOC/renderSectionHOC';
 
 
 class FontSection extends Component {

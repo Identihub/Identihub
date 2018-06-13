@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {DragSource, DropTarget} from 'react-dnd';
 import {findDOMNode} from 'react-dom';
-import {dropTargetFlow} from '../helpers';
-import {isPublic} from '../helpers';
+import {dropTargetFlow, isPublic} from '../../helpers';
 import { connect } from 'react-redux';
-import {addImageConverted, deleteImage, updateImageFile} from "../reducers/Bridge/BridgeApiCalls";
+import {addImageConverted, deleteImage, updateImageFile} from "../../reducers/Bridge/BridgeApiCalls";
 import {bindActionCreators} from "redux";
 
 

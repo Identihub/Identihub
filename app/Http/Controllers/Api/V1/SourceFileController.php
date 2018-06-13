@@ -15,6 +15,8 @@ use App\IconConverted;
 use App\Image;
 use App\ImageConverted;
 use App\Jobs\ReorderAfterDelete;
+use App\Repositories\IconRepository;
+use App\Repositories\ImageRepository;
 use App\Section;
 use App\SectionType;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -23,6 +25,15 @@ use Illuminate\Support\Facades\Auth;
 
 class SourceFileController extends Controller
 {
+    private $iconRepo;
+    private $imageRepo;
+
+    public function __construct(IconRepository $iconRepo, ImageRepository $imageRepo)
+    {
+        $this->iconRepo = $iconRepo;
+        $this->imageRepo = $imageRepo;
+    }
+
     public function storeIcon(IconStoreRequest $request, $bridgeId)
     {
         try {
@@ -44,32 +55,32 @@ class SourceFileController extends Controller
                 $im->resizeImage($im->getImageWidth(), $im->getImageHeight(), \Imagick::FILTER_LANCZOS, 1);
 
                 $sectionType = SectionType::where('name', SectionType::ICONS)->get()->first();
-                $filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.svg';
+                $filenameIcon = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_'.++$bridge->nr_icons.'.svg';
 
                 $icon->storeAs('', $filenameIcon, 'assets');
 
                 $sectionType = SectionType::where('name', SectionType::ICONS)->get()->first();
-                $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.png';
+                $filenameConverted = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_'.++$bridge->nr_icons.'.png';
 
-                $iconAsPng = $filenameIcon . '.png';
+                $iconAsPng = $filenameIcon.'.png';
 
                 \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
                 \Storage::disk('assets')->put($iconAsPng, $im->getImageBlob());
                 $section = Section::where('section_type_id', $sectionType->id)->where('bridge_id', $bridgeId)->first();
                 $imageicon = Icon::create([
-                    'bridge_id' => $bridgeId,
-                    'filename' => $filenameIcon,
+                    'bridge_id'    => $bridgeId,
+                    'filename'     => $filenameIcon,
                     'filename_png' => $iconAsPng,
-                    'width_ratio' => $im->getImageWidth() / $im->getImageHeight(),
-                    'section_id' => $section->id,
-                    'order' => Icon::where('section_id', $section->id)->where('bridge_id', $bridgeId)->get()->count()
+                    'width_ratio'  => $im->getImageWidth() / $im->getImageHeight(),
+                    'section_id'   => $section->id,
+                    'order'        => Icon::where('section_id', $section->id)->where('bridge_id', $bridgeId)->get()->count(),
                 ]);
 
                 IconConverted::create([
-                    'icon_id' => $imageicon->id,
+                    'icon_id'  => $imageicon->id,
                     'filename' => $filenameConverted,
-                    'width' => $im->getImageWidth(),
-                    'height' => $im->getImageHeight()
+                    'width'    => $im->getImageWidth(),
+                    'height'   => $im->getImageHeight(),
                 ]);
 
                 $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
@@ -80,15 +91,15 @@ class SourceFileController extends Controller
             }
 
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (IconShouldBeSVG $e) {
             return response()->json(['error' => $e->getMessage()]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
         }
     }
 
@@ -110,10 +121,10 @@ class SourceFileController extends Controller
             $im->setImageFormat('png32');
 
             $sectionType = SectionType::where('name', SectionType::ICONS)->get()->first();
-            $filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_icons . '.svg';
+            $filenameIcon = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_'.++$bridge->nr_icons.'.svg';
             $request->file('icon')->storeAs('', $filenameIcon, 'assets');
 
-            $iconAsPng = $filenameIcon . '.png';
+            $iconAsPng = $filenameIcon.'.png';
             \Storage::disk('assets')->put($iconAsPng, $im->getImageBlob());
 
             $icon = Icon::findOrFail($iconId);
@@ -131,20 +142,20 @@ class SourceFileController extends Controller
             }
 
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
         }
     }
 
     private function updateConvertedIcons(Icon $icon)
     {
         foreach ($icon->converted as $converted) {
-            $width = (int)$converted->width;
+            $width = (int) $converted->width;
             $im = new \Imagick();
             $im->setBackgroundColor(new \ImagickPixel('transparent'));
             $im->readImageBlob(\Storage::disk('assets')->get($icon->filename));
@@ -194,25 +205,25 @@ class SourceFileController extends Controller
                 $sectionType = SectionType::where('name', SectionType::IMAGES)->get()->first();
                 $section = Section::where('section_type_id', $sectionType->id)->where('bridge_id', $bridgeId)->get()->first();
 
-                $filenameImage = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_images . '.' . $imageExt;
+                $filenameImage = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_'.++$bridge->nr_images.'.'.$imageExt;
                 $image->storeAs('', $filenameImage, 'assets');
 
-                $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_images . '.' . $imageExt;
+                $filenameConverted = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_converted_'.++$bridge->nr_images.'.'.$imageExt;
                 \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
 
                 $image = Image::create([
-                    'bridge_id' => $bridgeId,
-                    'filename' => $filenameImage,
+                    'bridge_id'   => $bridgeId,
+                    'filename'    => $filenameImage,
                     'width_ratio' => $im->getImageWidth() / $im->getImageHeight(),
-                    'section_id' => $section->id,
-                    'order' => Image::where('section_id', $section->id)->where('bridge_id', $bridgeId)->get()->count()
+                    'section_id'  => $section->id,
+                    'order'       => Image::where('section_id', $section->id)->where('bridge_id', $bridgeId)->get()->count(),
                 ]);
 
                 ImageConverted::create([
                     'image_id' => $image->id,
                     'filename' => $filenameConverted,
-                    'width' => $im->getImageWidth(),
-                    'height' => $im->getImageHeight()
+                    'width'    => $im->getImageWidth(),
+                    'height'   => $im->getImageHeight(),
                 ]);
 
                 $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
@@ -223,13 +234,13 @@ class SourceFileController extends Controller
             }
 
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
         }
     }
 
@@ -239,11 +250,11 @@ class SourceFileController extends Controller
         $attr = $xml->attributes();
 
         if (strpos($svgdata, "viewBox") == false) {
-            $xml->addAttribute('viewBox', "0 0 ". $attr->width . " " . $attr->height);
+            $xml->addAttribute('viewBox', "0 0 ".$attr->width." ".$attr->height);
         }
 
-        $xml->attributes()->width =  $width;
-        $xml->attributes()->height =  $height;
+        $xml->attributes()->width = $width;
+        $xml->attributes()->height = $height;
 
         return $xml->asXML();
     }
@@ -258,8 +269,8 @@ class SourceFileController extends Controller
             }
 
             $icon = Icon::findOrFail($iconId);
-            $width = (int)$request->get('width');
-            $height = (int)($width / $icon->width_ratio);
+            $width = (int) $request->get('width');
+            $height = (int) ($width / $icon->width_ratio);
 
             $im = new \Imagick();
             $svgdata = \Storage::disk('assets')->get($icon->filename);
@@ -271,13 +282,13 @@ class SourceFileController extends Controller
             $im->setImageFormat('png32');
 
             $sectionType = SectionType::where('name', SectionType::ICONS)->get()->first();
-            $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_icons
-            . '-' . $width .'x' . $height . '.png';
+            $filenameConverted = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_converted_'.++$bridge->nr_icons
+                .'-'.$width.'x'.$height.'.png';
             IconConverted::create([
-                'icon_id' => $icon->id,
+                'icon_id'  => $icon->id,
                 'filename' => $filenameConverted,
-                'width' => $im->getImageWidth(),
-                'height' => $im->getImageHeight()
+                'width'    => $im->getImageWidth(),
+                'height'   => $im->getImageHeight(),
             ]);
             \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
@@ -286,13 +297,41 @@ class SourceFileController extends Controller
             $im->destroy();
 
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
+        }
+    }
+
+    /**
+     * Serve the generated icon publicly.
+     *
+     * @param CreateConvertedIcon $request
+     * @param Bridge              $bridge
+     * @param Icon                $icon
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function customSizeIconConverted(CreateConvertedIcon $request, Bridge $bridge, Icon $icon)
+    {
+        try {
+            $width = (int) $request->get('width');
+            $height = (int) ($width / $icon->width_ratio);
+
+            $path = $this->iconRepo->generateIconConverted($bridge, $icon, $width, $height);
+
+            return response()->json([
+                'download_url' => url($path),
+                'filename'     => basename($path),
+            ]);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Entry not found']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
         }
     }
 
@@ -317,7 +356,7 @@ class SourceFileController extends Controller
 
             $image = Image::findOrFail($imageId);
             $im = new \Imagick();
-            $width = (int)$request->get('width');
+            $width = (int) $request->get('width');
 
             $im->setBackgroundColor(new \ImagickPixel('transparent'));
             $im->readImageBlob(\Storage::disk('assets')->get($image->filename));
@@ -325,28 +364,55 @@ class SourceFileController extends Controller
             $im->resizeImage($width, $width / $image->width_ratio, \Imagick::FILTER_LANCZOS, 1);
 
             $sectionType = SectionType::where('name', SectionType::IMAGES)->get()->first();
-            $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_converted_' . ++$bridge->nr_images . '.' . $imageExt;
+            $filenameConverted = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_converted_'.++$bridge->nr_images.'.'.$imageExt;
 
             ImageConverted::create([
                 'image_id' => $image->id,
                 'filename' => $filenameConverted,
-                'width' => $im->getImageWidth(),
-                'height' => $im->getImageHeight()
+                'width'    => $im->getImageWidth(),
+                'height'   => $im->getImageHeight(),
             ]);
             \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
 
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
         }
     }
 
+    /**
+     * Serve the generated image publicly.
+     *
+     * @param ConvertedStoreRequest $request
+     * @param Bridge                $bridge
+     * @param Image                 $image
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function customSizeImageConverted(ConvertedStoreRequest $request, Bridge $bridge, Image $image)
+    {
+        try {
+            $width = (int) $request->get('width');
+            $height = (int) ($width / $image->width_ratio);
+
+            $path = $this->imageRepo->generateImageConverted($bridge, $image, $width, $height, $request->get('format'));
+
+            return response()->json([
+                'download_url' => url($path),
+                'filename'     => basename($path),
+            ]);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Entry not found']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
+        }
+    }
 
     public function deleteIcon(Request $request, $bridgeId, $iconId)
     {
@@ -372,13 +438,13 @@ class SourceFileController extends Controller
             }
 
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
         }
     }
 
@@ -406,13 +472,13 @@ class SourceFileController extends Controller
             }
 
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
         }
     }
 
@@ -443,7 +509,7 @@ class SourceFileController extends Controller
             $im->setImageFormat($imageType);
 
             $sectionType = SectionType::where('name', SectionType::IMAGES)->get()->first();
-            $filenameIcon = str_replace(' ', '', $bridge->name) . '_' . $sectionType->name . '_' . ++$bridge->nr_images . '.' . $imageExt;
+            $filenameIcon = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_'.++$bridge->nr_images.'.'.$imageExt;
 
             $request->file('image')->storeAs('', $filenameIcon, 'assets');
 
@@ -461,20 +527,20 @@ class SourceFileController extends Controller
             }
 
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()]);
+            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
         }
     }
 
     private function updateConvertedImages(Image $image)
     {
         foreach ($image->converted as $converted) {
-            $width = (int)$converted->width;
+            $width = (int) $converted->width;
             $parsedString = explode('.', $converted->filename);
 
             if (end($parsedString) === 'png') {

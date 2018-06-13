@@ -5,10 +5,10 @@ import { bindActionCreators } from 'redux';
 import ReactSVG from 'react-svg';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import NotificationSystem from 'react-notification-system';
-import { deleteColor } from '../reducers/Bridge/BridgeApiCalls';
-import { paramsChecker, isPublic } from '../helpers';
+import { deleteFont } from '../../reducers/Bridge/BridgeApiCalls';
+import { paramsChecker, isPublic } from '../../helpers';
 
-class ColorSidebar extends Component {
+class FontSidebar extends Component {
 
   constructor(props) {
     super(props);
@@ -22,21 +22,20 @@ class ColorSidebar extends Component {
     this.openSettings = this.openSettings.bind(this);
     this.openPrimary = this.openPrimary.bind(this);
     this.addNotification = this.addNotification.bind(this);
-    this.deleteColor = this.deleteColor.bind(this);
+    this.deleteFont = this.deleteFont.bind(this);
+    this.weightToText = this.weightToText.bind(this);
   }
 
   componentDidMount() {
-      this.notificationSystem = this.refs.notificationSystem;
+    this.notificationSystem = this.refs.notificationSystem;
   }
 
-  addNotification() {
-      debugger;
-        this.notificationSystem.addNotification({
-            message: 'Color copied to clipboard',
-            level: 'success'
-        });
+  addNotification(){
+    this.notificationSystem.addNotification({
+      message: 'Link copied to clipboard ',
+      level: 'success'
+    });
   }
-
 
   openSettings() {
     this.setState((prevState, _) => {
@@ -50,25 +49,45 @@ class ColorSidebar extends Component {
     })
   }
 
-  deleteColor() {
-    const { deleteColor, bridge, color, history } = this.props;
-    if(deleteColor()){
+  deleteFont() {
+    const { deleteFont, bridge, font, history } = this.props;
+    if(deleteFont){
       history.replace('/project/' + bridge.id);
-      deleteColor(bridge.id, color.id);
+      deleteFont(bridge.id, font.id);
     }
   }
 
+  weightToText(weight) {
+    if(weight){
+      return weight.replace('100', "Thin ")
+        .replace('200', "Ultra Thin ")
+        .replace('300', "Light ")
+        .replace('400', "Regular ")
+        .replace('500', "Medium ")
+        .replace('600', "Semi Bold ")
+        .replace('700', "Bold ")
+        .replace('800', "Ultra Bold ")
+        .replace('900', "Black ");
+    }
+    return weight;
+  }
+
   render() {
+
     const openSettings = this.openSettings;
     const openPrimary = this.openPrimary;
     const addNotification = this.addNotification;
-    const deleteColor = this.deleteColor;
+    const deleteFont = this.deleteFont;
+
+
     const isPub = isPublic();
 
-    const { margin } = this.state;
+    const { margin, fontLink } = this.state;
     const marginStyle = "-" + margin + "px";
 
-    const { color } = this.props;
+    const { font } = this.props;
+    console.log(font);
+    const weight = this.weightToText(font.variant.variant);
 
     let settings = null;
     if(!isPub){
@@ -76,20 +95,20 @@ class ColorSidebar extends Component {
           <div className="settings">
               <div className="buttons">
                   <a className="button-outline-delete settings-button"
-                     onClick={deleteColor}>DELETE</a>
+                     onClick={deleteFont}>DELETE</a>
               </div>
           </div>
       );
     }
 
-    if(!color)
+    if(!font)
       return <div> </div>;
 
     return (
         <div className="bm-item-list sidebar">
             <div className="sidebar-padding">
                 <div className="header">
-                    <span>Use Color</span>
+                    <span>Use Font</span>
                 </div>
                 {settings}
             </div>
@@ -97,15 +116,27 @@ class ColorSidebar extends Component {
                 <hr/>
             </div>
             <div className="sidebar-client sidebar-margin-top">
+                <div className="sidebar-section">
+                    <div className="title">
+                                <span>
+                                    SOURCE FILE
+                                </span>
+                        <a className="download-icon" href={font.variant.link}
+                           download={font.variant.font_family.family + " " + font.variant.variant}>
+                            <i className="fas fa-download"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div className="sidebar-client sidebar-margin-top">
                 <div className="sidebar-section-url">
-                    <div className="sidebar-little-title">HEX</div>
-                    <div className="url url-lighter">
+                    <div className="sidebar-little-title">FONT URL</div>
+                    <div className="url url-darker">
                         <input type="text"
-                               readOnly
-                               value={"#" + color.hex}/>
+                        defaultValue={`${font.variant.link}`.substring(0,59)}/>
                         <span id="copy-to-clip">
                                         <CopyToClipboard
-                                            text={"#" + color.hex}
+                                            text={font.variant.link}
                                             className="clipboard" onCopy={() => {
                                             addNotification()
                                         }}>
@@ -118,83 +149,67 @@ class ColorSidebar extends Component {
                 </div>
             </div>
             <div className="sidebar-client sidebar-margin-top">
-                <div className="sidebar-section-url">
-                    <div className="sidebar-little-title">RGB</div>
-                    <div className="url url-darker">
-                        <input type="text"
-                               readOnly
-                               value={"rgb(" + color.rgb.replace(" ", ", ") + ")"}/>
-                        <span id="copy-to-clip">
-                                        <CopyToClipboard
-                                            text={"#" + color.hex}
-                                            className="clipboard" onCopy={() => {
-                                            addNotification()
-                                        }}>
-                                                <span id="icon">
-                                                    <i className="far fa-copy"/>
-                                                </span>
-                                        </CopyToClipboard>
-                                    </span>
+                <div>
+                    <div className="sidebar-section-img-info">
+                        <div className="sidebar-image-info">
+                            <div className="sidebar-little-title">FONT FAMILY</div>
+                            <div className="info info-darker">{font.variant.font_family.family}</div>
+                        </div>
+                        <div className="sidebar-image-info">
+                            <div className="sidebar-little-title">WEIGHT</div>
+                            <div className="info info-darker">{weight}</div>
+                        </div>
                     </div>
                 </div>
             </div>
             <NotificationSystem ref="notificationSystem"/>
         </div>
     );
+
   }
+
 }
 
-ColorSidebar.propTypes = {
-  color: PropTypes.shape({
+FontSidebar.propTypes = {
+  font: PropTypes.shape({
     id: PropTypes.number
   })
 };
 
 const dispatchToProps = (dispatch) => {
   return bindActionCreators({
-    deleteColor
+    deleteFont
   }, dispatch)
 };
 
-export default connect(null, dispatchToProps)(ColorSidebar);
+export default connect(state => state, dispatchToProps)(FontSidebar);
+
 
 {/*<div className="font-sidebar">*/}
     {/*<div className="primary-view" style={{marginLeft: marginStyle}}>*/}
         {/*<div className="head">*/}
             {/*{ settingsButton }*/}
-            {/*<h3>Color</h3>*/}
+            {/*<h3>Fonts</h3>*/}
         {/*</div>*/}
         {/*<div className="content">*/}
             {/*<section>*/}
+                {/*<h4>Source File</h4><a className="button" href={font.variant.link} download={font.variant.font_family.family + " " + font.variant.variant}>Download</a>*/}
                 {/*<div className="clipboard_and_text">*/}
                     {/*<div>*/}
-                        {/*<CopyToClipboard text={"#" + color.hex} className="clipboard" onCopy={() => {addNotification()}}>*/}
+                        {/*<CopyToClipboard text={font.variant.link} className="clipboard" onCopy={() => {addNotification()}}>*/}
                     {/*<span><ReactSVG*/}
                         {/*path="/images/clipboard.svg"*/}
                     {/*/></span>*/}
                         {/*</CopyToClipboard>*/}
                     {/*</div>*/}
-                    {/*<p>{"#" + color.hex}</p>*/}
+                    {/*<p>{font.variant.link}</p>*/}
                 {/*</div>*/}
-                {/*<div className="clipboard_and_text">*/}
-                    {/*<div>*/}
-                        {/*<CopyToClipboard text={"rgb(" + color.rgb.replace(" ", ", ") + ")"} className="clipboard" onCopy={() => {addNotification()}}>*/}
-                    {/*<span><ReactSVG*/}
-                        {/*path="/images/clipboard.svg"*/}
-                    {/*/></span>*/}
-                        {/*</CopyToClipboard>*/}
-                    {/*</div>*/}
-                    {/*<p>{"rgb(" + color.rgb.replace(" ", ", ") + ")"}</p>*/}
-                {/*</div>*/}
-                {/*<div className="clipboard_and_text">*/}
-                    {/*<div>*/}
-                        {/*<CopyToClipboard text={"#" + color.hex} className="clipboard" onCopy={() => {addNotification()}}>*/}
-                    {/*<span><ReactSVG*/}
-                        {/*path="/images/clipboard.svg"*/}
-                    {/*/></span>*/}
-                        {/*</CopyToClipboard>*/}
-                    {/*</div>*/}
-                    {/*<p>{"#" + color.hex}</p>*/}
+            {/*</section>*/}
+            {/*<section>*/}
+                {/*<h4>Info</h4>*/}
+                {/*<div className="text">*/}
+                    {/*<p><span className="prefix">Font Family</span> <span className="primar">{font.variant.font_family.family}</span></p>*/}
+                    {/*<p><span className="prefix">Weight</span> <span className="primar">{weight}</span></p>*/}
                 {/*</div>*/}
             {/*</section>*/}
         {/*</div>*/}
@@ -206,16 +221,15 @@ export default connect(null, dispatchToProps)(ColorSidebar);
                     {/*path="/images/close.svg"*/}
                 {/*/>*/}
             {/*</div>*/}
-            {/*<h3>Color Settings</h3>*/}
+            {/*<h3>Font Settings</h3>*/}
         {/*</div>*/}
         {/*<div className="content">*/}
             {/*<section>*/}
                 {/*<div className="text">*/}
-                    {/*<a className="button" onClick={deleteColor}>Delete</a>*/}
+                    {/*<a className="button" onClick={deleteFont}>Delete</a>*/}
                 {/*</div>*/}
             {/*</section>*/}
         {/*</div>*/}
     {/*</div>*/}
     {/*<NotificationSystem ref="notificationSystem" />*/}
 {/*</div>*/}
-

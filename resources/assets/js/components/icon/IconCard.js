@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {DragSource, DropTarget} from 'react-dnd';
 import {findDOMNode} from 'react-dom';
-import {dropTargetFlow} from '../helpers';
-import {isPublic} from '../helpers';
+import {dropTargetFlow, isPublic} from '../../helpers';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
-import {addIconConverted, deleteIcon, updateIconFile} from "../reducers/Bridge/BridgeApiCalls";
+import {addIconConverted, deleteIcon, updateIconFile} from "../../reducers/Bridge/BridgeApiCalls";
 
 class IconCard extends Component {
     constructor(props) {

@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import {dropTargetFlow, getColorBrightness} from '../helpers';
+import {dropTargetFlow, getColorBrightness, isPublic} from '../../helpers';
 import {Link} from 'react-router-dom';
-import {isPublic} from '../helpers';
 import {connect} from 'react-redux';
 import colorConvert from 'color-convert';
 
-import {deleteColor} from "../reducers/Bridge/BridgeApiCalls";
+import {deleteColor} from "../../reducers/Bridge/BridgeApiCalls";
 import {bindActionCreators} from "redux";
 
 class ColorCard extends Component {

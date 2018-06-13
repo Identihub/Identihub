@@ -3,19 +3,18 @@ import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Section from './Section';
-import ImageCard from './ImageCard';
-import { dropTarget } from '../helpers';
-import { updateSectionOnImage, updateOrderOnImage } from '../reducers/Extra/ExtraActions';
-import { reorderElement, changeSection} from '../reducers/Bridge/BridgeApiCalls';
+import Section from '../Section';
+import FontCard from './FontCard';
+import { dropTarget } from '../../helpers';
+import { updateOrderOnFont } from '../../reducers/Extra/ExtraActions';
 
-class ImageSectionRow extends Component{
+class FontSectionRow extends Component{
 
     constructor(props) {
         super(props);
 
         this.state = {
-          images: []
+          fonts: []
         };
 
         this.pushCard = this.pushCard.bind(this);
@@ -33,35 +32,24 @@ class ImageSectionRow extends Component{
 
     updateLocalState(props) {
         this.setState({
-          images: props.images
+          fonts: props.fonts
         });
     }
 
     pushCard(card) {
-      const {
-        bridge,
-        section,
-        updateSectionOnImage,
-        changeSection
-      } = this.props;
-      updateSectionOnImage(bridge.id, card.id, section.id);
-      changeSection('image', card.id, section.id);
+
     }
 
     removeCard(index) { }
 
     moveCard(dragIndex, hoverIndex) {
         const {
-            images,
+            fonts,
             bridge,
-            section,
-            updateOrderOnImage,
-            reorderElement
+            updateOrderOnFont
         } = this.props;
-        console.log(this.props);
-        const card = images.find( image => image.order === dragIndex && image.section_id === section.id);
-        updateOrderOnImage(bridge.id, card.id, hoverIndex);
-        reorderElement('image', card.id, hoverIndex);
+        const card = fonts.find( font => font.order === dragIndex );
+        updateOrderOnFont(bridge.id, card.id, hoverIndex);
     }
 
     render() {
@@ -69,15 +57,12 @@ class ImageSectionRow extends Component{
             bridge,
             section,
             emptyStateText,
-            images,
+            fonts,
             canDrop,
             isOver,
             connectDropTarget
         } = this.props;
         const isActive = canDrop && isOver;
-
-        if(images === undefined)
-            return (<div> </div>);
 
         return connectDropTarget(
             <div>
@@ -87,16 +72,16 @@ class ImageSectionRow extends Component{
                          isActive={isActive}
                          emptyStateText={emptyStateText}>
                     {
-                        images.filter(image => ( image.section_id === section.id)).sort((a, b) => ( a.order - b.order )).map(image => {
+                        fonts.filter(font => ( font.section_id === section.id)).sort((a, b) => ( a.order - b.order )).map(font => {
                             return (
-                              <ImageCard
-                                  key={image.id}
-                                  index={image.order}
-                                  listId={image.section_id}
-                                  card={image}
-                                  bridge={bridge}
+                              <FontCard
+                                  key={font.id}
+                                  index={font.order}
+                                  listId={font.section_id}
+                                  card={font}
                                   removeCard={this.removeCard}
                                   moveCard={this.moveCard}
+                                  bridge={bridge}
                               />
                             )
                         })
@@ -107,7 +92,7 @@ class ImageSectionRow extends Component{
     }
 }
 
-ImageSectionRow.propTypes = {
+FontSectionRow.propTypes = {
     bridge: PropTypes.shape({
         id: PropTypes.integer
     }).isRequired,
@@ -117,7 +102,7 @@ ImageSectionRow.propTypes = {
         title: PropTypes.string,
         description: PropTypes.string
     }).isRequired,
-    images: PropTypes.arrayOf(PropTypes.shape({
+    fonts: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         section_id: PropTypes.number,
         order: PropTypes.number
@@ -126,14 +111,11 @@ ImageSectionRow.propTypes = {
 };
 
 const dispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    updateOrderOnImage,
-    updateSectionOnImage,
-    reorderElement,
-    changeSection
-  }, dispatch)
+    return bindActionCreators({
+        updateOrderOnFont
+    }, dispatch)
 };
 
-const imageSectionRow = dropTarget("IMAGE")(ImageSectionRow);
+const fontSectionRow = dropTarget("FONT")(FontSectionRow);
 
-export default connect(state => state, dispatchToProps)(imageSectionRow);
+export default connect(state => state, dispatchToProps)(fontSectionRow);

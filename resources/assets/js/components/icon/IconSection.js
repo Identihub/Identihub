@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import SectionWrapper from './SectionWrapper';
+import SectionWrapper from '../SectionWrapper';
 import {bindActionCreators} from 'redux';
-import {getSectionType} from '../reducers/SectionType/SectionTypeReducer';
+import {getSectionType} from '../../reducers/SectionType/SectionTypeReducer';
 import {connect} from 'react-redux';
 import IconSectionRow from './IconSectionRow';
-import {filterSectionsWithSectionType, sortByOrder} from '../helpers';
-import {createIcon} from '../reducers/Bridge/BridgeApiCalls';
+import {filterSectionsWithSectionType, sortByOrder} from '../../helpers';
+import {createIcon} from '../../reducers/Bridge/BridgeApiCalls';
 import NotificationSystem from 'react-notification-system';
 import _ from 'lodash';
-import renderSection from '../HOC/renderSectionHOC'
+import renderSection from '../../HOC/renderSectionHOC'
 
 
 class IconSection extends Component {

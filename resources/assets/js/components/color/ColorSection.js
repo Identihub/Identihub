@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SectionWrapper from './SectionWrapper';
+import SectionWrapper from '../SectionWrapper';
 import ColorSectionRow from './ColorSectionRow';
-import { getSectionType } from '../reducers/SectionType/SectionTypeReducer';
+import { getSectionType } from '../../reducers/SectionType/SectionTypeReducer';
 import { connect } from 'react-redux';
-import { filterSectionsWithSectionType, sortByOrder } from '../helpers';
-import renderSection from '../HOC/renderSectionHOC'
+import { filterSectionsWithSectionType, sortByOrder } from '../../helpers';
+import renderSection from '../../HOC/renderSectionHOC'
 
 
 class ColorSection extends Component {

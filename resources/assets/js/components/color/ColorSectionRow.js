@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Section from './Section';
-import FontCard from './FontCard';
-import { dropTarget } from '../helpers';
-import { updateOrderOnFont } from '../reducers/Extra/ExtraActions';
+import Section from '../Section';
+import ColorCard from './ColorCard';
+import { dropTarget } from '../../helpers';
+import { updateSectionOnColor, updateOrderOnColor } from '../../reducers/Extra/ExtraActions';
+import { reorderElement, changeSection} from '../../reducers/Bridge/BridgeApiCalls';
 
-class FontSectionRow extends Component{
+class ColorSectionRow extends Component{
 
     constructor(props) {
         super(props);
 
         this.state = {
-          fonts: []
+          colors: []
         };
 
         this.pushCard = this.pushCard.bind(this);
@@ -32,24 +33,34 @@ class FontSectionRow extends Component{
 
     updateLocalState(props) {
         this.setState({
-          fonts: props.fonts
+          colors: props.colors
         });
     }
 
     pushCard(card) {
-
+        const {
+            bridge,
+            section,
+            updateSectionOnColor,
+            changeSection
+        } = this.props;
+        updateSectionOnColor(bridge.id, card.id, section.id);
+        changeSection('color', card.id, section.id);
     }
 
     removeCard(index) { }
 
     moveCard(dragIndex, hoverIndex) {
         const {
-            fonts,
+            colors,
             bridge,
-            updateOrderOnFont
+            section,
+            updateOrderOnColor,
+            reorderElement
         } = this.props;
-        const card = fonts.find( font => font.order === dragIndex );
-        updateOrderOnFont(bridge.id, card.id, hoverIndex);
+        const card = colors.find( color => color.order === dragIndex && color.section_id === section.id);
+        updateOrderOnColor(bridge.id, card.id, hoverIndex);
+        reorderElement('color', card.id, hoverIndex);
     }
 
     render() {
@@ -57,7 +68,7 @@ class FontSectionRow extends Component{
             bridge,
             section,
             emptyStateText,
-            fonts,
+            colors,
             canDrop,
             isOver,
             connectDropTarget
@@ -72,13 +83,13 @@ class FontSectionRow extends Component{
                          isActive={isActive}
                          emptyStateText={emptyStateText}>
                     {
-                        fonts.filter(font => ( font.section_id === section.id)).sort((a, b) => ( a.order - b.order )).map(font => {
+                        colors.filter(color => ( color.section_id === section.id)).sort((a, b) => ( a.order - b.order )).map(color => {
                             return (
-                              <FontCard
-                                  key={font.id}
-                                  index={font.order}
-                                  listId={font.section_id}
-                                  card={font}
+                              <ColorCard
+                                  key={color.id}
+                                  index={color.order}
+                                  listId={color.section_id}
+                                  card={color}
                                   removeCard={this.removeCard}
                                   moveCard={this.moveCard}
                                   bridge={bridge}
@@ -92,7 +103,7 @@ class FontSectionRow extends Component{
     }
 }
 
-FontSectionRow.propTypes = {
+ColorSectionRow.propTypes = {
     bridge: PropTypes.shape({
         id: PropTypes.integer
     }).isRequired,
@@ -102,7 +113,7 @@ FontSectionRow.propTypes = {
         title: PropTypes.string,
         description: PropTypes.string
     }).isRequired,
-    fonts: PropTypes.arrayOf(PropTypes.shape({
+    colors: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         section_id: PropTypes.number,
         order: PropTypes.number
@@ -111,11 +122,14 @@ FontSectionRow.propTypes = {
 };
 
 const dispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        updateOrderOnFont
-    }, dispatch)
+  return bindActionCreators({
+    updateOrderOnColor,
+    updateSectionOnColor,
+    reorderElement,
+    changeSection
+  }, dispatch)
 };
 
-const fontSectionRow = dropTarget("FONT")(FontSectionRow);
+const colorSectionRow = dropTarget("COLOR")(ColorSectionRow);
 
-export default connect(state => state, dispatchToProps)(fontSectionRow);
+export default connect(state => state, dispatchToProps)(colorSectionRow);
