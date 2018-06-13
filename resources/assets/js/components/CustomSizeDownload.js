@@ -98,6 +98,7 @@ class CustomSizeDownload extends Component {
 CustomSizeDownload.propTypes = {
     ratio: PropTypes.number,
     defaultWidth: PropTypes.number,
+    downloadCustomSize: PropTypes.func.isRequired,
 };
 
 export default CustomSizeDownload;

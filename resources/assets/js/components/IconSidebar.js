@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ReactSVG from 'react-svg';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import NotificationSystem from 'react-notification-system';
-import NewSize from '../components/NewSize';
 import Spinner from '../components/Spinner';
 
 import {deleteIcon, addIconConverted, updateIconFile, downloadIconConverted} from '../reducers/Bridge/BridgeApiCalls';
@@ -39,8 +37,6 @@ class IconSidebar extends Component {
     }
 
     addNotification() {
-        console.log("Here");
-
         this.notificationSystem.addNotification({
             message: 'Link copied to clipboard ',
             level: 'success'
@@ -72,7 +68,6 @@ class IconSidebar extends Component {
     }
 
     updateIcon(e) {
-        //console.log(this);
         const {updateIconFile, bridge, icon} = this.props;
         const file = e.target.files[0];
         updateIconFile(bridge.id, icon.id, file);
@@ -89,8 +84,6 @@ class IconSidebar extends Component {
     }
 
     render() {
-        console.log(this.props);
-
         const openSettings = this.openSettings;
         const openPrimary = this.openPrimary;
         const addNotification = this.addNotification;
@@ -110,10 +103,8 @@ class IconSidebar extends Component {
             return <div/>;
 
         const lastConverted = icon.converted[icon.converted.length - 1];
-        console.log(lastConverted);
 
         let adminOptions = null;
-        let newSize = null;
         let customSizeDownload = null;
 
 
@@ -157,20 +148,12 @@ class IconSidebar extends Component {
 
                 </div>
             );
-
-            newSize = (
-                <NewSize
-                    defaultWidth={lastConverted.width}
-                    ratio={this.props.icon.width_ratio}
-                    saveElement={addNewConverted}/>
-            );
-        } else {
-            customSizeDownload = (<CustomSizeDownload
-                defaultWidth={lastConverted.width}
-                ratio={this.props.icon.width_ratio}
-                downloadCustomSize={downloadCustomSize}/>);
         }
 
+        customSizeDownload = (<CustomSizeDownload
+            defaultWidth={lastConverted.width}
+            ratio={this.props.icon.width_ratio}
+            downloadCustomSize={downloadCustomSize}/>);
 
         return (
             <div className="sidebar">
@@ -273,108 +256,13 @@ class IconSidebar extends Component {
                     </div>
 
                     <div className="sidebar-client new-size">
-                        {newSize}
                         {customSizeDownload}
                     </div>
                     <NotificationSystem ref="notificationSystem"/>
                 </div>
             </div>
         );
-
-        // return (
-        //     <div className="icon-sidebar">
-        //         <div className="primary-view" style={{marginLeft: marginStyle}}>
-        //             <div className="head">
-        //                 {settingsButton}
-        //                 <h3>Logos</h3>
-        //             </div>
-        //             <div className="content">
-        //                 <section>
-        //                     <h4>SVG</h4><a className="button" href={window.location.origin + '/assets/' + icon.filename}
-        //                                    download={icon.filename}>Download</a>
-        //                     <div className="clipboard_and_text">
-        //                         <div>
-        //                            <CopyToClipboard text={window.location.origin + '/assets/' + icon.filename}
-        //                                             className="clipboard" onCopy={() => {
-        //                               addNotification()
-        //                            }}>
-        //             <span><ReactSVG
-        //                 path="/images/clipboard.svg"
-        //             /></span>
-        //                             </CopyToClipboard>
-        //                         </div>
-        //                         <p>{window.location.origin + '/assets/' + icon.filename}</p>
-        //                     </div>
-        //                 </section>
-        //                 <section>
-        //                     <h4>PNG</h4>
-        //                     {
-        //                         icon.converted.map(function (convertedItem) {
-        //                             return (
-        //                                 <div key={convertedItem.id}>
-        //                                     <div className="clipboard_and_text">
-        //                                         <div>
-        //                                             <CopyToClipboard
-        //                                                 text={window.location.origin + '/assets/' + convertedItem.filename}
-        //                                                 className="clipboard" onCopy={() => {
-        //                                                 addNotification()
-        //                                             }}>
-        //                     <span>
-        //                       <ReactSVG
-        //                           path="/images/clipboard.svg"
-        //                       />
-        //                     </span>
-        //                                             </CopyToClipboard>
-        //                                         </div>
-        //                                         <p>{window.location.origin + '/assets/' + convertedItem.filename}</p>
-        //                                     </div>
-        //                                     <div className="text">
-        //                                         <p><span className="prefix">Width</span> <span className="primar">{convertedItem.width}</span></p>
-        //                                         <p><span className="prefix">Height</span> <span className="primar">{convertedItem.height}</span></p>
-        //                                         <a className="button"
-        //                                            href={window.location.origin + '/assets/' + convertedItem.filename}
-        //                                            download={convertedItem.filename}>Download</a>
-        //                                     </div>
-        //                                 </div>
-        //                             );
-        //                         })
-        //                     }
-        //                 </section>
-        //                 {newSize}
-        //             </div>
-        //         </div>
-        //         <div className="settings">
-        //             <div className="head">
-        //                 <div onClick={openPrimary}>
-        //                     <ReactSVG
-        //                         path="/images/close.svg"
-        //                     />
-        //                 </div>
-        //                 <h3>Logo Settings</h3>
-        //             </div>
-        //             <div className="content">
-        //                 <section className="text">
-        //                     <input id="update-icon"
-        //                            ref={input => this.inputElement = input}
-        //                            onChange={this.updateIcon}
-        //                            type="file"
-        //                            accept="image/*"
-        //                            name="icon"/>
-        //                     <a className="button" onClick={emulateInputOnChange}>Update Logo File</a>
-        //                 </section>
-        //                 <section>
-        //                     <div className="text">
-        //                         <a className="button" onClick={deleteIcon}>Delete</a>
-        //                     </div>
-        //                 </section>
-        //             </div>
-        //         </div>
-        //         <NotificationSystem ref="notificationSystem"/>
-        //     </div>
-        // );
-
     }
-
 }
 
 IconSidebar.propTypes = {

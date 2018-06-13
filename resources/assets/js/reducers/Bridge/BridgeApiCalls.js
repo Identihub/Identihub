@@ -206,8 +206,7 @@ export function downloadIconConverted(bridgeId, iconId, width, height) {
             }
 
         }).catch(function (error) {
-            console.log('Something went wrong');
-            console.log(error);
+            console.log('Something went wrong', error);
         });
     }
 }
@@ -246,8 +245,7 @@ export function downloadImageConverted(bridgeId, imageId, width, height) {
             }
 
         }).catch(function (error) {
-            console.log('Something went wrong');
-            console.log(error);
+            console.log('Something went wrong', error);
         });
     }
 }
