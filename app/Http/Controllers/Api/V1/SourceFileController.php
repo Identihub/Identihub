@@ -320,8 +320,9 @@ class SourceFileController extends Controller
         try {
             $width = (int) $request->get('width');
             $height = (int) ($width / $icon->width_ratio);
+            $format = $request->get('format');
 
-            $path = $this->iconRepo->generateIconConverted($bridge, $icon, $width, $height);
+            $path = $this->iconRepo->generateIconConverted($bridge, $icon, $width, $height, $format);
 
             return response()->json([
                 'download_url' => url($path),

@@ -189,11 +189,12 @@ export function addIconConverted(bridgeId, iconId, width, height) {
     }
 }
 
-export function downloadIconConverted(bridgeId, iconId, width, height) {
+export function downloadIconConverted(bridgeId, iconId, width, height, format) {
     return (dispatch) => {
         return axios.post('/api/v1/bridges/' + bridgeId + '/icons/' + iconId + '/converted/custom', {
             width: width,
-            height: height
+            height: height,
+            format: format,
         }).then(function (response) {
 
             if (response.data.download_url) {
