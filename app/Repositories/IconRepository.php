@@ -34,7 +34,10 @@ class IconRepository extends Repository
         $im->readImageBlob($svgData);
         $im->setImageResolution(1536, 1536);
         $im->resizeImage($width, $width / $icon->width_ratio, \Imagick::FILTER_LANCZOS, 1);
-        $im->setImageFormat($format);
+
+        $imgFormat = ($format === 'png') ? 'png32' : $format;
+
+        $im->setImageFormat($imgFormat);
 
         $sectionType = SectionType::where('name', SectionType::ICONS)->first();
 
