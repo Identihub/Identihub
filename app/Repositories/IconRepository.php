@@ -30,14 +30,24 @@ class IconRepository extends Repository
         $svgData = Storage::disk('assets')->get($icon->filename);
         $svgData = $this->addViewBoxAndScaleSvg($svgData, $width, $height);
 
-        $im->setBackgroundColor(new ImagickPixel('transparent'));
         $im->readImageBlob($svgData);
         $im->setImageResolution(1536, 1536);
         $im->resizeImage($width, $width / $icon->width_ratio, \Imagick::FILTER_LANCZOS, 1);
 
-        $imgFormat = ($format === 'png') ? 'png32' : $format;
+        switch ($format) {
+            case 'png':
 
-        $im->setImageFormat($imgFormat);
+                $im->setBackgroundColor(new ImagickPixel('transparent'));
+                $im->setImageFormat('png32');
+
+                break;
+            case 'jpg':
+
+                $im->setBackgroundColor(new ImagickPixel('#FFFFFF'));
+                $im->setImageFormat('jpg');
+
+                break;
+        }
 
         $sectionType = SectionType::where('name', SectionType::ICONS)->first();
 
