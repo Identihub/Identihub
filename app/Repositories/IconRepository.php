@@ -20,24 +20,38 @@ class IconRepository extends Repository
      * @param Icon   $icon
      * @param        $width
      * @param        $height
+     * @param string $format
      * @return string
      * @throws \ImagickException
      */
-    public function generateIconConverted(Bridge $bridge, Icon $icon, $width, $height)
+    public function generateIconConverted(Bridge $bridge, Icon $icon, $width, $height, $format = 'png')
     {
         $im = new Imagick();
         $svgData = Storage::disk('assets')->get($icon->filename);
         $svgData = $this->addViewBoxAndScaleSvg($svgData, $width, $height);
 
-        $im->setBackgroundColor(new ImagickPixel('transparent'));
         $im->readImageBlob($svgData);
         $im->setImageResolution(1536, 1536);
         $im->resizeImage($width, $width / $icon->width_ratio, \Imagick::FILTER_LANCZOS, 1);
-        $im->setImageFormat('png32');
+
+        switch ($format) {
+            case 'png':
+
+                $im->setBackgroundColor(new ImagickPixel('transparent'));
+                $im->setImageFormat('png32');
+
+                break;
+            case 'jpg':
+
+                $im->setBackgroundColor(new ImagickPixel('#FFFFFF'));
+                $im->setImageFormat('jpg');
+
+                break;
+        }
 
         $sectionType = SectionType::where('name', SectionType::ICONS)->first();
 
-        $filenameConverted = str_replace(' ', '', $bridge->name).'_'.$sectionType->name.'_converted_'.$icon->id.'-'.$width.'x'.$height.'.png';
+        $filenameConverted = str_replace(' ', '', $bridge->name) . '_' . "{$sectionType->name}_converted_{$icon->id}-{$width}x{$height}.{$format}";
 
         IconConverted::create([
             'icon_id'           => $icon->id,
@@ -45,6 +59,7 @@ class IconRepository extends Repository
             'width'             => $im->getImageWidth(),
             'height'            => $im->getImageHeight(),
             'is_visitor_custom' => 1,
+            'format'            => $format,
         ]);
 
         Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());

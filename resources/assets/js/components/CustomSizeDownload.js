@@ -8,18 +8,21 @@ export const roundNumber = (number) => {
 
 class CustomSizeDownload extends Component {
 
-    constructor(props) {
-        super(props);
+    static propTypes = {
+        ratio: PropTypes.number,
+        defaultWidth: PropTypes.number,
+        format: PropTypes.string,
+        downloadCustomSize: PropTypes.func.isRequired,
+    };
 
-        this.state = {
-            width: null,
-            height: null
-        };
+    static defaultProps = {
+        format: "png"
+    };
 
-        this.changeWidth = this.changeWidth.bind(this);
-        this.changeHeight = this.changeHeight.bind(this);
-    }
-
+    state = {
+        width: null,
+        height: null
+    };
 
     componentWillReceiveProps(nextProps, nextState) {
         if ((this.state.width === null) && (nextProps.defaultWidth))
@@ -31,30 +34,26 @@ class CustomSizeDownload extends Component {
             })
     }
 
-    changeWidth(width) {
+    changeWidth = (width) => {
         this.setState((prevState, _) => {
             return {
                 width: width,
                 height: width / this.props.ratio
             }
         });
-    }
+    };
 
-    changeHeight(height) {
+    changeHeight = (height) => {
         this.setState((prevState, _) => {
             return {
                 width: height * this.props.ratio,
                 height: height
             }
         });
-    }
+    };
 
     render() {
-
-        const changeWidth = this.changeWidth;
-        const changeHeight = this.changeHeight;
-
-        const {downloadCustomSize} = this.props;
+        const {downloadCustomSize, format} = this.props;
 
         let {width, height} = this.state;
 
@@ -68,37 +67,44 @@ class CustomSizeDownload extends Component {
 
 
         return (
-            <section className="new-size">
-                <div className="sidebar-section-img-info">
-                    <div className="sidebar-image-info">
-                        <div className="sidebar-little-title">WIDTH(px)</div>
-                        <input type="number" className="info info-lighter" value={roundNumber(width)}
-                               onChange={(e) => {
-                                   changeWidth(e.target.value)
-                               }} placeholder="Set width"/>
-                    </div>
-                    <i className="fas fa-lock lock"/>
-                    <div className="sidebar-image-info">
-                        <div className="sidebar-little-title">HEIGHT</div>
-                        <input type="number" className="info info-lighter" value={roundNumber(height)}
-                               onChange={(e) => {
-                                   changeHeight(e.target.value)
-                               }} placeholder="Set height"/>
-                    </div>
-                    <a className="add-size" onClick={() => {
-                        downloadCustomSize(roundNumber(width), roundNumber(height));
-                    }}>Download</a>
-                </div>
 
-            </section>
+            <div>
+
+                <section className="custom-size">
+                    <div className="sidebar-section-img-info">
+                        <div className="sidebar-image-info">
+                            <div className="sidebar-little-title">WIDTH(px)</div>
+                            <input type="number" className="info info-lighter" placeholder="Set width"
+                                   value={roundNumber(width)}
+                                   onChange={(e) => {
+                                       this.changeWidth(e.target.value)
+                                   }}/>
+                        </div>
+                        <i className="fas fa-lock lock"/>
+                        <div className="sidebar-image-info">
+                            <div className="sidebar-little-title">HEIGHT(px)</div>
+                            <input type="number" className="info info-lighter" placeholder="Set height"
+                                   value={roundNumber(height)}
+                                   onChange={(e) => {
+                                       this.changeHeight(e.target.value)
+                                   }}/>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <div className="download-btn">
+                    <a className="btn-white"
+                       onClick={() => {
+                           downloadCustomSize(roundNumber(width), roundNumber(height), format);
+                       }}>
+                        <i className="fas fa-download"/>&nbsp;&nbsp; Download
+                    </a>
+                </div>
+            </div>
         );
     }
 }
-
-CustomSizeDownload.propTypes = {
-    ratio: PropTypes.number,
-    defaultWidth: PropTypes.number,
-    downloadCustomSize: PropTypes.func.isRequired,
-};
 
 export default CustomSizeDownload;

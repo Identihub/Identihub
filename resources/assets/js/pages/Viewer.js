@@ -247,6 +247,8 @@ class Viewer extends Component {
                 });
                 sidebar = <IconSidebar bridge={bridge} icon={icon} history={this.props.history}/>;
                 break;
+
+
             case 'image':
                 sortedItems = orderedElements ? orderedElements.map(function (image) {
                     return (<div key={image.id} className="item">
@@ -260,6 +262,8 @@ class Viewer extends Component {
                 });
                 sidebar = <ImageSidebar bridge={bridge} image={image} history={this.props.history}/>;
                 break;
+
+
             case 'color':
                 sortedItems = orderedElements ? orderedElements.map(function (color) {
                     return (<div key={color.id} className="item">
@@ -273,6 +277,8 @@ class Viewer extends Component {
                 });
                 sidebar = <ColorSidebar bridge={bridge} color={color} history={this.props.history}/>
                 break;
+
+
             case 'font':
                 sortedItems = orderedElements ? orderedElements.map(function (font) {
                     return (<div key={font.id} className="item">
@@ -286,6 +292,8 @@ class Viewer extends Component {
                 });
                 sidebar = <FontSidebar bridge={bridge} font={font} history={this.props.history}/>;
                 break;
+
+
             default:
                 break;
         }
@@ -299,6 +307,7 @@ class Viewer extends Component {
                             className="close"
                         />
                     </div>
+
                     <div onClick={goBackward} tabIndex="-1" ref={input => input && input.focus()}
                          onKeyDown={this.keyPress}>
                         <ReactSVG
@@ -306,6 +315,7 @@ class Viewer extends Component {
                             className="backward"
                         />
                     </div>
+
                     <div onClick={goForward} tabIndex="-1" ref={input => input && input.focus()}
                          onKeyDown={this.keyPress}>
                         <ReactSVG
@@ -313,12 +323,16 @@ class Viewer extends Component {
                             className="forward"
                         />
                     </div>
+
                     <div className="items" style={{marginLeft: marginLeft}}>
                         {sortedItems}
                         <div className="clearfix"/>
                     </div>
                 </main>
-                {screenWidth > 900
+
+
+                {
+                    screenWidth > 900
                     ? <div className="viewer-sidebar__desktop">{sidebar}</div>
                     : <Menu
                         left
@@ -328,17 +342,16 @@ class Viewer extends Component {
                         pageWrapId={"page-wrap"}
                         outerContainerId={"outter-container"}
                         customBurgerIcon={<ReactSVG path="/images/hamburger.svg" className="open-menu"/>}
-                        customCrossIcon={<span className="close-menu"><i className="fas fa-bars"/></span>}
-                    >
+                        customCrossIcon={<span className="close-menu"><i className="fas fa-bars"/></span>}>
+
                         {sidebar}
+
                     </Menu>
 
                 }
             </div>
         );
     }
-
-
 }
 
 const mapStateToProps = (state, ownProps) => {
