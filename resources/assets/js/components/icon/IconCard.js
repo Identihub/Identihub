@@ -29,11 +29,16 @@ class IconCard extends Component {
         const opacity = isDragging ? 0.1 : 1;
         const deleteIcon = this.deleteIcon;
 
-        console.log("a");
+        const bgColor = card.bg_color ? card.bg_color : null;
+
+        const cardStyle = {opacity: opacity};
+        if (bgColor) {
+            cardStyle.backgroundColor = bgColor
+        }
 
         if (!isPub) {
             return connectDragSource(connectDropTarget(
-                <div className="item card" style={{opacity: opacity}}>
+                <div className="item card" style={cardStyle}>
                     <Link to={'/project/' + bridge.id + '/view/icon/element/' + card.id}>
                         <img src={'/assets/' + card.filename_png}/>
                         {/*<i className="fas fa-expand-arrows-alt move-handler"/>*/}
@@ -45,7 +50,7 @@ class IconCard extends Component {
             ));
         } else {
             return (
-                <div className="item card" style={{opacity: opacity}}>
+                <div className="item card" style={cardStyle}>
                     <Link to={'/view/icon/element/' + card.id}>
                         <img src={'/assets/' + card.filename_png}/>
                     </Link>

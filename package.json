@@ -33,6 +33,7 @@
     "pusher-js": "^4.1.0",
     "react": "^15.5.4",
     "react-burger-menu": "^2.2.3",
+    "react-color": "^2.14.1",
     "react-copy-to-clipboard": "^5.0.0",
     "react-debounce-input": "^3.2.0",
     "react-dnd": "^2.4.0",

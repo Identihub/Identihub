@@ -7,7 +7,8 @@ import {
     UPDATE_ORDER_ON_COLOR,
     UPDATE_ORDER_ON_FONT,
     UPDATE_ORDER_ON_ICON,
-    UPDATE_ORDER_ON_IMAGE
+    UPDATE_ORDER_ON_IMAGE,
+    UPDATE_BG_COLOR_ON_ICON
 } from '../Extra/ExtraActions';
 import {arrangeElements} from '../../helpers';
 
@@ -63,10 +64,10 @@ const BridgeReducer = (state = initialState, action) => {
             var {bridgeId, iconId, newOrder} = action.payload;
 
             var bridge = state.data.find((bridge) => bridge.id == bridgeId);
-            const icons = bridge.icons;
-            const icon = icons.find(iconElement => iconElement.id === iconId);
+            var icons = bridge.icons;
+            var icon = icons.find(iconElement => iconElement.id === iconId);
 
-            const newIcons = arrangeElements(icons, icon, newOrder);
+            var newIcons = arrangeElements(icons, icon, newOrder);
 
             return {
                 data: state.data.map(bridgeElement => {
@@ -202,6 +203,33 @@ const BridgeReducer = (state = initialState, action) => {
                     return bridgeElement;
                 })
             };
+
+
+        case UPDATE_BG_COLOR_ON_ICON:
+            var {bridgeId, iconId, bgColor} = action.payload;
+
+            var bridges = state.data;
+
+            var bridge = bridges.find((bridge) => bridge.id === bridgeId);
+
+            var icons = bridge.icons.map(icon => {
+                if (icon.id === iconId) {
+                    icon.bg_color = bgColor;
+                }
+                return icon;
+            });
+
+            bridges = bridges.map(bridge => {
+                if (bridge.id === bridgeId) {
+                    bridge.icons = [...icons];
+                }
+                return bridge;
+            });
+
+            return {
+                data: [...bridges]
+            };
+
 
         default:
             return state;

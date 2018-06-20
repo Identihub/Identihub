@@ -1,22 +1,29 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import Spinner from '../../components/Spinner';
+import Spinner from '../../../components/Spinner';
+import AssetBgColor from "./AssetBgColor";
 
 class AdminOptions extends Component {
 
     static propTypes = {
         updateIcon: PropTypes.func.isRequired,
         deleteIcon: PropTypes.func.isRequired,
+        updateAssetBgColor: PropTypes.func.isRequired,
+        icon: PropTypes.object.isRequired,
     };
 
     emulateInputOnChange = (event) => {
         this.inputElement.click();
     };
 
+    onBgColorChange = (color) => {
+        this.props.updateAssetBgColor(color);
+    };
+
     render() {
 
-        const {updateIcon, deleteIcon} = this.props;
+        const {updateIcon, deleteIcon, icon} = this.props;
 
         return (
             <div className="admin-option">
@@ -33,6 +40,10 @@ class AdminOptions extends Component {
                                              height={14}/>
                                 </span>
                         </div>
+
+                        <AssetBgColor onBgColorChange={this.onBgColorChange}
+                                      selectedColor={icon.bg_color}/>
+
                         <div className="buttons">
 
                             <input id="update-icon"

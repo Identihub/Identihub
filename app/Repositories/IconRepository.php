@@ -40,7 +40,8 @@ class IconRepository extends Repository
                 break;
             case 'jpg':
 
-                $im->setBackgroundColor(new ImagickPixel('#FFFFFF'));
+                $bgColor = $icon->bg_color ?? '#FFFFFF';
+                $im->setBackgroundColor(new ImagickPixel($bgColor));
                 $im->readImageBlob($svgData);
                 $im->setImageFormat('jpg');
 
