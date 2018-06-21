@@ -65,7 +65,7 @@ class AssetBgColor extends Component {
                         <input type="text" className="input-picker"
                                onFocus={this.handleFocus} value={colorValue} readOnly={true}/>
 
-                        <div className="preview-color" style={previewStyle}></div>
+                        <div className="preview-color" onClick={this.handleFocus} style={previewStyle}></div>
 
                         {this.state.displayColorPicker ? <div className="popover">
                             <div className="cover" onClick={this.handleClose}/>

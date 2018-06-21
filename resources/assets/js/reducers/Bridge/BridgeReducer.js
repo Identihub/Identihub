@@ -216,18 +216,18 @@ const BridgeReducer = (state = initialState, action) => {
                 if (icon.id === iconId) {
                     icon.bg_color = bgColor;
                 }
-                return icon;
+                return {...icon};
             });
 
             bridges = bridges.map(bridge => {
                 if (bridge.id === bridgeId) {
-                    bridge.icons = [...icons];
+                    bridge.icons = icons;
                 }
-                return bridge;
+                return {...bridge};
             });
 
             return {
-                data: [...bridges]
+                data: bridges
             };
 
 

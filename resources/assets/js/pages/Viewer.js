@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getBridge} from '../reducers/Bridge/BridgeReducer';
+// import {getBridge} from '../reducers/Bridge/BridgeReducer';
 import {getSectionTypes, getSectionType} from '../reducers/SectionType/SectionTypeReducer';
 import ReactSVG from 'react-svg';
 import {sortWithSectionAndOrder} from '../helpers';
@@ -11,6 +11,7 @@ import IconSidebar from '../components/icon/IconSidebar';
 import ImageSidebar from '../components/image/ImageSidebar';
 import {paramsChecker, isPublic} from '../helpers';
 import {slide as Menu} from 'react-burger-menu'
+import {getBridge, getBridges} from '../selectors/BridgeSelector';
 
 class Viewer extends Component {
 
@@ -227,8 +228,6 @@ class Viewer extends Component {
         const order = this.findOrderOfElement(orderedElements, elementId);
         const marginLeft = "calc(" + (-100 * order) + "vw + " + 0 + "px)";
 
-        console.log("aa", marginLeft);
-
         let sortedItems = null;
         let sidebar = null;
         const container = screenWidth > 900 ? "container__desktop" : "container";
@@ -236,8 +235,11 @@ class Viewer extends Component {
         switch (objectType) {
             case 'icon':
                 sortedItems = orderedElements ? orderedElements.map(function (icon) {
+
+                    const iconStyle = icon.bg_color ? { backgroundColor: icon.bg_color } : {};
+
                     return (<div key={icon.id} className="item">
-                        <div className={container}>
+                        <div className={container} style={iconStyle}>
                             <img src={'/assets/' + icon.filename_png}/>
                         </div>
                     </div>)
@@ -333,20 +335,20 @@ class Viewer extends Component {
 
                 {
                     screenWidth > 900
-                    ? <div className="viewer-sidebar__desktop">{sidebar}</div>
-                    : <Menu
-                        left
-                        noOverlay
-                        width={320}
-                        className={"viewer-sidebar"}
-                        pageWrapId={"page-wrap"}
-                        outerContainerId={"outter-container"}
-                        customBurgerIcon={<ReactSVG path="/images/hamburger.svg" className="open-menu"/>}
-                        customCrossIcon={<span className="close-menu"><i className="fas fa-bars"/></span>}>
+                        ? <div className="viewer-sidebar__desktop">{sidebar}</div>
+                        : <Menu
+                            left
+                            noOverlay
+                            width={320}
+                            className={"viewer-sidebar"}
+                            pageWrapId={"page-wrap"}
+                            outerContainerId={"outter-container"}
+                            customBurgerIcon={<ReactSVG path="/images/hamburger.svg" className="open-menu"/>}
+                            customCrossIcon={<span className="close-menu"><i className="fas fa-bars"/></span>}>
 
-                        {sidebar}
+                            {sidebar}
 
-                    </Menu>
+                        </Menu>
 
                 }
             </div>
@@ -355,15 +357,17 @@ class Viewer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+
     ownProps = paramsChecker(ownProps);
     const bridgeId = ownProps.match.params.id;
+
     return {
-        bridge: getBridge(state, parseInt(bridgeId)),
+        bridge: getBridge(parseInt(bridgeId))(state), // selector
         sectionTypes: getSectionTypes(state),
         iconsSection: getSectionType(state, "ICONS"),
         colorsSection: getSectionType(state, "COLORS"),
         fontsSection: getSectionType(state, "FONTS"),
-        imagesSection: getSectionType(state, "IMAGES")
+        imagesSection: getSectionType(state, "IMAGES"),
     }
 };
 
