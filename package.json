@@ -22,6 +22,7 @@
     "react-router-dom": "^4.1.1",
     "react-transition-group": "^1.1.2",
     "redux": "^3.6.0",
+    "redux-devtools-extension": "^2.13.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
   },
@@ -33,6 +34,7 @@
     "pusher-js": "^4.1.0",
     "react": "^15.5.4",
     "react-burger-menu": "^2.2.3",
+    "react-color": "^2.14.1",
     "react-copy-to-clipboard": "^5.0.0",
     "react-debounce-input": "^3.2.0",
     "react-dnd": "^2.4.0",
@@ -40,6 +42,7 @@
     "react-notification-system": "^0.2.17",
     "react-sortable-hoc": "^0.8.3",
     "react-svg": "^2.2.14",
+    "reselect": "^3.0.1",
     "snapsvg-cjs": "0.0.6"
   }
 }
