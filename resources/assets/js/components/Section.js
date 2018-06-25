@@ -165,6 +165,8 @@ class Section extends Component {
 
         const flexBoxClassName = isActive ? 'flex active' : 'flex';
 
+        console.log("CHILDREN:", this.props.children);
+
         return (
             <section className="content">
                 { canBeDeletedSection }
@@ -178,7 +180,7 @@ class Section extends Component {
                     transitionName="example"
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={300}>
-                    { this.props.children.length ? this.props.children : <EmptySectionState emptyStateText={emptyStateText}/> }
+                    { this.props.children ? this.props.children : <EmptySectionState emptyStateText={emptyStateText}/> }
                 </CSSTransitionGroup>
                 <div className="clearfix"> </div>
             </section>

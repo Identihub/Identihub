@@ -8,20 +8,40 @@ import IconCard from './IconCard';
 import {dropTarget} from '../../helpers';
 import {updateOrderOnIcon, updateSectionOnIcon} from '../../reducers/Extra/ExtraActions';
 import {reorderElement, changeSection} from '../../reducers/Bridge/BridgeApiCalls';
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+
+const IconsList = SortableContainer(({icons, section, bridge, removeCard, moveCard}) => {
+    return (<div className="element-list">
+        {
+            icons.filter(icon => (icon.section_id === section.id)).sort((a, b) => (a.order - b.order)).map(icon => {
+                return (
+                    <IconCard
+                        key={icon.id}
+                        index={icon.order}
+                        listId={icon.section_id}
+                        card={icon}
+                        bridge={bridge}
+                        removeCard={removeCard}
+                        moveCard={moveCard}/>
+                )
+            })
+        }
+    </div>)
+});
 
 class IconSectionRow extends Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            icons: []
-        };
-
         this.pushCard = this.pushCard.bind(this);
         this.removeCard = this.removeCard.bind(this);
         this.moveCard = this.moveCard.bind(this);
     }
+
+    state = {
+        icons: []
+    };
 
     componentWillReceiveProps(nextProps) {
         this.updateLocalState(nextProps);
@@ -64,6 +84,12 @@ class IconSectionRow extends Component {
         reorderElement('icon', card.id, hoverIndex);
     }
 
+    onSortEnd = ({oldIndex, newIndex}) => {
+        this.setState({
+            icons: arrayMove(this.state.icons, oldIndex, newIndex),
+        });
+    };
+
     render() {
         const {
             bridge,
@@ -72,35 +98,28 @@ class IconSectionRow extends Component {
             icons,
             canDrop,
             isOver,
-            connectDropTarget
         } = this.props;
         const isActive = canDrop && isOver;
 
-        return connectDropTarget(
-            <div>
-                <Section
-                    bridge={bridge}
-                    section={section}
-                    isActive={isActive}
-                    emptyStateText={emptyStateText}>
-                    {
-                        icons.filter(icon => (icon.section_id === section.id)).sort((a, b) => (a.order - b.order)).map(icon => {
-                            return (
-                                <IconCard
-                                    key={icon.id}
-                                    index={icon.order}
-                                    listId={icon.section_id}
-                                    card={icon}
-                                    bridge={bridge}
-                                    removeCard={this.removeCard}
-                                    moveCard={this.moveCard}
-                                />
-                            )
-                        })
-                    }
-                </Section>
-            </div>
-        );
+        console.log(icons);
+
+        return (<div>
+            <Section
+                bridge={bridge}
+                section={section}
+                isActive={isActive}
+                emptyStateText={emptyStateText}>
+
+                <IconsList icons={icons}
+                           section={section}
+                           bridge={bridge}
+                           removeCard={this.removeCard}
+                           moveCard={this.moveCard}
+                           axis="x"
+                           onSortEnd={this.onSortEnd}/>
+
+            </Section>
+        </div>);
     }
 }
 
@@ -131,6 +150,6 @@ const dispatchToProps = (dispatch) => {
     }, dispatch)
 };
 
-const iconSectionRow = dropTarget("ICON")(IconSectionRow);
+// const iconSectionRow = dropTarget("ICON")(IconSectionRow);
 
-export default connect(state => state, dispatchToProps)(iconSectionRow);
+export default connect(state => state, dispatchToProps)(IconSectionRow);

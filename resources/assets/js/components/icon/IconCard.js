@@ -6,6 +6,7 @@ import {dropTargetFlow, isPublic} from '../../helpers';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import {addIconConverted, deleteIcon, updateIconFile} from "../../reducers/Bridge/BridgeApiCalls";
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 class IconCard extends Component {
     constructor(props) {
@@ -37,17 +38,14 @@ class IconCard extends Component {
         }
 
         if (!isPub) {
-            return connectDragSource(connectDropTarget(
-                <div className="item card" style={cardStyle}>
-                    <Link to={'/project/' + bridge.id + '/view/icon/element/' + card.id}>
-                        <img src={'/assets/' + card.filename_png}/>
-                        {/*<i className="fas fa-expand-arrows-alt move-handler"/>*/}
-                    </Link>
-                    <span onClick={deleteIcon}>
+            return (<div className="item card icon-card-dragged" style={cardStyle}>
+                <Link to={'/project/' + bridge.id + '/view/icon/element/' + card.id}>
+                    <img src={'/assets/' + card.filename_png}/>
+                </Link>
+                <span onClick={deleteIcon} className="hide-on-drag">
                         <i className="fas fa-trash-alt delete-handler"/>
                     </span>
-                </div>
-            ));
+            </div>);
         } else {
             return (
                 <div className="item card" style={cardStyle}>
@@ -69,4 +67,4 @@ const dispatchToProps = (dispatch) => {
     }, dispatch)
 };
 
-export default dropTargetFlow("ICON")(connect(state => state, dispatchToProps)(IconCard));
+export default SortableElement(connect(state => state, dispatchToProps)(IconCard));

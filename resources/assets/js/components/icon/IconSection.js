@@ -9,7 +9,7 @@ import {filterSectionsWithSectionType, sortByOrder} from '../../helpers';
 import {createIcon} from '../../reducers/Bridge/BridgeApiCalls';
 import NotificationSystem from 'react-notification-system';
 import _ from 'lodash';
-import renderSection from '../../HOC/renderSectionHOC'
+import renderSection from '../../HOC/renderSectionHOC';
 
 
 class IconSection extends Component {
@@ -21,6 +21,7 @@ class IconSection extends Component {
         this.addIcon = this.addIcon.bind(this);
         this.emulateInputOnChange = this.emulateInputOnChange.bind(this);
     }
+
 
     addIcon(event) {
         console.log(event);

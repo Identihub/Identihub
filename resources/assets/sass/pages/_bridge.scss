@@ -10,10 +10,10 @@
       & .fa-copy {
         font-size: 20px;
         margin-right: 13px;
-        @include  transition(color 0.2s easer-in-out);
+        @include transition(color 0.2s easer-in-out);
 
         &:active {
-            color: $oc-gray-6;
+          color: $oc-gray-6;
         }
       }
     }
@@ -290,27 +290,65 @@
         border: 1px solid rgba(104, 105, 97, 0.2);
       }
 
-      .card {
-        transition: .15s ease-in-out;
+      .element-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: left;
 
-        &:hover {
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-          transform: scale(1.02);
+        .card {
+          transition: .15s ease-in-out;
+
+          &:hover {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transform: scale(1.02);
+          }
+        }
+
+        .item {
+          margin: 10px;
+          width: 150px;
+          height: 150px;
+          border-radius: 3px;
+          background-color: $brand-disable-light;
+
+          &.font {
+            width: 100%;
+          }
+
+          .hide-on-drag {
+            display: inline;
+          }
         }
       }
 
-      .item {
-        margin: 10px;
-        width: 150px;
-        height: 150px;
-        border-radius: 3px;
-        background-color: $brand-disable-light;
-
-        &.font {
-          width: 100%;
-        }
-      }
     }
+  }
+}
+
+.icon-card-dragged {
+  margin: 10px;
+  width: 150px;
+  height: 150px;
+  border-radius: 3px;
+  background-color: $brand-disable-light;
+
+  &.font {
+    width: 100%;
+  }
+
+  img {
+    max-width: 85%;
+    max-height: 85%;
+    width: 85%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hide-on-drag {
+    display: none;
   }
 }
 
