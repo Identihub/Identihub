@@ -18,13 +18,19 @@ class IconSection extends Component {
         super(params);
         this.emptyStateText = "No Icons found here, start by adding a new icon.";
         this.inputElement = null;
-        this.addIcon = this.addIcon.bind(this);
-        this.emulateInputOnChange = this.emulateInputOnChange.bind(this);
     }
 
+    static propTypes = {
+        iconsSection: PropTypes.shape({
+            id: PropTypes.number
+        }).isRequired,
+        bridge: PropTypes.shape({
+            id: PropTypes.integer
+        }).isRequired
+    };
 
-    addIcon(event) {
-        console.log(event);
+
+    addIcon = (event) => {
         let files = [];
         Object.entries(event.target.files).map(
             ([key, value]) => (
@@ -45,11 +51,11 @@ class IconSection extends Component {
             // console.log(Math.round( (progressEvent.loaded * 100) / progressEvent.total ));
         })
         //this.addIcon(this.props.bridge.id, event.target.files[0]);
-    }
+    };
 
-    emulateInputOnChange() {
+    emulateInputOnChange = () => {
         this.inputElement.click();
-    }
+    };
 
     render() {
 
@@ -105,15 +111,6 @@ const mapStateToProps = (state) => {
     return {
         iconsSection: getSectionType(state, "ICONS")
     }
-};
-
-IconSection.propTypes = {
-    iconsSection: PropTypes.shape({
-        id: PropTypes.number
-    }).isRequired,
-    bridge: PropTypes.shape({
-        id: PropTypes.integer
-    }).isRequired
 };
 
 const dispatchToProps = (dispatch) => {

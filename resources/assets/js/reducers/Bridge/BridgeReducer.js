@@ -61,22 +61,22 @@ const BridgeReducer = (state = initialState, action) => {
             };
 
         case UPDATE_ORDER_ON_ICON:
-            var {bridgeId, iconId, newOrder} = action.payload;
+            var {bridge, icons} = action.payload;
 
-            var bridge = state.data.find((bridge) => bridge.id == bridgeId);
-            var icons = bridge.icons;
-            var icon = icons.find(iconElement => iconElement.id === iconId);
+            icons = icons.map((icon, index) => {
+                icon.order = index;
+                return {...icon};
+            });
 
-            var newIcons = arrangeElements(icons, icon, newOrder);
+            var bridges = state.data.map(obj => {
+                if (obj.id === bridge.id) {
+                    obj.icons = [...icons];
+                }
+                return obj;
+            });
 
             return {
-                data: state.data.map(bridgeElement => {
-                    if (bridgeElement.id === bridge.id) {
-                        bridge.icons = newIcons;
-                        return bridge;
-                    }
-                    return bridgeElement;
-                })
+                data: [...bridges]
             };
 
         case UPDATE_ORDER_ON_IMAGE:

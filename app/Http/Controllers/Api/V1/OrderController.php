@@ -17,9 +17,51 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
 
+    public function updateOrderOnSameSection($type, Bridge $bridge, Request $request)
+    {
+        try {
+
+            switch ($type) {
+                case 'image':
+                    $object = Image::findOrFail(1);
+                    $objects = Image::where('section_id', $object->section_id)->get();
+                    break;
+                case 'icon':
+
+                    foreach ($request->elements as $index => $element) {
+                        $object = Icon::findOrFail($element['id']);
+                        $object->order = $index;
+                        $object->save();
+                    }
+                    break;
+                case 'color':
+                    $object = Color::findOrFail(1);
+                    $objects = Color::where('section_id', $object->section_id)->get();
+                    break;
+                default:
+                    throw new \Exception("The specified type is not supported.");
+            }
+
+            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($object->bridge_id);
+            return response()->json([
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
+            ]);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Entry not found',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
     public function changedOrderOnSameSection(Request $request, $type, $objectId, $newOrder)
     {
-        try{
+        try {
 
             switch ($type) {
                 case 'image':
@@ -40,7 +82,7 @@ class OrderController extends Controller
 
             $user = Auth::user();
             $bridge = Bridge::findOrFail($object->bridge_id);
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             $oldOrder = $object->order;
@@ -50,9 +92,9 @@ class OrderController extends Controller
 
             foreach ($objects as $obj) {
                 $order = $obj->order;
-                if($oldOrder > $newOrder){
+                if ($oldOrder > $newOrder) {
                     $this->inRange($order, $start, $end) ? $obj->order = $order + 1 : null;
-                }else{
+                } else {
                     $this->inRange($order, $start, $end) ? $obj->order = $order - 1 : null;
                 }
                 $obj->save();
@@ -63,17 +105,17 @@ class OrderController extends Controller
 
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($object->bridge_id);
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
 
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
     }
@@ -85,7 +127,7 @@ class OrderController extends Controller
 
     public function changedSection(Request $request, $type, $objectId, $newSection)
     {
-        try{
+        try {
             switch ($type) {
                 case 'image':
                     $object = Image::findOrFail($objectId);
@@ -120,26 +162,27 @@ class OrderController extends Controller
 
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($object->bridge_id);
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
 
 
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
     }
 
-    private function checkIfBridgeIsFromTheSameUser($bridgeId){
+    private function checkIfBridgeIsFromTheSameUser($bridgeId)
+    {
         $user = Auth::user();
         $bridge = Bridge::findOrFail($bridgeId);
-        if($user->id !== $bridge->user_id)
+        if ($user->id !== $bridge->user_id)
             throw new ModelNotFoundException();
     }
 

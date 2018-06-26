@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::post('/bridges/{bridgeId}/images/{imageId}/converted', 'SourceFileController@addImageConverted');
     Route::post('/bridges/{bridgeId}/images/{imageId}/filename', 'SourceFileController@updateImageFile');
 
+    Route::post('/order/{type}/bridge/{bridge}', 'OrderController@updateOrderOnSameSection');
     Route::post('/order/{type}/{objectId}/{newOrder}', 'OrderController@changedOrderOnSameSection');
     Route::post('/changeSection/{type}/{objectid}/{newSection}', 'OrderController@changedSection');
 

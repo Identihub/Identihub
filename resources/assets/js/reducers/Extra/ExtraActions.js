@@ -87,13 +87,12 @@ export function updateOrderOnFont(bridgeId, fontId, newOrder) {
     }
 }
 
-export function updateOrderOnIcon(bridgeId, iconId, newOrder) {
+export function updateOrderOnIcon(bridge, icons) {
     return {
         type: UPDATE_ORDER_ON_ICON,
         payload: {
-            bridgeId,
-            iconId,
-            newOrder
+            bridge,
+            icons,
         }
     }
 }

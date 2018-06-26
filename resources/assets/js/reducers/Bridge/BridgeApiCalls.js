@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 import {addBridges, addBridge} from './BridgeActions';
-import {changeHasBridges, updateBgColorOnIcon} from '../Extra/ExtraActions';
+import {changeHasBridges, updateBgColorOnIcon, updateOrderOnIcon} from '../Extra/ExtraActions';
 import {addSectionTypes} from '../SectionType/SectionTypeActions';
 import {addFonts} from '../Extra/ExtraActions';
 
@@ -371,6 +371,18 @@ export function deleteFont(bridgeId, fontId) {
             .catch((error) => {
                 console.log(error);
             })
+    }
+}
+
+export function reorder(type, bridgeId, elements) {
+    return (dispatch) => {
+        return axios.post('/api/v1/order/' + type + '/bridge/' + bridgeId, {
+            elements: elements
+        }).then((response) => {
+            console.log("REORDER RESPONSE: ", response);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 }
 
