@@ -10,12 +10,13 @@ import {
     deleteIcon,
     addIconConverted,
     updateIconFile,
-    downloadIconConverted
+    downloadIconConverted,
+    updateAssetBgColor
 } from '../../reducers/Bridge/BridgeApiCalls';
 import {isPublic} from '../../helpers';
 import PngDownloadArea from "./PngDownloadArea";
 import JpgDownloadArea from "./JpgDownloadArea";
-import AdminOptions from "./AdminOptions";
+import AdminOptions from "./admin/AdminOptions";
 
 class IconSidebar extends Component {
 
@@ -46,6 +47,11 @@ class IconSidebar extends Component {
         const {updateIconFile, bridge, icon} = this.props;
         const file = event.target.files[0];
         updateIconFile(bridge.id, icon.id, file);
+    };
+
+    updateAssetBgColor = (color) => {
+        const {updateAssetBgColor, bridge, icon} = this.props;
+        updateAssetBgColor(bridge.id, icon.id, color);
     };
 
     downloadCustomSize = (width, height, format) => {
@@ -107,7 +113,9 @@ class IconSidebar extends Component {
         let adminOptions = null;
         if (!isPublic()) {
             adminOptions = (
-                <AdminOptions updateIcon={this.updateIcon} deleteIcon={this.deleteIcon}/>
+                <AdminOptions updateIcon={this.updateIcon} deleteIcon={this.deleteIcon}
+                              updateAssetBgColor={this.updateAssetBgColor}
+                              icon={icon}/>
             );
         }
 
@@ -150,7 +158,8 @@ const dispatchToProps = (dispatch) => {
         deleteIcon,
         addIconConverted,
         updateIconFile,
-        downloadIconConverted
+        downloadIconConverted,
+        updateAssetBgColor
     }, dispatch)
 };
 

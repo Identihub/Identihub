@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -27,4 +28,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Check if user is the owner of the specified entity.
+     *
+     * @param Model $entity
+     * @return bool
+     */
+    public function isOwnerOf(Model $entity)
+    {
+        return $entity->user_id === $this->id;
+    }
 }

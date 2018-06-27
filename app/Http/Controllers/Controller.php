@@ -23,4 +23,21 @@ class Controller extends BaseController
         $this->redirect = app('redirect');
         $this->url = app('url');
     }
+
+    /**
+     * Simple predefined json response.
+     *
+     * @param        $success
+     * @param string $message
+     * @param null   $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function simple_json($success, $message = null, $data = null)
+    {
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'data'    => $data,
+        ]);
+    }
 }

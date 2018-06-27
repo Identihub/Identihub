@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 import {addBridges, addBridge} from './BridgeActions';
-import {changeHasBridges} from '../Extra/ExtraActions';
+import {changeHasBridges, updateBgColorOnIcon} from '../Extra/ExtraActions';
 import {addSectionTypes} from '../SectionType/SectionTypeActions';
 import {addFonts} from '../Extra/ExtraActions';
 
@@ -399,5 +399,19 @@ export function changeSection(type, elementId, newSection) {
             .catch((error) => {
                 console.log(error);
             })
+    }
+}
+
+export function updateAssetBgColor(bridgeId, iconId, color) {
+    return (dispatch) => {
+        return axios.put('/api/v1/bridges/' + bridgeId + '/icons/' + iconId + '/update/bg', {
+            color: color,
+        }).then(function (response) {
+
+            dispatch(updateBgColorOnIcon(bridgeId, iconId, color));
+
+        }).catch(function (error) {
+            console.log('Something went wrong', error);
+        });
     }
 }

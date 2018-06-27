@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
 
     Route::post('/order/{type}/{objectId}/{newOrder}', 'OrderController@changedOrderOnSameSection');
     Route::post('/changeSection/{type}/{objectid}/{newSection}', 'OrderController@changedSection');
+
+    Route::put('/bridges/{bridge}/icons/{icon}/update/bg', 'IconsController@updateBgColor');
 });
 
 Route::group(['middleware' => 'throttle:100,60', 'namespace' => 'Api\V1', 'prefix' => 'v1'], function () {

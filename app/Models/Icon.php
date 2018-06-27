@@ -12,18 +12,23 @@ class Icon extends Model
     protected $table = 'icons';
 
     protected $fillable = [
-        'filename', 'filename_png', 'bridge_id', 'width_ratio', 'section_id', 'order'
+        'filename', 'filename_png', 'bridge_id', 'width_ratio', 'section_id', 'order', 'bg_color'
     ];
 
     public function getFilenamePngAttribute($value)
     {
-        return (strlen($value) > 1) ? $value :  $this->filename;
+        return (strlen($value) > 1) ? $value : $this->filename;
 
     }
 
     public function converted()
     {
         return $this->hasMany(IconConverted::class, 'icon_id', 'id')->where('is_visitor_custom', 0);
+    }
+
+    public function bridge()
+    {
+        return $this->belongsTo(Bridge::class, 'bridge_id');
     }
 
     public function save(array $options = [])

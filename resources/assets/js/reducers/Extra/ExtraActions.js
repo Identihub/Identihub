@@ -9,59 +9,60 @@ export const UPDATE_ORDER_ON_COLOR = 'UPDATE_ORDER_ON_COLOR';
 export const UPDATE_ORDER_ON_FONT = 'UPDATE_ORDER_ON_FONT';
 export const UPDATE_ORDER_ON_ICON = 'UPDATE_ORDER_ON_ICON';
 export const UPDATE_ORDER_ON_IMAGE = 'UPDATE_ORDER_ON_IMAGE';
+export const UPDATE_BG_COLOR_ON_ICON = 'UPDATE_BG_COLOR_ON_ICON';
 
 // Export Actions
 export function changeHasBridges(hasBridges) {
-  return {
-    type: CHANGE_HAS_BRIDGES,
-    hasBridges,
-  };
+    return {
+        type: CHANGE_HAS_BRIDGES,
+        hasBridges,
+    };
 }
 
 export function addFonts(fonts) {
-  return {
-    type: ADD_FONTS,
-    fonts
-  }
+    return {
+        type: ADD_FONTS,
+        fonts
+    }
 }
 
 export function deleteFonts() {
-  return {
-    type: DELETE_FONTS
-  }
+    return {
+        type: DELETE_FONTS
+    }
 }
 
 export function updateSectionOnColor(bridgeId, colorId, newSectionId) {
-  return {
-    type: UPDATE_SECTION_ON_COLOR,
-    payload: {
-      bridgeId,
-      colorId,
-      newSectionId
+    return {
+        type: UPDATE_SECTION_ON_COLOR,
+        payload: {
+            bridgeId,
+            colorId,
+            newSectionId
+        }
     }
-  }
 }
 
 export function updateSectionOnIcon(bridgeId, iconId, newSectionId) {
-  return {
-    type: UPDATE_SECTION_ON_ICON,
-    payload: {
-      bridgeId,
-      iconId,
-      newSectionId
+    return {
+        type: UPDATE_SECTION_ON_ICON,
+        payload: {
+            bridgeId,
+            iconId,
+            newSectionId
+        }
     }
-  }
 }
 
 export function updateSectionOnImage(bridgeId, imageId, newSectionId) {
-  return {
-    type: UPDATE_SECTION_ON_IMAGE,
-    payload: {
-      bridgeId,
-      imageId,
-      newSectionId
+    return {
+        type: UPDATE_SECTION_ON_IMAGE,
+        payload: {
+            bridgeId,
+            imageId,
+            newSectionId
+        }
     }
-  }
 }
 
 export function updateOrderOnColor(bridgeId, colorId, newOrder) {
@@ -76,36 +77,47 @@ export function updateOrderOnColor(bridgeId, colorId, newOrder) {
 }
 
 export function updateOrderOnFont(bridgeId, fontId, newOrder) {
-  return {
-    type: UPDATE_ORDER_ON_FONT,
-    payload: {
-      bridgeId,
-      fontId,
-      newOrder
+    return {
+        type: UPDATE_ORDER_ON_FONT,
+        payload: {
+            bridgeId,
+            fontId,
+            newOrder
+        }
     }
-  }
 }
 
 export function updateOrderOnIcon(bridgeId, iconId, newOrder) {
-  return {
-    type: UPDATE_ORDER_ON_ICON,
-    payload: {
-      bridgeId,
-      iconId,
-      newOrder
+    return {
+        type: UPDATE_ORDER_ON_ICON,
+        payload: {
+            bridgeId,
+            iconId,
+            newOrder
+        }
     }
-  }
 }
 
 export function updateOrderOnImage(bridgeId, imageId, newOrder) {
-  return {
-    type: UPDATE_ORDER_ON_IMAGE,
-    payload: {
-      bridgeId,
-      imageId,
-      newOrder
+    return {
+        type: UPDATE_ORDER_ON_IMAGE,
+        payload: {
+            bridgeId,
+            imageId,
+            newOrder
+        }
     }
-  }
+}
+
+export function updateBgColorOnIcon(bridgeId, iconId, bgColor) {
+    return {
+        type: UPDATE_BG_COLOR_ON_ICON,
+        payload: {
+            bridgeId,
+            iconId,
+            bgColor
+        }
+    }
 }
 
 
