@@ -12,6 +12,7 @@ import ImageSidebar from '../components/image/ImageSidebar';
 import {paramsChecker, isPublic} from '../helpers';
 import {slide as Menu} from 'react-burger-menu'
 import {getBridge, getBridges} from '../selectors/BridgeSelector';
+import {withRouter} from 'react-router-dom';
 
 class Viewer extends Component {
 
@@ -85,7 +86,6 @@ class Viewer extends Component {
         }
     }
 
-
     componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
@@ -95,11 +95,9 @@ class Viewer extends Component {
         window.removeEventListener('resize', this.updateWindowDimensions);
     }
 
-
     updateWindowDimensions() {
         this.setState({screenWidth: window.innerWidth});
     }
-
 
     componentWillReceiveProps(nextProps) {
 
@@ -208,7 +206,8 @@ class Viewer extends Component {
     }
 
     closePage() {
-        this.props.history.push('/#/')
+        const {bridge} = this.props;
+        this.props.history.push('/project/' + bridge.id);
     }
 
     render() {
@@ -236,10 +235,10 @@ class Viewer extends Component {
             case 'icon':
                 sortedItems = orderedElements ? orderedElements.map(function (icon) {
 
-                    const iconStyle = icon.bg_color ? { backgroundColor: icon.bg_color } : {};
+                    const iconStyle = icon.bg_color ? {backgroundColor: icon.bg_color} : {};
 
-                    return (<div key={icon.id} className="item">
-                        <div className={container} style={iconStyle}>
+                    return (<div key={icon.id} className="item" style={iconStyle}>
+                        <div className={container}>
                             <img src={'/assets/' + icon.filename_png}/>
                         </div>
                     </div>)
@@ -388,4 +387,4 @@ Viewer.propTypes = {
     })
 };
 
-export default connect(mapStateToProps)(Viewer);
+export default withRouter(connect(mapStateToProps)(Viewer));
