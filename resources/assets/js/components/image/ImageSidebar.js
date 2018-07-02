@@ -11,81 +11,107 @@ import {
     downloadImageConverted
 } from '../../reducers/Bridge/BridgeApiCalls';
 import {paramsChecker, isPublic} from '../../helpers';
-import Spinner from '../../components/Spinner';
 import CustomSizeDownload from "../CustomSizeDownload";
+import AdminOptions from "./admin/AdminOptions";
+import PngDownloadArea from "./PngDownloadArea";
+import JpgDownloadArea from "./JpgDownloadArea";
 
 
 class ImageSidebar extends Component {
-    constructor(props) {
-        super(props);
 
-        this.notificationSystem = null;
-        this.inputElement = null;
-
-        this.state = {
-            margin: 0
-        };
-
-        this.openSettings = this.openSettings.bind(this);
-        this.openPrimary = this.openPrimary.bind(this);
-        this.addNotification = this.addNotification.bind(this);
-        this.deleteImage = this.deleteImage.bind(this);
-        this.addNewConverted = this.addNewConverted.bind(this);
-        this.emulateInputOnChange = this.emulateInputOnChange.bind(this);
-        this.updateImage = this.updateImage.bind(this);
-        this.downloadCustomSize = this.downloadCustomSize.bind(this);
-    }
+    state = {
+        margin: 0,
+        image_format: 'png'
+    };
 
     componentDidMount() {
         this.notificationSystem = this.refs.notificationSystem;
     }
 
-    addNotification() {
+    addNotification = () => {
         this.notificationSystem.addNotification({
             message: 'Link copied to clipboard ',
             level: 'success'
         });
-    }
+    };
 
-    openSettings() {
+    openSettings = () => {
         this.setState((prevState, _) => {
             return {margin: 300}
         })
-    }
+    };
 
-    openPrimary() {
+    openPrimary = () => {
         this.setState((prevState, _) => {
             return {margin: 0}
         })
-    }
+    };
 
-    deleteImage() {
+    deleteImage = () => {
         const {deleteImage, bridge, image, history} = this.props;
         if (deleteImage) {
             history.replace('/project/' + bridge.id);
             deleteImage(bridge.id, image.id);
         }
-    }
+    };
 
-    emulateInputOnChange(event) {
+    emulateInputOnChange = (event) => {
         this.inputElement.click();
-    }
+    };
 
-    updateImage(e) {
+    updateImage = (e) => {
         const {updateImageFile, bridge, image} = this.props;
         const file = e.target.files[0];
         updateImageFile(bridge.id, image.id, file);
-    }
+    };
 
-    addNewConverted(width, height) {
+    addNewConverted = (width, height) => {
         const {addImageConverted, bridge, image} = this.props;
         addImageConverted(bridge.id, image.id, parseInt(width), parseInt(height));
-    }
+    };
 
-    downloadCustomSize(width, height) {
+    downloadCustomSize = (width, height) => {
         const {downloadImageConverted, bridge, image} = this.props;
         downloadImageConverted(bridge.id, image.id, parseInt(width), parseInt(height));
-    }
+    };
+
+    getDownloadArea = () => {
+
+        const {image} = this.props;
+
+        const lastConverted = image.converted[image.converted.length - 1];
+
+        switch (this.state.icon_format) {
+            case 'png':
+                return (<PngDownloadArea image={image}
+                                         downloadCustomSize={this.downloadCustomSize}
+                                         defaultWidth={lastConverted.width}/>);
+            case 'jpg':
+                return (<JpgDownloadArea image={image}
+                                         downloadCustomSize={this.downloadCustomSize}
+                                         defaultWidth={lastConverted.width}/>);
+        }
+    };
+
+    changeDownloadFormat = (format) => {
+        this.setState({
+            ...this.state,
+            image_format: format
+        });
+    };
+
+    getFormatButtons = () => {
+        return ['png', 'jpg'].map((format, index) => {
+
+            const isActive = (format === this.state.image_format) ? 'active' : '';
+
+            return <a className={`btn-outline-white format-btn ${isActive}`}
+                      key={index}
+                      onClick={() => {
+                          this.changeDownloadFormat(format)
+                      }}>{format.toUpperCase()}</a>
+        });
+    };
 
     render() {
         const openSettings = this.openSettings;
@@ -95,8 +121,6 @@ class ImageSidebar extends Component {
         const addNewConverted = this.addNewConverted;
         const emulateInputOnChange = this.emulateInputOnChange;
         const downloadCustomSize = this.downloadCustomSize;
-
-        const isPub = isPublic();
 
         const {margin} = this.state;
         const marginStyle = "-" + margin + "px";
@@ -108,49 +132,14 @@ class ImageSidebar extends Component {
         if (!image)
             return <div></div>;
 
-        let adminOptions = null;
+        const formatButtons = this.getFormatButtons();
+
         let customSizeDownload = null;
 
-        if (!isPub) {
-            adminOptions = (
-                <div className="admin-option">
-                    <div className="sidebar-padding">
-                        <div className="settings">
-                            <div className="title">
-                                <span>Admin</span>
-                            </div>
-                            <div className="featured">
-                                <span>Featured Image</span>
-                                {/* THE CHECKBOX FOR SETTING FEATURED */}
-                                <span id="checkbox">
-                                    <Spinner
-                                        width={14}
-                                        height={14}
-                                    />
-                                </span>
-                            </div>
-                            <div className="buttons">
-
-                                <input id="update-icon"
-                                       ref={input => this.inputElement = input}
-                                       onChange={this.updateIcon}
-                                       type="file"
-                                       accept="image/*"
-                                       name="icon"/>
-                                <a className="button-outline-white settings-button"
-                                   onClick={emulateInputOnChange}>UPDATE</a>
-
-                                <a className="button-outline-delete settings-button button-left"
-                                   onClick={deleteImage}>DELETE</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="sidebar-hr">
-                        <hr/>
-                    </div>
-
-                </div>
-            );
+        let adminOptions = null;
+        if (!isPublic()) {
+            adminOptions = (<AdminOptions updateImage={this.updateImage()} deleteImage={this.deleteImage()}
+                                          image={image}/>);
 
         }
 
@@ -166,7 +155,9 @@ class ImageSidebar extends Component {
                         <span>Use Image</span>
                     </div>
                 </div>
+
                 {adminOptions}
+
                 <div className="sidebar-client">
                     <div className="sidebar-section">
                         <div className="title">

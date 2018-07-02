@@ -109,7 +109,6 @@ class IconSidebar extends Component {
         const formatButtons = this.getFormatButtons();
         const downloadAreaComponent = this.getDownloadArea();
 
-
         let adminOptions = null;
         if (!isPublic()) {
             adminOptions = (
