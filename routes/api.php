@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
 });
 
 Route::group(['middleware' => 'throttle:100,60', 'namespace' => 'Api\V1', 'prefix' => 'v1'], function () {
-    Route::post('/bridges/{bridge}/icons/{icon}/converted/custom', 'SourceFileController@customSizeIconConverted');
-    Route::post('/bridges/{bridge}/images/{image}/converted/custom', 'SourceFileController@customSizeImageConverted');
+    Route::post('/bridges/{bridge}/icons/{icon}/converted/custom', 'IconsController@customSizeIconConverted');
+    Route::post('/bridges/{bridge}/images/{image}/converted/custom', 'ImagesController@customSizeImageConverted');
 });
 

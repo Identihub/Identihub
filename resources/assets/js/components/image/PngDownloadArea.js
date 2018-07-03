@@ -17,7 +17,7 @@ class PngDownloadArea extends Component {
         const {image, defaultWidth, downloadCustomSize} = this.props;
 
         return (
-            <div className="jpg">
+            <div className="png-area">
 
                 <CustomSizeDownload
                     defaultWidth={defaultWidth}

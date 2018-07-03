@@ -91,8 +91,9 @@ class IconSidebar extends Component {
         return ['svg', 'png', 'jpg'].map((format, index) => {
 
             const isActive = (format === this.state.icon_format) ? 'active' : '';
+            const borderX = (format === 'png') ? 'border-x-0' : '';
 
-            return <a className={`btn-outline-white format-btn ${isActive}`}
+            return <a className={`btn-outline-white format-btn ${isActive} ${borderX}`}
                       key={index}
                       onClick={() => {
                           this.changeDownloadFormat(format)

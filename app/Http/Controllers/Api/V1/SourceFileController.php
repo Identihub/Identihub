@@ -307,35 +307,6 @@ class SourceFileController extends Controller
         }
     }
 
-    /**
-     * Serve the generated icon publicly.
-     *
-     * @param CreateConvertedIcon $request
-     * @param Bridge              $bridge
-     * @param Icon                $icon
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
-     */
-    public function customSizeIconConverted(CreateConvertedIcon $request, Bridge $bridge, Icon $icon)
-    {
-        try {
-            $width = (int) $request->get('width');
-            $height = (int) ($width / $icon->width_ratio);
-            $format = $request->get('format');
-
-            $path = $this->iconRepo->generateIconConverted($bridge, $icon, $width, $height, $format);
-
-            return response()->json([
-                'download_url' => url($path),
-                'filename'     => basename($path),
-            ]);
-
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Entry not found']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
-        }
-    }
-
     public function addImageConverted(ConvertedStoreRequest $request, $bridgeId, $imageId)
     {
         try {
@@ -380,34 +351,6 @@ class SourceFileController extends Controller
                 'bridge'        => $bridge,
                 'section_types' => SectionType::all(),
             ]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Entry not found']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: '.$e->getMessage()]);
-        }
-    }
-
-    /**
-     * Serve the generated image publicly.
-     *
-     * @param ConvertedStoreRequest $request
-     * @param Bridge                $bridge
-     * @param Image                 $image
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function customSizeImageConverted(ConvertedStoreRequest $request, Bridge $bridge, Image $image)
-    {
-        try {
-            $width = (int) $request->get('width');
-            $height = (int) ($width / $image->width_ratio);
-
-            $path = $this->imageRepo->generateImageConverted($bridge, $image, $width, $height, $request->get('format'));
-
-            return response()->json([
-                'download_url' => url($path),
-                'filename'     => basename($path),
-            ]);
-
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Entry not found']);
         } catch (\Exception $e) {
