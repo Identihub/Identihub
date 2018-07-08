@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import CustomSizeDownload from '../CustomSizeDownload';
 
-class JpgDownloadArea extends Component {
+class PngDownloadArea extends Component {
 
     static propTypes = {
-        icon: PropTypes.shape({
+        image: PropTypes.shape({
             id: PropTypes.number
         }),
         downloadCustomSize: PropTypes.func.isRequired,
@@ -14,20 +14,20 @@ class JpgDownloadArea extends Component {
 
     render() {
 
-        const {icon, defaultWidth, downloadCustomSize} = this.props;
+        const {image, defaultWidth, downloadCustomSize} = this.props;
 
         return (
-            <div className="jpg-area">
+            <div className="png-area">
 
                 <CustomSizeDownload
                     defaultWidth={defaultWidth}
-                    ratio={icon.width_ratio}
+                    ratio={image.width_ratio}
                     downloadCustomSize={downloadCustomSize}
-                    format="jpg"/>
+                    format="png"/>
 
             </div>
         );
     }
 }
 
-export default JpgDownloadArea;
+export default PngDownloadArea;

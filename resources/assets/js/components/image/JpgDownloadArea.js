@@ -5,7 +5,7 @@ import CustomSizeDownload from '../CustomSizeDownload';
 class JpgDownloadArea extends Component {
 
     static propTypes = {
-        icon: PropTypes.shape({
+        image: PropTypes.shape({
             id: PropTypes.number
         }),
         downloadCustomSize: PropTypes.func.isRequired,
@@ -14,17 +14,16 @@ class JpgDownloadArea extends Component {
 
     render() {
 
-        const {icon, defaultWidth, downloadCustomSize} = this.props;
+        const {image, defaultWidth, downloadCustomSize} = this.props;
 
         return (
             <div className="jpg-area">
 
                 <CustomSizeDownload
                     defaultWidth={defaultWidth}
-                    ratio={icon.width_ratio}
+                    ratio={image.width_ratio}
                     downloadCustomSize={downloadCustomSize}
                     format="jpg"/>
-
             </div>
         );
     }

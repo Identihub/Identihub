@@ -229,11 +229,12 @@ export function addImageConverted(bridgeId, imageId, width, height) {
     }
 }
 
-export function downloadImageConverted(bridgeId, imageId, width, height) {
+export function downloadImageConverted(bridgeId, imageId, width, height, format) {
     return (dispatch) => {
         return axios.post('/api/v1/bridges/' + bridgeId + '/images/' + imageId + '/converted/custom', {
             width: width,
-            height: height
+            height: height,
+            format: format,
         }).then(function (response) {
 
             if (response.data.download_url) {
