@@ -41,7 +41,7 @@
     }
 
     & .sidebar {
-      height: 100vh;
+      height: calc(100vh - 30px);
       width: 100%;
       padding-top: 30px;
     }

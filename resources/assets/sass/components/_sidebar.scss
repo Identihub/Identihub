@@ -274,7 +274,7 @@
       .color-picker {
         display: flex;
 
-        input {
+        .input-picker {
           background: #555;
           padding: 4px;
           height: 13px;
@@ -311,6 +311,12 @@
           background: #fff;
           border-top-right-radius: 1px;
           border-bottom-right-radius: 1px;
+        }
+
+        .chrome-picker {
+          input {
+            background: #dedede !important;
+          }
         }
       }
 

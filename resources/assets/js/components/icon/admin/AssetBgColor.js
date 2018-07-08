@@ -6,7 +6,7 @@ class AssetBgColor extends Component {
 
     static propTypes = {
         onBgColorChange: PropTypes.func.isRequired,
-        selectedColor: PropTypes.string.isRequired,
+        selectedColor: PropTypes.string
     };
 
     state = {
