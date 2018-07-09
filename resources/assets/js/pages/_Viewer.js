@@ -14,7 +14,7 @@ import {slide as Menu} from 'react-burger-menu'
 import {getBridge, getBridges} from '../selectors/BridgeSelector';
 import {withRouter} from 'react-router-dom';
 
-class Viewer extends Component {
+class _Viewer extends Component {
 
     constructor(props) {
         super(props);
@@ -305,40 +305,32 @@ class Viewer extends Component {
                     <div onClick={closePage}>
                         <ReactSVG
                             path="/images/close.svg"
-                            className="close"/>
+                            className="close"
+                        />
                     </div>
 
-                    <a className="carousel-control carousel-control-prev" href="#viewer-carousel" role="button"
-                       data-slide="prev">
+                    <div onClick={goBackward} tabIndex="-1" ref={input => input && input.focus()}
+                         onKeyDown={this.keyPress}>
                         <ReactSVG
                             path="/images/backward.svg"
-                            className="backward"/>
-                        <span className="sr-only">Previous</span>
-                    </a>
+                            className="backward"
+                        />
+                    </div>
 
-                    <a className="carousel-control carousel-control-next" href="#viewer-carousel" role="button"
-                       data-slide="next">
+                    <div onClick={goForward} tabIndex="-1" ref={input => input && input.focus()}
+                         onKeyDown={this.keyPress}>
                         <ReactSVG
                             path="/images/forward.svg"
-                            className="forward"/>
-                        <span className="sr-only">Next</span>
-                    </a>
+                            className="forward"
+                        />
+                    </div>
 
-                    <div id="viewer-carousel" className="carousel slide" data-ride="carousel" data-interval="false">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img className="d-block w-100" src="https://placehold.it/1920x1080" alt="First slide"/>
-                            </div>
-                            <div className="carousel-item">
-                                <img className="d-block w-100" src="https://placehold.it/1080x1920" alt="Second slide"/>
-                            </div>
-                            <div className="carousel-item">
-                                <img className="d-block w-100" src="https://placehold.it/1000x300" alt="Third slide"/>
-                            </div>
-                        </div>
-
+                    <div className="items" style={{marginLeft: marginLeft}}>
+                        {sortedItems}
+                        <div className="clearfix"/>
                     </div>
                 </main>
+
 
                 {
                     screenWidth > 900
@@ -378,7 +370,7 @@ const mapStateToProps = (state, ownProps) => {
     }
 };
 
-Viewer.propTypes = {
+_Viewer.propTypes = {
     dispatch: PropTypes.func.isRequired,
     bridge: PropTypes.shape({
         id: PropTypes.number.isRequired
@@ -395,4 +387,4 @@ Viewer.propTypes = {
     })
 };
 
-export default withRouter(connect(mapStateToProps)(Viewer));
+export default withRouter(connect(mapStateToProps)(_Viewer));

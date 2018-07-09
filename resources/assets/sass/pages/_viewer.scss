@@ -27,6 +27,11 @@
     position: relative;
     max-height: 100vh;
     z-index: -1;
+
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .viewer-sidebar__desktop {
@@ -53,6 +58,21 @@
     position: relative;
     max-height: 100vh;
     z-index: -1;
+
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+  }
+
+  .carousel-control {
+    z-index: 10;
+    color: #000
+  }
+
+  #viewer-carousel {
+    width: 100%;
   }
 
   h4 {
