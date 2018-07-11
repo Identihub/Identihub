@@ -14,6 +14,8 @@ import {slide as Menu} from 'react-burger-menu'
 import {getBridge, getBridges} from '../selectors/BridgeSelector';
 import {withRouter} from 'react-router-dom';
 
+import Slider from "react-slick";
+
 class Viewer extends Component {
 
     constructor(props) {
@@ -130,6 +132,9 @@ class Viewer extends Component {
             default:
                 return;
         }
+
+        console.error('elementsSection', elementsSection);
+        console.error('bridgebridgebridgebridgebridgevvv', bridge);
 
         const orderedElements = sortWithSectionAndOrder(elements, bridge.sections, elementsSection);
 
@@ -299,6 +304,14 @@ class Viewer extends Component {
                 break;
         }
 
+        const settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1
+        };
+
         return (
             <div className="viewer-page" id="outter-container">
                 <main className={screenWidth > 900 ? 'viewer__desktop' : "viewer"} id="page-wrap">
@@ -327,13 +340,13 @@ class Viewer extends Component {
                     <div id="viewer-carousel" className="carousel slide" data-ride="carousel" data-interval="false">
                         <div className="carousel-inner">
                             <div className="carousel-item active">
-                                <img className="d-block w-100" src="https://placehold.it/1920x1080" alt="First slide"/>
+                                <img className="d-block" src="/assets/TechAlin_IMAGES_5.jpg" alt="First slide"/>
                             </div>
                             <div className="carousel-item">
-                                <img className="d-block w-100" src="https://placehold.it/1080x1920" alt="Second slide"/>
+                                <img className="d-block" src="https://placehold.it/1080x1920" alt="Second slide"/>
                             </div>
                             <div className="carousel-item">
-                                <img className="d-block w-100" src="https://placehold.it/1000x300" alt="Third slide"/>
+                                <img className="d-block " src="https://placehold.it/1000x300" alt="Third slide"/>
                             </div>
                         </div>
 

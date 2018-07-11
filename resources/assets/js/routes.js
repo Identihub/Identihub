@@ -5,7 +5,7 @@ import NewBridge from './pages/NewBridge';
 import Bridge from './pages/Bridge';
 import AddColor from './pages/AddColor';
 import AddFont from './pages/AddFont';
-import Viewer from './pages/Viewer';
+import Viewer from './pages/viewer/Viewer';
 import DeleteBridge from './pages/DeleteBridge';
 import Helmet from 'react-helmet';
 
