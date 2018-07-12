@@ -7,9 +7,9 @@ import FontSidebar from '../../components/font/FontSidebar';
 import ColorSidebar from '../../components/color/ColorSidebar';
 import IconSidebar from '../../components/icon/IconSidebar';
 import ImageSidebar from '../../components/image/ImageSidebar';
-import {paramsChecker, isPublic, sortWithSectionAndOrder} from '../../helpers';
+import {isPublic, paramsChecker, sortWithSectionAndOrder} from '../../helpers';
 import {slide as Menu} from 'react-burger-menu'
-import {getBridge, getBridges} from '../../selectors/BridgeSelector';
+import {getBridge} from '../../selectors/BridgeSelector';
 import {withRouter} from 'react-router-dom';
 import SliderWrapper from "./SliderWrapper";
 
@@ -18,14 +18,17 @@ class Viewer extends Component {
     constructor(props) {
         super(props);
 
-        const objectType = props.match.params.objectType;
+        const objectType = this.props.match.params.objectType;
+        const elementId = this.props.match.params.elementId;
+
+        const orderedElements = this.getOrderedElements(this.props, objectType);
 
         this.state = {
             objectType: objectType,
-            elementId: props.match.params.elementId,
-            orderedElements: null,
+            elementId: elementId,
+            orderedElements: orderedElements,
             screenWidth: null,
-        };
+        }
     }
 
     componentDidMount() {
@@ -46,11 +49,30 @@ class Viewer extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = nextProps;
-        const {objectType} = this.state;
+        const orderedElements = this.getOrderedElements(nextProps, this.state.objectType);
+
+        this.setState({
+            ...this.state,
+            orderedElements: orderedElements
+        });
+    }
+
+    /**
+     * Close page.
+     */
+    closePage = () => {
+        const {bridge} = this.props;
+        this.props.history.push('/project/' + bridge.id);
+    };
+
+    /**
+     * Get ordered elements.
+     */
+    getOrderedElements = (props, objectType) => {
+        const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = props;
 
         if (!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !objectType)
-            return;
+            return null;
 
         let elements = null;
         let elementsSection = null;
@@ -76,82 +98,112 @@ class Viewer extends Component {
                 return;
         }
 
-        const orderedElements = sortWithSectionAndOrder(elements, bridge.sections, elementsSection);
-
-        this.setState({
-            ...this.state,
-            orderedElements
-        });
-    }
-
-    closePage = () => {
-        const {bridge} = this.props;
-        this.props.history.push('/project/' + bridge.id);
+        return sortWithSectionAndOrder(elements, bridge.sections, elementsSection);
     };
 
-    render() {
-        if (this.state === null)
-            return (<div/>);
+    /**
+     * Get sidebar component based on object type.
+     */
+    getSidebar = () => {
 
-        const {objectType, orderedElements, elementId, screenWidth} = this.state;
-        const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = this.props;
-
-        const closePage = this.closePage;
-
-        if (!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !orderedElements)
-            return (<div/>);
-
-        let sidebar = null;
-        const container = screenWidth > 900 ? "container__desktop" : "container";
+        const {objectType, orderedElements, elementId} = this.state;
+        const {bridge} = this.props;
 
         switch (objectType) {
             case 'icon':
                 let icon = orderedElements.find(function (item) {
                     return item.id == elementId;
                 });
-                sidebar = <IconSidebar bridge={bridge} icon={icon} history={this.props.history}/>;
-                break;
-
+                return <IconSidebar bridge={bridge} icon={icon} history={this.props.history}/>;
 
             case 'image':
                 let image = orderedElements.find(function (item) {
                     return item.id == elementId;
                 });
-                sidebar = <ImageSidebar bridge={bridge} image={image} history={this.props.history}/>;
-                break;
-
+                return <ImageSidebar bridge={bridge} image={image} history={this.props.history}/>;
 
             case 'color':
                 let color = orderedElements.find(function (item) {
                     return item.id == elementId;
                 });
-                sidebar = <ColorSidebar bridge={bridge} color={color} history={this.props.history}/>
-                break;
-
+                return <ColorSidebar bridge={bridge} color={color} history={this.props.history}/>
 
             case 'font':
                 let font = orderedElements.find(function (item) {
                     return item.id == elementId;
                 });
-                sidebar = <FontSidebar bridge={bridge} font={font} history={this.props.history}/>;
-                break;
-
+                return <FontSidebar bridge={bridge} font={font} history={this.props.history}/>;
 
             default:
                 break;
         }
+    };
+
+    onChangeElement = (element) => {
+        const {objectType} = this.state;
+        const {bridge} = this.props;
+
+        if (!objectType || !bridge)
+            return;
+
+        alert('element new');
+
+        this.setState((prevState, props) => {
+            return {
+                ...this.state,
+                elementId: element.id
+            }
+        });
+
+        let url = null;
+
+        if (!isPublic()) {
+            url = '/project/' + bridge.id + '/view/' + objectType + '/element/' + element.id;
+        } else {
+            url = '/view/' + objectType + '/element/' + element.id;
+        }
+
+        this.props.history.replace(url);
+    };
+
+    indexOfActiveElement = () => {
+        const {elementId} = this.state;
+
+        // TODO: Find index of active element.
+    };
+
+    /**
+     * Render view.
+     */
+    render() {
+        if (this.state === null)
+            return (<div/>);
+
+        const {orderedElements, screenWidth} = this.state;
+        const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = this.props;
+
+        if (!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !orderedElements)
+            return (<div/>);
+
+        let sidebar = this.getSidebar();
+        const viewerClassName = screenWidth > 900 ? 'viewer__desktop' : "viewer";
+
+        const activeElementIndex = this.indexOfActiveElement();
 
         return (
             <div className="viewer-page" id="outter-container">
-                <main className={screenWidth > 900 ? 'viewer__desktop' : "viewer"} id="page-wrap">
-                    <div onClick={closePage}>
+                <main className={viewerClassName} id="page-wrap">
+                    <div onClick={this.closePage}>
                         <ReactSVG
                             path="/images/close.svg"
                             className="close"/>
                     </div>
 
                     <div className="slider-wrapper">
-                        <SliderWrapper/>
+                        <SliderWrapper elements={orderedElements}
+                                       elementType={this.state.objectType}
+                                       activeElement={activeElementIndex}
+                                       onChangeElement={this.onChangeElement}/>
                     </div>
                 </main>
 
@@ -171,7 +223,6 @@ class Viewer extends Component {
                             {sidebar}
 
                         </Menu>
-
                 }
             </div>
         );

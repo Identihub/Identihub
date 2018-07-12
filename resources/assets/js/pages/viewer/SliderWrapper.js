@@ -2,14 +2,15 @@ import React, {Component} from "react";
 import Slider from "react-slick";
 import SliderItem from "./SliderItem";
 import ReactSVG from 'react-svg';
+import PropTypes from "prop-types";
 
 function NextArrow(props) {
-    const {className, style, onClick} = props;
+    const {className, style, onNextArrow} = props;
     return (
         <div
             className={className}
             style={{...style}}
-            onClick={onClick}>
+            onClick={onNextArrow}>
             <ReactSVG
                 path="/images/forward.svg"
                 className="backward"/>
@@ -19,12 +20,12 @@ function NextArrow(props) {
 }
 
 function PreviousArrow(props) {
-    const {className, style, onClick} = props;
+    const {className, style, onPreviousArrow} = props;
     return (
         <div
             className={className}
             style={{...style}}
-            onClick={onClick}>
+            onClick={onPreviousArrow}>
             <ReactSVG
                 path="/images/backward.svg"
                 className="forward"/>
@@ -35,25 +36,51 @@ function PreviousArrow(props) {
 
 class SliderWrapper extends Component {
 
+    static propTypes = {
+        elements: PropTypes.array.isRequired,
+        elementType: PropTypes.string.isRequired,
+        activeElementIndex: PropTypes.number,
+        onChangeElement: PropTypes.func.isRequired
+    };
+
+    static defaultProps = {
+        activeElementIndex: 0,
+    };
+
+    onNextArrow = () => {
+        const {elements, activeElementIndex} = this.props;
+
+        if (elements[activeElementIndex + 1]) {
+            this.slider.slickNext();
+            const element = elements[activeElementIndex + 1];
+
+            this.onChangeElement(element);
+        }
+    };
+
+    onPreviousArrow = () => {
+        this.slider.slickPrev();
+    };
+
     render() {
-        var settings = {
+        const settings = {
             dots: true,
             infinite: true,
             speed: 500,
             slidesToShow: 1,
             slidesToScroll: 1,
-            nextArrow: <NextArrow/>,
-            prevArrow: <PreviousArrow/>
+            adaptiveHeight: true,
+            nextArrow: <NextArrow onNextArrow={this.onNextArrow}/>,
+            prevArrow: <PreviousArrow onPreviousArrow={this.onPreviousArrow}/>,
+            initialSlide: this.props.activeElementIndex
         };
 
+        let items = this.props.elements.map((element, index) => <SliderItem key={index} element={element}
+                                                                            elementType={this.props.elementType}/>);
+
         return (
-            <Slider {...settings}>
-                <SliderItem index={1}/>
-                <SliderItem index={2}/>
-                <SliderItem index={3}/>
-                <SliderItem index={4}/>
-                <SliderItem index={5}/>
-                <SliderItem index={6}/>
+            <Slider ref={slider => (this.slider = slider)} {...settings}>
+                {items}
             </Slider>
         );
     }

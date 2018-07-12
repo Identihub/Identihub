@@ -9,7 +9,7 @@
 
   .primary-view,
   .settings {
-    overflow-y: auto;
+    overflow: visible;
 
     &::-webkit-scrollbar {
       display: none;
@@ -32,14 +32,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #000;
   }
 
   .viewer-sidebar__desktop {
-    //width: 350px;
+    width: 350px;
     height: 100vh;
     z-index: 9999;
     background-color: #212429;
-    overflow-y: auto;
+    overflow-y: visible;
 
     &::-webkit-scrollbar {
       display: none;
@@ -64,32 +65,11 @@
     justify-content: center;
     align-items: center;
     width: 100vw;
-  }
+    background: #000;
 
-  .carousel-control {
-    z-index: 10;
-    color: #000
-  }
-
-  #viewer-carousel {
-    width: 100%;
-    height: 100vh;
-
-    .carousel-item {
-      width: 100%;
-      height: 100vh;
-      text-align: center;
-
-      &.active {
-        display: flex !important;
-        justify-content: center;
-        align-items: center;
-      }
-
-      img {
-        max-width: 100vw;
-        max-height: 100vh;
-      }
+    & .sidebar {
+      width: 350px;
+      overflow: visible;
     }
   }
 
@@ -103,7 +83,7 @@
     background: transparent;
     color: #F9F9F9;
     font-size: 17px;
-    width: 51px;
+    width: 60px;
     // margin-left: 4px;
     display: inline-block;
 
@@ -238,24 +218,42 @@
   .slider-wrapper {
     width: 85%;
 
-    .slider-item {
-
-      img {
-        width: 100%
-      }
-
-    }
-
     .slick-slider {
 
       .slick-slide {
 
         .slider-item {
           background: lightpink;
-          padding: 25px;
           text-align: center;
           margin: 15px 0;
-          border: 1px dashed #000;
+          top: 0;
+          height: 90vh;
+          max-height: 100vh;
+          margin-top: 0;
+
+          .image-item {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+              max-height: 100%;
+              width: auto;
+            }
+          }
+
+          .icon-item {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+              max-height: 100vh;
+              width: auto;
+            }
+          }
         }
       }
 
