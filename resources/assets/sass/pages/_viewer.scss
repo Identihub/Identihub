@@ -32,7 +32,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #000;
   }
 
   .viewer-sidebar__desktop {
@@ -65,7 +64,6 @@
     justify-content: center;
     align-items: center;
     width: 100vw;
-    background: #000;
 
     & .sidebar {
       width: 350px;
@@ -132,47 +130,6 @@
     }
   }
 
-  .items {
-    width: 1000000vw;
-    transition: 300ms ease-in-out;
-    .item {
-      height: 100vh;
-      float: left;
-      //width: calc(100vw - 300px);
-      width: 100vw;
-      position: relative;
-
-      .container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      .container__desktop {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-80%, -50%);
-      }
-
-      .container, .container__desktop {
-        img {
-          width: 40vw;
-          max-height: 90vh;
-          object-fit: contain;
-        }
-
-        .image-viewer {
-          max-width: 40vw;
-          max-height: 88vw;
-
-          object-fit: contain;
-        }
-      }
-    }
-  }
-
   .backward,
   .forward {
     position: absolute;
@@ -198,11 +155,6 @@
     }
   }
 
-  .color {
-    width: 40vw;
-    height: 40vw;
-  }
-
   .forward {
     // right: 45px;
   }
@@ -223,13 +175,11 @@
       .slick-slide {
 
         .slider-item {
-          background: lightpink;
           text-align: center;
-          margin: 15px 0;
+          margin: 0 0 15px 0;
           top: 0;
           height: 90vh;
           max-height: 100vh;
-          margin-top: 0;
 
           .image-item {
             height: 100%;
@@ -239,6 +189,7 @@
 
             img {
               max-height: 100%;
+              max-width: 100%;
               width: auto;
             }
           }
@@ -252,6 +203,34 @@
             img {
               max-height: 100vh;
               width: auto;
+            }
+          }
+
+          .color-item {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .color {
+              width: 40vw;
+              height: 40vw;
+              max-height: 100%;
+              max-width: 100%;
+              border: 1px solid #333;
+            }
+          }
+
+          .font-item {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .font {
+              max-height: 100%;
+              max-width: 100%;
+              border: 1px solid #333;
             }
           }
         }

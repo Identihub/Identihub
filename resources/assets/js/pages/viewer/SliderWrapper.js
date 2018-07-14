@@ -40,39 +40,86 @@ class SliderWrapper extends Component {
         elements: PropTypes.array.isRequired,
         elementType: PropTypes.string.isRequired,
         activeElementIndex: PropTypes.number,
-        onChangeElement: PropTypes.func.isRequired
+        onElementChange: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
         activeElementIndex: 0,
     };
 
+    componentDidMount() {
+        window.addEventListener("keydown", this.onKeyDown, false);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("keydown", this.onKeyDown, false);
+    }
+
+    /**
+     * Check if has next element and change page if yes.
+     */
     onNextArrow = () => {
         const {elements, activeElementIndex} = this.props;
 
         if (elements[activeElementIndex + 1]) {
             this.slider.slickNext();
-            const element = elements[activeElementIndex + 1];
-
-            this.onChangeElement(element);
         }
     };
 
+    /**
+     * Check if has previous element and change page if yes.
+     */
     onPreviousArrow = () => {
-        this.slider.slickPrev();
+        const {elements, activeElementIndex} = this.props;
+
+        if (elements[activeElementIndex - 1]) {
+            this.slider.slickPrev();
+        }
+    };
+
+    /**
+     * Update element on slide change.
+     */
+    onSlideChange = (currentIndex) => {
+        const {elements, onElementChange} = this.props;
+
+        const element = elements[currentIndex];
+        return onElementChange(element);
+    };
+
+    /**
+     * Move slider items via keyboard, forward and backward keys.
+     */
+    onKeyDown = (event) => {
+        const key = event.keyCode;
+
+        switch (key) {
+            case 37: {
+                this.onPreviousArrow();
+                break;
+            }
+            case 39: {
+                this.onNextArrow();
+                break;
+            }
+            default:
+                break;
+        }
     };
 
     render() {
         const settings = {
             dots: true,
-            infinite: true,
+            infinite: false,
             speed: 500,
             slidesToShow: 1,
             slidesToScroll: 1,
             adaptiveHeight: true,
+            lazyLoad: true,
+            initialSlide: this.props.activeElementIndex,
             nextArrow: <NextArrow onNextArrow={this.onNextArrow}/>,
             prevArrow: <PreviousArrow onPreviousArrow={this.onPreviousArrow}/>,
-            initialSlide: this.props.activeElementIndex
+            afterChange: current => this.onSlideChange(current)
         };
 
         let items = this.props.elements.map((element, index) => <SliderItem key={index} element={element}

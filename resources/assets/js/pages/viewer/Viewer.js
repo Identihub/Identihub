@@ -34,10 +34,24 @@ class Viewer extends Component {
     componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
+        window.addEventListener("keydown", this.onEscKeyDown, false);
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.updateWindowDimensions);
+        window.removeEventListener("keydown", this.onEscKeyDown, false);
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        const orderedElements = this.getOrderedElements(nextProps, this.state.objectType);
+        const elementId = nextProps.match.params.elementId;
+
+        this.setState({
+            ...this.state,
+            orderedElements: orderedElements,
+            elementId: elementId
+        });
     }
 
     updateWindowDimensions = () => {
@@ -46,16 +60,6 @@ class Viewer extends Component {
             screenWidth: window.innerWidth
         });
     };
-
-    componentWillReceiveProps(nextProps) {
-
-        const orderedElements = this.getOrderedElements(nextProps, this.state.objectType);
-
-        this.setState({
-            ...this.state,
-            orderedElements: orderedElements
-        });
-    }
 
     /**
      * Close page.
@@ -139,21 +143,12 @@ class Viewer extends Component {
         }
     };
 
-    onChangeElement = (element) => {
+    onElementChange = (element) => {
         const {objectType} = this.state;
         const {bridge} = this.props;
 
         if (!objectType || !bridge)
             return;
-
-        alert('element new');
-
-        this.setState((prevState, props) => {
-            return {
-                ...this.state,
-                elementId: element.id
-            }
-        });
 
         let url = null;
 
@@ -163,14 +158,36 @@ class Viewer extends Component {
             url = '/view/' + objectType + '/element/' + element.id;
         }
 
-        this.props.history.replace(url);
+        return this.props.history.push(url);
     };
 
     indexOfActiveElement = () => {
-        const {elementId} = this.state;
+        const {elementId, orderedElements} = this.state;
 
-        // TODO: Find index of active element.
+        let activeIndex = null;
+
+        orderedElements.forEach(function (element, index) {
+            if (element.id == elementId) {
+                activeIndex = index;
+            }
+        });
+
+        return activeIndex;
     };
+
+    onEscKeyDown = (event) => {
+        const key = event.keyCode;
+
+        if (key === 27) {
+            this.closePage();
+        }
+    };
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.elementId !== nextProps.elementId) {
+            return true;
+        }
+    }
 
     /**
      * Render view.
@@ -179,7 +196,7 @@ class Viewer extends Component {
         if (this.state === null)
             return (<div/>);
 
-        const {orderedElements, screenWidth} = this.state;
+        const {orderedElements, screenWidth, elementId} = this.state;
         const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = this.props;
 
         if (!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !orderedElements)
@@ -202,8 +219,8 @@ class Viewer extends Component {
                     <div className="slider-wrapper">
                         <SliderWrapper elements={orderedElements}
                                        elementType={this.state.objectType}
-                                       activeElement={activeElementIndex}
-                                       onChangeElement={this.onChangeElement}/>
+                                       activeElementIndex={activeElementIndex}
+                                       onElementChange={this.onElementChange}/>
                     </div>
                 </main>
 
