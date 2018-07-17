@@ -77,13 +77,13 @@ class ColorCard extends Component {
                                         : null}
                                     {i === 1
                                         ? <span className="rgb-span">
-                                            <span id="rgb-text">R</span>
+                                            <span id="rgb-text">G</span>
                                             <span id="rgb-number">{a}</span>
                                         </span>
                                         : null}
                                     {i === 2
                                         ? <span className="rgb-span">
-                                            <span id="rgb-text">R</span>
+                                            <span id="rgb-text">B</span>
                                             <span id="rgb-number">{a}</span>
                                           </span>
                                         : null}
