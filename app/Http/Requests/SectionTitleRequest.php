@@ -24,7 +24,7 @@ class SectionTitleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:4'
+            'title' => 'required|min:1',
         ];
     }
 }

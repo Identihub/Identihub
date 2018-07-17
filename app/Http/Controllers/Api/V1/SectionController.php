@@ -60,11 +60,11 @@ class SectionController extends Controller
             // event(new BridgeUpdated($bridge));
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
             return response()->json([
-                'bridge' => $bridge
+                'bridge' => $bridge,
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
 
@@ -91,16 +91,16 @@ class SectionController extends Controller
             } catch (\Exception $e) {
             }
             return response()->json([
-                'bridge' => $bridge
+                'bridge' => $bridge,
             ]);
 
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
 
@@ -119,21 +119,21 @@ class SectionController extends Controller
             $section->title = $request->get('title');
             $section->save();
 
-            $bridge = Bridge::with('sections')->findOrFail($bridgeId);
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
-            try {
-                event(new BridgeUpdated($bridge));
-            } catch (\Exception $e) {
-            }
+
+            event(new BridgeUpdated($bridge));
+
             return response()->json([
-                'bridge' => $bridge
+                'bridge' => $bridge,
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
         } catch (\Exception $e) {
-
+            return response()->json([
+                'error' => 'Server error',
+            ]);
         }
     }
 
@@ -150,22 +150,20 @@ class SectionController extends Controller
             $section->description = $request->get('description');
             $section->save();
 
-            $bridge = Bridge::with('sections')->findOrFail($bridgeId);
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
-            try {
-                event(new BridgeUpdated($bridge));
-            } catch (\Exception $e) {
-            }
+
+            event(new BridgeUpdated($bridge));
+
             return response()->json([
-                'bridge' => $bridge
+                'bridge' => $bridge,
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
     }
@@ -174,7 +172,7 @@ class SectionController extends Controller
      * TODO: Make a trait or something
      *
      * @param BridgeUpdateRequest $request
-     * @param $id
+     * @param                     $id
      */
     public function updateOrder(BridgeUpdateRequest $request, $id)
     {
