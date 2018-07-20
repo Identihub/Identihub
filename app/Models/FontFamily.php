@@ -9,11 +9,11 @@ class FontFamily extends Model
     protected $table = 'fonts_list';
 
     protected $fillable = [
-        'family', 'category', 'version'
+        'family', 'category', 'version',
     ];
 
     protected $hidden = [
-        'created_at', 'updated_at', 'version'
+        'created_at', 'updated_at', 'version',
     ];
 
     public function variants()

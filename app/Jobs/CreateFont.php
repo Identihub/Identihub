@@ -28,12 +28,9 @@ class CreateFont implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param $fontFamilyId
-     * @param $fontVariantId
+     * CreateFont constructor.
+     * @param         $fontVariantId
      * @param Section $section
-     * @internal param $sectionId
-     * @internal param $params
-     * @internal param $bridgeId
      */
     public function __construct($fontVariantId, Section $section)
     {
@@ -48,14 +45,11 @@ class CreateFont implements ShouldQueue
      */
     public function handle()
     {
-
-        // Crate an image for this font
-
         return Font::create([
             'variant_id' => $this->fontVariantId,
             'section_id' => $this->section->id,
-            'bridge_id' => $this->section->bridge_id,
-            'order' => Font::where('section_id', $this->section->id)->get()->count()
+            'bridge_id'  => $this->section->bridge_id,
+            'order'      => Font::where('section_id', $this->section->id)->get()->count(),
         ]);
     }
 }
