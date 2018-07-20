@@ -40,8 +40,10 @@
     "react-dnd": "^2.4.0",
     "react-dnd-html5-backend": "^2.4.1",
     "react-notification-system": "^0.2.17",
+    "react-slick": "^0.23.1",
     "react-svg": "^2.2.14",
     "reselect": "^3.0.1",
+    "slick-carousel": "^1.8.1",
     "snapsvg-cjs": "0.0.6"
   }
 }

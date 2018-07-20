@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -30,11 +30,12 @@
 
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Overpass:400,900" rel="stylesheet">
+
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <!--  Font Awesome -->
     <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    
+
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -45,22 +46,22 @@
 
 </head>
 <body class="app-page">
-    <div>
+<div>
 
-        @if(!isset($menu) || $menu !== false)
-            <nav>
-                <div class="container">
-                    @include('components.logo-login-menu')
-                </div>
-            </nav>
-        @endif
+    @if(!isset($menu) || $menu !== false)
+        <nav>
+            <div class="container">
+                @include('components.logo-login-menu')
+            </div>
+        </nav>
+    @endif
 
-        @yield('content')
+    @yield('content')
 
-    </div>
+</div>
 
-    <footer>powered by <span>Identihub</span></footer>
+<footer>powered by <span>Identihub</span></footer>
 
-    <script src="{{ mix('js/react-panel.js') }}"></script>
+<script src="{{ mix('js/react-panel.js') }}"></script>
 </body>
 </html>

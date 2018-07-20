@@ -207,6 +207,7 @@
 
 .settings {
   margin-top: 30px;
+  overflow-y: visible;
 
   & .title {
     span {
@@ -273,15 +274,16 @@
 
       .color-picker {
         display: flex;
+        position: relative;
 
         .input-picker {
           background: #555;
           padding: 4px;
-          height: 13px;
+          height: 11px;
           font-size: 14px;
           border-top-left-radius: 1px;
           border-bottom-left-radius: 1px;
-          width: 57px;
+          width: 62px;
         }
 
         &:before {
@@ -307,7 +309,7 @@
 
         .preview-color {
           width: 21px;
-          height: 21px;
+          height: 19px;
           background: #fff;
           border-top-right-radius: 1px;
           border-bottom-right-radius: 1px;
@@ -339,104 +341,6 @@
     }
   }
 }
-
-//.sidebar{
-//  box-sizing: border-box;
-//
-//  .primar{
-//    text-transform: capitalize;
-//  }
-//
-//  .font-sidebar{
-//    position: relative;
-//
-//    .content section:nth-child(2){
-//      p:nth-child(2){
-//        margin-top: 10px;
-//      }
-//    }
-//  }
-//
-//  .prefix{
-//    color: #919191;
-//  }
-//
-//  .settings{
-//    .head{
-//      svg{
-//        height: 20px;
-//        fill: $white;
-//      }
-//    }
-//  }
-//
-//  .primary-view,
-//  .settings{
-//    width: 100%;
-//    height: 100vh;
-//    float: left;
-//    position: relative;
-//  }
-//
-//  .primary-view{
-//    transition: 300ms ease-in-out;
-//  }
-//
-//
-//  p{
-//    font-size: 18px;
-//    color: $white;
-//  }
-//
-//  .clipboard_and_text{
-//    position: relative;
-//
-//    div:first-child{
-//      display: inline-block;
-//    }
-//
-//    p{
-//      top: 0;
-//      left: 0;
-//      position: absolute;
-//      height: 19px;
-//    }
-//
-//    svg {
-//      height: 17px;
-//      top: 0;
-//      left: 0;
-//      position: absolute;
-//
-//      &:hover{
-//        cursor: pointer;
-//      }
-//
-//      .a{
-//        fill: #f9f9f9;
-//      }
-//    }
-//  }
-//
-//  section{
-//    margin-bottom: 40px;
-//    h4{
-//      margin-left: 23px;
-//      font-size: 18px;
-//      color: $white;
-//      font-weight: bold;
-//      margin-bottom: 20px;
-//    }
-//
-//    p{
-//      margin-left: 23px;
-//      max-width: 230px;
-//      overflow:hidden;
-//      text-overflow: ellipsis;
-//    }
-//  }
-//
-//}
 
 /* Additional Style */
 

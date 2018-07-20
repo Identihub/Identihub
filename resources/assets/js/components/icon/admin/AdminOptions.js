@@ -22,7 +22,6 @@ class AdminOptions extends Component {
     };
 
     render() {
-
         const {updateIcon, deleteIcon, icon} = this.props;
 
         return (

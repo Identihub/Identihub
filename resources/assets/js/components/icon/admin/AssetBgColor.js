@@ -20,6 +20,12 @@ class AssetBgColor extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.selectedColor) {
+            this.setState({selectedColor: nextProps.selectedColor});
+        }
+    }
+
     handleFocus = () => {
         this.setState({displayColorPicker: true});
     };
