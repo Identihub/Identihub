@@ -26,67 +26,59 @@ class FontsController extends Controller
         $fontModelCollection = FontFamily::where('family', $search)
             ->orWhere('family', 'like', '%' . $search . '%')->with('variants')->get();
         return response()->json([
-            'fonts' => $fontModelCollection
+            'fonts' => $fontModelCollection,
         ]);
     }
 
+    /**
+     * Create font.
+     *
+     * @param StoreFontRequest $request
+     * @param                  $bridgeId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function createFont(StoreFontRequest $request, $bridgeId)
     {
-
-        try{
-
+        try {
             $user = Auth::user();
             $bridge = Bridge::findOrFail($bridgeId);
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
-
-            //if(Font::where('variant_id', $request->get('font_variant_id'))->get()->count())
-                // return;
 
             $section = (new CreateSection($bridge, SectionType::where('name', 'FONTS')->get()->first()))->handle();
 
-            //$sectionType = SectionType::where('name', SectionType::FONTS)->get()->first();
-            //$section = Section::where('section_type_id', $sectionType->id)->get()->first();
+            $font = (new CreateFont($request->font_variant_id, $section))->handle();
 
-
-            $font = (new CreateFont(
-                    $request->get('font_variant_id'),
-                    $section))
-                ->handle();
-
-            $section->title = $font->variant->fontFamily->family . ' ' . $font->variant->variant;
+            $section->title = $font->variant->fontFamily->family . ' ' . ucfirst($font->variant->variantText());
             $section->save();
 
-            (new CreateFontImage(FontVariant::findOrFail($request->get('font_variant_id'))))->handle();
+            (new CreateFontImage(FontVariant::findOrFail($request->font_variant_id)))->handle();
 
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
-            try{
-                // event(new BridgeUpdated($bridge));
-            }catch(\Exception $e){}
+
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
-        }catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
-
     }
 
     public function deleteFont($bridgeId, $fontId)
     {
-        try{
+        try {
 
             $user = Auth::user();
             $bridge = Bridge::findOrFail($bridgeId);
-            if($user->id !== $bridge->user_id)
+            if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
             $font = Font::findOrFail($fontId);
@@ -95,21 +87,22 @@ class FontsController extends Controller
             $section->delete();
 
             $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
-            try{
+            try {
                 event(new BridgeUpdated($bridge));
-            }catch(\Exception $e){}
+            } catch (\Exception $e) {
+            }
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
 
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
     }
