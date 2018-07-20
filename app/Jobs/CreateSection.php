@@ -27,7 +27,7 @@ class CreateSection implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param Bridge $bridge
+     * @param Bridge      $bridge
      * @param SectionType $type
      */
     public function __construct(Bridge $bridge, SectionType $type)
@@ -38,23 +38,21 @@ class CreateSection implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
+     * @return $this|\Illuminate\Database\Eloquent\Model
      */
     public function handle()
     {
-
         $bridge = $this->bridge;
         $sections = $bridge->sections;
         $sectionsWithType = $bridge->getSectionsFromTypeModel($sections, $this->type);
         $order = $sectionsWithType->count();
 
         return Section::create([
-            'bridge_id' => $this->bridge->id,
+            'bridge_id'       => $this->bridge->id,
             'section_type_id' => $this->type->id,
-            'order' => $order,
-            'title' => '',
-            'description' => ''
+            'order'           => $order,
+            'title'           => '',
+            'description'     => '',
         ]);
     }
 }
