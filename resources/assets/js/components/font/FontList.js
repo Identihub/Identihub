@@ -12,8 +12,9 @@ export const FontList = (props) => {
             {
                 props.fonts.map(font => (
                     <li key={font.id}
-                        onClick={(e) => { props.selectItem(font.id) }}
-                    > {font.family}</li>
+                        onClick={(e) => {
+                            props.selectItem(font.id)
+                        }}> {font.family}</li>
                 ))
             }
         </CSSTransitionGroup>
@@ -23,10 +24,10 @@ export const FontList = (props) => {
 FontList.propTypes = {
     fonts: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number,
-            family: PropTypes.string
-        }
-    )).isRequired,
+                id: PropTypes.number,
+                family: PropTypes.string
+            }
+        )).isRequired,
     selectItem: PropTypes.func.isRequired
 };
 
