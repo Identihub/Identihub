@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 const weightToText = (weight) => {
-    if(weight){
+    if (weight) {
         return weight.replace('100', "Thin ")
             .replace('200', "Ultra Thin ")
             .replace('300', "Light ")
@@ -21,7 +21,6 @@ export const VariantList = (props) => {
     return (
         <CSSTransitionGroup
             component="ul"
-            className="variant-list"
             transitionName="example"
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
@@ -31,7 +30,9 @@ export const VariantList = (props) => {
                         <input
                             type="checkbox"
                             id={'variant-' + variant.id}
-                            onChange={() => {props.toggleVariant(variant)}}/>
+                            onChange={() => {
+                                props.toggleVariant(variant)
+                            }}/>
                         <label htmlFor={'variant-' + variant.id} className="checkbox"> </label>
                         <label htmlFor={'variant-' + variant.id}>
                             {weightToText(variant.variant)}

@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { DropTarget } from 'react-dnd';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {DropTarget} from 'react-dnd';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import Section from '../Section';
 import FontCard from './FontCard';
-import { dropTarget } from '../../helpers';
-import { updateOrderOnFont } from '../../reducers/Extra/ExtraActions';
+import {dropTarget} from '../../helpers';
+import {updateOrderOnFont} from '../../reducers/Extra/ExtraActions';
 
-class FontSectionRow extends Component{
+class FontSectionRow extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-          fonts: []
+            fonts: []
         };
 
         this.pushCard = this.pushCard.bind(this);
@@ -23,16 +23,16 @@ class FontSectionRow extends Component{
     }
 
     componentWillReceiveProps(nextProps) {
-      this.updateLocalState(nextProps);
+        this.updateLocalState(nextProps);
     }
 
     componentWillMount() {
-      this.updateLocalState(this.props);
+        this.updateLocalState(this.props);
     }
 
     updateLocalState(props) {
         this.setState({
-          fonts: props.fonts
+            fonts: props.fonts
         });
     }
 
@@ -40,7 +40,8 @@ class FontSectionRow extends Component{
 
     }
 
-    removeCard(index) { }
+    removeCard(index) {
+    }
 
     moveCard(dragIndex, hoverIndex) {
         const {
@@ -48,7 +49,7 @@ class FontSectionRow extends Component{
             bridge,
             updateOrderOnFont
         } = this.props;
-        const card = fonts.find( font => font.order === dragIndex );
+        const card = fonts.find(font => font.order === dragIndex);
         updateOrderOnFont(bridge.id, card.id, hoverIndex);
     }
 
@@ -67,22 +68,22 @@ class FontSectionRow extends Component{
         return connectDropTarget(
             <div>
                 <Section
-                         bridge={bridge}
-                         section={section}
-                         isActive={isActive}
-                         emptyStateText={emptyStateText}>
+                    bridge={bridge}
+                    section={section}
+                    isActive={isActive}
+                    emptyStateText={emptyStateText}>
                     {
-                        fonts.filter(font => ( font.section_id === section.id)).sort((a, b) => ( a.order - b.order )).map(font => {
+                        fonts.filter(font => (font.section_id === section.id)).sort((a, b) => (a.order - b.order)).map(font => {
                             return (
-                              <FontCard
-                                  key={font.id}
-                                  index={font.order}
-                                  listId={font.section_id}
-                                  card={font}
-                                  removeCard={this.removeCard}
-                                  moveCard={this.moveCard}
-                                  bridge={bridge}
-                              />
+                                <FontCard
+                                    key={font.id}
+                                    index={font.order}
+                                    listId={font.section_id}
+                                    card={font}
+                                    removeCard={this.removeCard}
+                                    moveCard={this.moveCard}
+                                    bridge={bridge}
+                                />
                             )
                         })
                     }

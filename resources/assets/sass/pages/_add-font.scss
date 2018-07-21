@@ -1,5 +1,5 @@
-.add-font{
-  .dialog-box{
+.add-font {
+  .dialog-box {
     position: absolute;
     z-index: 9999;
     top: 50%;
@@ -10,33 +10,51 @@
 
     font-size: 18px;
 
-    .wrapper{
-      padding: 50px 145px;
-      div{
+    .wrapper {
+      padding: 50px 50px;
+
+      div {
         margin-bottom: 20px;
+      }
+
+      .font-list {
+        max-height: 350px;
+        overflow-y: auto;
+
+        ul > li {
+          cursor: pointer;
+          padding: 5px 0;
+        }
+      }
+
+      .variant-list {
+        ul > li {
+          margin-bottom: 5px;
+          text-transform: capitalize;
+        }
+      }
+
+      .input-wrapper {
+
+        .input {
+          font-size: 19px;
+        }
       }
     }
 
-    .close-window:hover{
+    .close-window:hover {
       cursor: pointer;
     }
 
-    input[type="checkbox"]{
+    input[type="checkbox"] {
       display: none;
     }
 
-    .checkbox{
+    .checkbox {
       display: inline-block;
     }
 
-    .variant-list{
-      li{
-        margin-bottom: 5px;
-        text-transform: capitalize;
-      }
-    }
-
-    .button{
+    .button {
       margin-top: 30px;
     }
   }

@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { getFonts } from '../reducers/Extra/ExtraReducer';
-import { searchFont } from '../reducers/Bridge/BridgeApiCalls';
+import {getFonts} from '../reducers/Extra/ExtraReducer';
+import {searchFont} from '../reducers/Bridge/BridgeApiCalls';
 import DebounceInput from 'react-debounce-input';
-import { addFonts } from '../reducers/Extra/ExtraActions';
+import {addFonts} from '../reducers/Extra/ExtraActions';
 import FontList from '../components/font/FontList';
-import VariantList from '../components/VariantList';
-import { createFont } from '../reducers/Bridge/BridgeApiCalls';
+import VariantList from '../components/font/VariantList';
+import {createFont} from '../reducers/Bridge/BridgeApiCalls';
 
 
 class AddFont extends Component {
@@ -39,7 +39,7 @@ class AddFont extends Component {
     }
 
     updateFonts(nextProps) {
-        if(nextProps.fonts){
+        if (nextProps.fonts) {
             this.setState({
                 fonts: nextProps.fonts
             });
@@ -53,9 +53,9 @@ class AddFont extends Component {
             selectedFontFamily: null,
             selectedVariants: []
         });
-        if(value.length < 4){
+        if (value.length < 4) {
             this.props.dispatch(addFonts([]));
-        }else{
+        } else {
             this.props.dispatch(searchFont(value));
         }
 
@@ -65,7 +65,7 @@ class AddFont extends Component {
         const fonts = this.state.fonts;
         this.setState({
             selectedFontFamily: fontFamilyId,
-            searchFontFamily: fonts.find( font => (
+            searchFontFamily: fonts.find(font => (
                 font.id === fontFamilyId
             )).family
         });
@@ -84,8 +84,8 @@ class AddFont extends Component {
         const fontFamilyId = this.state.selectedFontFamily.id;
         const bridgeId = this.state.id;
 
-        if(variants.length > 0){
-            variants.map( (variant) => {
+        if (variants.length > 0) {
+            variants.map((variant) => {
                 this.props.dispatch(createFont(bridgeId, fontFamilyId, variant.id))
             });
             this.closeWindow();
@@ -98,7 +98,7 @@ class AddFont extends Component {
             return variant.id === variantFromState.id;
         });
 
-        if(isVariantPresent){
+        if (isVariantPresent) {
             const filteredVariants = variants.filter((value, key) => {
                 return value.id !== variant.id;
             });
@@ -107,7 +107,7 @@ class AddFont extends Component {
                 selectedVariants: filteredVariants
             });
 
-        }else{
+        } else {
             variants.push(variant);
             this.setState({
                 selectedVariants: variants
@@ -144,17 +144,18 @@ class AddFont extends Component {
                                            placeholder="Font Family"
                                            onChange={searchFontFamilyFunction}/>
                         </div>
-                        <div className={"fontList"}>
-                            {
-                                selectedFontFamily ?
-                                        <div>
-                                            <VariantList toggleVariant={toggleVariant} variants={getSelectedFontFamily().variants}/>
-                                            <a onClick={createFont} className={buttonClassName}> Add Fonts </a>
-                                        </div>
-                                    :
-                                        <FontList fonts={fonts} selectItem={selectFontFamilyFunction}/>
-                            }
-                        </div>
+                        {
+                            selectedFontFamily ?
+                                <div className="variant-list">
+                                    <VariantList toggleVariant={toggleVariant}
+                                                 variants={getSelectedFontFamily().variants}/>
+                                    <a onClick={createFont} className={buttonClassName}> Add Fonts </a>
+                                </div>
+                                :
+                                <div className="font-list">
+                                    <FontList fonts={fonts} selectItem={selectFontFamilyFunction}/>
+                                </div>
+                        }
                     </div>
                 </div>
             </div>
