@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bridge extends Model
 {
     protected $fillable = [
-        'name', 'user_id', 'slug', 'nr_images', 'nr_icons', 'nr_fonts', 'nr_colors'
+        'name', 'user_id', 'slug', 'nr_images', 'nr_icons', 'nr_fonts', 'nr_colors',
     ];
 
     public function user()
@@ -21,7 +20,7 @@ class Bridge extends Model
      * Scope a query to only include users of a given type.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param User $user
+     * @param User                                  $user
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFromUser($query, User $user)
@@ -57,14 +56,14 @@ class Bridge extends Model
     public function getSectionsFromType(Collection $collection, $type)
     {
         $sectionType = SectionType::where('name', $type)->get()->first();
-        return $collection->filter(function($value, $key) use ($sectionType) {
+        return $collection->filter(function ($value, $key) use ($sectionType) {
             return $value->section_type_id === $sectionType->id;
         });
     }
 
     public function getSectionsFromTypeModel(Collection $collection, $type)
     {
-        return $collection->filter(function($value, $key) use ($type) {
+        return $collection->filter(function ($value, $key) use ($type) {
             return $value->section_type_id === $type->id;
         });
     }
@@ -88,5 +87,4 @@ class Bridge extends Model
     {
         return $this->hasMany(Color::class, 'bridge_id', 'id');
     }
-
 }

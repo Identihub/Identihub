@@ -24,7 +24,7 @@ class SectionDescriptionRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|min:1',
+            'description' => 'required',
         ];
     }
 }
