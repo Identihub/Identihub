@@ -14,8 +14,7 @@ export default (
         <HashRouter>
             <div>
                 <Helmet
-                    titleTemplate="Identihub - %s"
-                >
+                    titleTemplate="Identihub - %s">
                 </Helmet>
 
                 <Route exact path="/" render={() => <Redirect to="/projects"/>}/>

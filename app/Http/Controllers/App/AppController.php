@@ -13,15 +13,23 @@ class AppController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @param $slug
+     * @return mixed
      */
-    public function index()
+    public function index($slug)
     {
+        $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->where('slug', $slug)->get();
+
+        if ($bridge->count() === 0) {
+            throw new ModelNotFoundException;
+        }
+
         return $this->view->make('app.app', [
-            'pusherId' => env('PUSHER_APP_KEY'),
+            'pusherId'           => env('PUSHER_APP_KEY'),
             'public_bridge_path' => url('/') . "/project/",
-            'is_public' => false,
-            'bridge' => null
+            'is_public'          => auth()->check() ? false : true,
+            'bridge'             => json_encode($bridge->first()),
+            'section_types'      => json_encode(SectionType::all()),
         ]);
     }
 
@@ -29,16 +37,16 @@ class AppController extends Controller
     {
         $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->where('slug', $slug)->get();
 
-        if($bridge->count() === 0){
+        if ($bridge->count() === 0) {
             throw new ModelNotFoundException;
         }
 
         return $this->view->make('app.public', [
-            'pusherId' => env('PUSHER_APP_KEY'),
+            'pusherId'           => env('PUSHER_APP_KEY'),
             'public_bridge_path' => url('/') . "/identities/",
-            'is_public' => true,
-            'bridge' => json_encode($bridge->first()),
-            'section_types' => json_encode(SectionType::all())
+            'is_public'          => true,
+            'bridge'             => json_encode($bridge->first()),
+            'section_types'      => json_encode(SectionType::all()),
         ]);
     }
 

@@ -12,21 +12,16 @@ import BridgesList from '../components/BridgesList';
 import BridgesEmptyState from '../components/BridgesEmptyState';
 
 export class BridgesPage extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         this.props.dispatch(fetchBridges());
-
     }
 
     render() {
         const block = this.props.hasBridges ?
             <BridgesList bridges={this.props.bridges} />
             :
-            <BridgesEmptyState/>
-        ;
+            <BridgesEmptyState/>;
 
         let title = 'List';
 
