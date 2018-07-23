@@ -1,33 +1,20 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import DebounceInput from 'react-debounce-input';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import EmptySectionState from './EmptySectionState';
-import { DropTarget } from 'react-dnd';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {
-    updateSectionTitle,
-    updateSectionDescription,
-    deleteSection
-} from '../reducers/Bridge/BridgeApiCalls';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {updateSectionTitle, updateSectionDescription, deleteSection} from '../reducers/Bridge/BridgeApiCalls';
 import ReactSVG from 'react-svg';
-import { paramsChecker, isPublic } from '../helpers';
+import {isPublic} from '../helpers';
 
 class Section extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            titleValue: '',
-            descriptionValue: ''
-        };
-
-        this.updateTitle = this.updateTitle.bind(this);
-        this.updateDescription = this.updateDescription.bind(this);
-        this.deleteSection = this.deleteSection.bind(this);
-    }
+    state = {
+        titleValue: '',
+        descriptionValue: ''
+    };
 
     componentWillReceiveProps(nextProps) {
         this.updateLocalState(nextProps.section);
@@ -37,150 +24,126 @@ class Section extends Component {
         this.updateLocalState(this.props.section);
     }
 
-    updateLocalState(section) {
-        if(section.title)
-            this.setState({
-                titleValue: section.title
-            });
-
-        if(section.description)
-            this.setState({
-                descriptionValue: section.description
-            });
+    shouldComponentUpdate(nextProps, nextState) {
+        const {titleValue, descriptionValue} = this.state;
+        return (nextState.titleValue !== titleValue || nextState.descriptionValue !== descriptionValue);
     }
 
-    updateTitle(e) {
-        const {
-            bridge,
-            section,
-            updateSectionTitle
-        } = this.props;
+    updateLocalState = (section) => {
+        this.setState({
+            titleValue: section.title ? section.title : this.state.title,
+            descriptionValue: section.description ? section.description : this.state.description,
+        });
+    };
+
+    updateTitle = (e) => {
+        const {bridge, section, updateSectionTitle} = this.props;
         const title = e.target.value;
         updateSectionTitle(bridge.id, section.id, title);
-    }
+    };
 
-    updateDescription(e) {
-        const {
-            bridge,
-            section,
-            updateSectionDescription
-        } = this.props;
+    updateDescription = (e) => {
+        const {bridge, section, updateSectionDescription} = this.props;
         const description = e.target.value;
         updateSectionDescription(bridge.id, section.id, description);
-    }
+    };
 
-    deleteSection(e) {
-        const {
-            bridge,
-            section,
-            deleteSection
-        } = this.props;
-        //console.log(bridge);
+    deleteSection = () => {
+        const {bridge, section, deleteSection} = this.props;
         deleteSection(bridge.id, section.id);
-    }
+    };
 
     render() {
+        const {updateTitle, updateDescription, deleteSection} = this;
+        const {emptyStateText, isActive, section} = this.props;
 
-        const {
-            updateTitle,
-            updateDescription,
-            deleteSection
-        } = this;
+        let isDeletable = (!this.props.children.length) && (section.order != 0);
 
-        const {
-            emptyStateText,
-            isActive,
-            section
-        } = this.props;
+        let isDeletableSection = (<div/>);
 
-        const isPub = isPublic();
-
-        let canBeDeleted = (!this.props.children.length) && (section.order != 0);
-
-        let canBeDeletedSection = ( <div> </div> );
-
-        if(canBeDeleted && !isPub) {
-            canBeDeletedSection = (
-              <div className="delete" onClick={deleteSection}>
-                  <ReactSVG
-                      path="/images/close.svg"
-                      className="backward"
-                  />
-              </div>
+        if (isDeletable && !isPublic()) {
+            isDeletableSection = (
+                <div className="delete" onClick={deleteSection}>
+                    <ReactSVG
+                        path="/images/close.svg"
+                        className="backward"/>
+                </div>
             );
         }
 
-        let name = null;
-        let description = null;
+        let nameInput = null;
+        let descriptionInput = null;
 
-        if(!isPub){
-            name = (
-              <DebounceInput value={this.state.titleValue}
-                             className="input-ghost background-light-gray-Hovered"
-                             placeholder="Write a title"
-                             debounceTimeout="3000"
-                             minLength="4"
-                             onChange={updateTitle}/>
+        if (!isPublic()) {
+            nameInput = (
+                <DebounceInput value={this.state.titleValue}
+                               className="input-ghost background-light-gray-Hovered"
+                               placeholder="Write a title"
+                               debounceTimeout="3000"
+                               onChange={updateTitle}/>
             );
-            description = (
-              <DebounceInput spellCheck="false"
-                             element="textarea"
-                             className="input-ghost background-light-gray-Hovered"
-                             value={this.state.descriptionValue}
-                             placeholder="Description"
-                             debounceTimeout="3000"
-                             minLength="4"
-                             onChange={updateDescription}/>
+            descriptionInput = (
+                <DebounceInput spellCheck="false"
+                               element="textarea"
+                               className="input-ghost background-light-gray-Hovered"
+                               value={this.state.descriptionValue}
+                               placeholder="Description"
+                               debounceTimeout="3000"
+                               onChange={updateDescription}/>
             );
-        }
-        else{
-            //show if the string is not empty
-            if(!!this.state.titleValue){
-                name = (
+        } else {
+            if (this.state.titleValue) {
+                nameInput = (
                     <DebounceInput value={this.state.titleValue}
                                    className="input-ghost"
                                    placeholder="Write a title"
                                    debounceTimeout="3000"
-                                   minLength="4"
                                    disabled="true"
                                    onChange={updateTitle}/>
                 );
             }
 
-            //show if the string is not empty
-            if(!!this.state.descriptionValue){
-                description = (
+            if (this.state.descriptionValue) {
+                descriptionInput = (
                     <DebounceInput spellCheck="false"
                                    element="textarea"
                                    className="input-ghost"
                                    value={this.state.descriptionValue}
                                    placeholder="Description"
                                    debounceTimeout="3000"
-                                   minLength="4"
                                    disabled="true"
                                    onChange={updateDescription}/>
                 );
             }
         }
 
-        const flexBoxClassName = isActive ? 'flex active' : 'flex';
+        const flexClassName = isActive ? 'flex active' : 'flex';
 
         return (
             <section className="content">
-                { canBeDeletedSection }
+
+                {isDeletableSection}
+
                 <div className="text">
-                    {name}
-                    {description}
-                    <div className="clearfix"> </div>
+
+                    {nameInput}
+                    {descriptionInput}
+
+                    <div className="clearfix"/>
                 </div>
+
                 <CSSTransitionGroup
-                    className={flexBoxClassName}
+                    className={flexClassName}
                     transitionName="example"
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={300}>
-                    { this.props.children.length ? this.props.children : <EmptySectionState emptyStateText={emptyStateText}/> }
+
+                    {this.props.children.length ? this.props.children :
+                        <EmptySectionState emptyStateText={emptyStateText}/>}
+
                 </CSSTransitionGroup>
-                <div className="clearfix"> </div>
+
+                <div className="clearfix"/>
             </section>
         );
     }
@@ -200,12 +163,12 @@ Section.propTypes = {
     emptyStateText: PropTypes.string.isRequired
 };
 
-const dispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    updateSectionTitle,
-    updateSectionDescription,
-    deleteSection
-  }, dispatch)
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        updateSectionTitle,
+        updateSectionDescription,
+        deleteSection
+    }, dispatch)
 };
 
-export default connect(state => state, dispatchToProps)(Section);
+export default connect(state => state, mapDispatchToProps)(Section);

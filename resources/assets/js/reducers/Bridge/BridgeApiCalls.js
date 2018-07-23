@@ -95,9 +95,11 @@ export function updateBridgeSlugRequest(id, name) {
 }
 
 export function updateSectionTitle(bridgeId, sectionId, text) {
+    console.log('updateSectionTitle');
     return (dispatch) => {
         return axios.patch('/api/v1/bridges/' + bridgeId + '/sections/' + sectionId + '/updateTitle', {title: text})
             .then(function (response) {
+                console.log('response.data.bridge', response.data.bridge);
                 dispatch(addBridge(response.data.bridge));
             })
             .catch(function (error) {
@@ -107,9 +109,11 @@ export function updateSectionTitle(bridgeId, sectionId, text) {
 }
 
 export function updateSectionDescription(bridgeId, sectionId, text) {
+    console.log('updateSectionDescription');
     return (dispatch) => {
         return axios.patch('/api/v1/bridges/' + bridgeId + '/sections/' + sectionId + '/updateDescription', {description: text})
             .then(function (response) {
+                console.log('response.data.bridge', response.data.bridge);
                 dispatch(addBridge(response.data.bridge));
             })
             .catch(function (error) {
