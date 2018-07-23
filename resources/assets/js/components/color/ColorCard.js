@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {dropTargetFlow, getColorBrightness, isPublic} from '../../helpers';
+import {dropTargetFlow, isPublic} from '../../helpers';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import colorConvert from 'color-convert';
@@ -8,59 +8,45 @@ import {deleteColor} from "../../reducers/Bridge/BridgeApiCalls";
 import {bindActionCreators} from "redux";
 
 class ColorCard extends Component {
-    constructor() {
-        super();
 
-        this.state = {
-            infoColor: "#000",
-        };
-
-        this.deleteColor = this.deleteColor.bind(this);
-    }
+    state = {
+        infoColor: "#000",
+    };
 
     componentDidMount() {
-        const infoColor = this.props.card ? this.props.card.hex : undefined;
+        const infoColor = this.props.card ? this.props.card.hex : null;
         const colorHsl = colorConvert.hex.hsl(infoColor);
 
         if (infoColor && colorHsl.pop() < 60) {
-            // pick a different colour
             this.setState({
                 infoColor: "#FFF",
             });
-
         }
     }
 
-    deleteColor() {
+    deleteColor = () => {
         const {deleteColor, bridge, card} = this.props;
-
-        if (deleteColor()) {
-            deleteColor(bridge.id, card.id);
-        }
-    }
-
+        deleteColor(bridge.id, card.id);
+    };
 
     render() {
-        const isPub = isPublic();
         const {card, isDragging, connectDragSource, connectDropTarget, bridge} = this.props;
         const opacity = isDragging ? 0.1 : 1;
-        const deleteColor = this.deleteColor;
-        // console.log(card);
 
-        if (!isPub) {
+        if (!isPublic()) {
             return connectDragSource(connectDropTarget(
                 <div
                     className="item card color-card"
-                    ref={(div) => {
-                        this.card = div;
+                    ref={(cardDiv) => {
+                        this.card = cardDiv;
                     }}
-                    style={{backgroundColor: "#" + card.hex, opacity: opacity}}
-                >
+                    style={{backgroundColor: "#" + card.hex, opacity: opacity}}>
+
                 <span
-                    onClick={deleteColor}
-                >
+                    onClick={this.deleteColor}>
                     <i className="fas fa-trash-alt delete-handler"/>
                 </span>
+
                     <Link to={'/project/' + bridge.id + '/view/color/element/' + card.id}>
                         {/*<img src="/images/move-handler.svg" className="" width="22" />*/}
                         {/*<i className="fas fa-expand-arrows-alt move-handler" style={{color: this.state.infoColor}}/>*/}
@@ -77,13 +63,13 @@ class ColorCard extends Component {
                                         : null}
                                     {i === 1
                                         ? <span className="rgb-span">
-                                            <span id="rgb-text">R</span>
+                                            <span id="rgb-text">G</span>
                                             <span id="rgb-number">{a}</span>
                                         </span>
                                         : null}
                                     {i === 2
                                         ? <span className="rgb-span">
-                                            <span id="rgb-text">R</span>
+                                            <span id="rgb-text">B</span>
                                             <span id="rgb-number">{a}</span>
                                           </span>
                                         : null}
@@ -112,13 +98,13 @@ class ColorCard extends Component {
                                     : null}
                                 {i === 1
                                     ? <span className="rgb-span">
-                                        <span id="rgb-text">R</span>
+                                        <span id="rgb-text">G</span>
                                         <span id="rgb-number">{a}</span>
                                     </span>
                                     : null}
                                 {i === 2
                                     ? <span className="rgb-span">
-                                        <span id="rgb-text">R</span>
+                                        <span id="rgb-text">B</span>
                                         <span id="rgb-number">{a}</span>
                                       </span>
                                     : null}
