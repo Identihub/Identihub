@@ -24,11 +24,6 @@ class Section extends Component {
         this.updateLocalState(this.props.section);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        const {titleValue, descriptionValue} = this.state;
-        return (nextState.titleValue !== titleValue || nextState.descriptionValue !== descriptionValue);
-    }
-
     updateLocalState = (section) => {
         this.setState({
             titleValue: section.title ? section.title : this.state.title,

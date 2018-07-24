@@ -39,9 +39,8 @@ class IconCard extends Component {
         if (!isPub) {
             return connectDragSource(connectDropTarget(
                 <div className="item card" style={cardStyle}>
-                    <Link to={'/project/' + bridge.id + '/view/icon/element/' + card.id}>
+                    <Link to={'/view/icon/element/' + card.id}>
                         <img src={'/assets/' + card.filename_png}/>
-                        {/*<i className="fas fa-expand-arrows-alt move-handler"/>*/}
                     </Link>
                     <span onClick={deleteIcon}>
                         <i className="fas fa-trash-alt delete-handler"/>

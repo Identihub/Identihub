@@ -34,19 +34,19 @@
 
     @php
 
-        $options = [
+        $LaravelObject = [
                 'csrfToken' => csrf_token(),
-                'pusherId' => isset($pusherId) ? $pusherId : '',
-                'public_bridge_path' => isset($public_bridge_path) ? $public_bridge_path : '',
-                'is_public' => isset($is_public) ? $is_public : false,
-                'bridge' => isset($bridge) ? $bridge : null,
-                'section_types' => isset($section_types) ? $section_types : null
+                'pusherId' => $pusherId ?? '',
+                'public_bridge_path' => $public_bridge_path ?? '',
+                'is_public' => $is_public ?? false,
+                'bridge' => $bridge ?? null,
+                'section_types' => $section_types ?? null
             ];
 
     @endphp
 
     <script>
-        window.Laravel = {!! json_encode($options) !!};
+        window.Laravel = {!! json_encode($LaravelObject) !!};
     </script>
 
 </head>

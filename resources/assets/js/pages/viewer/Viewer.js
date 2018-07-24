@@ -66,7 +66,7 @@ class Viewer extends Component {
      */
     closePage = () => {
         const {bridge} = this.props;
-        this.props.history.push('/project/' + bridge.id);
+        this.props.history.push('/');
     };
 
     /**
@@ -150,13 +150,7 @@ class Viewer extends Component {
         if (!objectType || !bridge)
             return;
 
-        let url = null;
-
-        if (!isPublic()) {
-            url = '/project/' + bridge.id + '/view/' + objectType + '/element/' + element.id;
-        } else {
-            url = '/view/' + objectType + '/element/' + element.id;
-        }
+        const url = '/view/' + objectType + '/element/' + element.id;
 
         return this.props.history.push(url);
     };
@@ -248,11 +242,10 @@ class Viewer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
 
-    ownProps = paramsChecker(ownProps);
-    const bridgeId = ownProps.match.params.id;
+    let bridge = JSON.parse(window.Laravel.bridge);
 
     return {
-        bridge: getBridge(parseInt(bridgeId))(state),
+        bridge: getBridge(parseInt(bridge.id))(state),
         sectionTypes: getSectionTypes(state),
         iconsSection: getSectionType(state, "ICONS"),
         colorsSection: getSectionType(state, "COLORS"),

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {DragSource, DropTarget} from 'react-dnd';
 import {findDOMNode} from 'react-dom';
 import {dropTargetFlow, isPublic} from '../../helpers';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {addImageConverted, deleteImage, updateImageFile} from "../../reducers/Bridge/BridgeApiCalls";
 import {bindActionCreators} from "redux";
 
@@ -16,8 +16,8 @@ class ImageCard extends Component {
     }
 
     deleteImage() {
-        const { deleteImage, bridge, card } = this.props;
-        if(deleteImage){
+        const {deleteImage, bridge, card} = this.props;
+        if (deleteImage) {
             deleteImage(bridge.id, card.id);
         }
     }
@@ -33,7 +33,7 @@ class ImageCard extends Component {
             return connectDragSource(connectDropTarget(
                 <div className="item card" style={{opacity: opacity}}>
                     <Link
-                        to={'/project/' + bridge.id + '/view/image/element/' + card.id}
+                        to={'/view/image/element/' + card.id}
                         style={{
                             backgroundImage: "url(" + '/assets/' + card.filename + ")",
                             backgroundPosition: 'center',
@@ -68,4 +68,4 @@ const dispatchToProps = (dispatch) => {
     }, dispatch)
 };
 
-export default dropTargetFlow("IMAGE")( connect(state => state, dispatchToProps)(ImageCard));
+export default dropTargetFlow("IMAGE")(connect(state => state, dispatchToProps)(ImageCard));

@@ -9,7 +9,7 @@ import {isPublic} from '../../helpers';
 
 class ColorSidebar extends Component {
 
-    propTypes = {
+    static propTypes = {
         color: PropTypes.shape({
             id: PropTypes.number
         })

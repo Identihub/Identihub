@@ -47,7 +47,7 @@ class ColorCard extends Component {
                     <i className="fas fa-trash-alt delete-handler"/>
                 </span>
 
-                    <Link to={'/project/' + bridge.id + '/view/color/element/' + card.id}>
+                    <Link to={'/view/color/element/' + card.id}>
                         {/*<img src="/images/move-handler.svg" className="" width="22" />*/}
                         {/*<i className="fas fa-expand-arrows-alt move-handler" style={{color: this.state.infoColor}}/>*/}
                     </Link>

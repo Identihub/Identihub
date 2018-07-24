@@ -12,7 +12,7 @@ export function configureStore(initialState = {}) {
     // Middleware and store enhancers
     const middlewares = [
         thunk,
-        logger
+        // logger
     ];
 
 

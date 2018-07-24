@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { createColor } from '../reducers/Bridge/BridgeApiCalls';
-import { getBridge } from '../reducers/Bridge/BridgeReducer';
+import {createColor} from '../reducers/Bridge/BridgeApiCalls';
+import {getBridge} from '../reducers/Bridge/BridgeReducer';
+
 const convert = require('color-convert');
 
 class AddColor extends Component {
@@ -10,8 +11,10 @@ class AddColor extends Component {
     constructor(props) {
         super(props);
 
+        let bridge = JSON.parse(window.Laravel.bridge);
+
         this.state = {
-            id: props.match.params.id,
+            id: bridge.id,
 
             hex: 'FFFFFF',
             hexIsValid: true,
@@ -42,7 +45,7 @@ class AddColor extends Component {
         const rgb = state.r + " " + state.g + " " + state.b;
         const hex = state.hex;
         const cmyk = state.c + " " + state.m + " " + state.y + " " + state.k;
-        if(state.hexIsValid){
+        if (state.hexIsValid) {
             this.props.dispatch(createColor(this.state.id, hex, rgb, cmyk));
             this.props.history.goBack();
         }
@@ -51,11 +54,11 @@ class AddColor extends Component {
     handleRBG(key, value) {
         let changes = {};
 
-        if(value < 0 || value === ""){
+        if (value < 0 || value === "") {
             changes[key] = 0;
-        }else if(value > 255){
+        } else if (value > 255) {
             changes[key] = 255;
-        }else{
+        } else {
             changes[key] = value;
         }
 
@@ -77,11 +80,11 @@ class AddColor extends Component {
     handleCMYK(key, value) {
         let changes = {};
 
-        if(value < 0 || value === ""){
+        if (value < 0 || value === "") {
             changes[key] = 0;
-        }else if(value > 100){
+        } else if (value > 100) {
             changes[key] = 100;
-        }else{
+        } else {
             changes[key] = value;
         }
 
@@ -101,7 +104,7 @@ class AddColor extends Component {
     handleHEX(element) {
         const value = element.target.value;
         const isValid = value.match("^([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$");
-        if(isValid !== null) {
+        if (isValid !== null) {
             const rgb = convert.hex.rgb(this.state.hex);
             const cmyk = convert.hex.cmyk(this.state.hex);
             this.setState({
@@ -115,7 +118,7 @@ class AddColor extends Component {
                 y: cmyk[2],
                 k: cmyk[3]
             });
-        }else{
+        } else {
             this.setState({
                 hex: value.toUpperCase(),
                 hexIsValid: false
@@ -133,15 +136,21 @@ class AddColor extends Component {
             <div className="add-color">
                 <span className="overlay" onClick={this.closeWindow}> </span>
                 <div className="dialog-box">
-                    <img className="close-window" onClick={this.closeWindow} src="/images/close.svg" />
+                    <img className="close-window" onClick={this.closeWindow} src="/images/close.svg"/>
                     <div className="wrapper">
                         <div className="rgb">
                             <span>rgb( </span>
-                            <input type="number" onChange={function(e) { that.handleRBG("r", e.target.value) }} value={this.state.r}/>
+                            <input type="number" onChange={function (e) {
+                                that.handleRBG("r", e.target.value)
+                            }} value={this.state.r}/>
                             <span>, </span>
-                            <input onChange={function(e) { that.handleRBG('g', e.target.value) }} type="number" value={this.state.g}/>
+                            <input onChange={function (e) {
+                                that.handleRBG('g', e.target.value)
+                            }} type="number" value={this.state.g}/>
                             <span>, </span>
-                            <input onChange={function(e) { that.handleRBG('b', e.target.value) }} type="number" value={this.state.b}/>
+                            <input onChange={function (e) {
+                                that.handleRBG('b', e.target.value)
+                            }} type="number" value={this.state.b}/>
                             <span> )</span>
                         </div>
                         <div className="hex">
@@ -151,13 +160,21 @@ class AddColor extends Component {
                         </div>
                         <div className="cmyk">
                             <span>cmyk( </span>
-                            <input onChange={function(e) { that.handleCMYK("c", e.target.value) }} type="number" value={this.state.c}/>
+                            <input onChange={function (e) {
+                                that.handleCMYK("c", e.target.value)
+                            }} type="number" value={this.state.c}/>
                             <span>%, </span>
-                            <input onChange={function(e) { that.handleCMYK("m", e.target.value) }} type="number" value={this.state.m}/>
+                            <input onChange={function (e) {
+                                that.handleCMYK("m", e.target.value)
+                            }} type="number" value={this.state.m}/>
                             <span>%, </span>
-                            <input onChange={function(e) { that.handleCMYK("y", e.target.value) }} type="number" value={this.state.y}/>
+                            <input onChange={function (e) {
+                                that.handleCMYK("y", e.target.value)
+                            }} type="number" value={this.state.y}/>
                             <span>%, </span>
-                            <input onChange={function(e) { that.handleCMYK("k", e.target.value) }} type="number" value={this.state.k}/>
+                            <input onChange={function (e) {
+                                that.handleCMYK("k", e.target.value)
+                            }} type="number" value={this.state.k}/>
                             <span>% )</span>
                         </div>
                         <a onClick={this.addColor} className={buttonClassName}>Add Color</a>

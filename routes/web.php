@@ -29,11 +29,12 @@ Route::group(['middleware' => 'installationChecker'], function () {
     Route::group([
         'middleware' => 'auth',
         'namespace'  => 'App',
+        'prefix'     => 'app',
     ], function () {
-
+        Route::get('/', 'AppController@index')->name('app');
     });
 
-    Route::get('/{slug}', 'App\AppController@index')->name('app');
+    Route::get('/{slug}', 'App\AppController@project')->name('app');
     // Route::get('/{slug}', 'App\AppController@publicIdentities')->name('public-identity');
 });
 
