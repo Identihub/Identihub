@@ -35,7 +35,6 @@ Route::group(['middleware' => 'installationChecker'], function () {
     });
 
     Route::get('/{slug}', 'App\AppController@project')->name('app');
-    // Route::get('/{slug}', 'App\AppController@publicIdentities')->name('public-identity');
 });
 
 Route::group([

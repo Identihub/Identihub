@@ -8,8 +8,8 @@ import { Helmet } from 'react-helmet';
 
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
-import BridgesList from '../components/BridgesList';
-import BridgesEmptyState from '../components/BridgesEmptyState';
+import BridgesList from '../components/bridge/BridgesList';
+import BridgesEmptyState from '../components/bridge/BridgesEmptyState';
 
 export class BridgesPage extends Component {
 
