@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Bridge;
 use App\Icon;
+use App\Policies\BridgePolicy;
 use App\Policies\IconPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,8 +16,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
-        Icon::class => IconPolicy::class,
+        'App\Model'   => 'App\Policies\ModelPolicy',
+        Icon::class   => IconPolicy::class,
+        Bridge::class => BridgePolicy::class,
     ];
 
     /**

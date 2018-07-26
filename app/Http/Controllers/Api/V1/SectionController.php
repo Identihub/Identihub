@@ -73,6 +73,14 @@ class SectionController extends Controller
         }
     }
 
+    /**
+     * Update title.
+     *
+     * @param SectionTitleRequest $request
+     * @param                     $bridgeId
+     * @param                     $sectionId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateTitle(SectionTitleRequest $request, $bridgeId, $sectionId)
     {
         try {
@@ -87,7 +95,10 @@ class SectionController extends Controller
             $section->title = $request->title;
             $section->save();
 
-            event(new BridgeUpdated($bridge));
+            try {
+                event(new BridgeUpdated($bridge));
+            } catch (\Exception $ex) {
+            }
 
             return response()->json([
                 'bridge' => $bridge,
@@ -103,6 +114,14 @@ class SectionController extends Controller
         }
     }
 
+    /**
+     * Update description.
+     *
+     * @param SectionDescriptionRequest $request
+     * @param                           $bridgeId
+     * @param                           $sectionId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateDescription(SectionDescriptionRequest $request, $bridgeId, $sectionId)
     {
         try {
@@ -116,7 +135,10 @@ class SectionController extends Controller
             $section->description = $request->get('description');
             $section->save();
 
-            event(new BridgeUpdated($bridge));
+            try {
+                event(new BridgeUpdated($bridge));
+            } catch (\Exception $ex) {
+            }
 
             return response()->json([
                 'bridge' => $bridge,

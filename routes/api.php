@@ -19,7 +19,6 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::resource('bridges.sections', 'SectionController');
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateTitle', 'SectionController@updateTitle');
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateDescription', 'SectionController@updateDescription');
-    Route::post('/bridges/{bridgeId}/icons', 'SourceFileController@storeIcon');
     Route::post('/bridges/{bridgeId}/icons/{iconId}/convert', 'SourceFileController@addIconConverted');
     Route::get('/fonts/search/{search}', 'FontsController@search');
     Route::post('/bridges/{bridgeId}/fonts', 'FontsController@createFont');
@@ -33,7 +32,6 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::delete('/bridges/{bridgeId}/icons/{iconId}', 'SourceFileController@deleteIcon');
     Route::delete('/bridges/{bridgeId}/images/{iconId}', 'SourceFileController@deleteImage');
     Route::post('/bridges/{bridgeId}/icons/{iconId}/converted', 'SourceFileController@addIconConverted');
-    Route::post('/bridges/{bridgeId}/icons/{iconId}/filename', 'SourceFileController@updateIconFile');
 
     Route::patch('/bridges/{bridgeId}/slug', 'BridgeController@updateSlug');
     Route::post('/bridges/{bridgeId}/images/', 'SourceFileController@storeImage');
@@ -43,7 +41,9 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::post('/order/{type}/{objectId}/{newOrder}', 'OrderController@changedOrderOnSameSection');
     Route::post('/changeSection/{type}/{objectid}/{newSection}', 'OrderController@changedSection');
 
+    Route::post('/bridges/{bridge}/icons', 'IconsController@storeIcon');
     Route::put('/bridges/{bridge}/icons/{icon}/update/bg', 'IconsController@updateBgColor');
+    Route::post('/bridges/{bridge}/icons/{icon}/filename', 'IconsController@updateIconFile');
 });
 
 Route::group(['middleware' => 'throttle:100,60', 'namespace' => 'Api\V1', 'prefix' => 'v1'], function () {

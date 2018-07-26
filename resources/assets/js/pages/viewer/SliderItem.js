@@ -13,12 +13,14 @@ class SliderItem extends Component {
     getContentOfElement = () => {
         const {elementType, element} = this.props;
 
+        let randomId = Math.floor(Math.random() * 1000);
+
         switch (elementType) {
             case 'icon':
                 const iconStyle = element.bg_color ? {backgroundColor: element.bg_color} : {};
 
                 return (<div className="icon-item" style={iconStyle}>
-                    <img src={'/assets/' + element.filename_png}/>
+                    <img src={'/assets/' + element.filename_png + '?id=' + randomId}/>
                 </div>);
 
             case 'image':
