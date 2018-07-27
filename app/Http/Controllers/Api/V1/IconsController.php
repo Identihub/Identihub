@@ -172,8 +172,10 @@ class IconsController extends Controller
         }
 
         $im = new \Imagick();
+        $im->setBackgroundColor(new \ImagickPixel('transparent'));
         $im->readImageBlob(file_get_contents($request->file('icon')->getRealPath()));
         $im->setImageFormat('png32');
+        $im->resizeImage($im->getImageWidth(), $im->getImageHeight(), \Imagick::FILTER_LANCZOS, 1);
 
         $request->file('icon')->storeAs('', $icon->filename, 'assets');
 

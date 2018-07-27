@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import NotificationSystem from 'react-notification-system';
+import {setIconUpdated} from '../../reducers/Extra/ExtraActions';
 
 import SvgDownloadArea from './SvgDownloadArea';
 
@@ -44,9 +45,10 @@ class IconSidebar extends Component {
     };
 
     updateIcon = (event) => {
-        const {updateIconFile, bridge, icon} = this.props;
+        const {updateIconFile, setIconUpdated, bridge, icon} = this.props;
         const file = event.target.files[0];
         updateIconFile(bridge.id, icon.id, file);
+        setIconUpdated(icon.id);
     };
 
     updateAssetBgColor = (color) => {
@@ -153,14 +155,15 @@ IconSidebar.propTypes = {
     })
 };
 
-const dispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         deleteIcon,
         addIconConverted,
         updateIconFile,
+        setIconUpdated,
         downloadIconConverted,
         updateAssetBgColor
     }, dispatch)
 };
 
-export default connect(state => state, dispatchToProps)(IconSidebar);
+export default connect(state => state, mapDispatchToProps)(IconSidebar);

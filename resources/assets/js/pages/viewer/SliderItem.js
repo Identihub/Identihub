@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 
 class SliderItem extends Component {
 
@@ -19,8 +20,14 @@ class SliderItem extends Component {
             case 'icon':
                 const iconStyle = element.bg_color ? {backgroundColor: element.bg_color} : {};
 
+                let imgAsset = `/assets/${element.filename_png}`;
+                if (this.props.icon_updated && this.props.icon_updated === element.id) {
+                    let randomId = Math.floor(Math.random() * 1000);
+                    imgAsset = `/assets/${element.filename_png}?id=${randomId}`;
+                }
+
                 return (<div className="icon-item" style={iconStyle}>
-                    <img src={'/assets/' + element.filename_png + '?id=' + randomId}/>
+                    <img src={imgAsset}/>
                 </div>);
 
             case 'image':
@@ -55,4 +62,10 @@ class SliderItem extends Component {
     }
 }
 
-export default SliderItem;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        icon_updated: state.extras.icon_updated,
+    }
+};
+
+export default connect(mapStateToProps)(SliderItem);
