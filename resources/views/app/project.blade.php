@@ -1,4 +1,4 @@
-@extends('layouts.panel')
+@extends('layouts.project')
 
 @section('content')
 

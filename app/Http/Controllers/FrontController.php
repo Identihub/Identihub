@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use Auth;
 
 class FrontController
 {
-
-    public function welcome()
+    /**
+     * Home Page.
+     */
+    public function home()
     {
-        if(Auth::guest()){
-            return view('auth/login');
-        }
-        else {
+        if (auth()->guest()) {
+            return redirect()->route('login');
+        } else {
             return redirect('/app#/projects');
         }
     }

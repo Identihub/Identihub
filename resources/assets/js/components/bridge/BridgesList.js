@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BridgeCard from './BridgeCard';
-import EmptyCard from './EmptyCard';
+import EmptyCard from '../EmptyCard';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 class BridgesList extends Component{
@@ -29,7 +29,5 @@ class BridgesList extends Component{
       );
     }
 }
-
-
 
 export default BridgesList;

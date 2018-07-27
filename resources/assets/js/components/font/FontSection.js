@@ -1,48 +1,26 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SectionWrapper from '../SectionWrapper';
-import { connect } from 'react-redux';
-import { getSectionType } from '../../reducers/SectionType/SectionTypeReducer';
-import { filterSectionsWithSectionType, sortByOrder } from '../../helpers';
+import {connect} from 'react-redux';
+import {getSectionType} from '../../reducers/SectionType/SectionTypeReducer';
+import {filterSectionsWithSectionType, sortByOrder} from '../../helpers';
 import FontSectionRow from './FontSectionRow';
 import EmptySectionState from '../EmptySectionState';
 import renderSection from '../../HOC/renderSectionHOC';
 
-
 class FontSection extends Component {
 
-    constructor(params) {
-        super(params);
-        this.emptyStateText = "No Fonts found here, start by adding a new font.";
-        this.addFont = this.addFont.bind(this);
-    }
-
-    addFont() {
-        const {
-            bridge,
-            history
-        } = this.props;
-        history.push('/project/' + bridge.id + "/add-font");
-    }
+    addFont = () => {
+        this.props.history.push("/add-font");
+    };
 
     render() {
+        const {bridge, fontsSection} = this.props;
 
-        const {
-            bridge,
-            fontsSection
-        } = this.props;
+        let {fonts, sections} = bridge;
 
-        let {
-            fonts,
-            sections
-        } = bridge;
-
-        const {
-            addFont,
-            emptyStateText
-        } = this;
-
-        const emptyState = <EmptySectionState style={{width: "56%", marginLeft: "23%"}} soloElement={true} emptyStateText="No fonts found here, start by adding a new font"/>;
+        const emptyState = <EmptySectionState style={{width: "56%", marginLeft: "23%"}} soloElement={true}
+                                              emptyStateText="No fonts found here, start by adding a new font"/>;
 
         return (
             <div className="fonts-section">
@@ -53,16 +31,16 @@ class FontSection extends Component {
                     bridge={bridge}
                     sectionType={fontsSection}
                     canCreateSection={false}
-                    onResourceClick={addFont}>
-                    {   fonts.length === 0 ? emptyState :
-                            sortByOrder(filterSectionsWithSectionType(sections, fontsSection)).map( section => (
-                                <FontSectionRow
-                                  key={section.id}
-                                  bridge={bridge}
-                                  section={section}
-                                  fonts={fonts}
-                                  emptyStateText={emptyStateText}/>
-                            ))
+                    onResourceClick={this.addFont}>
+                    {fonts.length === 0 ? emptyState :
+                        sortByOrder(filterSectionsWithSectionType(sections, fontsSection)).map(section => (
+                            <FontSectionRow
+                                key={section.id}
+                                bridge={bridge}
+                                section={section}
+                                fonts={fonts}
+                                emptyStateText="No Fonts found here, start by adding a new font."/>
+                        ))
                     }
                 </SectionWrapper>
             </div>
@@ -72,9 +50,9 @@ class FontSection extends Component {
 }
 
 const mapStateToProps = (state, _) => {
-  return {
-    fontsSection: getSectionType(state, "FONTS")
-  }
+    return {
+        fontsSection: getSectionType(state, "FONTS")
+    }
 };
 
 FontSection.propTypes = {

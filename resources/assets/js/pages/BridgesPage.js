@@ -8,25 +8,20 @@ import { Helmet } from 'react-helmet';
 
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
-import BridgesList from '../components/BridgesList';
-import BridgesEmptyState from '../components/BridgesEmptyState';
+import BridgesList from '../components/bridge/BridgesList';
+import BridgesEmptyState from '../components/bridge/BridgesEmptyState';
 
 export class BridgesPage extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         this.props.dispatch(fetchBridges());
-
     }
 
     render() {
         const block = this.props.hasBridges ?
             <BridgesList bridges={this.props.bridges} />
             :
-            <BridgesEmptyState/>
-        ;
+            <BridgesEmptyState/>;
 
         let title = 'List';
 

@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SectionWrapper from '../SectionWrapper';
-import { bindActionCreators } from 'redux';
-import { getSectionType } from '../../reducers/SectionType/SectionTypeReducer';
-import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {getSectionType} from '../../reducers/SectionType/SectionTypeReducer';
+import {connect} from 'react-redux';
 import ImageSectionRow from './ImageSectionRow';
-import { filterSectionsWithSectionType, sortByOrder } from '../../helpers';
-import { createImage } from '../../reducers/Bridge/BridgeApiCalls';
+import {filterSectionsWithSectionType, sortByOrder} from '../../helpers';
+import {createImage} from '../../reducers/Bridge/BridgeApiCalls';
 import renderSection from '../../HOC/renderSectionHOC'
 
 class ImageSection extends Component {
@@ -63,15 +63,14 @@ class ImageSection extends Component {
                        accept="image/png,image/jpg,image/jpeg"
                        name="image"/>
                 {
-                    sortByOrder(filterSectionsWithSectionType(sections, imagesSection)).map( section => {
-                        console.log(section);
+                    sortByOrder(filterSectionsWithSectionType(sections, imagesSection)).map(section => {
                         return (
-                          <ImageSectionRow
-                              key={section.id}
-                              bridge={bridge}
-                              section={section}
-                              images={images}
-                              emptyStateText={emptyStateText}/>
+                            <ImageSectionRow
+                                key={section.id}
+                                bridge={bridge}
+                                section={section}
+                                images={images}
+                                emptyStateText={emptyStateText}/>
                         )
                     })
                 }
@@ -82,24 +81,24 @@ class ImageSection extends Component {
 }
 
 const mapStateToProps = (state, _) => {
-  return {
-    imagesSection: getSectionType(state, "IMAGES")
-  }
+    return {
+        imagesSection: getSectionType(state, "IMAGES")
+    }
 };
 
 ImageSection.propTypes = {
-  imagesSection: PropTypes.shape({
-    id: PropTypes.number
-  }).isRequired,
-  bridge: PropTypes.shape({
-    id: PropTypes.integer
-  }).isRequired
+    imagesSection: PropTypes.shape({
+        id: PropTypes.number
+    }).isRequired,
+    bridge: PropTypes.shape({
+        id: PropTypes.integer
+    }).isRequired
 };
 
 const dispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    createImage
-  }, dispatch)
+    return bindActionCreators({
+        createImage
+    }, dispatch)
 };
 
 export default renderSection('images')(connect(mapStateToProps, dispatchToProps)(ImageSection));

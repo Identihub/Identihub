@@ -14,9 +14,9 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => 'installationChecker'], function(){
+Route::group(['middleware' => 'installationChecker'], function () {
 
-    Route::get('/', 'FrontController@welcome')->name('home');
+    Route::get('/', 'FrontController@home')->name('home');
     Route::get('/identities/{bridge-slug}', 'FrontController@bridge')->name('public-bridge');
 
     // Activation link routes
@@ -24,24 +24,23 @@ Route::group(['middleware' => 'installationChecker'], function(){
     Route::post('/auth/link', 'Auth\\ActivationLinkController@sendLink')->name('activate.post');
     Route::get('/auth/check/{token}', 'Auth\\ActivationLinkController@activate')->name('activate.check');
 
-    Route::get('/project/{slug}', 'App\AppController@publicIdentities')->name('public-identity');
-
     Auth::routes();
 
     Route::group([
         'middleware' => 'auth',
-        'namespace' => 'App',
-        'prefix' => 'app'
+        'namespace'  => 'App',
+        'prefix'     => 'app',
     ], function () {
         Route::get('/', 'AppController@index')->name('app');
     });
 
+    Route::get('/{slug}', 'App\AppController@project')->name('app');
 });
 
 Route::group([
     'namespace' => "Installation",
-    'prefix' => 'installation'
-], function() {
+    'prefix'    => 'installation',
+], function () {
     Route::get('/introduction', 'InstallationController@introduction')->name('installation');
     Route::get('/database', 'InstallationController@databaseInformation')->name('introduction.database');
     Route::post('/database', 'InstallationController@saveDatabaseInformation')->name('introduction.database.post');

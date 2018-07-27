@@ -4,22 +4,17 @@ import {findDOMNode} from 'react-dom';
 import {addBridge} from './reducers/Bridge/BridgeActions';
 import {addSectionTypes} from './reducers/SectionType/SectionTypeActions';
 
-
 export const paramsChecker = (params) => {
 
-    if (window.Laravel.is_public) {
+    if (isPublic()) {
         params.match.params.id = JSON.parse(window.Laravel.bridge).id;
-        return params;
     }
+
     return params;
 };
 
-
 export const isPublic = () => {
-    if (window.Laravel.is_public) {
-        return window.Laravel.is_public;
-    }
-    return false;
+    return !!window.Laravel.is_public;
 };
 
 export const fillStore = (store) => {
@@ -181,15 +176,3 @@ export function sortWithSectionAndOrder(data, sections, sectionType) {
         });
     }));
 }
-
-
-// export function getColorBrightness(hex) {
-//     // strip off any leading #
-//     hex = hex.replace('#', '');
-//
-//     const r = parseInt(hex.substr(0, 2), 16);
-//     const g = parseInt(hex.substr(2, 2), 16);
-//     const b = parseInt(hex.substr(4, 2), 16);
-//
-//     return ((r * 299) + (g * 587) + (b * 114)) / 1000;
-// }

@@ -17,29 +17,41 @@ class AppController extends Controller
      */
     public function index()
     {
-        return $this->view->make('app.app', [
-            'pusherId' => env('PUSHER_APP_KEY'),
-            'public_bridge_path' => url('/') . "/project/",
-            'is_public' => false,
-            'bridge' => null
+        return view('app.app', [
+            'pusherId'           => env('PUSHER_APP_KEY'),
+            'public_bridge_path' => url('/') . "/bridge/",
+            'is_public'          => false,
+            'bridge'             => null,
         ]);
     }
 
-    public function publicIdentities($slug)
+    /**
+     * Show the application project.
+     *
+     * @param $slug
+     * @return mixed
+     */
+    public function project($slug)
     {
-        $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->where('slug', $slug)->get();
+        $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->where('slug', $slug)->first();
 
-        if($bridge->count() === 0){
+        $loggedUser = auth()->user();
+        if ($loggedUser) {
+            $isPublic = $loggedUser->id === $bridge->user_id;
+        } else {
+            $isPublic = false;
+        }
+
+        if ($bridge->count() === 0) {
             throw new ModelNotFoundException;
         }
 
-        return $this->view->make('app.public', [
-            'pusherId' => env('PUSHER_APP_KEY'),
-            'public_bridge_path' => url('/') . "/identities/",
-            'is_public' => true,
-            'bridge' => json_encode($bridge->first()),
-            'section_types' => json_encode(SectionType::all())
+        return view('app.project', [
+            'pusherId'           => env('PUSHER_APP_KEY'),
+            'public_bridge_path' => url('/') . "/",
+            'is_public'          => $isPublic ? false : true,
+            'bridge'             => json_encode($bridge),
+            'section_types'      => json_encode(SectionType::all()),
         ]);
     }
-
 }

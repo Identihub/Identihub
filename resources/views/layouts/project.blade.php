@@ -3,8 +3,8 @@
 
 @include('partials.head')
 
-<body>
-<div id="app">
+<body class="app-page">
+<div>
 
     @if(!isset($menu) || $menu !== false)
         <nav>
@@ -19,5 +19,7 @@
 </div>
 
 <footer>powered by <span>Identihub</span></footer>
+
+<script src="{{ mix('js/react-project.js') }}"></script>
 </body>
 </html>

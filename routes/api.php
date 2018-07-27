@@ -13,8 +13,8 @@
 */
 
 Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => 'v1'], function () {
-    Route::get('/me', 'UsersController@me');
     Route::resource('bridges', 'BridgeController');
+    Route::get('/me', 'UsersController@me');
     Route::patch('bridges/{id}/name', 'BridgeController@updateName');
     Route::resource('bridges.sections', 'SectionController');
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateTitle', 'SectionController@updateTitle');
