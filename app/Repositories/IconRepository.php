@@ -71,4 +71,6 @@ class IconRepository extends Repository
 
         return "/assets/$filenameConverted";
     }
+
+
 }

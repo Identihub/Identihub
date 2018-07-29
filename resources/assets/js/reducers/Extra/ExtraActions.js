@@ -11,6 +11,8 @@ export const UPDATE_ORDER_ON_ICON = 'UPDATE_ORDER_ON_ICON';
 export const UPDATE_ORDER_ON_IMAGE = 'UPDATE_ORDER_ON_IMAGE';
 export const UPDATE_BG_COLOR_ON_ICON = 'UPDATE_BG_COLOR_ON_ICON';
 
+export const SET_ICON_UPDATED = 'SET_ICON_UPDATED';
+
 // Export Actions
 export function changeHasBridges(hasBridges) {
     return {
@@ -29,6 +31,15 @@ export function addFonts(fonts) {
 export function deleteFonts() {
     return {
         type: DELETE_FONTS
+    }
+}
+
+export function setIconUpdated(updatedId) {
+    return {
+        type: SET_ICON_UPDATED,
+        payload: {
+            updatedId: updatedId
+        }
     }
 }
 

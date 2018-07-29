@@ -17,12 +17,16 @@ class AssetBgColor extends Component {
     componentWillMount() {
         if (this.props.selectedColor) {
             this.setState({selectedColor: this.props.selectedColor});
+        } else {
+            this.setState({selectedColor: '#ffffff'});
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.selectedColor) {
+        if (nextProps.selectedColor) {
             this.setState({selectedColor: nextProps.selectedColor});
+        } else {
+            this.setState({selectedColor: '#ffffff'});
         }
     }
 

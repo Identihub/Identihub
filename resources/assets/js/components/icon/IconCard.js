@@ -36,11 +36,18 @@ class IconCard extends Component {
             cardStyle.backgroundColor = bgColor
         }
 
+        // Reload asset if it has been updated.
+        let imgAsset = `/assets/${card.filename_png}`;
+        if (this.props.icon_updated && this.props.icon_updated === card.id) {
+            let randomId = Math.floor(Math.random() * 1000);
+            imgAsset = `/assets/${card.filename_png}?id=${randomId}`;
+        }
+
         if (!isPub) {
             return connectDragSource(connectDropTarget(
                 <div className="item card" style={cardStyle}>
                     <Link to={'/view/icon/element/' + card.id}>
-                        <img src={'/assets/' + card.filename_png}/>
+                        <img src={imgAsset}/>
                     </Link>
                     <span onClick={deleteIcon}>
                         <i className="fas fa-trash-alt delete-handler"/>
@@ -51,7 +58,7 @@ class IconCard extends Component {
             return (
                 <div className="item card" style={cardStyle}>
                     <Link to={'/view/icon/element/' + card.id}>
-                        <img src={'/assets/' + card.filename_png}/>
+                        <img src={imgAsset}/>
                     </Link>
                 </div>
             );
@@ -60,7 +67,13 @@ class IconCard extends Component {
     }
 }
 
-const dispatchToProps = (dispatch) => {
+const mapStateToProps = (state, ownProps) => {
+    return {
+        icon_updated: state.extras.icon_updated,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         deleteIcon,
         addIconConverted,
@@ -68,4 +81,4 @@ const dispatchToProps = (dispatch) => {
     }, dispatch)
 };
 
-export default dropTargetFlow("ICON")(connect(state => state, dispatchToProps)(IconCard));
+export default dropTargetFlow("ICON")(connect(mapStateToProps, mapDispatchToProps)(IconCard));
