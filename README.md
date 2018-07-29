@@ -23,10 +23,10 @@
 
 ## Demos: 
 
-* [Identihub](https://demo.identihub.co/project/identihub)
-* [Ura Design](https://demo.identihub.co/project/uradesign)
-* [Firefox](https://demo.identihub.co/project/firefox)
-* [The Tor Project](https://demo.identihub.co/project/tor-project)
+* [Identihub](https://demo.identihub.co/identihub)
+* [Ura Design](https://demo.identihub.co/uradesign)
+* [Firefox](https://demo.identihub.co/firefox)
+* [The Tor Project](https://demo.identihub.co/tor-project)
 
 
 ---
