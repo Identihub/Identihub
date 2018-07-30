@@ -299,14 +299,6 @@
           margin-left: 17px;
         }
 
-        .cover {
-          position: fixed;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-        }
-
         .preview-color {
           width: 21px;
           height: 19px;
@@ -315,9 +307,10 @@
           border-bottom-right-radius: 1px;
         }
 
-        .chrome-picker {
+        .photoshop-picker {
           input {
             background: #dedede !important;
+            color: #666;
           }
         }
       }

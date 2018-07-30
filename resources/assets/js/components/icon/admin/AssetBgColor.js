@@ -36,7 +36,11 @@ class AssetBgColor extends Component {
 
     handleClose = () => {
         this.setState({displayColorPicker: false});
+    };
+
+    onColorAccept = () => {
         this.props.onBgColorChange(this.state.selectedColor);
+        this.handleClose();
     };
 
     handleChange = (color) => {
@@ -72,14 +76,15 @@ class AssetBgColor extends Component {
                         <div className="default-color black" onClick={this.setBlackColor}></div>
                     </div>
                     <div className="color-picker">
-                        <input type="text" className="input-picker"
-                               onFocus={this.handleFocus} value={colorValue} readOnly={true}/>
+                        <input type="text" className="input-picker" value={colorValue} readOnly={true}/>
 
                         <div className="preview-color" onClick={this.handleFocus} style={previewStyle}></div>
 
                         {this.state.displayColorPicker ? <div className="popover">
                             <div className="cover" onClick={this.handleClose}/>
-                            <PhotoshopPicker color={selectedColor} onChange={this.handleChange}/>
+                            <PhotoshopPicker color={selectedColor} onChangeComplete={this.handleChange}
+                                             onCancel={this.handleClose}
+                                             onAccept={this.onColorAccept}/>
                         </div> : null}
                     </div>
                 </div>
