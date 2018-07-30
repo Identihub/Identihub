@@ -21,7 +21,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateDescription', 'SectionController@updateDescription');
     Route::post('/bridges/{bridgeId}/icons/{iconId}/convert', 'SourceFileController@addIconConverted');
     Route::get('/fonts/search/{search}', 'FontsController@search');
-    Route::post('/bridges/{bridgeId}/fonts', 'FontsController@createFont');
+    Route::post('/bridges/{bridge}/fonts', 'FontsController@createFont');
     Route::delete('/bridges/{bridgeId}/fonts/{fontId}', 'FontsController@deleteFont');
 
     Route::post('/bridges/{bridgeId}/colors', 'ColorsController@createColor');
