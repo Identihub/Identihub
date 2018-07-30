@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ChromePicker} from 'react-color';
+import {PhotoshopPicker} from 'react-color';
 import PropTypes from 'prop-types';
 
 class AssetBgColor extends Component {
@@ -79,13 +79,12 @@ class AssetBgColor extends Component {
 
                         {this.state.displayColorPicker ? <div className="popover">
                             <div className="cover" onClick={this.handleClose}/>
-                            <ChromePicker color={selectedColor} onChange={this.handleChange}/>
+                            <PhotoshopPicker color={selectedColor} onChange={this.handleChange}/>
                         </div> : null}
                     </div>
                 </div>
             </div>);
     }
-
 }
 
 export default AssetBgColor;
