@@ -17,7 +17,7 @@ RUN composer install -o --no-dev --no-interaction --no-progress
 #####
 # Indentihub image
 #####
-FROM php:7.2-fpm
+FROM php:7.1-fpm
 
 MAINTAINER Albatroz Jeremias <ajeremias@coletivos.org>
 
