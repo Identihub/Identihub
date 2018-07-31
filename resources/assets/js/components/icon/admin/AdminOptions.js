@@ -40,6 +40,17 @@ class AdminOptions extends Component {
                                 </span>
                         </div>
 
+                        <div className="dont-use">
+                            <div className="input-wrapper">
+                                <input id="dont_use" type="checkbox" name="dont_use" className="checkbox-input"
+                                       onChange={() => {
+                                           console.log('changed')
+                                       }}/>
+                                <label htmlFor="dont_use" className="checkbox"/>
+                                <label htmlFor="dont_use">Don't Use</label>
+                            </div>
+                        </div>
+
                         <AssetBgColor onBgColorChange={this.onBgColorChange}
                                       selectedColor={icon.bg_color}/>
 

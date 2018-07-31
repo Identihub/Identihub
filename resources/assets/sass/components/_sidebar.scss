@@ -209,7 +209,7 @@
   margin-top: 30px;
   overflow-y: visible;
 
-  & .title {
+  .title {
     span {
       font-size: 18px;
       color: $white;
@@ -217,7 +217,7 @@
     }
   }
 
-  & .featured {
+  .featured {
     margin-top: 10px;
     display: flex;
     align-items: center;
@@ -227,6 +227,25 @@
     }
     #checkbox {
       margin-left: 30px;
+    }
+  }
+
+  .dont-use {
+    margin-top: 10px;
+
+    .input-wrapper {
+      color: #fff;
+      display: flex;
+      align-items: center;
+
+      input[type="checkbox"] {
+        display: none !important;
+      }
+
+      label {
+        font-size: 12px;
+        color: $white;
+      }
     }
   }
 

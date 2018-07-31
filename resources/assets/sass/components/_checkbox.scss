@@ -1,15 +1,24 @@
-.checkbox{
-  width: 12px;
-  height: 12px;
-  border: 1px solid $grey-with-more-opacity;
-  transition: $common-transition;
+.checkbox {
+  width: 12px !important;
+  height: 12px !important;
+  border: 1px solid $grey-with-more-opacity !important;
+  transition: $common-transition !important;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
   visibility: hidden;
 }
 
-input[type="checkbox"]:checked ~ .checkbox{
-  background-color: $grey-lighter;
-  border: 1px solid $grey-lighter;
+input[type="checkbox"]:checked ~ .checkbox {
+  background-color: $grey-lighter !important;
+  border: 1px solid $grey-lighter !important;
+}
+
+.checkbox-input {
+  border: initial !important;
+  background: initial !important;
+  color: #F9F9F9 !important;
+  font-size: initial !important;
+  width: initial !important;
+  display: inline-block !important;
 }
