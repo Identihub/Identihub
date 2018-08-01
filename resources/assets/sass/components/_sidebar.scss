@@ -217,20 +217,7 @@
     }
   }
 
-  .featured {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    span {
-      font-size: 12px;
-      color: $white;
-    }
-    #checkbox {
-      margin-left: 30px;
-    }
-  }
-
-  .dont-use {
+  .check-setting {
     margin-top: 10px;
 
     .input-wrapper {
@@ -245,6 +232,10 @@
       label {
         font-size: 12px;
         color: $white;
+
+        &.txt-label {
+          padding-top: 2px;
+        }
       }
     }
   }

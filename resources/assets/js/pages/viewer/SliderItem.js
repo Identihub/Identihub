@@ -48,7 +48,6 @@ class SliderItem extends Component {
             default:
                 return <div/>;
         }
-
     };
 
     render() {

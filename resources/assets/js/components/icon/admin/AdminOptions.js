@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
 
-import Spinner from '../../../components/Spinner';
 import AssetBgColor from "./AssetBgColor";
+import {updateIconDontUseFlag} from '../../../reducers/Bridge/BridgeApiCalls';
 
 class AdminOptions extends Component {
 
@@ -21,6 +23,12 @@ class AdminOptions extends Component {
         this.props.updateAssetBgColor(color);
     };
 
+    markAsDontUse = (event) => {
+        const {icon, updateIconDontUseFlag} = this.props;
+        const is_checked = event.target.checked;
+        updateIconDontUseFlag(icon.bridge_id, icon.id, is_checked)
+    };
+
     render() {
         const {updateIcon, deleteIcon, icon} = this.props;
 
@@ -31,23 +39,22 @@ class AdminOptions extends Component {
                         <div className="title">
                             <span>Admin</span>
                         </div>
-                        <div className="featured">
-                            <span>Featured Image</span>
 
-                            <span id="checkbox">
-                                    <Spinner width={14}
-                                             height={14}/>
-                                </span>
+                        <div className="check-setting">
+                            <div className="input-wrapper">
+                                <input id="featured_thumbnail" type="checkbox" name="featured_thumbnail"
+                                       className="checkbox-input"/>
+                                <label htmlFor="featured_thumbnail" className="checkbox"/>
+                                <label htmlFor="featured_thumbnail" className="txt-label">Featured Thumbnail</label>
+                            </div>
                         </div>
 
-                        <div className="dont-use">
+                        <div className="check-setting">
                             <div className="input-wrapper">
                                 <input id="dont_use" type="checkbox" name="dont_use" className="checkbox-input"
-                                       onChange={() => {
-                                           console.log('changed')
-                                       }}/>
+                                       onChange={this.markAsDontUse} defaultChecked={icon.dont_use}/>
                                 <label htmlFor="dont_use" className="checkbox"/>
-                                <label htmlFor="dont_use">Don't Use</label>
+                                <label htmlFor="dont_use" className="txt-label">Don't Use</label>
                             </div>
                         </div>
 
@@ -79,4 +86,10 @@ class AdminOptions extends Component {
     }
 }
 
-export default AdminOptions;
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        updateIconDontUseFlag
+    }, dispatch)
+};
+
+export default connect(state => state, mapDispatchToProps)(AdminOptions);

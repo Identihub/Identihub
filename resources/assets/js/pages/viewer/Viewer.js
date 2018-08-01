@@ -7,11 +7,13 @@ import FontSidebar from '../../components/font/FontSidebar';
 import ColorSidebar from '../../components/color/ColorSidebar';
 import IconSidebar from '../../components/icon/IconSidebar';
 import ImageSidebar from '../../components/image/ImageSidebar';
-import {isPublic, paramsChecker, sortWithSectionAndOrder} from '../../helpers';
+import {sortWithSectionAndOrder} from '../../helpers';
 import {slide as Menu} from 'react-burger-menu'
 import {getBridge} from '../../selectors/BridgeSelector';
 import {withRouter} from 'react-router-dom';
 import SliderWrapper from "./SliderWrapper";
+import {bindActionCreators} from "redux";
+import {setDontUseIndicator} from "../../reducers/Extra/ExtraActions";
 
 class Viewer extends Component {
 
@@ -28,11 +30,19 @@ class Viewer extends Component {
             elementId: elementId,
             orderedElements: orderedElements,
             screenWidth: null,
+            dontUseIndicator: false
         }
     }
 
     componentDidMount() {
         this.updateWindowDimensions();
+
+        const {activeElement} = this.activeElement();
+        this.setState({
+            ...this.state,
+            dontUseIndicator: activeElement.dont_use
+        });
+
         window.addEventListener('resize', this.updateWindowDimensions);
         window.addEventListener("keydown", this.onEscKeyDown, false);
     }
@@ -145,28 +155,35 @@ class Viewer extends Component {
 
     onElementChange = (element) => {
         const {objectType} = this.state;
-        const {bridge} = this.props;
+        const {bridge, setDontUseIndicator} = this.props;
 
         if (!objectType || !bridge)
             return;
 
         const url = '/view/' + objectType + '/element/' + element.id;
 
+        this.setState({
+            ...this.state,
+            dontUseIndicator: element.dont_use
+        });
+
         return this.props.history.push(url);
     };
 
-    indexOfActiveElement = () => {
+    activeElement = () => {
         const {elementId, orderedElements} = this.state;
 
         let activeIndex = null;
+        let activeElement = null;
 
         orderedElements.forEach(function (element, index) {
             if (element.id == elementId) {
                 activeIndex = index;
+                activeElement = element;
             }
         });
 
-        return activeIndex;
+        return {activeIndex, activeElement};
     };
 
     onEscKeyDown = (event) => {
@@ -190,7 +207,7 @@ class Viewer extends Component {
         if (this.state === null)
             return (<div/>);
 
-        const {orderedElements, screenWidth, elementId} = this.state;
+        const {orderedElements, screenWidth, elementId, dontUseIndicator} = this.state;
         const {bridge, iconsSection, colorsSection, fontsSection, imagesSection} = this.props;
 
         if (!bridge || !iconsSection || !colorsSection || !fontsSection || !imagesSection || !orderedElements)
@@ -199,7 +216,15 @@ class Viewer extends Component {
         let sidebar = this.getSidebar();
         const viewerClassName = screenWidth > 900 ? 'viewer__desktop' : "viewer";
 
-        const activeElementIndex = this.indexOfActiveElement();
+        const {activeIndex, activeElement} = this.activeElement();
+
+        let dont_use_indicator = "";
+        if (dontUseIndicator) {
+            dont_use_indicator = <div className="dont-use-indicator">
+                <span className="times">&times;</span>&nbsp;&nbsp;&nbsp;<span>Do not use</span>
+            </div>;
+        }
+
 
         return (
             <div className="viewer-page" id="outter-container">
@@ -210,10 +235,13 @@ class Viewer extends Component {
                             className="close"/>
                     </div>
 
+                    {dont_use_indicator}
+
                     <div className="slider-wrapper">
                         <SliderWrapper elements={orderedElements}
                                        elementType={this.state.objectType}
-                                       activeElementIndex={activeElementIndex}
+                                       activeElementIndex={activeIndex}
+                                       activeElement={activeElement}
                                        onElementChange={this.onElementChange}/>
                     </div>
                 </main>
@@ -240,22 +268,7 @@ class Viewer extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-
-    let bridge = JSON.parse(window.Laravel.bridge);
-
-    return {
-        bridge: getBridge(parseInt(bridge.id))(state),
-        sectionTypes: getSectionTypes(state),
-        iconsSection: getSectionType(state, "ICONS"),
-        colorsSection: getSectionType(state, "COLORS"),
-        fontsSection: getSectionType(state, "FONTS"),
-        imagesSection: getSectionType(state, "IMAGES"),
-    }
-};
-
 Viewer.propTypes = {
-    dispatch: PropTypes.func.isRequired,
     bridge: PropTypes.shape({
         id: PropTypes.number.isRequired
     }),
@@ -271,4 +284,25 @@ Viewer.propTypes = {
     })
 };
 
-export default withRouter(connect(mapStateToProps)(Viewer));
+const mapStateToProps = (state, ownProps) => {
+
+    let bridge = JSON.parse(window.Laravel.bridge);
+
+    return {
+        bridge: getBridge(parseInt(bridge.id))(state),
+        sectionTypes: getSectionTypes(state),
+        iconsSection: getSectionType(state, "ICONS"),
+        colorsSection: getSectionType(state, "COLORS"),
+        fontsSection: getSectionType(state, "FONTS"),
+        imagesSection: getSectionType(state, "IMAGES"),
+        dont_use_indicator: state.extras.dont_use_indicator
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        setDontUseIndicator,
+    }, dispatch)
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Viewer));
