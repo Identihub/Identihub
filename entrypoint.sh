@@ -14,4 +14,5 @@ else
 fi
 
 echo 'start'
+chown -R www-data:www-data /var/www/app
 exec "$@"
