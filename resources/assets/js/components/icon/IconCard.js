@@ -43,9 +43,15 @@ class IconCard extends Component {
             imgAsset = `/assets/${card.filename_png}?id=${randomId}`;
         }
 
+        let doNotUse = "";
+        if (card.dont_use) {
+            doNotUse = <span className="do-not-use">&times;</span>;
+        }
+
         if (!isPub) {
             return connectDragSource(connectDropTarget(
                 <div className="item card" style={cardStyle}>
+                    {doNotUse}
                     <Link to={'/view/icon/element/' + card.id}>
                         <img src={imgAsset}/>
                     </Link>
@@ -57,6 +63,7 @@ class IconCard extends Component {
         } else {
             return (
                 <div className="item card" style={cardStyle}>
+                    {doNotUse}
                     <Link to={'/view/icon/element/' + card.id}>
                         <img src={imgAsset}/>
                     </Link>

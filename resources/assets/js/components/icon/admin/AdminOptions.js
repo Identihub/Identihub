@@ -52,7 +52,7 @@ class AdminOptions extends Component {
                         <div className="check-setting">
                             <div className="input-wrapper">
                                 <input id="dont_use" type="checkbox" name="dont_use" className="checkbox-input"
-                                       onChange={this.markAsDontUse} defaultChecked={icon.dont_use}/>
+                                       onChange={this.markAsDontUse} checked={icon.dont_use}/>
                                 <label htmlFor="dont_use" className="checkbox"/>
                                 <label htmlFor="dont_use" className="txt-label">Don't Use</label>
                             </div>

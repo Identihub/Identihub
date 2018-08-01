@@ -5,8 +5,7 @@ import {CHANGE_HAS_BRIDGES, ADD_FONTS, DELETE_FONTS, SET_ICON_UPDATED, SET_DONT_
 const initialState = {
     hasBridges: true,
     fonts: [],
-    icon_updated: false,
-    dont_use_indicator: false
+    icon_updated: false
 };
 
 const ExtraReducer = (state = initialState, action) => {
@@ -29,12 +28,6 @@ const ExtraReducer = (state = initialState, action) => {
             return {
                 ...state,
                 icon_updated: action.payload.updatedId
-            };
-
-        case SET_DONT_USE_INDICATOR:
-            return {
-                ...state,
-                dont_use_indicator: action.payload.dontUse
             };
 
         default:

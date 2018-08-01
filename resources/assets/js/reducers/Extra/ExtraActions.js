@@ -44,15 +44,6 @@ export function setIconUpdated(updatedId) {
     }
 }
 
-export function setDontUseIndicator(dontUse = true) {
-    return {
-        type: SET_DONT_USE_INDICATOR,
-        payload: {
-            dontUse: dontUse
-        }
-    }
-}
-
 export function updateSectionOnColor(bridgeId, colorId, newSectionId) {
     return {
         type: UPDATE_SECTION_ON_COLOR,

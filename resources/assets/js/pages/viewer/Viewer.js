@@ -12,8 +12,6 @@ import {slide as Menu} from 'react-burger-menu'
 import {getBridge} from '../../selectors/BridgeSelector';
 import {withRouter} from 'react-router-dom';
 import SliderWrapper from "./SliderWrapper";
-import {bindActionCreators} from "redux";
-import {setDontUseIndicator} from "../../reducers/Extra/ExtraActions";
 
 class Viewer extends Component {
 
@@ -35,11 +33,10 @@ class Viewer extends Component {
     }
 
     componentDidMount() {
-        this.updateWindowDimensions();
-
         const {activeElement} = this.activeElement();
         this.setState({
             ...this.state,
+            screenWidth: window.innerWidth,
             dontUseIndicator: activeElement.dont_use
         });
 
@@ -56,11 +53,13 @@ class Viewer extends Component {
 
         const orderedElements = this.getOrderedElements(nextProps, this.state.objectType);
         const elementId = nextProps.match.params.elementId;
+        const {activeElement} = this.activeElement(elementId, orderedElements);
 
         this.setState({
             ...this.state,
             orderedElements: orderedElements,
-            elementId: elementId
+            elementId: elementId,
+            dontUseIndicator: activeElement.dont_use
         });
     }
 
@@ -75,7 +74,6 @@ class Viewer extends Component {
      * Close page.
      */
     closePage = () => {
-        const {bridge} = this.props;
         this.props.history.push('/');
     };
 
@@ -170,8 +168,9 @@ class Viewer extends Component {
         return this.props.history.push(url);
     };
 
-    activeElement = () => {
-        const {elementId, orderedElements} = this.state;
+    activeElement = (element_id = null, ordered_elements = null) => {
+        const elementId = element_id ? element_id : this.state.elementId;
+        const orderedElements = ordered_elements ? ordered_elements : this.state.orderedElements;
 
         let activeIndex = null;
         let activeElement = null;
@@ -195,6 +194,7 @@ class Viewer extends Component {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
+        return true;
         if (this.state.elementId !== nextProps.elementId) {
             return true;
         }
@@ -224,7 +224,6 @@ class Viewer extends Component {
                 <span className="times">&times;</span>&nbsp;&nbsp;&nbsp;<span>Do not use</span>
             </div>;
         }
-
 
         return (
             <div className="viewer-page" id="outter-container">
@@ -294,15 +293,8 @@ const mapStateToProps = (state, ownProps) => {
         iconsSection: getSectionType(state, "ICONS"),
         colorsSection: getSectionType(state, "COLORS"),
         fontsSection: getSectionType(state, "FONTS"),
-        imagesSection: getSectionType(state, "IMAGES"),
-        dont_use_indicator: state.extras.dont_use_indicator
+        imagesSection: getSectionType(state, "IMAGES")
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        setDontUseIndicator,
-    }, dispatch)
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Viewer));
+export default withRouter(connect(mapStateToProps)(Viewer));
