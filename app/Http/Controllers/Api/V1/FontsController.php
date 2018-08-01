@@ -34,17 +34,15 @@ class FontsController extends Controller
      * Create font.
      *
      * @param StoreFontRequest $request
-     * @param                  $bridgeId
+     * @param Bridge           $bridge
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function createFont(StoreFontRequest $request, $bridgeId)
+    public function createFont(StoreFontRequest $request, Bridge $bridge)
     {
-        try {
-            $user = Auth::user();
-            $bridge = Bridge::findOrFail($bridgeId);
-            if ($user->id !== $bridge->user_id)
-                throw new ModelNotFoundException();
+        $this->authorize('update', $bridge);
 
+        try {
             $section = (new CreateSection($bridge, SectionType::where('name', 'FONTS')->get()->first()))->handle();
 
             $font = (new CreateFont($request->font_variant_id, $section))->handle();
@@ -54,7 +52,7 @@ class FontsController extends Controller
 
             (new CreateFontImage(FontVariant::findOrFail($request->font_variant_id)))->handle();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridge->id);
 
             return response()->json([
                 'bridge'        => $bridge,
