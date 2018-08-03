@@ -419,4 +419,11 @@
     padding: 8px 16px;
     font-size: 13px;
   }
+
+  .disabled {
+    cursor: not-allowed;
+    color: #fff;
+    background: #888;
+    border-color: #888;
+  }
 }
