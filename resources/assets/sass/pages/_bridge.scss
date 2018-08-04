@@ -10,10 +10,10 @@
       & .fa-copy {
         font-size: 20px;
         margin-right: 13px;
-        @include  transition(color 0.2s easer-in-out);
+        @include transition(color 0.2s easer-in-out);
 
         &:active {
-            color: $oc-gray-6;
+          color: $oc-gray-6;
         }
       }
     }
@@ -106,6 +106,14 @@
 
     .card {
       position: relative;
+
+      .do-not-use {
+        font-size: 47px;
+        position: absolute;
+        top: -17px;
+        left: -15px;
+        color: red;
+      }
 
       a {
         width: 100%;

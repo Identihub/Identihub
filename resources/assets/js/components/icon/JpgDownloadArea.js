@@ -23,7 +23,8 @@ class JpgDownloadArea extends Component {
                     defaultWidth={defaultWidth}
                     ratio={icon.width_ratio}
                     downloadCustomSize={downloadCustomSize}
-                    format="jpg"/>
+                    format="jpg"
+                    disabledDownload={!!icon.dont_use}/>
 
             </div>
         );

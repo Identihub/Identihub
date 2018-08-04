@@ -1,5 +1,5 @@
 // Import Actions
-import {CHANGE_HAS_BRIDGES, ADD_FONTS, DELETE_FONTS, SET_ICON_UPDATED} from './ExtraActions';
+import {CHANGE_HAS_BRIDGES, ADD_FONTS, DELETE_FONTS, SET_ICON_UPDATED, SET_DONT_USE_INDICATOR} from './ExtraActions';
 
 // Initial State
 const initialState = {

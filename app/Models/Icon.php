@@ -12,7 +12,7 @@ class Icon extends Model
     protected $table = 'icons';
 
     protected $fillable = [
-        'filename', 'filename_png', 'bridge_id', 'width_ratio', 'section_id', 'order', 'bg_color'
+        'filename', 'filename_png', 'bridge_id', 'width_ratio', 'section_id', 'order', 'bg_color', 'dont_use',
     ];
 
     public function getFilenamePngAttribute($value)
