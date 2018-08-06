@@ -319,8 +319,12 @@
 
         .photoshop-picker {
           input {
-            background: #dedede !important;
-            color: #666;
+            background: #fff !important;
+            color: #000;
+          }
+
+          span {
+            color: #000;
           }
         }
       }
