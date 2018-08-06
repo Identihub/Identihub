@@ -209,7 +209,7 @@
   margin-top: 30px;
   overflow-y: visible;
 
-  & .title {
+  .title {
     span {
       font-size: 18px;
       color: $white;
@@ -217,16 +217,26 @@
     }
   }
 
-  & .featured {
+  .check-setting {
     margin-top: 10px;
-    display: flex;
-    align-items: center;
-    span {
-      font-size: 12px;
-      color: $white;
-    }
-    #checkbox {
-      margin-left: 30px;
+
+    .input-wrapper {
+      color: #fff;
+      display: flex;
+      align-items: center;
+
+      input[type="checkbox"] {
+        display: none !important;
+      }
+
+      label {
+        font-size: 12px;
+        color: $white;
+
+        &.txt-label {
+          padding-top: 2px;
+        }
+      }
     }
   }
 
@@ -401,5 +411,12 @@
   .btn-white {
     padding: 8px 16px;
     font-size: 13px;
+  }
+
+  .disabled {
+    cursor: not-allowed;
+    color: #fff;
+    background: #888;
+    border-color: #888;
   }
 }

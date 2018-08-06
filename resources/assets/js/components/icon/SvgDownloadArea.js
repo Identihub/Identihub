@@ -15,6 +15,20 @@ class SvgDownloadArea extends Component {
 
         const {icon, addNotification} = this.props;
 
+        let downloadBtn = "";
+        if (icon.dont_use) {
+            downloadBtn = <a className="btn-white disabled">
+                <i className="fas fa-download"/>&nbsp;&nbsp; Download
+            </a>;
+        } else {
+            downloadBtn =
+                <a className="btn-white"
+                   href={window.location.origin + '/assets/' + icon.filename}
+                   download={icon.filename}>
+                    <i className="fas fa-download"/>&nbsp;&nbsp; Download
+                </a>;
+        }
+
         return (
             <div className="svg-area">
 
@@ -38,11 +52,7 @@ class SvgDownloadArea extends Component {
                 </div>
 
                 <div className="download-btn">
-                    <a className="btn-white"
-                       href={window.location.origin + '/assets/' + icon.filename}
-                       download={icon.filename}>
-                        <i className="fas fa-download"/>&nbsp;&nbsp; Download
-                    </a>
+                    {downloadBtn}
                 </div>
 
             </div>

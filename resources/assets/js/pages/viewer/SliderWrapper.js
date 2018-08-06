@@ -39,6 +39,7 @@ class SliderWrapper extends Component {
     static propTypes = {
         elements: PropTypes.array.isRequired,
         elementType: PropTypes.string.isRequired,
+        activeElement: PropTypes.object,
         activeElementIndex: PropTypes.number,
         onElementChange: PropTypes.func.isRequired,
     };

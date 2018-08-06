@@ -13,10 +13,12 @@ class CustomSizeDownload extends Component {
         defaultWidth: PropTypes.number,
         format: PropTypes.string,
         downloadCustomSize: PropTypes.func.isRequired,
+        disabledDownload: PropTypes.bool
     };
 
     static defaultProps = {
-        format: "png"
+        format: "png",
+        disabledDownload: false
     };
 
     state = {
@@ -53,7 +55,7 @@ class CustomSizeDownload extends Component {
     };
 
     render() {
-        const {downloadCustomSize, format} = this.props;
+        const {downloadCustomSize, format, disabledDownload} = this.props;
 
         let {width, height} = this.state;
 
@@ -63,8 +65,21 @@ class CustomSizeDownload extends Component {
         }
 
         if ((!downloadCustomSize) || (!width))
-            return (<div></div>);
+            return (<div/>);
 
+        let downloadBtn = "";
+        if (disabledDownload) {
+            downloadBtn = <a className="btn-white disabled">
+                <i className="fas fa-download"/>&nbsp;&nbsp; Download
+            </a>;
+        } else {
+            downloadBtn = <a className="btn-white"
+                             onClick={() => {
+                                 downloadCustomSize(roundNumber(width), roundNumber(height), format);
+                             }}>
+                <i className="fas fa-download"/>&nbsp;&nbsp; Download
+            </a>;
+        }
 
         return (
 
@@ -95,12 +110,7 @@ class CustomSizeDownload extends Component {
 
 
                 <div className="download-btn">
-                    <a className="btn-white"
-                       onClick={() => {
-                           downloadCustomSize(roundNumber(width), roundNumber(height), format);
-                       }}>
-                        <i className="fas fa-download"/>&nbsp;&nbsp; Download
-                    </a>
+                    {downloadBtn}
                 </div>
             </div>
         );

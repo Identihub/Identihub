@@ -23,7 +23,8 @@ class PngDownloadArea extends Component {
                     defaultWidth={defaultWidth}
                     ratio={icon.width_ratio}
                     downloadCustomSize={downloadCustomSize}
-                    format="png"/>
+                    format="png"
+                    disabledDownload={!!icon.dont_use}/>
 
             </div>
         );

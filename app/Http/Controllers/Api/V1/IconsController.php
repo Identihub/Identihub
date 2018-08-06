@@ -197,4 +197,39 @@ class IconsController extends Controller
             'section_types' => SectionType::all(),
         ]);
     }
+
+    /**
+     * Update dont-use flag for the specified icon.
+     *
+     * @param Bridge  $bridge
+     * @param Icon    $icon
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function updateDontUseFlag(Bridge $bridge, Icon $icon, Request $request)
+    {
+        $this->authorize('update', $bridge);
+        $this->authorize('update', $icon);
+
+        $this->validate($request, [
+            'dont_use' => 'required',
+        ]);
+
+        $icon->dont_use = $request->dont_use ? true : false;
+        $icon->save();
+
+        $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridge->id);
+
+        try {
+            event(new BridgeUpdated($bridge));
+        } catch (\Exception $ex) {
+
+        }
+
+        return response()->json([
+            'bridge'        => $bridge,
+            'section_types' => SectionType::all(),
+        ]);
+    }
 }

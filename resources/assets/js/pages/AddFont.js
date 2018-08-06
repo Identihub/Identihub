@@ -14,8 +14,10 @@ class AddFont extends Component {
     constructor(props) {
         super(props);
 
+        let bridge = JSON.parse(window.Laravel.bridge);
+
         this.state = {
-            id: props.match.params.id,
+            id: bridge.id,
             isSearching: false,
 
             searchFontFamily: "",
@@ -25,28 +27,21 @@ class AddFont extends Component {
 
             selectedVariants: [],
         };
-
-        this.searchFontFamily = this.searchFontFamily.bind(this);
-        this.closeWindow = this.closeWindow.bind(this);
-        this.selectFontFamily = this.selectFontFamily.bind(this);
-        this.getSelectedFontFamily = this.getSelectedFontFamily.bind(this);
-        this.toggleVariant = this.toggleVariant.bind(this);
-        this.createFont = this.createFont.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         this.updateFonts(nextProps)
     }
 
-    updateFonts(nextProps) {
+    updateFonts = (nextProps) => {
         if (nextProps.fonts) {
             this.setState({
                 fonts: nextProps.fonts
             });
         }
-    }
+    };
 
-    searchFontFamily(value) {
+    searchFontFamily = (value) => {
         value = value.target.value;
         this.setState({
             searchFontFamily: value,
@@ -59,9 +54,9 @@ class AddFont extends Component {
             this.props.dispatch(searchFont(value));
         }
 
-    }
+    };
 
-    selectFontFamily(fontFamilyId) {
+    selectFontFamily = (fontFamilyId) => {
         const fonts = this.state.fonts;
         this.setState({
             selectedFontFamily: fontFamilyId,
@@ -69,17 +64,17 @@ class AddFont extends Component {
                 font.id === fontFamilyId
             )).family
         });
-    }
+    };
 
-    getSelectedFontFamily() {
+    getSelectedFontFamily = () => {
         const selectedFontFamilyId = this.state.selectedFontFamily;
         const fonts = this.state.fonts;
         return fonts.find((item) => {
             return item.id === selectedFontFamilyId
         });
-    }
+    };
 
-    createFont() {
+    createFont = () => {
         const variants = this.state.selectedVariants;
         const fontFamilyId = this.state.selectedFontFamily.id;
         const bridgeId = this.state.id;
@@ -90,9 +85,9 @@ class AddFont extends Component {
             });
             this.closeWindow();
         }
-    }
+    };
 
-    toggleVariant(variant) {
+    toggleVariant = (variant) => {
         const variants = this.state.selectedVariants;
         const isVariantPresent = variants.find((variantFromState) => {
             return variant.id === variantFromState.id;
@@ -113,11 +108,11 @@ class AddFont extends Component {
                 selectedVariants: variants
             });
         }
-    }
+    };
 
-    closeWindow() {
+    closeWindow = () => {
         this.props.history.goBack();
-    }
+    };
 
     render() {
 
@@ -161,7 +156,6 @@ class AddFont extends Component {
             </div>
         )
     }
-
 }
 
 const mapStateToProps = (state, ownProps) => {

@@ -12,6 +12,7 @@ export const UPDATE_ORDER_ON_IMAGE = 'UPDATE_ORDER_ON_IMAGE';
 export const UPDATE_BG_COLOR_ON_ICON = 'UPDATE_BG_COLOR_ON_ICON';
 
 export const SET_ICON_UPDATED = 'SET_ICON_UPDATED';
+export const SET_DONT_USE_INDICATOR = 'SET_DONT_USE_INDICATOR';
 
 // Export Actions
 export function changeHasBridges(hasBridges) {
