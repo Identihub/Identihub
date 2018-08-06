@@ -12,11 +12,12 @@
         "intervention/image": "^2.3",
         "laravel/framework": "5.4.*",
         "laravel/passport": "^2.0",
+        "laravel/socialite": "^3.0",
+        "mockery/mockery": "dev-master@dev",
         "nesbot/carbon": "^1.22",
         "orangehill/iseed": "dev-master",
         "phpunit/phpunit": "^5.7",
-        "pusher/pusher-php-server": "^2.6",
-        "mockery/mockery": "dev-master@dev"
+        "pusher/pusher-php-server": "^2.6"
     },
     "autoload": {
         "classmap": [

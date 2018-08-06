@@ -16,7 +16,8 @@
                 @endif
 
                 <div class="input-wrapper{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <input type="email" class="input" name="email" placeholder="email" value="{{ old('email') }}" required autofocus>
+                    <input type="email" class="input" name="email" placeholder="email" value="{{ old('email') }}"
+                           required autofocus>
                     @if ($errors->has('email'))
                         <span class="input-error">
                             <strong>{{ $errors->first('email') }}</strong>
@@ -54,6 +55,16 @@
                         <button type="submit" class="button">
                             Login
                         </button>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin: 10px">OR</p>
+
+                <div class="btn-wrapper">
+                    <div class="input-wrapper">
+                        <a href="{{ route('github.redirect') }}" class="button">
+                            <i class="fa fa-github-alt"></i>&nbsp;&nbsp;Login via Github
+                        </a>
                     </div>
                 </div>
 
