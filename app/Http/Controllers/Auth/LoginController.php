@@ -111,15 +111,16 @@ class LoginController extends Controller
             if ($userModel->active && $userModel->via === 'github') {
                 Auth::login($userModel);
             } else {
-                // Show message that this email is registered via another service provider.
-                return redirect()->route('login');
+                return redirect()->route('login')
+                    ->withErrors(['error' => 'Email is already registered, but not via github. Please try another method.']);
             }
 
         } else {
             $userModel = $this->createUser([
-                'name'       => $user->name,
+                'name'       => $user->name ?? $user->nickname,
                 'email'      => $user->email,
-                'identified' => 1,
+                'identified' => true,
+                'active'     => true,
                 'via'        => 'github',
             ]);
 
@@ -129,12 +130,19 @@ class LoginController extends Controller
         return $this->sendLoginResponse($request);
     }
 
+    /**
+     * Create user via providers.
+     *
+     * @param $data
+     * @return $this|\Illuminate\Database\Eloquent\Model
+     */
     public function createUser($data)
     {
         return User::create([
             'name'       => $data['name'],
             'email'      => $data['email'],
             'identified' => $data['identified'],
+            'active'     => $data['active'],
             'password'   => isset($data['password']) ? bcrypt($data['password']) : null,
             'via'        => $data['via'],
         ]);
