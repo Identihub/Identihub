@@ -52,7 +52,7 @@ class FontsController extends Controller
 
             (new CreateFontImage(FontVariant::findOrFail($request->font_variant_id)))->handle();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridge->id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridge->id);
 
             return response()->json([
                 'bridge'        => $bridge,
@@ -65,7 +65,7 @@ class FontsController extends Controller
 
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error',
+                'error' => $e->getMessage(),
             ]);
         }
     }
@@ -84,7 +84,7 @@ class FontsController extends Controller
             $font->delete();
             $section->delete();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {
@@ -100,7 +100,7 @@ class FontsController extends Controller
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error',
+                'error' => $e->getMessage(),
             ]);
         }
     }

@@ -8,40 +8,43 @@ import WritingSectionRow from './WritingSectionRow';
 import EmptySectionState from '../EmptySectionState';
 import renderSection from '../../HOC/renderSectionHOC';
 
-class FontSection extends Component {
+class WritingSection extends Component {
 
-    addFont = () => {
-        this.props.history.push("/add-font");
+    addWriting = () => {
+        this.props.history.push("/add-writing");
     };
 
     render() {
-        const {bridge, fontsSection} = this.props;
+        const {bridge, writingsSection} = this.props;
 
-        let {fonts, sections} = bridge;
+        let {writings, sections} = bridge;
 
         const emptyState = <EmptySectionState style={{width: "56%", marginLeft: "23%"}} soloElement={true}
                                               emptyStateText="No writings found here, start by adding a new writing"/>;
 
         return (
-            <div className="fonts-section">
+            <div className="writings-section">
                 <SectionWrapper
 
-                    title="Fonts"
-                    addResource="Add Font"
+                    title="Writings"
+                    addResource="Add Writing"
                     bridge={bridge}
-                    sectionType={fontsSection}
+                    sectionType={writingsSection}
                     canCreateSection={false}
-                    onResourceClick={this.addFont}>
-                    {fonts.length === 0 ? emptyState :
-                        sortByOrder(filterSectionsWithSectionType(sections, fontsSection)).map(section => (
+                    onResourceClick={this.addWriting}
+                    extraClass="no-sidebar-section">
+
+                    {writings.length === 0 ? emptyState :
+                        sortByOrder(filterSectionsWithSectionType(sections, writingsSection)).map(section => (
                             <WritingSectionRow
                                 key={section.id}
                                 bridge={bridge}
                                 section={section}
-                                fonts={fonts}
+                                writings={writings}
                                 emptyStateText="No writings found here, start by adding a new writing."/>
                         ))
                     }
+
                 </SectionWrapper>
             </div>
         );
@@ -51,12 +54,12 @@ class FontSection extends Component {
 
 const mapStateToProps = (state, _) => {
     return {
-        fontsSection: getSectionType(state, "FONTS")
+        writingsSection: getSectionType(state, "WRITINGS")
     }
 };
 
-FontSection.propTypes = {
-    fontsSection: PropTypes.shape({
+WritingSection.propTypes = {
+    writingsSection: PropTypes.shape({
         id: PropTypes.number
     }).isRequired,
     bridge: PropTypes.shape({
@@ -64,4 +67,4 @@ FontSection.propTypes = {
     }).isRequired
 };
 
-export default renderSection('fonts')(connect(mapStateToProps)(FontSection));
+export default renderSection('writings')(connect(mapStateToProps)(WritingSection));

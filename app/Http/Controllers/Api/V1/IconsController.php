@@ -144,7 +144,7 @@ class IconsController extends Controller
             }
         }
 
-        $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridge->id);
+        $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridge->id);
 
         return response()->json([
             'bridge'        => $bridge,
@@ -184,7 +184,7 @@ class IconsController extends Controller
         $icon->width_ratio = $im->getImageWidth() / $im->getImageHeight();
         $icon->save();
 
-        $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridge->id);
+        $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridge->id);
 
         try {
             event(new BridgeUpdated($bridge));
@@ -219,7 +219,7 @@ class IconsController extends Controller
         $icon->dont_use = $request->dont_use ? true : false;
         $icon->save();
 
-        $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridge->id);
+        $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridge->id);
 
         try {
             event(new BridgeUpdated($bridge));

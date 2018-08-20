@@ -1,23 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import Section from '../Section';
 import WritingCard from './WritingCard';
-import {updateOrderOnFont} from '../../reducers/Extra/ExtraActions';
+import {bindActionCreators} from "redux";
 
-class FontSectionRow extends Component {
+class WritingSectionRow extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            fonts: []
+            writings: []
         };
-
-        this.pushCard = this.pushCard.bind(this);
-        this.removeCard = this.removeCard.bind(this);
-        this.moveCard = this.moveCard.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -30,25 +25,8 @@ class FontSectionRow extends Component {
 
     updateLocalState(props) {
         this.setState({
-            fonts: props.fonts
+            writings: props.writings
         });
-    }
-
-    pushCard(card) {
-
-    }
-
-    removeCard(index) {
-    }
-
-    moveCard(dragIndex, hoverIndex) {
-        const {
-            fonts,
-            bridge,
-            updateOrderOnFont
-        } = this.props;
-        const card = fonts.find(font => font.order === dragIndex);
-        updateOrderOnFont(bridge.id, card.id, hoverIndex);
     }
 
     render() {
@@ -56,42 +34,35 @@ class FontSectionRow extends Component {
             bridge,
             section,
             emptyStateText,
-            fonts,
-            canDrop,
-            isOver,
+            writings,
             connectDropTarget
         } = this.props;
-        const isActive = canDrop && isOver;
 
-        return connectDropTarget(
-            <div>
-                <Section
-                    bridge={bridge}
-                    section={section}
-                    isActive={isActive}
-                    emptyStateText={emptyStateText}>
-                    {
-                        fonts.filter(font => (font.section_id === section.id)).sort((a, b) => (a.order - b.order)).map(font => {
-                            return (
-                                <WritingCard
-                                    key={font.id}
-                                    index={font.order}
-                                    listId={font.section_id}
-                                    card={font}
-                                    removeCard={this.removeCard}
-                                    moveCard={this.moveCard}
-                                    bridge={bridge}
-                                />
-                            )
-                        })
-                    }
-                </Section>
-            </div>
-        );
+        return <div>
+            <Section
+                bridge={bridge}
+                section={section}
+                isActive={false}
+                emptyStateText={emptyStateText}
+                hasSidebar={false}>
+                {
+                    writings.filter(writing => (writing.section_id === section.id)).sort((a, b) => (a.order - b.order)).map(writing => {
+                        return (
+                            <WritingCard
+                                key={writing.id}
+                                index={writing.order}
+                                listId={writing.section_id}
+                                card={writing}
+                                bridge={bridge}/>
+                        )
+                    })
+                }
+            </Section>
+        </div>;
     }
 }
 
-FontSectionRow.propTypes = {
+WritingSectionRow.propTypes = {
     bridge: PropTypes.shape({
         id: PropTypes.integer
     }).isRequired,
@@ -101,7 +72,7 @@ FontSectionRow.propTypes = {
         title: PropTypes.string,
         description: PropTypes.string
     }).isRequired,
-    fonts: PropTypes.arrayOf(PropTypes.shape({
+    writings: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         section_id: PropTypes.number,
         order: PropTypes.number
@@ -109,10 +80,9 @@ FontSectionRow.propTypes = {
     emptyStateText: PropTypes.string.isRequired
 };
 
+
 const dispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        updateOrderOnFont
-    }, dispatch)
+    return bindActionCreators({}, dispatch)
 };
 
-export default connect(state => state, dispatchToProps)(FontSectionRow);
+export default connect(state => state, dispatchToProps)(WritingSectionRow);

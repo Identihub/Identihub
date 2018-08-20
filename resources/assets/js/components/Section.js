@@ -11,6 +11,10 @@ import {isPublic} from '../helpers';
 
 class Section extends Component {
 
+    static defaultProps = {
+        hasSidebar: true
+    };
+
     state = {
         titleValue: '',
         descriptionValue: ''
@@ -50,7 +54,7 @@ class Section extends Component {
 
     render() {
         const {updateTitle, updateDescription, deleteSection} = this;
-        const {emptyStateText, isActive, section} = this.props;
+        const {emptyStateText, isActive, section, hasSidebar} = this.props;
 
         let isDeletable = (!this.props.children.length) && (section.order != 0);
 
@@ -114,9 +118,9 @@ class Section extends Component {
 
         const flexClassName = isActive ? 'flex active' : 'flex';
 
-        return (
-            <section className="content">
-
+        let sidebar = "";
+        if (hasSidebar) {
+            sidebar = <div>
                 {isDeletableSection}
 
                 <div className="text">
@@ -126,6 +130,14 @@ class Section extends Component {
 
                     <div className="clearfix"/>
                 </div>
+            </div>
+        }
+
+
+        return (
+            <section className="content">
+
+                {sidebar}
 
                 <CSSTransitionGroup
                     className={flexClassName}
@@ -155,7 +167,8 @@ Section.propTypes = {
         id: PropTypes.number
     }).isRequired,
     isActive: PropTypes.bool.isRequired,
-    emptyStateText: PropTypes.string.isRequired
+    emptyStateText: PropTypes.string.isRequired,
+    hasSidebar: PropTypes.bool
 };
 
 const mapDispatchToProps = (dispatch) => {

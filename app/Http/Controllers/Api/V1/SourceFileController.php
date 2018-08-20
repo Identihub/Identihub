@@ -108,7 +108,7 @@ class SourceFileController extends Controller
                     'height'   => $im->getImageHeight(),
                 ]);
 
-                $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+                $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
                 try {
                     event(new BridgeUpdated($bridge));
                 } catch (\Exception $e) {
@@ -173,7 +173,7 @@ class SourceFileController extends Controller
                 'height'   => $im->getImageHeight(),
             ]);
             \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
 
             $im->clear();
             $im->destroy();
@@ -228,7 +228,7 @@ class SourceFileController extends Controller
             ]);
             \Storage::disk('assets')->put($filenameConverted, $im->getImageBlob());
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             return response()->json([
                 'bridge'        => $bridge,
                 'section_types' => SectionType::all(),
@@ -257,7 +257,7 @@ class SourceFileController extends Controller
 
             (new ReorderAfterDelete($icons))->handle();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {
@@ -291,7 +291,7 @@ class SourceFileController extends Controller
 
             (new ReorderAfterDelete($images))->handle();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {
@@ -346,7 +346,7 @@ class SourceFileController extends Controller
 
             $this->updateConvertedImages($image);
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {

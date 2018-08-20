@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { createSection, deleteSection } from '../reducers/Bridge/BridgeApiCalls';
-import { isPublic } from '../helpers';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {createSection, deleteSection} from '../reducers/Bridge/BridgeApiCalls';
+import {isPublic} from '../helpers';
 
 class SectionWrapper extends Component {
 
@@ -13,12 +13,12 @@ class SectionWrapper extends Component {
     }
 
     createSection() {
-      const {
-        bridge,
-        sectionType,
-        createSection
-      } = this.props;
-      createSection(bridge.id, sectionType.id);
+        const {
+            bridge,
+            sectionType,
+            createSection
+        } = this.props;
+        createSection(bridge.id, sectionType.id);
     }
 
     render() {
@@ -26,41 +26,41 @@ class SectionWrapper extends Component {
         const {
             title,
             addResource,
-            onResourceClick ,
+            onResourceClick,
             canCreateSection,
             children
         } = this.props;
 
-        const { createSection } = this;
+        const {createSection} = this;
 
         const isPub = isPublic();
 
         let plusIcon = null;
         let tooltip = null;
-        if(!isPub){
-          plusIcon = ( <img src="/images/plus.svg" width="19" height="19" /> );
-          tooltip = (
-            <div className="tooltip">
-              <ul>
-                <li onClick={ onResourceClick }>{ addResource }</li>
-                {
-                  canCreateSection ? <li onClick={ createSection }>Add new section</li> : null
-                }
-              </ul>
-            </div>
-          );
+        if (!isPub) {
+            plusIcon = (<img src="/images/plus.svg" width="19" height="19"/>);
+            tooltip = (
+                <div className="tooltip">
+                    <ul>
+                        <li onClick={onResourceClick}>{addResource}</li>
+                        {
+                            canCreateSection ? <li onClick={createSection}>Add new section</li> : null
+                        }
+                    </ul>
+                </div>
+            );
         }
 
         return (
-            <div className="bridge-section">
+            <div className={`bridge-section ${this.props.extraClass}`}>
 
                 <div className="title">
-                    <h2>{ title }</h2>
-                    { plusIcon }
-                    { tooltip }
+                    <h2>{title}</h2>
+                    {plusIcon}
+                    {tooltip}
                 </div>
 
-                { children }
+                {children}
 
             </div>
         );
@@ -78,13 +78,14 @@ SectionWrapper.propTypes = {
     bridge: PropTypes.shape({
         id: PropTypes.number
     }).isRequired,
-    canCreateSection: PropTypes.bool
+    canCreateSection: PropTypes.bool,
+    extraClass: PropTypes.string
 };
 
 export const dispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    createSection
-  }, dispatch)
+    return bindActionCreators({
+        createSection
+    }, dispatch)
 };
 
 export default connect(state => state, dispatchToProps)(SectionWrapper);

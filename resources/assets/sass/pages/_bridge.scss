@@ -320,6 +320,45 @@
       }
     }
   }
+
+  .no-sidebar-section {
+
+    .flex {
+      width: 100%;
+
+      .writing {
+        width: 100%;
+        padding: 15px;
+        background: white;
+
+        .delete-writing {
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+
+        &:hover {
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        }
+
+        textarea {
+          width: 100%;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .writings-section {
+
+    .tooltip {
+      padding-left: 145px !important;
+    }
+
+    .empty-state {
+      margin-top: 20px;
+    }
+  }
 }
 
 @media (max-width: 767px) {

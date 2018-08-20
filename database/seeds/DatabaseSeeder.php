@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
 
     private function seedSectionTypes()
     {
-        $sectionTypes = [SectionType::COLORS, SectionType::FONTS, SectionType::ICONS, SectionType::IMAGES];
+        $sectionTypes = [SectionType::COLORS, SectionType::FONTS, SectionType::ICONS, SectionType::IMAGES, SectionType::WRITINGS];
         foreach ($sectionTypes as $type) {
-            if(SectionType::where('name', $type)->get()->count() === 0) {
+            if (SectionType::where('name', $type)->get()->count() === 0) {
                 SectionType::create(['name' => $type]);
             }
         }

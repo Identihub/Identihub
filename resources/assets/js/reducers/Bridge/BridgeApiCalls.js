@@ -432,3 +432,33 @@ export function updateAssetBgColor(bridgeId, iconId, color) {
         });
     }
 }
+
+export function createWriting(bridgeId, title, description) {
+    return (dispatch) => {
+        return axios.post(
+            '/api/v1/bridges/' + bridgeId + '/writings',
+            {
+                'title': title,
+                'description': description
+            }
+        ).then((response) => {
+            dispatch(addBridge(response.data.bridge))
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+}
+
+export function deleteWriting(bridgeId, writingId) {
+    return (dispatch) => {
+        return axios.delete(
+            '/api/v1/bridges/' + bridgeId + '/writings/' + writingId
+        )
+            .then((response) => {
+                dispatch(addBridge(response.data.bridge))
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+}

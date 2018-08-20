@@ -11,6 +11,7 @@ import FontSection from '../components/font/FontSection';
 import ColorSection from '../components/color/ColorSection';
 import IconSection from '../components/icon/IconSection';
 import ImageSection from '../components/image/ImageSection';
+import WritingSection from '../components/writing/WritingSection';
 import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {isPublic} from '../helpers';
@@ -103,6 +104,7 @@ export class Bridge extends Component {
                     <ColorSection bridge={bridge} history={this.props.history}/>
                     <FontSection bridge={bridge} history={this.props.history}/>
                     <ImageSection bridge={bridge} history={this.props.history}/>
+                    <WritingSection bridge={bridge} history={this.props.history}/>
                 </div>
             </div>
         );
