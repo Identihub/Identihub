@@ -54,15 +54,17 @@
                     </div>
                 </div>
 
-                <p style="text-align: center; margin: 10px">OR</p>
+                @if(env('GITHUB_LOGIN_ENABLED'))
+                    <p style="text-align: center; margin: 10px">OR</p>
 
-                <div class="btn-wrapper">
-                    <div class="input-wrapper">
-                        <a href="{{ route('github.redirect') }}" class="button">
-                            <i class="fab fa-github"></i>&nbsp;&nbsp;Login via Github
-                        </a>
+                    <div class="btn-wrapper">
+                        <div class="input-wrapper">
+                            <a href="{{ route('github.redirect') }}" class="button">
+                                <i class="fab fa-github"></i>&nbsp;&nbsp;Login via Github
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 <div class="center-text">
                     <a class="link" href="{{ route('password.request') }}">
