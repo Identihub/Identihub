@@ -15,23 +15,20 @@
                     </div>
                 @endif
 
+                @if ($errors->has('error'))
+                    <span class="input-error" style="margin-bottom: 10px">
+                        <strong>{{ $errors->first('error') }}</strong>
+                    </span>
+                @endif
+
                 <div class="input-wrapper{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <input type="email" class="input" name="email" placeholder="email" value="{{ old('email') }}" required autofocus>
+                    <input type="email" class="input" name="email" placeholder="email" value="{{ old('email') }}"
+                           required autofocus>
                     @if ($errors->has('email'))
                         <span class="input-error">
                             <strong>{{ $errors->first('email') }}</strong>
                         </span>
-                    @else
-                        @if ($errors->any())
-                            <span class="input-error">
-                                @foreach ($errors->all() as $error)
-                                    <strong>{{ $error }}</strong>
-                                @endforeach
-                            </span>
-                        @endif
                     @endif
-
-
                 </div>
 
                 <div class="input-wrapper{{ $errors->has('password') ? ' has-error' : '' }}">
@@ -56,6 +53,18 @@
                         </button>
                     </div>
                 </div>
+
+                @if(env('GITHUB_LOGIN_ENABLED'))
+                    <p style="text-align: center; margin: 10px">OR</p>
+
+                    <div class="btn-wrapper">
+                        <div class="input-wrapper">
+                            <a href="{{ route('github.redirect') }}" class="button">
+                                <i class="fab fa-github"></i>&nbsp;&nbsp;Login via Github
+                            </a>
+                        </div>
+                    </div>
+                @endif
 
                 <div class="center-text">
                     <a class="link" href="{{ route('password.request') }}">

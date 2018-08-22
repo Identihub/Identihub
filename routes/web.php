@@ -25,6 +25,8 @@ Route::group(['middleware' => 'installationChecker'], function () {
     Route::get('/auth/check/{token}', 'Auth\\ActivationLinkController@activate')->name('activate.check');
 
     Auth::routes();
+    Route::get('/auth/github', 'Auth\\LoginController@redirectToGithub')->name('github.redirect');
+    Route::get('/auth/github/callback', 'Auth\\LoginController@handleGithubCallback')->name('github.callback');
 
     Route::group([
         'middleware' => 'auth',

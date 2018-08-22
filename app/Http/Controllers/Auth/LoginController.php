@@ -9,6 +9,8 @@ use App\Mail\ActivationLinkMail;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -47,7 +49,7 @@ class LoginController extends Controller
         $this->validateLogin($request);
 
         $email = $request->get('email');
-        $user = User::where('email', $email)->whereActive(1)->get()->first();
+        $user = User::where('email', $email)->whereActive(1)->first();
 
         if (!$user) {
             return redirect()->back()->withInput()->withErrors((new UserDoesntExist()));
@@ -80,5 +82,69 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function redirectToGithub()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function handleGithubCallback(Request $request)
+    {
+        $user = Socialite::driver('github')->user();
+
+        $userModel = User::where('email', $user->email)->first();
+
+        if ($userModel) {
+
+            if ($userModel->active && $userModel->via === 'github') {
+                Auth::login($userModel);
+            } else {
+                return redirect()->route('login')
+                    ->withErrors(['error' => 'Email is already registered, but not via github. Please try another method.']);
+            }
+
+        } else {
+            $userModel = $this->createUser([
+                'name'       => $user->name ?? $user->nickname,
+                'email'      => $user->email,
+                'identified' => true,
+                'active'     => true,
+                'via'        => 'github',
+            ]);
+
+            Auth::login($userModel);
+        }
+
+        return $this->sendLoginResponse($request);
+    }
+
+    /**
+     * Create user via providers.
+     *
+     * @param $data
+     * @return $this|\Illuminate\Database\Eloquent\Model
+     */
+    public function createUser($data)
+    {
+        return User::create([
+            'name'       => $data['name'],
+            'email'      => $data['email'],
+            'identified' => $data['identified'],
+            'active'     => $data['active'],
+            'password'   => isset($data['password']) ? bcrypt($data['password']) : null,
+            'via'        => $data['via'],
+        ]);
     }
 }
