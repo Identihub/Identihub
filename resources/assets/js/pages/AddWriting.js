@@ -19,55 +19,74 @@ class AddWriting extends Component {
     }
 
     createWriting = () => {
-        const variants = this.state.selectedVariants;
-        const fontFamilyId = this.state.selectedFontFamily.id;
         const bridgeId = this.state.id;
 
-        this.props.dispatch(createWriting(bridgeId, title, description));
-        this.closeWindow();
+        if (this.validateInputs()) {
+            this.props.dispatch(createWriting(bridgeId, this.state.titleValue, this.state.descriptionValue));
+            this.closeWindow();
+        }
+    };
+
+    updateTitle = (e) => {
+        const title = e.target.value;
+
+        this.setState({
+            ...this.state,
+            titleValue: title
+        });
+    };
+
+    updateDescription = (e) => {
+        const description = e.target.value;
+
+        this.setState({
+            ...this.state,
+            descriptionValue: description
+        });
     };
 
     closeWindow = () => {
         this.props.history.goBack();
     };
 
+    validateInputs = () => {
+
+        return !!this.state.titleValue &&
+            !!this.state.descriptionValue;
+    };
+
     render() {
 
-        const searchFontFamily = this.state.searchFontFamily;
-        const searchFontFamilyFunction = this.searchFontFamily;
-        const closeWindowFunction = this.closeWindow;
-        const fonts = this.state.fonts;
-        const selectFontFamilyFunction = this.selectFontFamily;
-        const selectedFontFamily = this.state.selectedFontFamily;
-        const getSelectedFontFamily = this.getSelectedFontFamily;
-        const toggleVariant = this.toggleVariant;
-        const buttonClassName = this.state.selectedVariants.length === 0 ? "button button-white button-disabled" : "button button-black";
-        const createFont = this.createWriting;
+        const closeWindow = this.closeWindow;
+        const createWriting = this.createWriting;
+
+        const buttonClassName = this.validateInputs() ? "button button-black" : "button button-white button-disabled";
 
         return (
-            <div className="add-font">
-                <span onClick={closeWindowFunction} className="overlay"> </span>
+            <div className="add-writing">
+                <span onClick={closeWindow} className="overlay"> </span>
                 <div className="dialog-box">
-                    <img src="/images/close.svg" className="close-window" onClick={closeWindowFunction}/>
+                    <img src="/images/close.svg" className="close-window" onClick={closeWindow}/>
                     <div className="wrapper">
                         <div className="input-wrapper">
-                            <DebounceInput value={searchFontFamily}
-                                           className="input"
-                                           placeholder="Font Family"
-                                           onChange={searchFontFamilyFunction}/>
+                            <DebounceInput value={this.state.titleValue}
+                                           className="input-ghost background-light-gray-Hovered"
+                                           placeholder="Write a title"
+                                           debounceTimeout="3000"
+                                           onChange={this.updateTitle}/>
                         </div>
-                        {
-                            selectedFontFamily ?
-                                <div className="variant-list">
-                                    <VariantList toggleVariant={toggleVariant}
-                                                 variants={getSelectedFontFamily().variants}/>
-                                    <a onClick={createFont} className={buttonClassName}> Add Fonts </a>
-                                </div>
-                                :
-                                <div className="font-list">
-                                    <FontList fonts={fonts} selectItem={selectFontFamilyFunction}/>
-                                </div>
-                        }
+
+                        <div className="input-wrapper">
+                            <DebounceInput spellCheck="false"
+                                           element="textarea"
+                                           className="input-ghost background-light-gray-Hovered"
+                                           value={this.state.descriptionValue}
+                                           placeholder="Description"
+                                           debounceTimeout="3000"
+                                           onChange={this.updateDescription}/>
+                        </div>
+
+                        <a onClick={createWriting} className={buttonClassName}> Add Writing </a>
                     </div>
                 </div>
             </div>
@@ -76,15 +95,11 @@ class AddWriting extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return {
-        fonts: getFonts(state)
-    }
+    return {}
 };
 
 AddWriting.propTypes = {
     dispatch: PropTypes.func.isRequired
 };
 
-export default connect(
-    mapStateToProps
-)(AddWriting);
+export default connect(mapStateToProps)(AddWriting);

@@ -328,7 +328,7 @@
 
       .writing {
         width: 100%;
-        padding: 15px;
+        // padding: 15px;
         background: white;
 
         .delete-writing {
@@ -338,7 +338,9 @@
         }
 
         &:hover {
-          box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+          // box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+          transform: none;
+          box-shadow: none;
         }
 
         textarea {

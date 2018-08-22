@@ -1,6 +1,7 @@
 .new-bridge,
 .add-color,
-.add-font{
+.add-font,
+.add-writing {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,31 +9,31 @@
   height: 100vh;
   z-index: 9999;
 
-  .overlay{
+  .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(73,73,73, .95);
+    background-color: rgba(73, 73, 73, .95);
   }
 
-  .close{
+  .close {
     display: inline-block;
     margin: 30px;
     position: absolute;
     z-index: 9999;
 
-    &:hover{
+    &:hover {
       cursor: pointer;
     }
   }
 
-  .input-wrapper:first-child{
+  .input-wrapper:first-child {
     margin-bottom: 30px;
   }
 
-  .button{
+  .button {
     width: 100%;
   }
 }

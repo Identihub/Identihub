@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {isPublic} from '../../helpers';
 import {bindActionCreators} from "redux";
-import {deleteWriting} from "../../reducers/Bridge/BridgeApiCalls";
+import {deleteWriting, updateWriting} from "../../reducers/Bridge/BridgeApiCalls";
 import DebounceInput from 'react-debounce-input';
 
 import {connect} from 'react-redux';
@@ -14,26 +14,47 @@ class WritingCard extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        this.updateLocalState(nextProps.section);
+        this.updateLocalState(nextProps.card);
     }
 
     componentWillMount() {
-        this.updateLocalState(this.props.section);
+        this.updateLocalState(this.props.card);
     }
 
-    updateLocalState = (section) => {
+    updateLocalState = (card) => {
         this.setState({
-            titleValue: "hello",
-            descriptionValue: "hello desc",
+            titleValue: card.title,
+            descriptionValue: card.description,
         });
     };
 
     updateTitle = (e) => {
         const title = e.target.value;
+        this.updateWriting(title, this.state.descriptionValue);
     };
 
     updateDescription = (e) => {
         const description = e.target.value;
+        this.updateWriting(this.state.titleValue, description);
+    };
+
+    updateWriting = (title, description) => {
+
+        if (!title) {
+            alert('Title is required. Update failed.');
+        }
+
+        if (!description) {
+            alert('Description is required. Update failed.');
+        }
+
+        const {updateWriting, bridge, card} = this.props;
+        if (updateWriting) {
+            updateWriting(bridge.id, card.id, {
+                title: title,
+                description: description,
+            });
+        }
     };
 
     deleteWriting = () => {
@@ -110,13 +131,10 @@ class WritingCard extends Component {
         } else {
             return (
                 <div className="item writing card">
-                    <div className="text">
+                    {titleInput}
+                    {descriptionInput}
 
-                        {titleInput}
-                        {descriptionInput}
-
-                        <div className="clearfix"/>
-                    </div>
+                    <div className="clearfix"/>
                 </div>
             );
         }
@@ -125,7 +143,8 @@ class WritingCard extends Component {
 
 const dispatchToProps = (dispatch) => {
     return bindActionCreators({
-        deleteWriting
+        deleteWriting,
+        updateWriting
     }, dispatch)
 };
 

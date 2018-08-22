@@ -453,12 +453,25 @@ export function deleteWriting(bridgeId, writingId) {
     return (dispatch) => {
         return axios.delete(
             '/api/v1/bridges/' + bridgeId + '/writings/' + writingId
-        )
-            .then((response) => {
-                dispatch(addBridge(response.data.bridge))
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        ).then((response) => {
+            dispatch(addBridge(response.data.bridge))
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 }
+
+export function updateWriting(bridgeId, writingId, data) {
+    return (dispatch) => {
+        return axios.put(
+            '/api/v1/bridges/' + bridgeId + '/writings/' + writingId,
+            data
+        ).then((response) => {
+            dispatch(addBridge(response.data.bridge))
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+}
+
+

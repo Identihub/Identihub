@@ -21,7 +21,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::patch('bridges/{bridgeId}/sections/{sectionId}/updateDescription', 'SectionController@updateDescription');
     Route::post('/bridges/{bridgeId}/icons/{iconId}/convert', 'SourceFileController@addIconConverted');
     Route::get('/fonts/search/{search}', 'FontsController@search');
-    Route::post('/bridges/{bridge}/fonts', 'FontsController@createWriting');
+    Route::post('/bridges/{bridge}/fonts', 'FontsController@createFont');
     Route::delete('/bridges/{bridgeId}/fonts/{fontId}', 'FontsController@deleteFont');
 
     Route::post('/bridges/{bridgeId}/colors', 'ColorsController@createColor');
@@ -45,6 +45,10 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::put('/bridges/{bridge}/icons/{icon}/update/bg', 'IconsController@updateBgColor');
     Route::post('/bridges/{bridge}/icons/{icon}/filename', 'IconsController@updateIconFile');
     Route::post('/bridges/{bridge}/icons/{icon}/dont-use', 'IconsController@updateDontUseFlag');
+
+    Route::post('/bridges/{bridge}/writings', 'WritingsController@createWriting');
+    Route::delete('/bridges/{bridge}/writings/{writing}', 'WritingsController@deleteWriting');
+    Route::put('/bridges/{bridge}/writings/{writing}', 'WritingsController@updateWriting');
 });
 
 Route::group(['middleware' => 'throttle:100,60', 'namespace' => 'Api\V1', 'prefix' => 'v1'], function () {
