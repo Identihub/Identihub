@@ -20,13 +20,21 @@ class AdminOptions extends Component {
         featured_thumbnail: false
     };
 
+    componentWillMount() {
+        this.featuredThumbnail(this.props);
+    }
+
     componentWillReceiveProps(nextProps) {
-        const {bridge, icon} = nextProps;
+        this.featuredThumbnail(nextProps);
+    }
+
+    featuredThumbnail = (props) => {
+        const {bridge, icon} = props;
         const is_featured = bridge.icon_id === icon.id;
         this.setState({
             featured_thumbnail: is_featured
         });
-    }
+    };
 
     emulateInputOnChange = (event) => {
         this.inputElement.click();
@@ -42,7 +50,7 @@ class AdminOptions extends Component {
         updateIconDontUseFlag(icon.bridge_id, icon.id, is_checked)
     };
 
-    setFeaturedThumbnail = (event) => {
+    updateFeaturedThumbnail = (event) => {
         const {icon, updateFeaturedThumbnail} = this.props;
         const is_checked = event.target.checked;
         updateFeaturedThumbnail(icon.bridge_id, icon.id, is_checked);
@@ -62,7 +70,7 @@ class AdminOptions extends Component {
                         <div className="check-setting">
                             <div className="input-wrapper">
                                 <input id="featured_thumbnail" type="checkbox" name="featured_thumbnail"
-                                       onChange={this.setFeaturedThumbnail} checked={this.state.featured_thumbnail}
+                                       onChange={this.updateFeaturedThumbnail} checked={this.state.featured_thumbnail}
                                        className="checkbox-input"/>
                                 <label htmlFor="featured_thumbnail" className="checkbox"/>
                                 <label htmlFor="featured_thumbnail" className="txt-label">Featured Thumbnail</label>
@@ -108,7 +116,8 @@ class AdminOptions extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        updateIconDontUseFlag
+        updateIconDontUseFlag,
+        updateFeaturedThumbnail
     }, dispatch)
 };
 
