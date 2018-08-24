@@ -104,7 +104,7 @@ class IconSidebar extends Component {
     };
 
     render() {
-        const {icon} = this.props;
+        const {icon, bridge} = this.props;
 
         if (!icon)
             return <div/>;
@@ -117,7 +117,8 @@ class IconSidebar extends Component {
             adminOptions = (
                 <AdminOptions updateIcon={this.updateIcon} deleteIcon={this.deleteIcon}
                               updateAssetBgColor={this.updateAssetBgColor}
-                              icon={icon}/>
+                              icon={icon}
+                              bridge={bridge}/>
             );
         }
 

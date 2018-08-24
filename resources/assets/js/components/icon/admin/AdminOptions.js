@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 
 import AssetBgColor from "./AssetBgColor";
-import {updateIconDontUseFlag} from '../../../reducers/Bridge/BridgeApiCalls';
+import {updateIconDontUseFlag, updateFeaturedThumbnail} from '../../../reducers/Bridge/BridgeApiCalls';
 
 class AdminOptions extends Component {
 
@@ -13,7 +13,20 @@ class AdminOptions extends Component {
         deleteIcon: PropTypes.func.isRequired,
         updateAssetBgColor: PropTypes.func.isRequired,
         icon: PropTypes.object.isRequired,
+        bridge: PropTypes.object.isRequired,
     };
+
+    state = {
+        featured_thumbnail: false
+    };
+
+    componentWillReceiveProps(nextProps) {
+        const {bridge, icon} = nextProps;
+        const is_featured = bridge.icon_id === icon.id;
+        this.setState({
+            featured_thumbnail: is_featured
+        });
+    }
 
     emulateInputOnChange = (event) => {
         this.inputElement.click();
@@ -27,6 +40,12 @@ class AdminOptions extends Component {
         const {icon, updateIconDontUseFlag} = this.props;
         const is_checked = event.target.checked;
         updateIconDontUseFlag(icon.bridge_id, icon.id, is_checked)
+    };
+
+    setFeaturedThumbnail = (event) => {
+        const {icon, updateFeaturedThumbnail} = this.props;
+        const is_checked = event.target.checked;
+        updateFeaturedThumbnail(icon.bridge_id, icon.id, is_checked);
     };
 
     render() {
@@ -43,6 +62,7 @@ class AdminOptions extends Component {
                         <div className="check-setting">
                             <div className="input-wrapper">
                                 <input id="featured_thumbnail" type="checkbox" name="featured_thumbnail"
+                                       onChange={this.setFeaturedThumbnail} checked={this.state.featured_thumbnail}
                                        className="checkbox-input"/>
                                 <label htmlFor="featured_thumbnail" className="checkbox"/>
                                 <label htmlFor="featured_thumbnail" className="txt-label">Featured Thumbnail</label>

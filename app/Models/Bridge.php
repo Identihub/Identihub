@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Bridge extends Model
 {
     protected $fillable = [
-        'name', 'user_id', 'slug', 'nr_images', 'nr_icons', 'nr_fonts', 'nr_colors',
+        'name', 'icon_id', 'user_id', 'slug', 'nr_images', 'nr_icons', 'nr_fonts', 'nr_colors',
     ];
 
     public function user()
