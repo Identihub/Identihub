@@ -38,7 +38,7 @@ class WritingsController extends Controller
             'title'       => $request->title,
             'description' => $request->description,
             'section_id'  => $section->id,
-            'order'       => $latest->order + 1,
+            'order'       => $latest ? $latest->order + 1 : 1,
         ]);
 
         if ($created) {
