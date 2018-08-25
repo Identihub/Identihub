@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bridge extends Model
 {
+    const WITH_RELATIONS = ['sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors', 'writings'];
+
     protected $fillable = [
         'name', 'icon_id', 'user_id', 'slug', 'nr_images', 'nr_icons', 'nr_fonts', 'nr_colors',
     ];
@@ -84,6 +86,11 @@ class Bridge extends Model
         return $this->getSectionsFromType($collection, SectionType::COLORS);
     }
 
+    public function writingsSections(Collection $collection)
+    {
+        return $this->getSectionsFromType($collection, SectionType::WRITINGS);
+    }
+
     public function getSectionsFromType(Collection $collection, $type)
     {
         $sectionType = SectionType::where('name', $type)->get()->first();
@@ -117,6 +124,11 @@ class Bridge extends Model
     public function colors()
     {
         return $this->hasMany(Color::class, 'bridge_id', 'id');
+    }
+
+    public function writings()
+    {
+        return $this->hasMany(Writing::class, 'bridge_id', 'id');
     }
 
     /**

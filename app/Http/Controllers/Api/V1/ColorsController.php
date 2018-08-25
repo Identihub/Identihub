@@ -33,7 +33,7 @@ class ColorsController extends Controller
 
             (new CreateBulkColors($request->file('swatch'), $bridge->id, $section))->handle();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {
@@ -67,7 +67,7 @@ class ColorsController extends Controller
 
             (new CreateColor($request->only(['hex', 'cmyk', 'rgb']), $bridgeId, $section))->handle();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {
@@ -98,7 +98,7 @@ class ColorsController extends Controller
 
             (new UpdateColor($request->only(['hex', 'cmyk', 'rgb']), $bridgeId, Color::findOrFail($colorId)))->handle();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {
@@ -130,7 +130,7 @@ class ColorsController extends Controller
             $color = Color::findOrFail($colorId);
             $color->delete();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->where('user_id', $user->id)->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->where('user_id', $user->id)->findOrFail($bridgeId);
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {

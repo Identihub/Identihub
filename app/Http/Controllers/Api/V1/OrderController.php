@@ -61,7 +61,7 @@ class OrderController extends Controller
             $object->order = $newOrder;
             $object->save();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($object->bridge_id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($object->bridge_id);
             return response()->json([
                 'bridge' => $bridge,
                 'section_types' => SectionType::all()
@@ -118,7 +118,7 @@ class OrderController extends Controller
                     throw new \Exception("Not good type");
             }
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($object->bridge_id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($object->bridge_id);
             return response()->json([
                 'bridge' => $bridge,
                 'section_types' => SectionType::all()

@@ -10,12 +10,13 @@ class SectionType extends Model
     const FONTS = "FONTS";
     const IMAGES = "IMAGES";
     const COLORS = "COLORS";
+    const WRITINGS = "WRITINGS";
 
     protected $table = 'section_types';
     public $timestamps = false;
 
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     /**
@@ -48,6 +49,14 @@ class SectionType extends Model
     public static function getColorsSectionType()
     {
         return self::getSectionType(self::COLORS);
+    }
+
+    /**
+     * @return SectionType
+     */
+    public static function getWritingsSectionType()
+    {
+        return self::getSectionType(self::WRITINGS);
     }
 
     /**

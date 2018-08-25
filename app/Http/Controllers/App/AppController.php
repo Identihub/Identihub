@@ -33,7 +33,7 @@ class AppController extends Controller
      */
     public function project($slug)
     {
-        $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->where('slug', $slug)->first();
+        $bridge = Bridge::with(Bridge::WITH_RELATIONS)->where('slug', $slug)->first();
 
         $loggedUser = auth()->user();
         if ($loggedUser) {

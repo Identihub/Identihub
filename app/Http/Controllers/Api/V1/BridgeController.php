@@ -21,10 +21,10 @@ class BridgeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $bridges = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->where('user_id', $user->id)->get();
+        $bridges = Bridge::with(Bridge::WITH_RELATIONS)->where('user_id', $user->id)->get();
         return response()->json([
-            'bridges' => $bridges,
-            'section_types' => SectionType::all()
+            'bridges'       => $bridges,
+            'section_types' => SectionType::all(),
         ]);
     }
 
@@ -32,16 +32,16 @@ class BridgeController extends Controller
     {
         try {
             $user = Auth::user();
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($id);
             if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
             return response()->json([
-                'bridge' => $bridge,
-                'section_types' => SectionType::all()
+                'bridge'        => $bridge,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
         }
 
@@ -74,7 +74,7 @@ class BridgeController extends Controller
                 foreach ([
                              SectionType::getColorsSectionType(),
                              SectionType::getIconsSectionType(),
-                             SectionType::getImagesSectionType()
+                             SectionType::getImagesSectionType(),
                          ] as $sectionType) {
                     (new CreateSection($bridge, $sectionType))->handle();
                 }
@@ -84,19 +84,19 @@ class BridgeController extends Controller
             });
 
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridge->id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridge->id);
 //
 //            try{
 //                event(new BridgeCreated($bridge));
 //            }catch(\Exception $e){}
 
             return response()->json([
-                'bridge' => $bridge
+                'bridge' => $bridge,
             ]);
         } catch (\Exception $e) {
             return $e->getMessage();
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
 
@@ -117,17 +117,17 @@ class BridgeController extends Controller
                 event(new BridgeCreated($bridge));
             } catch (\Exception $e) {
             }
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($id);
             return response()->json([
-                'bridge' => $bridge
+                'bridge' => $bridge,
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
 
@@ -146,21 +146,21 @@ class BridgeController extends Controller
             $slug = $this->getSlug($request);
             $bridge->slug = $slug;
             $bridge->save();
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($id);
             try {
                 event(new BridgeCreated($bridge));
             } catch (\Exception $e) {
             }
             return response()->json([
-                'bridge' => $bridge
+                'bridge' => $bridge,
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
     }
@@ -186,18 +186,18 @@ class BridgeController extends Controller
                 throw new ModelNotFoundException();
 
             $bridge->delete();
-            $bridges = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->where('user_id', $user->id)->get();
+            $bridges = Bridge::with(Bridge::WITH_RELATIONS)->where('user_id', $user->id)->get();
             return response()->json([
-                'bridges' => $bridges,
-                'section_types' => SectionType::all()
+                'bridges'       => $bridges,
+                'section_types' => SectionType::all(),
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
 
@@ -219,17 +219,17 @@ class BridgeController extends Controller
                 event(new BridgeCreated($bridge));
             } catch (\Exception $e) {
             }
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($id);
             return response()->json([
-                'bridge' => $bridge
+                'bridge' => $bridge,
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Entry not found'
+                'error' => 'Entry not found',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Server error'
+                'error' => 'Server error',
             ]);
         }
     }

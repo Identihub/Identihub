@@ -28,7 +28,7 @@ class SectionController extends Controller
 
             (new CreateSection($bridge, SectionType::findOrFail($request->get('section_type'))))->handle();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             return response()->json([
                 'bridge' => $bridge,
             ]);
@@ -53,7 +53,7 @@ class SectionController extends Controller
 
             $section->delete();
 
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridgeId);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridgeId);
             try {
                 event(new BridgeUpdated($bridge));
             } catch (\Exception $e) {
@@ -87,7 +87,7 @@ class SectionController extends Controller
             $section = Section::findOrFail($sectionId);
 
             $user = Auth::user();
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($section->bridge_id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($section->bridge_id);
 
             if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
@@ -128,7 +128,7 @@ class SectionController extends Controller
             $section = Section::findOrFail($sectionId);
 
             $user = Auth::user();
-            $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($section->bridge_id);
+            $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($section->bridge_id);
             if ($user->id !== $bridge->user_id)
                 throw new ModelNotFoundException();
 
