@@ -10,8 +10,39 @@ class Bridge extends Model
     const WITH_RELATIONS = ['sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors', 'writings'];
 
     protected $fillable = [
-        'name', 'user_id', 'slug', 'nr_images', 'nr_icons', 'nr_fonts', 'nr_colors',
+        'name', 'icon_id', 'user_id', 'slug', 'nr_images', 'nr_icons', 'nr_fonts', 'nr_colors',
     ];
+
+    protected $appends = ['thumbnail', 'has_thumbnail'];
+
+    /**
+     * Get thumbnail attribute.
+     */
+    public function getThumbnailAttribute()
+    {
+        if ($this->icon) {
+            return "/assets/{$this->icon->filename_png}";
+        } else if ($this->icons()->count()) {
+            $icon = $this->icons()->first();
+            return "/assets/{$icon->filename_png}";
+        } else {
+            return "/images/logo.svg";
+        }
+    }
+
+    /**
+     * Check if has a thumbnail or not.
+     */
+    public function getHasThumbnailAttribute()
+    {
+        if ($this->icon) {
+            return true;
+        } else if ($this->icons()->count()) {
+            return true;
+        }
+
+        return false;
+    }
 
     public function user()
     {
@@ -98,5 +129,13 @@ class Bridge extends Model
     public function writings()
     {
         return $this->hasMany(Writing::class, 'bridge_id', 'id');
+    }
+
+    /**
+     * Icon which will serve as a featured thumbnail.
+     */
+    public function icon()
+    {
+        return $this->belongsTo(Icon::class, 'icon_id');
     }
 }

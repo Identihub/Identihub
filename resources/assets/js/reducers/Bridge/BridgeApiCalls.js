@@ -283,6 +283,18 @@ export function updateIconDontUseFlag(bridgeId, iconId, dontUse) {
     }
 }
 
+export function updateFeaturedThumbnail(bridgeId, iconId, is_featured) {
+    return (dispatch) => {
+        return axios.post('/api/v1/bridges/' + bridgeId + '/icons/' + iconId + '/featured/thumbnail', {
+            is_featured: is_featured
+        }).then(function (response) {
+            dispatch(addBridge(response.data.bridge));
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
+
 export function updateImageFile(bridgeId, imageId, file) {
     let data = new FormData();
     data.append('image', file);

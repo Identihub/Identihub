@@ -25,14 +25,7 @@ class AdminOptions extends Component {
                         <div className="title">
                             <span>Admin</span>
                         </div>
-                        <div className="featured">
-                            <span>Featured Image</span>
-                            <span id="checkbox">
-                                    <Spinner
-                                        width={14}
-                                        height={14}/>
-                                </span>
-                        </div>
+
                         <div className="buttons">
 
                             <input id="update-icon"
