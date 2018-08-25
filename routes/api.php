@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api\V1', 'prefix' => '
     Route::put('/bridges/{bridge}/icons/{icon}/update/bg', 'IconsController@updateBgColor');
     Route::post('/bridges/{bridge}/icons/{icon}/filename', 'IconsController@updateIconFile');
     Route::post('/bridges/{bridge}/icons/{icon}/dont-use', 'IconsController@updateDontUseFlag');
+    Route::post('/bridges/{bridge}/icons/{icon}/featured/thumbnail', 'IconsController@updateFeaturedThumbnail');
 });
 
 Route::group(['middleware' => 'throttle:100,60', 'namespace' => 'Api\V1', 'prefix' => 'v1'], function () {
