@@ -254,8 +254,7 @@ class IconsController extends Controller
         $bridge->icon_id = $request->is_featured ? $icon->id : null;
         $bridge->save();
 
-        // TODO: This need to be updated
-        $bridge = Bridge::with('sections', 'icons', 'icons.converted', 'images', 'images.converted', 'fonts', 'fonts.variant', 'fonts.variant.fontFamily', 'colors')->findOrFail($bridge->id);
+        $bridge = Bridge::with(Bridge::WITH_RELATIONS)->findOrFail($bridge->id);
 
         try {
             event(new BridgeUpdated($bridge));
