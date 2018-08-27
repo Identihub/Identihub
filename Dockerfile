@@ -78,7 +78,7 @@ COPY entrypoint.sh /entrypoint.sh
 ######
 # INSTALL IMAGEIMAGICK 6.8.9
 ######
-RUN git clone https://github.com/Borisbudini/imagemagick-6.8.9-9 \
+RUN git clone https://github.com/kominoshja/imagemagick-6.8.9-9 \
     && cd imagemagick-6.8.9-9 \
     && ./configure \
     && make \
