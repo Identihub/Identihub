@@ -20,6 +20,8 @@
 
 <footer>powered by <span>Identihub</span></footer>
 
+@stack('scripts')
+
 <script src="{{ mix('js/react-panel.js') }}"></script>
 </body>
 </html>

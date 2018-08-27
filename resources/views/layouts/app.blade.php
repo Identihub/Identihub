@@ -19,5 +19,7 @@
 </div>
 
 <footer>powered by <span>Identihub</span></footer>
+
+@stack('scripts')
 </body>
 </html>

@@ -116,7 +116,7 @@ class WritingCard extends Component {
 
         if (!isPub) {
             return (
-                <div className="card item writing">
+                <div className="card item writing" id="writing">
 
                     {titleInput}
                     {descriptionInput}
