@@ -30,11 +30,6 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <!--  Font Awesome -->
-    <script
-            src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-    <script src="{{ asset('plugins/autoresize.jquery.js') }}"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
     @php

@@ -133,7 +133,6 @@ class Section extends Component {
             </div>
         }
 
-
         return (
             <section className="content">
 
