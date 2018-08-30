@@ -176,16 +176,7 @@
       }
 
       img {
-        max-width: 85%;
-        max-height: 85%;
-
-        width: 85%;
-        position: absolute;
-        // max-width: 90%;
-        // max-height: 90%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        width: 100%;
       }
     }
 
@@ -316,6 +307,7 @@
 
         &.font {
           width: 100%;
+          height: auto;
         }
       }
     }
