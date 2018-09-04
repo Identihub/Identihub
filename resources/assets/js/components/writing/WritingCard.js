@@ -83,7 +83,7 @@ class WritingCard extends Component {
             descriptionInput = (
                 <DebounceInput spellCheck="false"
                                element="textarea"
-                               className="input-ghost background-light-gray-Hovered"
+                               className="input-ghost background-light-gray-Hovered textarea-autogrow"
                                value={this.state.descriptionValue}
                                placeholder="Description"
                                debounceTimeout="3000"
