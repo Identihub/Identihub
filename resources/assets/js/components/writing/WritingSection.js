@@ -20,14 +20,14 @@ class WritingSection extends Component {
         let {writings, sections} = bridge;
 
         const emptyState = <EmptySectionState style={{width: "56%", marginLeft: "23%"}} soloElement={true}
-                                              emptyStateText="No writings found here, start by adding a new writing"/>;
+                                              emptyStateText="No texts found here, start by adding a new text"/>;
 
         return (
             <div className="writings-section">
                 <SectionWrapper
 
-                    title="Writings"
-                    addResource="Add Writing"
+                    title="Texts"
+                    addResource="Add Text"
                     bridge={bridge}
                     sectionType={writingsSection}
                     canCreateSection={false}
@@ -41,7 +41,7 @@ class WritingSection extends Component {
                                 bridge={bridge}
                                 section={section}
                                 writings={writings}
-                                emptyStateText="No writings found here, start by adding a new writing."/>
+                                emptyStateText="No texts found here, start by adding a new text."/>
                         ))
                     }
 

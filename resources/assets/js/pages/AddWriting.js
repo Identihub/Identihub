@@ -86,7 +86,7 @@ class AddWriting extends Component {
                                            onChange={this.updateDescription}/>
                         </div>
 
-                        <a onClick={createWriting} className={buttonClassName}> Add Writing </a>
+                        <a onClick={createWriting} className={buttonClassName}> Add Text </a>
                     </div>
                 </div>
             </div>

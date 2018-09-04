@@ -1,4 +1,4 @@
-body{
+body {
   background-color: $background-color;
   color: $grey-lighter;
   font-family: $font-family-sans-serif;
@@ -8,26 +8,26 @@ body{
 }
 
 input,
-textarea{
+textarea {
   font-family: $font-family-sans-serif;
 }
 
-.help-block, .input-error{
+.help-block, .input-error {
   display: block;
   color: rgba(243, 52, 52, 0.82);
 
-  strong{
+  strong {
     margin-top: 10px;
     display: block;
   }
 
 }
 
-h1{
+h1 {
   font-size: 28px;
 }
 
-h2{
+h2 {
   font-size: 24px;
 }
 
@@ -35,7 +35,7 @@ a {
   text-decoration: none;
   color: $grey-main;
 
-  &:focus{
+  &:focus {
     outline-width: 1px;
     outline-style: dashed;
     outline-offset: 3px;
@@ -43,12 +43,12 @@ a {
   }
 }
 
-#app{
+#app {
   min-height: calc(100vh - 140px);
-  padding-bottom: 70px;//
+  padding-bottom: 70px; //
 }
 
-.clearfix{
+.clearfix {
   clear: both;
 }
 
@@ -57,11 +57,15 @@ a {
   margin: 0 auto;
 }
 
-.installation-checker{
-  li{
+.installation-checker {
+  li {
     color: red;
   }
-  li.active{
+  li.active {
     color: green;
   }
+}
+
+.textarea-autogrow {
+  overflow-y: visible;
 }

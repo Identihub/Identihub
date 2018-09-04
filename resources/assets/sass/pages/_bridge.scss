@@ -310,7 +310,7 @@
       .item {
         margin: 10px;
         width: 150px;
-        height: 150px;
+        // height: 150px;
         border-radius: 3px;
         background-color: $brand-disable-light;
 
@@ -346,6 +346,19 @@
         textarea {
           width: 100%;
           font-size: 14px;
+        }
+
+        .public-writing-title {
+
+        }
+
+        .public-writing-description {
+          font-size: 14px;
+          resize: none;
+          color: rgba(104, 105, 97, 0.6);
+          margin-top: 10px;
+          line-height: 1.35em;
+          white-space: pre-wrap;
         }
       }
     }

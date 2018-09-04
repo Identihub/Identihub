@@ -83,7 +83,7 @@ class WritingCard extends Component {
             descriptionInput = (
                 <DebounceInput spellCheck="false"
                                element="textarea"
-                               className="input-ghost background-light-gray-Hovered"
+                               className="input-ghost background-light-gray-Hovered textarea-autogrow"
                                value={this.state.descriptionValue}
                                placeholder="Description"
                                debounceTimeout="3000"
@@ -92,23 +92,13 @@ class WritingCard extends Component {
         } else {
             if (this.state.titleValue) {
                 titleInput = (
-                    <DebounceInput value={this.state.titleValue}
-                                   className="input-ghost"
-                                   placeholder="Write a title"
-                                   debounceTimeout="3000"
-                                   disabled="true"/>
+                    <p className="public-writing-title">{this.state.titleValue}</p>
                 );
             }
 
             if (this.state.descriptionValue) {
                 descriptionInput = (
-                    <DebounceInput spellCheck="false"
-                                   element="textarea"
-                                   className="input-ghost"
-                                   value={this.state.descriptionValue}
-                                   placeholder="Description"
-                                   debounceTimeout="3000"
-                                   disabled="true"/>
+                    <p className="public-writing-description">{this.state.descriptionValue}</p>
                 );
             }
         }
@@ -116,7 +106,7 @@ class WritingCard extends Component {
 
         if (!isPub) {
             return (
-                <div className="card item writing">
+                <div className="card item writing" id="writing">
 
                     {titleInput}
                     {descriptionInput}
