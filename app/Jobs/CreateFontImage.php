@@ -30,8 +30,7 @@ class CreateFontImage implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
+     * @throws \ImagickException
      */
     public function handle()
     {
@@ -44,27 +43,24 @@ class CreateFontImage implements ShouldQueue
         if(!$storage->exists($link))
             $storage->put($link, file_get_contents($fontVariant->link));
 
-//        if($fontRenderedStorage->exists($link . '.png'))
-//            return;
-
         $filePath = storage_path('app/fonts/') . $link;
 
         $draw = new \ImagickDraw();
         $draw->setFont($filePath);
         $draw->setStrokeWidth(1);
-        $draw->setFontSize(48);
-        $draw->annotation(10, 91, "Abc");
+        $draw->setFontSize(65);
+        $draw->annotation(20, 100, "Abc");
 
         $drawOther = new \ImagickDraw();
         $drawOther->setFont($filePath);
         $drawOther->setStrokeWidth(1);
-        $drawOther->setFontSize(16);
-        $drawOther->annotation(120, 40, "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
-        $drawOther->annotation(120, 80, "a b c d e f g h i j k l m n o p q r s t u v w x y z");
-        $drawOther->annotation(120, 120, "1 2 3 4 5 6 7 8 9 0 ' ? ` \" !");
+        $drawOther->setFontSize(25);
+        $drawOther->annotation(170, 70, "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
+        $drawOther->annotation(170, 130, "a b c d e f g h i j k l m n o p q r s t u v w x y z");
+        $drawOther->annotation(170, 190, "1 2 3 4 5 6 7 8 9 0 ' ? ` \" !");
 
         $imagick = new \Imagick();
-        $imagick->newImage(500, 150, 'transparent');
+        $imagick->newImage(800, 240, 'transparent');
         $imagick->setImageFormat("png");
         $imagick->drawImage($draw);
         $imagick->drawImage($drawOther);
