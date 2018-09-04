@@ -11,5 +11,6 @@ Homestead.yaml
 .env
 public/css
 public/js
+!public/js/script.js
 public/mix-manifest.json
 storage/
