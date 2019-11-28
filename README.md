@@ -34,8 +34,9 @@
 ## Installing
 [(Installation guides are located in our wiki)](https://github.com/uracreative/identihub/wiki/Installation-Guide) 
 
-There are are several ways to install Identihub in various configurations
-* [From source](https://github.com/uracreative/identihub/wiki/Installation-Guide-%28from-source%29)
+There are are several ways to install Identihub in various configurations:
+* [Local Installation](https://github.com/Identihub/Identihub/wiki/Local-Installation-(from-source))
+* [Production Deployment from source](https://github.com/uracreative/identihub/wiki/Installation-Guide-%28from-source%29)
 * [Homestead](https://github.com/uracreative/identihub/wiki/Installation-guide-(homestead))
 
 
