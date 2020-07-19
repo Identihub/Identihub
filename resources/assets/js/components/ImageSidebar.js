@@ -74,7 +74,9 @@ class ImageSidebar extends Component {
 
     addNewConverted(width, height) {
         const {addImageConverted, bridge, image} = this.props;
-        addImageConverted(bridge.id, image.id, parseInt(width), parseInt(height));
+        if(width > 0 && height > 0) {
+            addImageConverted(bridge.id, image.id, parseInt(width), parseInt(height));
+        }
     }
 
     render() {
@@ -119,7 +121,6 @@ class ImageSidebar extends Component {
                                 </span>
                             </div>
                             <div className="buttons">
-                                {/*<section className="update">*/}
                                 <input id="update-icon"
                                        ref={input => this.inputElement = input}
                                        onChange={this.updateIcon}
@@ -128,7 +129,6 @@ class ImageSidebar extends Component {
                                        name="icon"/>
                                 <a className="button-outline-white settings-button"
                                    onClick={emulateInputOnChange}>UPDATE</a>
-                                {/*</section>*/}
                                 <a className="button-outline-delete settings-button button-left"
                                    onClick={deleteImage}>DELETE</a>
                             </div>
@@ -172,6 +172,7 @@ class ImageSidebar extends Component {
                             <div className="sidebar-little-title">EMBED</div>
                             <div className="url url-lighter">
                                 <input type="text"
+                                       readOnly
                                        defaultValue={window.location.origin + '/assets/' + image.filename}/>
                                 <span id="copy-to-clip">
                                     <CopyToClipboard
@@ -222,6 +223,7 @@ class ImageSidebar extends Component {
                                                 <div className="sidebar-little-title">EMBED</div>
                                                 <div className="url url-darker">
                                                     <input type="text"
+                                                           readOnly
                                                            defaultValue={window.location.origin + '/assets/' + convertedItem.filename}/>
                                                     <span id="copy-to-clip">
                                                     <CopyToClipboard

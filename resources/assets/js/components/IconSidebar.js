@@ -78,7 +78,9 @@ class IconSidebar extends Component {
 
     addNewConverted(width, height) {
         const {addIconConverted, bridge, icon} = this.props;
-        addIconConverted(bridge.id, icon.id, parseInt(width), parseInt(height));
+        if(width > 0 && height > 0) {
+            addIconConverted(bridge.id, icon.id, parseInt(width), parseInt(height));
+        }
     }
 
     render() {
@@ -157,7 +159,7 @@ class IconSidebar extends Component {
             );
         }
 
-
+        console.log("newSize", newSize);
         return (
             <div className="sidebar">
                 <div className="bm-item-list">
@@ -182,6 +184,7 @@ class IconSidebar extends Component {
                                 <div className="sidebar-little-title">EMBED</div>
                                 <div className="url url-lighter">
                                     <input type="text"
+                                           readOnly
                                            defaultValue={`${window.location.origin + '/assets/' + icon.filename}`}/>
                                     {/*<p>{`${window.location.origin + '/assets/' + icon.filename}`.substring(0, 35)}</p>*/}
                                     <span id="copy-to-clip">
@@ -232,8 +235,7 @@ class IconSidebar extends Component {
                                                 <div className="sidebar-section-url">
                                                     <div className="sidebar-little-title">EMBED</div>
                                                     <div className="url url-darker">
-                                                        <input type="text"
-                                                               defaultValue={window.location.origin + '/assets/' + convertedItem.filename}/>
+                                                        <input readOnly type="text" defaultValue={window.location.origin + '/assets/' + convertedItem.filename}/>
                                                         <span id="copy-to-clip">
                                                     <CopyToClipboard
                                                         text={window.location.origin + '/assets/' + convertedItem.filename}

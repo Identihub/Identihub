@@ -197,7 +197,7 @@
         display: none;
         left: 0px;
         top: -17px;
-        min-width: 140px;
+        min-width: 200px;
         padding-left: 130px;
         vertical-align: middle;
         position: absolute;
@@ -210,10 +210,12 @@
 
           li {
             cursor: pointer;
+            margin-top: 8px;
           }
 
-          li:nth-child(2) {
-            margin-top: 8px;
+          li:nth-child(1) {
+            margin-top: 0px;
+
           }
         }
 

@@ -49,9 +49,15 @@ class ImageSection extends Component {
 
         return (
             <SectionWrapper
+                componentResources={[
+                    {
+                        title: "Add Image",
+                        onClick: emulateInputOnChange
+                    },
+                ]}
                 title="Images"
-                addResource="Add Image"
-                onResourceClick={emulateInputOnChange}
+                // addResource="Add Image"
+                // onResourceClick={emulateInputOnChange}
                 bridge={bridge}
                 canCreateSection={true}
                 sectionType={imagesSection}>

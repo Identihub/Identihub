@@ -47,13 +47,19 @@ class FontSection extends Component {
         return (
             <div className="fonts-section">
                 <SectionWrapper
-
+                    componentResources={[
+                        {
+                            title: "Add Font",
+                            onClick: addFont
+                        }
+                    ]}
                     title="Fonts"
                     addResource="Add Font"
                     bridge={bridge}
                     sectionType={fontsSection}
-                    canCreateSection={false}
-                    onResourceClick={addFont}>
+                    // canCreateSection={false}
+                    >
+
                     {   fonts.length === 0 ? emptyState :
                             sortByOrder(filterSectionsWithSectionType(sections, fontsSection)).map( section => (
                                 <FontSectionRow
