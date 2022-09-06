@@ -66,5 +66,10 @@ To help identify and subsequently fix bugs faster, make sure to include some bas
 ---
 
 ## Contributing Code
-
-Simply create a branch based on the `dev` branch, do your changes, and open it as a pull request. Ideally write tests for the feature or bugfix you propose.
+  
+Follow the installation guide above to install Identihub in your preferred configuration. 
+After installation, fork the repository and create a branch based on the 'dev' branch. Next find and edit what you want to improve, clarify or document. Once changes have been made, commit those changes with a descriptive commit message, and open it as a pull request.
+  
+Ideally write tests for the feature or bugfix you propose.
+  
+Please note the code of conduct and follow it in all interactions with the project.
